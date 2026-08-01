@@ -1,0 +1,58 @@
+{
+	"SchemaVersion":1,
+	"Case":"CellStyleDataRules-source",
+	"Mode":"original",
+	"TargetType":"Notebook",
+	"TargetFileName":"CellStyleDataRules.nb",
+	"CompareNotebookSideEffects":false,
+	"StartedAt":"Tue 28 Jul 2026 08:39:49",
+	"ElapsedSeconds":2.65673956e1,
+	"WolframVersion":"15.0.1 for Microsoft Windows (64-bit) (July 2, 2026)",
+	"SystemID":"Windows-x86-64",
+	"MachinePrecision":1.5954589770191003e1,
+	"EvaluationStatus":"Success",
+	"InitializationResultHash":"fa1d2db62d4d952e2031452e1bc1ddcad0b192c2e29a706f11ce426ae5acddea",
+	"FinalResultHash":"fa1d2db62d4d952e2031452e1bc1ddcad0b192c2e29a706f11ce426ae5acddea",
+	"InputCellCount":9,
+	"CodeCellCount":0,
+	"NotebookOutputs":[],
+	"NotebookMessages":[],
+	"NotebookPrints":[
+		{
+			"Index":1,
+			"Hash":"73810757ef863d21b06c155dc2e9a8937c88712b7330cd4ba4ec5a70bff6f50a",
+			"Preview":"NotebookDirectory[] : <PROJECT_ROOT>\\legacy-original"
+		},
+		{
+			"Index":2,
+			"Hash":"afd3f71b223b755e48cb1284da25d341d201f9ad5f9e0b4db6553ca58f7241da",
+			"Preview":"SETTING CELL STYLE DATA RULES - CellStyleDataRules"
+		},
+		{
+			"Index":3,
+			"Hash":"88ae092f7a50e6c7c502d7fd09e01450f6f1442addd3e22887728941a9e0d00c",
+			"Preview":"InputNotebook $Failed EvaluationNotebook NotebookObject[FrontEndObject[LinkObject[C:\\Program Files\\Wolfram Research\\Wolfram\\15.0\\SystemFiles\\FrontEnd\\Binaries\\Windows-x86-64\\WolframNB.exe \/b \/min -mathlink -server, 89, 2]], 29] This package"
+		},
+		{
+			"Index":4,
+			"Hash":"6a583a2076ca3c26b18bad1914807e7fd724134c298e190538fcd52d5589f32a",
+			"Preview":"END NotebookObject[FrontEndObject[LinkObject[C:\\Program Files\\Wolfram Research\\Wolfram\\15.0\\SystemFiles\\FrontEnd\\Binaries\\Windows-x86-64\\WolframNB.exe \/b \/min -mathlink -server, 89, 2]], 29]"
+		}
+	],
+	"EvaluatedNotebook":"evaluated-notebooks\\original\\CellStyleDataRules-source.nb",
+	"CapturedContexts":[
+		"Global`",
+		"myNotebookInit`",
+		"myNotebookInit`Private`",
+		"base`",
+		"base`Private`",
+		"statDataAnal`",
+		"statDataAnal`Private`",
+		"rich`",
+		"rich`Private`",
+		"calculator`",
+		"calculator`Private`"
+	],
+	"CapturedSymbolCount":0,
+	"Symbols":{}
+}

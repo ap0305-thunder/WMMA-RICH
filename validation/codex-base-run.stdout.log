@@ -1,0 +1,33 @@
+[2026-07-27 19:45:46] Project root: C:\Users\Ale\OneDrive - unige.it\Documenti\WolframMMAProjectRICH-Git-new
+[2026-07-27 19:45:46] Cases: base
+[2026-07-27 19:45:46] Wolfram executable: C:\Program Files\Wolfram Research\Wolfram\15.0\wolfram.exe
+[2026-07-27 19:45:46] Creating validation workspace: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-d45d39c854f749b598bad129bda136fe
+[2026-07-27 19:45:47] Workspace copy completed: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-d45d39c854f749b598bad129bda136fe
+[2026-07-27 19:45:47] Invocation mode: standalone kernel (-script)
+[2026-07-27 19:45:47] Starting: C:\Program Files\Wolfram Research\Wolfram\15.0\wolfram.exe -script C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-d45d39c854f749b598bad129bda136fe\validation\RegenerateSources.wls C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-d45d39c854f749b598bad129bda136fe base
+[2026-07-27 19:45:47] Started PID 30524; hard timeout 300 seconds
+[2026-07-27 19:45:57] PID 30524 still running after 10 seconds; stdout=0 bytes, stderr=0 bytes
+[2026-07-27 19:46:07] PID 30524 still running after 20 seconds; stdout=0 bytes, stderr=0 bytes
+[2026-07-27 19:46:17] PID 30524 still running after 30 seconds; stdout=0 bytes, stderr=0 bytes
+[2026-07-27 19:46:27] PID 30524 still running after 40 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:46:37] PID 30524 still running after 51 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:46:47] PID 30524 still running after 61 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:46:58] PID 30524 still running after 71 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:47:08] PID 30524 still running after 81 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:47:18] PID 30524 still running after 91 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:47:28] PID 30524 still running after 101 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:47:38] PID 30524 still running after 111 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:47:48] PID 30524 still running after 121 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:47:58] PID 30524 still running after 132 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:48:08] PID 30524 still running after 142 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:48:19] PID 30524 still running after 152 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:48:29] PID 30524 still running after 162 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:48:39] PID 30524 still running after 172 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:48:49] PID 30524 still running after 182 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:48:59] PID 30524 still running after 192 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:49:09] PID 30524 still running after 203 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:49:19] PID 30524 still running after 213 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:49:29] PID 30524 still running after 223 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:49:40] PID 30524 still running after 233 seconds; stdout=174 bytes, stderr=0 bytes
+[2026-07-27 19:49:50] PID 30524 still running after 243 seconds; stdout=287 bytes, stderr=0 bytes
+[2026-07-27 19:49:55] PID 30524 exited with code 5

@@ -1,0 +1,2339 @@
+Notebook[{
+Cell["\<\
+This package/notebook defines tools for statistical data analysis.\
+\>", "Text",
+ CellChangeTimes->{
+  3.945862080410919*^9, 3.9468070237038136`*^9, {3.9477566575925846`*^9, 
+   3.9477566678681946`*^9}, {3.9478421075186825`*^9, 3.947842224319666*^9}, {
+   3.9478424601916847`*^9, 
+   3.947842473909487*^9}},ExpressionUUID->"a616da22-6fde-2f4c-a3fa-\
+0d5a82bfbb3d"],
+
+Cell[BoxData[
+ RowBox[{"checkNewCreatedSymbols", "[", "]"}]], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:54  \
+In[1]:=",ExpressionUUID->"ff06fadb-2f63-104b-900f-b943642f2082"],
+
+Cell[OutputFormData["\<\
+checkNewCreatedSymbols[]\
+\>"], "Output",
+ CellLabel->
+  "7/27/26 20:16:54 ",ExpressionUUID->"9ba3d967-9ad9-c94c-a6aa-9e1b583a307a"],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"$NewSymbol", "=", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<New symbol: \>\"", ",", "#2", ",", "#1"}], "]"}], "&"}]}], 
+  "*)"}]], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:54  \
+In[2]:=",ExpressionUUID->"32a56982-e3b1-1449-9c0b-acb86041a0a8"],
+
+Cell[CellGroupData[{
+
+Cell["SETUP", "Title",
+ CellChangeTimes->{{3.9460185960077095`*^9, 
+  3.9460185970521603`*^9}},ExpressionUUID->"793dd5d6-1e0b-224d-b85c-\
+26714e526b92"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "Print", "[", \
+"\"\<*========================================================================\
+==========================*\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "Print", "[", \
+"\"\<*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\
+||||||||||||||||||||||||||*\>\"", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Print", "[", "\"\<***--- statDataAnal ---***\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "Print", "[", \
+"\"\<*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "Print", "[", \
+"\"\<*========================================================================\
+==========================*\>\"", "]"}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:54  \
+In[3]:=",ExpressionUUID->"99d9781d-0f98-6549-9f4c-2fa9255022e9"],
+
+Cell["\<\
+*=============================================================================\
+=====================*
+*|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\
+|||||||||||||||||||||*
+***--- statDataAnal ---***
+*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*
+*=============================================================================\
+=====================*\
+\>", "Print",
+ CellLabel->
+  "7/27/26 20:16:54 During evaluation of  \
+In[3]:=",ExpressionUUID->"aff92bf5-5dd4-7b41-8ede-f82fa8e388dd"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["statDataAnal", \
+"Title",ExpressionUUID->"951626b3-8dee-8e48-801a-50fe6a19ac45"],
+
+Cell[CellGroupData[{
+
+Cell["INITIALIZATION", "Subtitle",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellChangeTimes->{3.753249653300557*^9, 3.753249980600159*^9, 
+  3.912606015786838*^9},ExpressionUUID->"602b6154-d254-6e47-9935-\
+6d8137142072"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Once", "["}], "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+   "myNotebookInit`loadMyFile", "[", "\"\<CellStyleDataRules.m\>\"", "]"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{",", "\"\<Notebook\>\""}], "]"}], "*)"}]}]}]], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:54  \
+In[8]:=",ExpressionUUID->"41907e2f-47bb-ae45-ad97-6c0d89986671"],
+
+Cell[OutputFormData["\<\
+myNotebookInit`loadMyFile[CellStyleDataRules.m]\
+\>"], "Output",
+ CellLabel->
+  "7/27/26 20:16:54 ",ExpressionUUID->"1edd6cc8-152b-f14c-9f11-3b2a6268769e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\n", 
+  RowBox[{
+   RowBox[{"showContextInfo", "[", "]"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"BeginPackage", "[", 
+    RowBox[{"\"\<statDataAnal`\>\"", ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<myNotebookInit`\>\"", ",", "\"\<base`\>\""}], "}"}]}], 
+    "]"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", "\"\< loading statDataAnal \>\"", "]"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], " ", ";"}], 
+   RowBox[{"(*", " ", 
+    RowBox[{"Begin", " ", "Private", " ", "Context"}], " ", "*)"}], " ", "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"End", "[", "]"}], ";"}], 
+   RowBox[{"(*", " ", 
+    RowBox[{"End", " ", "Private", " ", "Context"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}]}]}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellTags->"index",
+ CellLabel->
+  "7/27/26 20:16:54  \
+In[9]:=",ExpressionUUID->"51777eee-49ae-7f4a-a0b1-01af5070f22d"],
+
+Cell["\<\
+*=============================================================================\
+=====================*
+*|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\
+|||||||||||||||||||||*
+***----------------------------------- myNotebookInit \
+---------------------------------------------***
+*=============================================================================\
+=====================*
+============================================================
+ myNotebookInit  loaded  |  Version: v.09-05-2026
+ Kernel: 15.0.1 for Microsoft Windows (64-bit) (July 2, 2026)
+ Context: myNotebookInit`Private`
+============================================================
+Explicit Load Tracker ready. Functions: loadMyFile[], loadNeeds[], \
+summarizeLoads[], saveLoadLog[], loadSavedLog[], clearLoadLog[]
+ loading statDataAnal \
+\>", "Print",
+ CellTags->"index",
+ CellLabel->
+  "7/27/26 20:16:54 During evaluation of  \
+In[9]:=",ExpressionUUID->"2219ccba-e323-9045-b7fc-78679eebf505"],
+
+Cell["Get::noopen: Cannot open base`.", "Message",
+ CellTags->"index",
+ CellLabel->
+  "During evaluation of  \
+In[9]:=",ExpressionUUID->"0d7f82f0-9906-2b4c-aed0-5596b10854dd"],
+
+Cell["\<\
+Needs::nocont: Context base` was not created when Needs was evaluated.\
+\>", "Message",
+ CellTags->"index",
+ CellLabel->
+  "During evaluation of  \
+In[9]:=",ExpressionUUID->"5ba9bef8-6c1c-0340-903e-01bf08bf7565"]
+}, Open  ]],
+
+Cell[OutputFormData["\<\
+statDataAnal`\
+\>"], "Output",
+ CellTags->"index",
+ CellLabel->
+  "7/27/26 20:16:54 ",ExpressionUUID->"f54287af-137a-c444-8831-f2e880353dcd"],
+
+Cell[BoxData[""], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:54  \
+In[14]:=",ExpressionUUID->"eeb36551-dc59-3f4d-9164-6b0d99ea5a25"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["PROBABILITY AND STATISTICS FUNCTIONS", "Subtitle",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellChangeTimes->{3.753249653300557*^9, 3.753249980600159*^9, 
+  3.912605979148068*^9, 
+  3.912606015786838*^9},ExpressionUUID->"77605f2f-33fe-8d40-9dbb-\
+0fe8cb2bf355"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", 
+   RowBox[{"absSpread", ",", "relSpread"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"absSpread", "[", "z_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Max", "[", "z", "]"}], "-", 
+    RowBox[{"Min", "[", "z", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"relSpread", "[", "z_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"Max", "[", "z", "]"}], "-", 
+      RowBox[{"Min", "[", "z", "]"}]}], ")"}], "/", 
+    RowBox[{"Median", "[", "z", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", "*)"}]}]}], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellChangeTimes->{{3.911136841412212*^9, 3.911136850063279*^9}, {
+   3.911136933780743*^9, 3.911137001214768*^9}, 3.91260597914907*^9, 
+   3.912606015786838*^9, 3.924354269755615*^9, {3.9243958692295895`*^9, 
+   3.9243958739699306`*^9}, {3.92439591827788*^9, 3.924395934960886*^9}},
+ CellLabel->
+  "7/27/26 20:16:54  \
+In[15]:=",ExpressionUUID->"5b05b0e3-de2f-4448-a89f-5bf6bff49c55"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Only", " ", "for", " ", "normal", " ", "distribution"}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Clear", "[", "standardErrorOfSampleMedian", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"standardErrorOfSampleMedian", "[", "list_", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"num", ",", "result"}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"num", "=", 
+         RowBox[{"Length", "[", "list", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"num", ">", "0"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"result", "=", 
+           RowBox[{
+            RowBox[{"Sqrt", "[", 
+             RowBox[{"Pi", "/", "2"}], "]"}], "*", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"StandardDeviation", "[", "list", "]"}], "/", 
+              RowBox[{"Sqrt", "[", "num", "]"}]}], ")"}]}]}]}], 
+         "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", 
+         RowBox[{"N", "[", "result", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+      "]"}]}], ";"}]}]}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellChangeTimes->{{3.911136841412212*^9, 3.911136850063279*^9}, {
+   3.911136933780743*^9, 3.911137001214768*^9}, 3.91260597914907*^9, 
+   3.912606015786838*^9, 3.924354269755615*^9, {3.9243958692295895`*^9, 
+   3.924395881998854*^9}},
+ CellLabel->
+  "7/27/26 20:16:54  \
+In[18]:=",ExpressionUUID->"1f988d3c-1806-d24a-986b-f1784f7796cf"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"https", ":"}], "//", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"www", ".", "itl", ".", "nist", ".", "gov"}], "/", 
+         "div898"}], "/", "handbook"}], "/", "eda"}], "/", "section3"}], "/", 
+     RowBox[{"eda35b", ".", "htm"}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Clear", "[", "sampleSkewness", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"sampleSkewness", "[", "list_", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"num", ",", "result"}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"num", "=", 
+         RowBox[{"Length", "[", "list", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"result", "=", 
+         RowBox[{"Skewness", "[", "list", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", 
+         RowBox[{"N", "[", "result", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}]}]}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellLabel->
+  "7/27/26 20:16:55  \
+In[20]:=",ExpressionUUID->"b79e704d-cb8b-0546-9212-8a583f408b3d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"https", ":"}], "//", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"www", ".", "itl", ".", "nist", ".", "gov"}], "/", 
+         "div898"}], "/", "handbook"}], "/", "eda"}], "/", "section3"}], "/", 
+     RowBox[{"eda35b", ".", "htm"}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Only", " ", "for", " ", "normal", " ", "distribution"}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Clear", "[", "standardErrorOfSampleSkewness", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"standardErrorOfSampleSkewness", "[", "list_", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"num", ",", "result"}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"num", "=", 
+         RowBox[{"Length", "[", "list", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"num", ">", "2"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"result", "=", 
+           RowBox[{"Sqrt", "[", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"6", "*", "num", "*", 
+                RowBox[{"(", 
+                 RowBox[{"num", "-", "1"}], ")"}]}], ")"}], "/", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"num", "-", "2"}], ")"}], "*", 
+                RowBox[{"(", 
+                 RowBox[{"num", "+", "1"}], ")"}], "*", 
+                RowBox[{"(", 
+                 RowBox[{"num", "+", "3"}], ")"}]}], ")"}]}], ")"}], 
+            "]"}]}]}], "\[IndentingNewLine]", "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", 
+         RowBox[{"N", "[", "result", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}]}]}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellLabel->
+  "7/27/26 20:16:55  \
+In[22]:=",ExpressionUUID->"41e1bd83-7385-5d42-921a-38875828405f"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"https", ":"}], "//", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"www", ".", "itl", ".", "nist", ".", "gov"}], "/", 
+         "div898"}], "/", "handbook"}], "/", "eda"}], "/", "section3"}], "/", 
+     RowBox[{"eda35b", ".", "htm"}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Clear", "[", "sampleKurtosis", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"sampleKurtosis", "[", "list_", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"num", ",", "result"}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"num", "=", 
+         RowBox[{"Length", "[", "list", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"result", "=", 
+         RowBox[{"Kurtosis", "[", "list", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", 
+         RowBox[{"N", "[", "result", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}]}]}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellLabel->
+  "7/27/26 20:16:55  \
+In[24]:=",ExpressionUUID->"41368118-ab46-364a-b384-bff9cf96633d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"https", ":"}], "//", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"www", ".", "itl", ".", "nist", ".", "gov"}], "/", 
+         "div898"}], "/", "handbook"}], "/", "eda"}], "/", "section3"}], "/", 
+     RowBox[{"eda35b", ".", "htm"}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Only", " ", "for", " ", "normal", " ", "distribution"}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Clear", "[", "standardErrorOfSampleKurtosis", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"standardErrorOfSampleKurtosis", "[", "list_", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"num", ",", "result"}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"num", "=", 
+         RowBox[{"Length", "[", "list", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"num", ">", "3"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"result", "=", 
+           RowBox[{"Sqrt", "[", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"24", "*", "num", "*", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{"num", "-", "1"}], ")"}], "2"]}], ")"}], "/", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"num", "-", "3"}], ")"}], "*", 
+                RowBox[{"(", 
+                 RowBox[{"num", "-", "2"}], ")"}], "*", 
+                RowBox[{"(", 
+                 RowBox[{"num", "+", "3"}], ")"}], "*", 
+                RowBox[{"(", 
+                 RowBox[{"num", "+", "5"}], ")"}]}], ")"}]}], ")"}], 
+            "]"}]}]}], "\[IndentingNewLine]", "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", 
+         RowBox[{"N", "[", "result", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}]}]}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellLabel->
+  "7/27/26 20:16:55  \
+In[26]:=",ExpressionUUID->"1281e8d1-2f5d-434a-8108-bf0f062ed853"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "errSquarSum", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"errSquarSum", "[", "x_List", "]"}], ":=", 
+    RowBox[{"Sqrt", "@", 
+     RowBox[{"Total", "[", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "^", "2"}], "&"}], ",", "x"}], "]"}], "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"ClearAll", "[", "sumInQuadr", "]"}], ";", "\n", 
+    RowBox[{
+     RowBox[{"sumInQuadr", "[", 
+      RowBox[{"x__", "?", "NumericQ"}], "]"}], ":=", 
+     RowBox[{"Sqrt", "[", 
+      RowBox[{"Total", "[", 
+       SuperscriptBox[
+        RowBox[{"{", "x", "}"}], "2"], "]"}], "]"}]}], ";"}], "*)"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "errSquarSum", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"errSquarSum", "[", "x_List", "]"}], ":=", 
+    RowBox[{"Sqrt", "@", 
+     RowBox[{"Total", "[", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "^", "2"}], "&"}], ",", "x"}], "]"}], "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "sumInQuadr", "]"}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"sumInQuadr", "[", "x_List", "]"}], ":=", 
+    RowBox[{"Sqrt", "[", 
+     RowBox[{"Total", "[", 
+      RowBox[{"x", "^", "2"}], "]"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"sumInQuadr", "[", "x__", "]"}], ":=", 
+    RowBox[{"Sqrt", "[", 
+     RowBox[{"Total", "[", 
+      RowBox[{
+       RowBox[{"{", "x", "}"}], "^", "2"}], "]"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"VerificationTest", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"sumInQuadr", "[", "3", "]"}], ",", 
+     RowBox[{"sumInQuadr", "[", 
+      RowBox[{"3", ",", "4"}], "]"}], ",", 
+     RowBox[{"sumInQuadr", "[", 
+      RowBox[{"{", 
+       RowBox[{"3", ",", "4"}], "}"}], "]"}], ",", 
+     RowBox[{"sumInQuadr", "[", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "2", ",", "2"}], "}"}], "]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "5", ",", "5", ",", "3"}], "}"}], ",", 
+   RowBox[{"TestID", "->", "\"\<sumInQuadr-backward-compatible\>\""}]}], 
+  "]"}]}], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellLabel->
+  "7/27/26 20:16:55  \
+In[28]:=",ExpressionUUID->"58e04495-13ca-c249-9c49-dc678fcf963c"],
+
+Cell[OutputFormData["\<\
+TestObject[<|MetaInformation -> None, AbsoluteTime -> \
+3.9941650153267689`16.655030988214257*^9, SameTest -> SameQ, SameMessages -> \
+Testing`MessageMatchQ, MemoryConstraint -> Infinity, TimeConstraint -> \
+Infinity, CreationID -> 2ba4ce5e-796e-4847-b1ca-2aa337c756a0, TestID -> \
+sumInQuadr-backward-compatible, TestFileName -> , EvaluationID -> \
+03ea9d43-ed53-4860-b680-21cfec3ede6f, Input -> HoldForm[{sumInQuadr[3], \
+sumInQuadr[3, 4], sumInQuadr[{3, 4}], sumInQuadr[{1, 2, 2}]}], \
+ExpectedMessages -> HoldForm[{}], ActualOutput -> HoldForm[{3, 5, 5, 3}], \
+ActualMessages -> {}, AbsoluteTimeUsed -> 0``7.1505149978319915, CPUTimeUsed \
+-> 0., MemoryUsed -> 3672, IntermediateTestsTree -> {}, ExpectedOutput -> \
+HoldForm[{3, 5, 5, 3}], Outcome -> Success, FailureType -> None|>]\
+\>"], "Output",
+ CellLabel->
+  "7/27/26 20:16:55 ",ExpressionUUID->"b15655c8-1f75-0241-a5a2-09988e6e1c78"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+  "(*", "*************************************************************************************************)"}\
+], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"NEW", " ", "Statistics", " ", "Palette"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+  "(*", "*************************************************************************************************)"}\
+], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Unprotect", "[", 
+     RowBox[{
+     "descriptiveStatistics", ",", "descriptivestatistics", ",", "tds", ",", 
+      "ltxt", ",", "lgd", ",", "descriptiveStatisticsSimpleHisto", ",", 
+      "simpleHistogramWithStatistics", ",", "tdsFn", ",", "ltxtFn", ",", 
+      "lgdFn"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ClearAll", "[", 
+     RowBox[{
+     "thisDataHisto", ",", "descriptiveStatistics", ",", 
+      "descriptivestatistics", ",", "tds", ",", "ltxt", ",", "lgd", ",", 
+      "descriptiveStatisticsSimpleHisto", ",", 
+      "simpleHistogramWithStatistics", ",", "tdsFn", ",", "ltxtFn", ",", 
+      "lgdFn"}], "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"thisDataHisto", "=", 
+     RowBox[{"RandomReal", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", "1"}], "}"}], ",", "1000"}], "]"}]}], ";"}], "  ", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"default", " ", "test", " ", "data"}], ",", "unchanged"}], 
+    "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hdr", "=", 
+     RowBox[{"{", 
+      RowBox[{"\"\<   #  \>\"", ",", "\"\<  Min \>\"", ",", "\"\<  Max \>\"", 
+       ",", "\"\< Mean \>\"", ",", "\"\<Median\>\"", ",", "\"\<StdDev\>\"", 
+       ",", "\"\<Skewn.\>\"", ",", "\"\<Kurto.\>\""}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "\[HorizontalLine]\[HorizontalLine]", " ", "new", " ", "canonical", " ", 
+     "function", " ", 
+     "\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"descriptiveStatistics", "[", "data_", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", "sss", "}"}], ",", 
+       RowBox[{
+        RowBox[{"sss", "=", 
+         RowBox[{"StandardDeviation", "[", "data", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Length", "[", "data", "]"}], ",", 
+          RowBox[{"Min", "[", "data", "]"}], ",", 
+          RowBox[{"Max", "[", "data", "]"}], ",", 
+          RowBox[{"Mean", "[", "data", "]"}], ",", 
+          RowBox[{"Median", "[", "data", "]"}], ",", "sss", ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"sss", ">", "0"}], ",", 
+            RowBox[{"Skewness", "[", "data", "]"}], ",", 
+            RowBox[{"-", "1"}]}], "]"}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"sss", ">", "0"}], ",", 
+            RowBox[{"Kurtosis", "[", "data", "]"}], ",", 
+            RowBox[{"-", "1"}]}], "]"}]}], "}"}]}]}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"\[HorizontalLine]\[HorizontalLine]", " ", "back"}], "-", 
+     RowBox[{
+     "compat", " ", "alias", " ", 
+      "\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]"}]}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"descriptivestatistics", "[", "data_", "]"}], ":=", 
+     RowBox[{"descriptiveStatistics", "[", "data", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"unchanged", " ", "from", " ", "original"}], "\[LongDash]", 
+     "OwnValues", ",", 
+     RowBox[{"back", "-", 
+      RowBox[{"compat", " ", "preserved"}]}]}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"tds", ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"ToString", "@", 
+        RowBox[{"PaddedForm", "[", 
+         RowBox[{"#", ",", 
+          RowBox[{"{", 
+           RowBox[{"5", ",", "3"}], "}"}]}], "]"}]}], "&"}], "/@", 
+      RowBox[{"descriptiveStatistics", "[", "thisDataHisto", "]"}]}]}], ";"}],
+    "\n", 
+   RowBox[{
+    RowBox[{"ltxt", ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"StringJoin", "[", 
+        RowBox[{
+         RowBox[{"hdr", "[", 
+          RowBox[{"[", "#", "]"}], "]"}], ",", "\"\<:\>\"", ",", 
+         RowBox[{"tds", "[", 
+          RowBox[{"[", "#", "]"}], "]"}]}], "]"}], "&"}], "/@", 
+      RowBox[{"Range", "[", 
+       RowBox[{"Length", "[", "hdr", "]"}], "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"lgd", ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Text", "[", 
+        RowBox[{
+         RowBox[{"Style", "[", 
+          RowBox[{
+           RowBox[{"ltxt", "[", 
+            RowBox[{"[", "#", "]"}], "]"}], ",", "Bold", ",", 
+           RowBox[{"FontFamily", "->", "\"\<Courier\>\""}]}], "]"}], ",", 
+         RowBox[{"Scaled", "[", 
+          RowBox[{"{", 
+           RowBox[{"0.9", ",", 
+            RowBox[{"1", "-", 
+             RowBox[{"0.04", "#"}]}]}], "}"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], "]"}], "&"}], "/@", 
+      RowBox[{"Range", "[", 
+       RowBox[{"Length", "[", "hdr", "]"}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"new", " ", "parametric", " ", "versions"}], "\[LongDash]", 
+     RowBox[{"different", " ", "names"}], ",", 
+     RowBox[{"no", " ", "clash"}]}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"tdsFn", "[", "data_", "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"ToString", "@", 
+        RowBox[{"PaddedForm", "[", 
+         RowBox[{"#", ",", 
+          RowBox[{"{", 
+           RowBox[{"5", ",", "3"}], "}"}]}], "]"}]}], "&"}], "/@", 
+      RowBox[{"descriptiveStatistics", "[", "data", "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"ltxtFn", "[", "data_", "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"StringJoin", "[", 
+        RowBox[{
+         RowBox[{"hdr", "[", 
+          RowBox[{"[", "#", "]"}], "]"}], ",", "\"\<:\>\"", ",", 
+         RowBox[{
+          RowBox[{"tdsFn", "[", "data", "]"}], "[", 
+          RowBox[{"[", "#", "]"}], "]"}]}], "]"}], "&"}], "/@", 
+      RowBox[{"Range", "[", 
+       RowBox[{"Length", "[", "hdr", "]"}], "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"lgdFn", "[", "data_", "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Text", "[", 
+        RowBox[{
+         RowBox[{"Style", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ltxtFn", "[", "data", "]"}], "[", 
+            RowBox[{"[", "#", "]"}], "]"}], ",", "Bold", ",", 
+           RowBox[{"FontFamily", "->", "\"\<Courier\>\""}]}], "]"}], ",", 
+         RowBox[{"Scaled", "[", 
+          RowBox[{"{", 
+           RowBox[{"0.9", ",", 
+            RowBox[{"1", "-", 
+             RowBox[{"0.04", "#"}]}]}], "}"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], "]"}], "&"}], "/@", 
+      RowBox[{"Range", "[", 
+       RowBox[{"Length", "[", "hdr", "]"}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "\[HorizontalLine]\[HorizontalLine]", " ", "unchanged", " ", 
+     "\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\
+\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"descriptiveStatisticsSimpleHisto", "[", "data_", "]"}], ":=", 
+     RowBox[{"{", 
+      RowBox[{"Panel", "@", 
+       RowBox[{"Grid", "@", 
+        RowBox[{"Transpose", "@", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            
+            RowBox[{"\"\<Min\>\"", ",", "\"\<Max\>\"", ",", "\"\<Mean\>\"", 
+             ",", "\"\<Median\>\"", ",", "\"\<StdDev\>\"", ",", "\"\<Skew\>\"",
+              ",", "\"\<Kurt\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+           RowBox[{"Module", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"sss", "=", 
+               RowBox[{"StandardDeviation", "[", "data", "]"}]}], "}"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"z", "=", 
+               RowBox[{"N", "@", 
+                RowBox[{"Flatten", "[", "data", "]"}]}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"!", 
+                  RowBox[{"VectorQ", "[", 
+                   RowBox[{"z", ",", "NumericQ"}], "]"}]}], "||", 
+                 RowBox[{
+                  RowBox[{"Length", "[", "z", "]"}], "==", "0"}]}], ",", 
+                RowBox[{"Return", "[", "$Failed", "]"}]}], "]"}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Min", "[", "z", "]"}], ",", 
+                RowBox[{"Max", "[", "z", "]"}], ",", 
+                RowBox[{"Mean", "[", "z", "]"}], ",", 
+                RowBox[{"Median", "[", "z", "]"}], ",", "sss", ",", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"sss", ">", "0"}], ",", 
+                  RowBox[{"Skewness", "[", "z", "]"}], ",", 
+                  RowBox[{"-", "1"}]}], "]"}], ",", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"sss", ">", "0"}], ",", 
+                  RowBox[{"Kurtosis", "[", "z", "]"}], ",", 
+                  RowBox[{"-", "1"}]}], "]"}]}], "}"}]}]}], 
+            "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
+          "}"}]}]}]}], "\[IndentingNewLine]", "}"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"simpleHistogramWithStatistics", "[", "data_", "]"}], ":=", 
+     RowBox[{"GraphicsGrid", "[", 
+      RowBox[{"{", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Histogram", "[", 
+          RowBox[{"data", ",", 
+           RowBox[{"ImageSize", "->", "Medium"}]}], "]"}], ",", 
+         RowBox[{"descriptiveStatisticsSimpleHisto", "@", "data"}]}], "}"}], 
+       "}"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Protect", "[", 
+     RowBox[{
+     "descriptiveStatistics", ",", "descriptivestatistics", ",", "tds", ",", 
+      "ltxt", ",", "lgd", ",", "descriptiveStatisticsSimpleHisto", ",", 
+      "simpleHistogramWithStatistics", ",", "tdsFn", ",", "ltxtFn", ",", 
+      "lgdFn"}], "]"}], ";"}]}]}]], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:55  \
+In[36]:=",ExpressionUUID->"2dc7aad2-8ab3-2a43-a290-12b9823b559a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"===", "===", "==="}], "=", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "==="}], "="}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"NEWER", " ", "than", " ", "statsdisplay"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"===", "===", "==="}], "=", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "==="}], "="}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+  "(*", "*************************************************************************************************)"}\
+], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "displayHistoStats", " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+  "(*", "*************************************************************************************************)"}\
+], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Beware", ":", " ", 
+     RowBox[{
+     "default", " ", "bspec", " ", "and", " ", "hspec", " ", "do", " ", "not",
+       " ", "work"}]}], ",", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"forse", " ", "boh"}], "..."}], "."}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Unprotect", "[", "displayHistoStats", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ClearAll", "[", "displayHistoStats", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Options", "[", "displayHistoStats", "]"}], "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<BootstrapSamples\>\"", "->", "1000"}], ",", 
+       RowBox[{"\"\<RandomSeed\>\"", "->", "Automatic"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"displayHistoStats", "[", 
+      RowBox[{"z0_", ",", "\[IndentingNewLine]", 
+       RowBox[{"bspec", ":", 
+        RowBox[{"(", 
+         RowBox[{"_Integer", "|", "_List", "|", "Automatic"}], ")"}], ":", 
+        "10"}], ",", 
+       RowBox[{"hspec_String", ":", "\"\<Probability\>\""}], ",", 
+       RowBox[{"optsDisplayHistoStats", ":", 
+        RowBox[{"OptionsPattern", "[", 
+         RowBox[{"{", 
+          RowBox[{"displayHistoStats", ",", "Histogram"}], "}"}], "]"}]}]}], 
+      "\[IndentingNewLine]", "]"}], ":=", "\n", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "z", ",", "num", ",", "nBootstrap", ",", "\[Mu]", ",", "\[Sigma]", ",",
+          "med", ",", "cm4", ",", "ske", ",", "kur", ",", "medDev", ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"sigmaMean", "=", 
+          RowBox[{"-", "1"}]}], ",", 
+         RowBox[{"sigmaSigm", "=", 
+          RowBox[{"-", "1"}]}], ",", 
+         RowBox[{"sigmaStdDev", "=", 
+          RowBox[{"-", "1"}]}], ",", 
+         RowBox[{"sigmaMedian", "=", 
+          RowBox[{"-", "1"}]}], ",", 
+         RowBox[{"sigmaSkewness", "=", 
+          RowBox[{"-", "1"}]}], ",", 
+         RowBox[{"sigmaKurtosis", "=", 
+          RowBox[{"-", "1"}]}], ",", "plot$local"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"nBootstrap", "=", 
+         RowBox[{"OptionValue", "[", "\"\<BootstrapSamples\>\"", "]"}]}], ";",
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{
+        "miniBanner", 
+         "[", "\"\< Histogram statistics summary --- !!! Assume at least 5 \
+data elements OR die !!! \>\"", "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"nBootstrap", "=", "1000"}], ";", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", 
+        RowBox[{"z", "=", 
+         RowBox[{"N", "@", 
+          RowBox[{"Flatten", "[", "z0", "]"}]}]}], ";", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Make", " ", "z", " ", 
+          RowBox[{
+           RowBox[{"float", " ", "!!"}], "!"}]}], " ", "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"num", "=", 
+         RowBox[{"Length", "[", "z", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"num", "\[LessEqual]", "4"}], ",", 
+          RowBox[{
+           RowBox[{"Print", "[", 
+            
+            RowBox[{"\"\< !@#$% displayHistoStats : # of data = \>\"", ",", 
+             "num", ",", "\"\<  ... too few data // Return \>\""}], "]"}], ";", 
+           RowBox[{"Return", "[", "$Failed", "]"}]}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"\[Mu]", "=", 
+         RowBox[{"Mean", "[", "z", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"\[Sigma]", "=", 
+         RowBox[{"StandardDeviation", "[", "z", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"med", "=", 
+         RowBox[{"Median", "[", "z", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"medDev", "=", 
+         RowBox[{"MedianDeviation", "[", "z", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"cm4", "=", 
+         RowBox[{"CentralMoment", "[", 
+          RowBox[{"z", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"sigmaMean", "=", 
+         RowBox[{"\[Sigma]", "/", 
+          RowBox[{"Sqrt", "[", "num", "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"ske", "=", 
+         RowBox[{"sampleSkewness", "[", "z", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"kur", "=", 
+         RowBox[{"sampleKurtosis", "[", "z", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"\[Sigma]", "\[LessEqual]", "0"}], ",", 
+          RowBox[{
+           RowBox[{"Print", "[", 
+            
+            RowBox[{"\"\< !@#$% displayHistoStats : non positive \[Sigma] = \
+\>\"", ",", "\[Sigma]", ",", "\"\<  // Return \>\""}], "]"}], ";", 
+           RowBox[{"Return", "[", "$Failed", "]"}]}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{
+          "this", " ", "is", " ", "derived", " ", "from", " ", "the", " ", 
+           "exact", " ", "for", " ", "variance", " ", "with", " ", 
+           "propagation"}], " ", "//", " ", 
+          RowBox[{"for", " ", "ANY", " ", "distribution"}]}], " ", "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"sigmaSigm", "=", 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"1", "/", 
+             RowBox[{"(", 
+              RowBox[{"4", "*", "num", "*", 
+               RowBox[{"\[Sigma]", "^", "2"}]}], ")"}]}], ")"}], "*", 
+           RowBox[{"(", 
+            RowBox[{"cm4", "-", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"num", "-", "3"}], ")"}], "/", 
+                RowBox[{"(", 
+                 RowBox[{"num", "-", "1"}], ")"}]}], ")"}], "*", 
+              RowBox[{"\[Sigma]", "^", "4"}]}]}], ")"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"sigmaMedian", "=", 
+         RowBox[{"bootstrap", "[", 
+          RowBox[{"z", ",", "nBootstrap", ",", "Median"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"sigmaStdDev", "=", 
+         RowBox[{"bootstrap", "[", 
+          RowBox[{"z", ",", "nBootstrap", ",", "StandardDeviation"}], "]"}]}],
+         ";", "\[IndentingNewLine]", 
+        RowBox[{"sigmaSkewness", "=", 
+         RowBox[{"bootstrap", "[", 
+          RowBox[{"z", ",", "nBootstrap", ",", "Skewness"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"sigmaKurtosis", "=", 
+         RowBox[{"bootstrap", "[", 
+          RowBox[{"z", ",", "nBootstrap", ",", "Kurtosis"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"Print", "[", 
+         RowBox[{"\"\< Number of data        = \>\"", ",", "num"}], "]"}], ";",
+         "\[IndentingNewLine]", 
+        RowBox[{"Print", "[", 
+         RowBox[{"\"\< Mean                  = \>\"", ",", 
+          RowBox[{"nfpm5", "[", "\[Mu]", "]"}], ",", "\"\< \[PlusMinus]\>\"", 
+          ",", 
+          RowBox[{"nfpm5", "[", "sigmaMean", "]"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Print", "[", 
+         RowBox[{"\"\< StDv                  = \>\"", ",", 
+          RowBox[{"nfpm5", "[", "\[Sigma]", "]"}], 
+          ",", "\"\< \[PlusMinus]\>\"", ",", 
+          RowBox[{"nfpm5", "[", "sigmaSigm", "]"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"\[Sigma]", ">", "0"}], " ", ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Min                   = \>\"", ",", 
+             RowBox[{"nfpm5", "[", 
+              RowBox[{"Min", "[", "z", "]"}], "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Max                   = \>\"", ",", 
+             RowBox[{"nfpm5", "[", 
+              RowBox[{"Max", "[", "z", "]"}], "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Range                 = \>\"", ",", 
+             RowBox[{"nfpm5", "[", 
+              RowBox[{
+               RowBox[{"Max", "[", "z", "]"}], "-", 
+               RowBox[{"Min", "[", "z", "]"}]}], "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< MedianDeviation       = \>\"", ",", 
+             RowBox[{"nfpm5", "[", "medDev", "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Median                = \>\"", ",", 
+             RowBox[{"nfpm5", "[", "med", "]"}], ",", "\"\< \[PlusMinus]\>\"",
+              ",", 
+             RowBox[{"nfpm5", "[", 
+              RowBox[{"standardErrorOfSampleMedian", "[", "z", "]"}], "]"}], 
+             ",", "\"\< (gaussian hypothesis)\>\""}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            
+            RowBox[{"\"\<                 Bootstrap median std error     = \>\
+\"", ",", 
+             RowBox[{"nfpm5", "[", "sigmaMedian", "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< StandardDeviation     = \>\"", ",", 
+             RowBox[{"nfpm5", "[", "\[Sigma]", "]"}], 
+             ",", "\"\< \[PlusMinus]\>\"", ",", 
+             RowBox[{"nfpm5", "[", "sigmaSigm", "]"}], 
+             ",", "\"\< (propagated from exact for variance)\>\""}], "]"}], ";",
+            "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            
+            RowBox[{"\"\<                 Bootstrap StandardDeviation std \
+error     = \>\"", ",", 
+             RowBox[{"nfpm5", "[", "sigmaStdDev", "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Skewness (naive)      = \>\"", ",", 
+             RowBox[{"nfpm5", "[", "ske", "]"}], ",", "\"\< \[PlusMinus]\>\"",
+              ",", 
+             RowBox[{"nfpm5", "[", 
+              RowBox[{"standardErrorOfSampleSkewness", "[", "z", "]"}], "]"}],
+              ",", "\"\< (gaussian hypothesis)\>\""}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            
+            RowBox[{"\"\<                 Bootstrap skewness std error   = \>\
+\"", ",", 
+             RowBox[{"nfpm5", "[", "sigmaSkewness", "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Kurtosis (naive)      = \>\"", ",", 
+             RowBox[{"nfpm5", "[", "kur", "]"}], ",", "\"\< \[PlusMinus]\>\"",
+              ",", 
+             RowBox[{"nfpm5", "[", 
+              RowBox[{"standardErrorOfSampleKurtosis", "[", "z", "]"}], "]"}],
+              ",", "\"\< (gaussian hypothesis)\>\""}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            
+            RowBox[{"\"\<                 Bootstrap kurtosis std error   = \>\
+\"", ",", 
+             RowBox[{"nfpm5", "[", "sigmaKurtosis", "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+           RowBox[{"plot$local", "=", 
+            RowBox[{"Histogram", "[", 
+             RowBox[{
+             "z", ",", "bspec", ",", "hspec", ",", "\[IndentingNewLine]", 
+              RowBox[{"Sequence", "@@", 
+               RowBox[{"FilterRules", "[", 
+                RowBox[{
+                 RowBox[{"{", "optsDisplayHistoStats", "}"}], ",", 
+                 RowBox[{"Options", "[", "Histogram", "]"}]}], "]"}]}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Epilog", "->", 
+               RowBox[{"lgdFn", "[", "z", "]"}]}]}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", "plot$local", "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+           "miniBanner", 
+            "[", "\"\<{num, \[Mu], \[Sigma], skew, kurt , sigmaMean, \
+sigmaSigm, sigmaSkew, sigmaKurt, med, medDev}\>\"", "]"}], ";", "\n", 
+           "          ", 
+           RowBox[{"Return", "[", 
+            RowBox[{"{", 
+             RowBox[{"plot$local", ",", "\[IndentingNewLine]", 
+              RowBox[{"{", 
+               RowBox[{
+               "num", ",", "\[Mu]", ",", "\[Sigma]", ",", "ske", ",", "kur", ",",
+                 "  ", "sigmaMean", ",", "  ", "sigmaSigm", "  ", ",", 
+                RowBox[{"standardErrorOfSampleSkewness", "[", "z", "]"}], ",",
+                 " ", 
+                RowBox[{"standardErrorOfSampleKurtosis", "[", "z", "]"}], ",",
+                 "med", ",", "medDev"}], "}"}]}], "\[IndentingNewLine]", 
+             "}"}], "]"}], ";"}]}], "\[IndentingNewLine]", "]"}]}]}], "\n", 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Protect", "[", "displayHistoStats", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}]}]}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellLabel->
+  "7/27/26 20:16:55  \
+In[51]:=",ExpressionUUID->"6ae1b09d-cb34-704c-8546-90fc49603091"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"data", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "7.05", ",", "2.49", ",", "16.09", ",", "21.3", ",", "19.21", ",", 
+     "14.88", ",", "16.41", ",", "0.19", ",", "9.71", ",", "10.18", ",", 
+     "8.81", ",", "2.93", ",", "18.11", ",", "22.2", ",", "9.79", ",", 
+     "14.74", ",", "4.54", ",", "16.76", ",", "8.46", ",", "24.9"}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Print", "[", 
+    RowBox[{"TableForm", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"hdr", ",", 
+        RowBox[{"descriptivestatistics", "[", "data", "]"}]}], "}"}], ",", 
+      RowBox[{"TableAlignments", "->", "Center"}]}], "]"}], "]"}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "bootstrap", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"bootstrap", "[", 
+    RowBox[{"data_", ",", "numSamples_", ",", "func__"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ests", ",", "qBootstrapResult"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"ests", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"func", "[", 
+          RowBox[{"RandomChoice", "[", 
+           RowBox[{"data", ",", 
+            RowBox[{"Length", "[", "data", "]"}]}], "]"}], "]"}], ",", 
+         RowBox[{"{", "numSamples", "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{"Histogram", "[", "ests", "]"}], "]"}], ";"}], "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"qBootstrapResult", "=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Mean", "[", "ests", "]"}], ",", 
+         RowBox[{"StandardDeviation", "[", "ests", "]"}]}], "}"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", "qBootstrapResult", "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellLabel->
+  "7/27/26 20:16:55  \
+In[56]:=",ExpressionUUID->"20a53920-7026-d940-9f01-0da2e35a221d"],
+
+Cell["\<\
+TableForm[{{   #  ,   Min ,   Max ,  Mean , Median, StdDev, Skewn., Kurto.}, \
+{20, 0.19, 24.9, 12.4375, 12.46, 7.054477394944963, -0.03331542185499261, \
+1.9932236898012856}}, TableAlignments -> Center]\
+\>", "Print",
+ CellLabel->
+  "7/27/26 20:16:55 During evaluation of  \
+In[56]:=",ExpressionUUID->"97f24c16-1c41-7842-b6a1-699ef06bd3f7"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", "APPLICATION", " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"BOOTSTRAP", " ", "fit", " ", "parameters"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"numSim", "=", "1000"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"numBoo", "=", "100"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["\[Alpha]", "0"], "=."}], ";", 
+     RowBox[{
+      SubscriptBox["\[Beta]", "0"], "=."}], ";"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Mean", "[", 
+    RowBox[{"GammaDistribution", "[", 
+     RowBox[{
+      SubscriptBox["\[Alpha]", "0"], ",", 
+      SubscriptBox["\[Beta]", "0"]}], "]"}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["\[Alpha]", "0"], "=", "2"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["\[Beta]", "0"], "=", "30"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"PDF", "[", 
+      RowBox[{
+       RowBox[{"GammaDistribution", "[", 
+        RowBox[{
+         SubscriptBox["\[Alpha]", "0"], ",", 
+         SubscriptBox["\[Beta]", "0"]}], "]"}], ",", "x"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "0", ",", 
+       RowBox[{"Quantile", "[", 
+        RowBox[{
+         RowBox[{"GammaDistribution", "[", 
+          RowBox[{
+           SubscriptBox["\[Alpha]", "0"], ",", 
+           SubscriptBox["\[Beta]", "0"]}], "]"}], ",", "0.9"}], "]"}]}], 
+      "}"}]}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"gdata", "=", 
+     RowBox[{"BlockRandom", "[", 
+      RowBox[{
+       RowBox[{"SeedRandom", "[", "1", "]"}], ";", 
+       RowBox[{"RandomVariate", "[", 
+        RowBox[{
+         RowBox[{"GammaDistribution", "[", 
+          RowBox[{
+           SubscriptBox["\[Alpha]", "0"], ",", 
+           SubscriptBox["\[Beta]", "0"]}], "]"}], ",", "numSim"}], "]"}]}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Histogram", "[", "gdata", "]"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"FindDistributionParameters", "[", 
+      RowBox[{"gdata", ",", 
+       RowBox[{"GammaDistribution", "[", 
+        RowBox[{"\[Alpha]", ",", "\[Beta]"}], "]"}]}], "]"}], ";"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"FindDistributionParameters", "[", 
+      RowBox[{
+       RowBox[{"RandomChoice", "[", 
+        RowBox[{"gdata", ",", 
+         RowBox[{"Length", "[", "gdata", "]"}]}], "]"}], ",", 
+       RowBox[{"GammaDistribution", "[", 
+        RowBox[{"\[Alpha]", ",", "\[Beta]"}], "]"}]}], "]"}], ";"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"params", ":=", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", "\[Beta]"}], "}"}], "/.", 
+     RowBox[{"FindDistributionParameters", "[", 
+      RowBox[{
+       RowBox[{"RandomChoice", "[", 
+        RowBox[{"gdata", ",", 
+         RowBox[{"Length", "[", "gdata", "]"}]}], "]"}], ",", 
+       RowBox[{"GammaDistribution", "[", 
+        RowBox[{"\[Alpha]", ",", "\[Beta]"}], "]"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{"ests", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{"params", ",", 
+      RowBox[{"{", "numBoo", "}"}]}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"Map", "[", 
+    RowBox[{"Histogram", ",", 
+     RowBox[{"Transpose", "[", "ests", "]"}]}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Correlation", "[", "ests", "]"}], "//", "MatrixForm"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellChangeTimes->{
+  3.91260597914907*^9, 3.912606015787837*^9, {3.92435427722937*^9, 
+   3.9243542804082794`*^9}, {3.924396001092942*^9, 3.924396014987297*^9}},
+ CellLabel->
+  "7/27/26 20:16:55  \
+In[60]:=",ExpressionUUID->"0e56b95b-646a-1e40-940b-b996defb6254"],
+
+Cell[OutputFormData["\<\
+MatrixForm[{{1.0000000000000007, -0.8802412444698741}, {-0.8802412444698741, \
+1.0000000000000004}}]\
+\>"], "Output",
+ CellLabel->
+  "7/27/26 20:16:58 ",ExpressionUUID->"1ab60949-c78a-a546-8d4e-4ffd4e90b7ad"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"bigBannerHisto", "[", 
+    RowBox[{"w__", ":", "\"\<\>\""}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"Print", "[", "\"\< \\n\\n\\n \>\"", "]"}], ";"}], "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+      "Print", "[", \
+"\"\<*========================================================================\
+==========================*\>\"", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+      "Print", "[", \
+"\"\<*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\
+||||||||||||||||||||||||||*\>\"", "]"}], ";", "\n", "       ", 
+      RowBox[{"Print", "[", 
+       RowBox[{"\"\<***\\n\>\"", ",", "w", ",", "\"\<\\n ***\>\""}], "]"}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{
+      "Print", "[", \
+"\"\<*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*\>\"", "]"}], ";", "\n", "       ", 
+      RowBox[{
+      "Print", "[", \
+"\"\<*========================================================================\
+==========================*\>\"", "]"}], ";"}]}], "\[IndentingNewLine]", 
+    "]"}]}], ";"}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellChangeTimes->{
+  3.91260597914907*^9, 3.912606015787837*^9, {3.924354282315527*^9, 
+   3.924354309848404*^9}},
+ CellLabel->
+  "7/27/26 20:16:58  \
+In[72]:=",ExpressionUUID->"bbc8e24e-45c1-d04f-bc04-074b23ff973e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"===", "===", "==="}], "=", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "==="}], "="}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", "OLD", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"===", "===", "==="}], "=", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "==="}], "="}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Clear", "@", "statsDisplay"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"statsDisplay", "[", 
+      RowBox[{"z0_", ",", 
+       RowBox[{"showOut_", ":", "True"}], ",", 
+       RowBox[{"nBootstrap_", ":", "0"}], ",", 
+       RowBox[{"nBins_", ":", "100"}], ",", 
+       RowBox[{"title_", ":", "\"\<\>\""}]}], "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "num", ",", "cm1", ",", "cm2", ",", "cm3", ",", "cm4", ",", "z", ",", 
+         "sigmaMedian", ",", "sigmaSkewness", ",", "sigmaKurtosis", ",", "nf",
+          ",", "\[Mu]", ",", "\[Sigma]", ",", "sigmaMean", ",", 
+         "sigmaSigma"}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"nf", "[", "z_", "]"}], ":=", 
+         RowBox[{"PaddedForm", "[", 
+          RowBox[{
+           RowBox[{"N", "[", "z", "]"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"10", ",", "6"}], "}"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"num", "=", 
+         RowBox[{"Length", "[", "z0", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"num", "<=", "3"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"Print", "[", 
+            
+            RowBox[{"\"\< ERROR : only ******* \>\"", ",", "num", 
+             ",", "\"\< ******* data: too few for all statistics here\>\""}], 
+            "]"}], ";", 
+           RowBox[{"Return", "[", "]"}]}]}], "\[IndentingNewLine]", "]"}], ";",
+         "\[IndentingNewLine]", 
+        RowBox[{"z", " ", "=", " ", 
+         RowBox[{"N", "[", "z0", "]"}]}], ";", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Make", " ", "z", " ", 
+          RowBox[{
+           RowBox[{"Real", " ", "!!"}], "!"}]}], " ", "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"\[Mu]", "=", 
+         RowBox[{"cm1", "=", 
+          RowBox[{"Mean", "[", "z", "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"\[Sigma]", "=", 
+         RowBox[{"cm2", "=", 
+          RowBox[{"StandardDeviation", "[", "z", "]"}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"cm3", "=", 
+         RowBox[{"CentralMoment", "[", 
+          RowBox[{"z", ",", "3"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"cm4", "=", 
+         RowBox[{"CentralMoment", "[", 
+          RowBox[{"z", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"sigmaMean", "=", 
+         RowBox[{"\[Sigma]", "/", 
+          RowBox[{"\[Sqrt]", "num"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"sigmaSigma", "=", 
+         RowBox[{"\[Sqrt]", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"1", "/", 
+              RowBox[{"(", 
+               RowBox[{"4", "*", "num", "*", 
+                SuperscriptBox["\[Sigma]", "2"]}], ")"}]}], ")"}], "*", 
+            RowBox[{"(", 
+             RowBox[{"cm4", "-", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{"num", "-", "3"}], ")"}], "/", 
+                 RowBox[{"(", 
+                  RowBox[{"num", "-", "1"}], ")"}]}], ")"}], 
+               SuperscriptBox["\[Sigma]", "4"]}]}], " ", ")"}]}], ")"}]}]}], ";",
+         "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"nBootstrap", ">", "0"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"sigmaMedian", "=", 
+            RowBox[{"bootstrap", "[", 
+             RowBox[{"z", ",", "nBootstrap", ",", "Median"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"sigmaSkewness", "=", 
+            RowBox[{"bootstrap", "[", 
+             RowBox[{"z", ",", "nBootstrap", ",", "Skewness"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"sigmaKurtosis", "=", 
+            RowBox[{"bootstrap", "[", 
+             RowBox[{"z", ",", "nBootstrap", ",", "Kurtosis"}], "]"}]}]}], 
+          "\[IndentingNewLine]", ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"sigmaMedian", "=", 
+            RowBox[{"-", "1"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"sigmaSkewness", "=", 
+            RowBox[{"-", "1"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"sigmaKurtosis", "=", 
+            RowBox[{"-", "1"}]}]}]}], "\[IndentingNewLine]", "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"showOut", "\[Equal]", "True"}], "\[IndentingNewLine]", ",",
+           "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+           "miniBanner", 
+            "[", "\"\< Histogram statistics summary --- !!! Assume at least 5 \
+data elements OR die !!! \>\"", "]"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  # f data  =   \>\"", ",", "num"}], "]"}], ";",
+            "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  Mean      = \>\"", ",", 
+             RowBox[{"nf", "[", "\[Mu]", "]"}], ",", "\"\< \[PlusMinus] \>\"",
+              ",", 
+             RowBox[{"nf", "[", "sigmaMean", "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  StdDev    = \>\"", ",", 
+             RowBox[{"nf", "[", "\[Sigma]", "]"}], 
+             ",", "\"\< \[PlusMinus] \>\"", ",", 
+             RowBox[{"nf", "[", "sigmaSigma", "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  Var       = \>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"\[Sigma]", "^", "2"}], "]"}], 
+             ",", "\"\< \[PlusMinus] \>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"2", "*", "\[Sigma]", "*", "sigmaSigma"}], "]"}]}], 
+            "]"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  Min       = \>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"Min", "[", "z", "]"}], "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  Max       = \>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"Max", "[", "z", "]"}], "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  Range     = \>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{
+               RowBox[{"Max", "[", "z", "]"}], "-", 
+               RowBox[{"Min", "[", "z", "]"}]}], "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  Sq. RMS   = \>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"Max", "[", "z", "]"}], "-", 
+                 RowBox[{"Min", "[", "z", "]"}]}], ")"}], "/", 
+               RowBox[{"Sqrt", "[", "12", "]"}]}], "]"}]}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  median    = \>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"Median", "[", "z", "]"}], "]"}], 
+             ",", "\"\< \[PlusMinus]\>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"standardErrorOfSampleMedian", "[", "z", "]"}], "]"}], 
+             ",", "\"\< (gaussian hypothesis)\>\""}], "]"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"nBootstrap", ">", "0"}], ",", 
+             RowBox[{"Print", "[", 
+              
+              RowBox[{"\"\<                 Bootstrap median StdErr     =\>\"",
+                ",", 
+               RowBox[{"nf", "[", "sigmaMedian", "]"}]}], "]"}]}], "]"}], ";",
+            "\[IndentingNewLine]", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  skewness (naive)      = \>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"sampleSkewness", "[", "z", "]"}], "]"}], 
+             ",", "\"\< \[PlusMinus]\>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"standardErrorOfSampleSkewness", "[", "z", "]"}], "]"}],
+              ",", "\"\< (gaussian hypothesis)\>\""}], "]"}], ";", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"nBootstrap", ">", "0"}], ",", 
+             RowBox[{"Print", "[", 
+              
+              RowBox[{"\"\<                 Bootstrap skewness StdErr   =\>\"",
+                ",", 
+               RowBox[{"nf", "[", "sigmaSkewness", "]"}]}], "]"}]}], "]"}], ";", 
+           RowBox[{"Print", "[", 
+            RowBox[{"\"\< Stats :  kurtosis (naive)      = \>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"sampleKurtosis", "[", "z", "]"}], "]"}], 
+             ",", "\"\< \[PlusMinus]\>\"", ",", 
+             RowBox[{"nf", "[", 
+              RowBox[{"standardErrorOfSampleKurtosis", "[", "z", "]"}], "]"}],
+              ",", "\"\< (gaussian hypothesis)\>\""}], "]"}], ";", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"nBootstrap", ">", "0"}], ",", 
+             RowBox[{"Print", "[", 
+              
+              RowBox[{"\"\<                 Bootstrap kurtosis StdErr   =\>\"",
+                ",", 
+               RowBox[{"nf", "[", "sigmaKurtosis", "]"}]}], "]"}]}], 
+            "]"}]}]}], 
+         StyleBox["\[IndentingNewLine]",
+          FontFamily->"Courier New",
+          FontWeight->"Bold",
+          FontColor->GrayLevel[0]], "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Show", "[", 
+         RowBox[{"Histogram", "[", 
+          RowBox[{
+           RowBox[{"Flatten", "[", "z", "]"}], ",", "nBins", ",", 
+           RowBox[{"PlotLabel", "->", "title"}]}], "]"}], "]"}]}]}], 
+      "\[IndentingNewLine]", "]"}]}], ";"}]}]}]], "Input",
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellLabel->
+  "7/27/26 20:16:58  \
+In[73]:=",ExpressionUUID->"efe204d6-d9b7-4c45-8e74-679804b48ecb"],
+
+Cell[CellGroupData[{
+
+Cell["error propagation formulas", "Subsection",
+ InitializationCell->
+  True,ExpressionUUID->"79dddf27-2bce-3d4d-b4c3-c27e12bd79ec"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"varlist", "=", 
+     RowBox[{"ToExpression", "[", "variables", "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"funct", "=", 
+     RowBox[{"ToExpression", "[", "function", "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"errorFunction", "[", 
+     RowBox[{"variables", ",", "function"}], "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{"variables", ",", "\"\<{M,m}\>\""}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"function", ",", "\"\<g*(M-m)/(M+m)\>\""}], "}"}], ",", 
+   RowBox[{"LabelStyle", "->", 
+    RowBox[{"{", 
+     RowBox[{"FontSize", "->", "17"}], "}"}]}], ",", 
+   RowBox[{"AutoAction", "->", "False"}], ",", 
+   RowBox[{"Initialization", ":>", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"errorFunction", "[", 
+       RowBox[{"v_", ",", "theFunc_"}], "]"}], ":=", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"varlist", "=", 
+         RowBox[{"ToExpression", "[", "v", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"funct", "=", 
+         RowBox[{"ToExpression", "[", "theFunc", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"varlength", "=", 
+         RowBox[{"Length", "[", 
+          RowBox[{"Variables", "[", "varlist", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"theoretical", "=", 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{"(", 
+           RowBox[{"Total", "[", 
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"D", "[", 
+                  RowBox[{"funct", ",", 
+                   RowBox[{"Part", "[", 
+                    RowBox[{"varlist", ",", "n"}], "]"}]}], "]"}], "*", 
+                 RowBox[{"Subscript", "[", 
+                  RowBox[{"U", ",", 
+                   RowBox[{"Part", "[", 
+                    RowBox[{"varlist", ",", "n"}], "]"}]}], "]"}]}], ")"}], "^",
+                "2"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"n", ",", "1", ",", "varlength"}], "}"}]}], "]"}], 
+            "]"}], ")"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Part", "[", 
+         RowBox[{"theoretical", ",", "1"}], "]"}], ";", "\[IndentingNewLine]",
+         "varlist", ";", "\[IndentingNewLine]", 
+        RowBox[{"uncert", "=", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"Subscript", "[", 
+            RowBox[{"U", ",", 
+             RowBox[{"Part", "[", 
+              RowBox[{"varlist", ",", "n"}], "]"}]}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"n", ",", "1", ",", "varlength"}], "}"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"uncert", "=", 
+         RowBox[{"DeleteCases", "[", 
+          RowBox[{"uncert", ",", 
+           RowBox[{"Alternatives", "@@", 
+            RowBox[{"{", "0", "}"}]}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"theoretical", "=", 
+         RowBox[{"Simplify", "[", "theoretical", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Column", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Row", "[", 
+            RowBox[{"{", 
+             RowBox[{"Grid", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"\"\<Variables\>\"", ",", "varlist"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"\"\<Uncertainties\>\"", ",", "uncert"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"\"\<Function\>\"", ",", "function"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  
+                  RowBox[{"\"\<Uncertainty Function\>\"", ",", 
+                   "theoretical"}], "}"}]}], "}"}], ",", 
+               RowBox[{"Alignment", "->", "Left"}], ",", 
+               RowBox[{"Spacings", "->", 
+                RowBox[{"{", 
+                 RowBox[{"2", ",", "1"}], "}"}]}], ",", 
+               RowBox[{"Frame", "->", "All"}], ",", 
+               RowBox[{"ItemStyle", "->", 
+                RowBox[{"{", 
+                 RowBox[{"\"\<Text\>\"", ",", 
+                  RowBox[{"FontSize", "->", "20"}]}], "}"}]}], ",", 
+               RowBox[{"Background", "->", 
+                RowBox[{"{", 
+                 RowBox[{"{", 
+                  RowBox[{"LightGray", ",", "None"}], "}"}], "}"}]}]}], "]"}],
+              "}"}], "]"}], ",", 
+           RowBox[{"Row", "[", 
+            RowBox[{"{", 
+             RowBox[{"Grid", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"{", "\"\<Brian Gennow  March/24/2015\>\"", "}"}], 
+                "}"}], ",", 
+               RowBox[{"Alignment", "->", "Left"}], ",", 
+               RowBox[{"Spacings", "->", 
+                RowBox[{"{", 
+                 RowBox[{"2", ",", "1"}], "}"}]}], ",", 
+               RowBox[{"ItemStyle", "->", "\"\<Text\>\""}], ",", 
+               RowBox[{"Background", "->", 
+                RowBox[{"{", 
+                 RowBox[{"{", "None", "}"}], "}"}]}]}], "]"}], "}"}], "]"}]}],
+           "}"}], "]"}]}], ")"}]}], ")"}]}]}], "]"}]], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:58  \
+In[75]:=",ExpressionUUID->"96186660-d9ff-8a43-9666-0f379dfb2b42"],
+
+Cell[OutputFormData["\<\
+Manipulate[varlist = ToExpression[variables]; funct = ToExpression[function]; \
+errorFunction[variables, function], {variables, {M,m}}, {function, \
+g*(M-m)/(M+m)}, LabelStyle -> {FontSize -> 17}, AutoAction -> False, \
+Initialization :> (errorFunction[v_, theFunc_] := (varlist = ToExpression[v]; \
+funct = ToExpression[theFunc]; varlength = Length[Variables[varlist]]; \
+theoretical = Sqrt[Total[Table[(D[funct, varlist[[n]]]*Subscript[U, \
+varlist[[n]]])^2, {n, 1, varlength}]]]; theoretical[[1]]; varlist; uncert = \
+Table[Subscript[U, varlist[[n]]], {n, 1, varlength}]; uncert = \
+DeleteCases[uncert, Alternatives @@ {0}]; theoretical = \
+Simplify[theoretical]; Column[{Grid[{{Variables, varlist}, {Uncertainties, \
+uncert}, {Function, function}, {Uncertainty Function, theoretical}}, \
+Alignment -> Left, Spacings -> {2, 1}, Frame -> All, ItemStyle -> {Text, \
+FontSize -> 20}, Background -> {{LightGray, None}}], Grid[{{Brian Gennow  \
+March/24/2015}}, Alignment -> Left, Spacings -> {2, 1}, ItemStyle -> Text, \
+Background -> {{None}}]}]))]\
+\>"], "Output",
+ CellLabel->
+  "7/27/26 20:16:58 ",ExpressionUUID->"37f2c6b3-f325-cc4b-853c-76b077311082"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "errorProp", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"errorProp", "[", 
+    RowBox[{"func_", ",", "vars_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"derivs", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{"0", ",", 
+          RowBox[{"{", 
+           RowBox[{"Length", "[", "vars", "]"}], "}"}]}], "]"}]}], ",", 
+       "funcErrorForm", ",", "funcEval", ",", "funcErrorEval", ",", 
+       "rplcVals", ",", "rplcErrors"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"For", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"ii", "=", "1"}], ",", 
+         RowBox[{"ii", "<=", 
+          RowBox[{"Length", "[", "vars", "]"}]}], ",", 
+         RowBox[{"ii", "++"}], ",", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"derivs", "[", 
+            RowBox[{"[", "ii", "]"}], "]"}], "=", 
+           RowBox[{"D", "[", 
+            RowBox[{"func", ",", 
+             RowBox[{"vars", "[", 
+              RowBox[{"[", 
+               RowBox[{"ii", ",", "1"}], "]"}], "]"}]}], "]"}]}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";"}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Table", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"derivs", "[", 
+          RowBox[{"[", "ii", "]"}], "]"}], "=", 
+         RowBox[{"D", "[", 
+          RowBox[{"func", ",", 
+           RowBox[{"vars", "[", 
+            RowBox[{"[", 
+             RowBox[{"ii", ",", "1"}], "]"}], "]"}]}], "]"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"ii", ",", "1", ",", 
+          RowBox[{"Length", "[", "vars", "]"}]}], "}"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"funcErrorForm", "=", 
+       RowBox[{"Sqrt", "[", 
+        RowBox[{"Sum", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"derivs", "[", 
+              RowBox[{"[", "ii", "]"}], "]"}], "*", 
+             RowBox[{"vars", "[", 
+              RowBox[{"[", 
+               RowBox[{"ii", ",", "3"}], "]"}], "]"}]}], ")"}], "^", "2"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"ii", ",", 
+            RowBox[{"Length", "[", "vars", "]"}]}], "}"}]}], "]"}], "]"}]}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{"SetAttributes", "[", 
+       RowBox[{"rplcVals", ",", "Listable"}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"rplcVals", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"vars", "[", 
+            RowBox[{"[", 
+             RowBox[{"ii", ",", "1"}], "]"}], "]"}], "]"}], ":>", 
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"vars", "[", 
+            RowBox[{"[", 
+             RowBox[{"ii", ",", "2"}], "]"}], "]"}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"ii", ",", 
+           RowBox[{"Length", "[", "vars", "]"}]}], "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"SetAttributes", "[", 
+       RowBox[{"rplcErrors", ",", "Listable"}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"rplcErrors", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"vars", "[", 
+            RowBox[{"[", 
+             RowBox[{"ii", ",", "3"}], "]"}], "]"}], "]"}], ":>", 
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"vars", "[", 
+            RowBox[{"[", 
+             RowBox[{"ii", ",", "4"}], "]"}], "]"}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"ii", ",", 
+           RowBox[{"Length", "[", "vars", "]"}]}], "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"funcEval", "=", 
+       RowBox[{"func", "/.", " ", "rplcVals"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"funcErrorEval", "=", 
+       RowBox[{
+        RowBox[{"funcErrorForm", "/.", " ", "rplcVals"}], "/.", " ", 
+        "rplcErrors"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", 
+       RowBox[{"{", 
+        RowBox[{"funcErrorForm", ",", "funcEval", ",", "funcErrorEval"}], 
+        "}"}], "]"}], ";"}]}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:58  \
+In[76]:=",ExpressionUUID->"2783cee3-1a83-5547-a5ee-fd6059cf6c6d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"dx", ",", "dy", ",", "x", ",", "y"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"ClearAll", "[", "test", "]"}], ";", "\n", 
+     RowBox[{"test", "=", 
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"Sqrt", "[", 
+         RowBox[{"1", "/", "y"}], "]"}], "-", 
+        RowBox[{"x", "/", "y"}]}], "]"}]}], ";", "\n", 
+     RowBox[{"errorProp", "[", 
+      RowBox[{"test", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"x", ",", "0.3", ",", "dx", ",", "0.005"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"y", ",", "0.9", ",", "dy", ",", "0.1"}], "}"}]}], "}"}]}], 
+      "]"}]}]}], "\[IndentingNewLine]", "]"}], "*)"}]], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:58  \
+In[78]:=",ExpressionUUID->"3f5fa38e-3900-514b-b85f-e256bac249d9"],
+
+Cell[CellGroupData[{
+
+Cell["END", "Subtitle",
+ CellGroupingRules->{"GroupTogetherGrouping", 10001.},
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellChangeTimes->{3.753249653300557*^9, 3.753249980600159*^9, 
+  3.912606015787837*^9, 
+  3.9460381113887672`*^9},ExpressionUUID->"fb7c0151-9747-244a-881f-\
+3ae8b4d0fa16"],
+
+Cell[BoxData[
+ RowBox[{"EndPackage", "[", "]"}]], "Input",
+ CellGroupingRules->{"GroupTogetherGrouping", 10001.},
+ InitializationCell->True,
+ InitializationGroup->True,
+ CellChangeTimes->{
+  3.912606015787837*^9, {3.9459484577774925`*^9, 3.9459484601987457`*^9}, {
+   3.946028063118599*^9, 3.9460280670680103`*^9}, 3.9460381113887672`*^9},
+ CellLabel->
+  "7/27/26 20:16:58  \
+In[79]:=",ExpressionUUID->"64561325-a965-4a47-b1f0-4a412bda95f6"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"checkNewCreatedSymbols", "[", "]"}]], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:58  \
+In[80]:=",ExpressionUUID->"0a117ab4-b927-7846-b15a-9b42f50f0eb8"],
+
+Cell[OutputFormData["\<\
+{}\
+\>"], "Output",
+ CellLabel->
+  "7/27/26 20:16:58 ",ExpressionUUID->"1694e58c-faae-4543-954b-dc03a639c903"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"endEvalPrintOut", "[", "]"}], ";"}]], "Input",
+ InitializationCell->True,
+ CellLabel->
+  "7/27/26 20:16:58  \
+In[81]:=",ExpressionUUID->"5baca67c-a09e-a749-9e23-4aa3c27f0fde"],
+
+Cell["\<\
+==============================================================================\
+====================
+==============================================================================\
+====================
+  endEvalPrintOut 
+==============================================================================\
+====================
+==============================================================================\
+====================
+ timeStamp            ===>>>   -D260727T201658
+------------------------------------------------------------------------------\
+--------------------
+ Cells[MSG,Message}]      ===>>> 
+{CellObject[5057], CellObject[5073]}
+------------------------------------------------------------------------------\
+--------------------
+ $Context                 ===>>>  Validation`Private`
+------------------------------------------------------------------------------\
+--------------------
+ $ContextPath             ===>>>  Column[{statDataAnal`, myNotebookInit`, \
+OpticaDocumentation`, System`, Global`}]
+------------------------------------------------------------------------------\
+--------------------
+ checkNewCreatedSymbols   ===>>>  {}
+------------------------------------------------------------------------------\
+--------------------
+No loads recorded.\
+\>", "Print",
+ CellLabel->
+  "7/27/26 20:16:58 During evaluation of  \
+In[81]:=",ExpressionUUID->"f2d44600-d957-b247-833a-9413512d7f3a"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+AutoGeneratedPackage->Automatic,
+InitializationCellEvaluation->False,
+InitializationCellWarning->False,
+CellGrouping->Automatic,
+WindowSize->{949, 512},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowTitle->" ------- C:\\Users\\Ale\\My Drive\\allRICHWMMA\\statDataAnal.nb",
+Visible->False,
+DockedCells->{
+  Cell[
+   BoxData[
+    TagBox[
+     GridBox[{{
+        ItemBox[
+         TemplateBox[{
+           TemplateBox[{10}, "Spacer1"], 
+           StyleBox[
+           "\"\"", 8, Bold, FontFamily -> "Helvetica", StripOnInput -> False], 
+           StyleBox[
+           "\"\"", 8, Bold, FontFamily -> "Helvetica", StripOnInput -> 
+            False]}, "RowWithSeparator"], Alignment -> Left, StripOnInput -> 
+         False], 
+        ItemBox[
+         InterpretationBox[
+          GridBox[{{
+             ButtonBox[
+              StyleBox["\"Evl Cel\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["EvaluateCells"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingRight"}, Evaluator -> 
+              Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"GTo Evl Cel\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["FindEvaluatingCell"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Sel All\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["SelectAll"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Clo All Sel\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> 
+              FrontEndTokenExecute["SelectionCloseAllGroups"], FrameMargins -> 
+              3, Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+              Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Opn All Sel\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> 
+              FrontEndTokenExecute["SelectionOpenAllGroups"], FrameMargins -> 
+              3, Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+              Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Cel Grp\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["CellGroup"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Sav\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["Save"], FrameMargins -> 
+              3, Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+              Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Evl Ini Cel\"", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+              ButtonFunction :> 
+              FrontEndTokenExecute["EvaluateInitialization"], FrameMargins -> 
+              3, Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+              Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Evl Ntb\"", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["EvaluateNotebook"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Del All Out\"", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["DeleteGeneratedCells"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Cel Mrg\"", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["CellMerge"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Abort\"", 10, FontColor -> RGBColor[1, 0, 0], Bold, 
+               Background -> RGBColor[1, 0.85, 0.85], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["EvaluatorAbort"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Quit\"", 10, FontColor -> RGBColor[1, 0, 0], Bold, 
+               Background -> RGBColor[1, 0.85, 0.85], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["EvaluatorQuit"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeft"}, Evaluator -> 
+              Automatic, Method -> "Preemptive"]}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+           ColumnSpacings -> 0], 
+          ButtonBar[{Style["Evl Cel", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> 
+            FrontEndTokenExecute["EvaluateCells"], 
+            Style["GTo Evl Cel", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> 
+            FrontEndTokenExecute["FindEvaluatingCell"], 
+            Style["Sel All", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute["SelectAll"], 
+            Style["Clo All Sel", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> 
+            FrontEndTokenExecute["SelectionCloseAllGroups"], 
+            Style["Opn All Sel", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> 
+            FrontEndTokenExecute["SelectionOpenAllGroups"], 
+            Style["Cel Grp", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute["CellGroup"], 
+            Style["Sav", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute["Save"], 
+            Style["Evl Ini Cel", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+              Background -> RGBColor[1, 0.9, 0.8]] :> 
+            FrontEndTokenExecute["EvaluateInitialization"], 
+            Style["Evl Ntb", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+              Background -> RGBColor[1, 0.9, 0.8]] :> 
+            FrontEndTokenExecute["EvaluateNotebook"], 
+            Style["Del All Out", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+              Background -> RGBColor[1, 0.9, 0.8]] :> 
+            FrontEndTokenExecute["DeleteGeneratedCells"], 
+            Style["Cel Mrg", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+              Background -> RGBColor[1, 0.9, 0.8]] :> 
+            FrontEndTokenExecute["CellMerge"], 
+            Style["Abort", 10, FontColor -> RGBColor[1, 0, 0], Bold, 
+              Background -> RGBColor[1, 0.85, 0.85]] :> 
+            FrontEndTokenExecute["EvaluatorAbort"], 
+            Style["Quit", 10, FontColor -> RGBColor[1, 0, 0], Bold, 
+              Background -> RGBColor[1, 0.85, 0.85]] :> 
+            FrontEndTokenExecute["EvaluatorQuit"]}, FrameMargins -> 3, 
+           Appearance -> {Automatic}]], Alignment -> Right, StripOnInput -> 
+         False]}}, AutoDelete -> False, GridBoxItemSize -> {"Columns" -> {
+          Scaled[0.3], 
+          Scaled[0.7]}}], "Grid"]], "DockedCell", Background -> 
+   RGBColor[1, 0.992, 0.866]]},
+PrivateNotebookOptions->{"FileOutlineCache"->False,
+"SafeFileOpen"->"IgnoreCache"},
+OutputSizeLimit->1000000,
+CellProlog:>SelectionMove[
+  EvaluationCell[], All, Cell],
+CellEpilog:>SelectionMove[
+  EvaluationNotebook[], Next, Cell],
+DynamicUpdating->True,
+ShowCellLabel->False,
+AutoMultiplicationSymbol->True,
+"NotebookPersistence"-><|"Hashes/Once/FqeNo654-3D" -> <|"HeldValue" -> Hold[
+      Hold[Null]], "CreationDate" -> 3.9504593867901356`17.34922259049462*^9, 
+    "Creator" -> "Ale", "ModificationDate" -> 
+    3.9504593867901356`17.34922259049462*^9, "LanguageVersion" -> 14.2, 
+    "ValuePreprocessingFunction" -> Identity|>|>,
+Magnification->Rational[3, 4],
+Background->RGBColor[0.88, 1, 0.88],
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "myStyle.nb"]], 
+   Cell[
+    StyleData["Title"], CellGroupingRules -> {"SectionGrouping", 0}, FontSize -> 
+    28], 
+   Cell[
+    StyleData["Subtitle"], CellGroupingRules -> {"SectionGrouping", 10}, 
+    FontSize -> 26], 
+   Cell[
+    StyleData["Subsubtitle"], CellGroupingRules -> {"SectionGrouping", 20}, 
+    FontSize -> 24], 
+   Cell[
+    StyleData["Chapter"], CellGroupingRules -> {"SectionGrouping", 30}, 
+    FontSize -> 22], 
+   Cell[
+    StyleData["Section"], CellGroupingRules -> {"SectionGrouping", 40}, 
+    FontSize -> 20], 
+   Cell[
+    StyleData["Subsection"], CellGroupingRules -> {"SectionGrouping", 50}, 
+    FontSize -> 18], 
+   Cell[
+    StyleData["Subsubsection"], CellGroupingRules -> {"SectionGrouping", 60}, 
+    FontSize -> 16], 
+   Cell[
+    StyleData["Code"], CellGroupingRules -> {"SectionGrouping", 90}, FontSize -> 
+    14], 
+   Cell[
+    StyleData["Input"], CellGroupingRules -> {"SectionGrouping", 90}, 
+    FontSize -> 14], 
+   Cell[
+    StyleData["Text"], CellGroupingRules -> {"SectionGrouping", 90}, FontSize -> 
+    12], 
+   Cell[
+    StyleData["Output"], CellGroupingRules -> {"SectionGrouping", 90}, 
+    FontSize -> 14], 
+   Cell[
+    StyleData["Message"], CellGroupingRules -> {"SectionGrouping", 92}, 
+    FontSize -> 12], 
+   Cell[
+    StyleData["ExampleText"], CellGroupingRules -> {"SectionGrouping", 91}, 
+    FontSize -> 12]}, Visible -> False, FrontEndVersion -> 
+  "15.0 for Microsoft Windows (64-bit) (July 2, 2026)", StyleDefinitions -> 
+  "Default.nb"],
+ExpressionUUID->"15356906-d3a4-2940-a507-e78e8ec72fca"
+]
+

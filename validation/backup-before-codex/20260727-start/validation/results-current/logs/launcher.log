@@ -1,0 +1,10 @@
+﻿Wolfram validation launcher
+[2026-07-27 12:46:11] Project root: C:\Users\Ale\OneDrive - unige.it\Documenti\WolframMMAProjectRICH-Git\_new\WolframMMAProjectRICH-Git-restructured-validation\WolframMMAProjectRICH-Git-restructured-validation
+[2026-07-27 12:46:11] Cases: base
+[2026-07-27 12:46:11] Wolfram executable: C:\Program Files\Wolfram Research\Wolfram\15.0\wolfram.exe
+[2026-07-27 12:46:11] Creating validation workspace: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-8134146fa11b4bdd9bf0647d04e902ce
+[2026-07-27 12:46:12] Workspace copy completed: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-8134146fa11b4bdd9bf0647d04e902ce
+[2026-07-27 12:46:12] Invocation mode: standalone kernel (-script)
+[2026-07-27 12:46:12] Starting: C:\Program Files\Wolfram Research\Wolfram\15.0\wolfram.exe -script C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-8134146fa11b4bdd9bf0647d04e902ce\validation\RegenerateSources.wls C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-8134146fa11b4bdd9bf0647d04e902ce base
+[2026-07-27 12:46:12] Started PID 43628; hard timeout 300 seconds
+[2026-07-27 12:46:18] PID 43628 exited with code 5

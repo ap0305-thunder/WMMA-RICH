@@ -1,0 +1,37 @@
+Regenerating C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\src\CellStyleDataRules.wl
+  selected initialization Input/Code cells: 9
+  imported held expressions: 9
+  parsed expressions in generated file: 20
+Regenerating C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\src\base.wl
+  selected initialization Input/Code cells: 69
+  imported held expressions: 69
+  parsed expressions in generated file: 140
+Regenerating C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\src\physics-general.wl
+  selected initialization Input/Code cells: 16
+  imported held expressions: 16
+  parsed expressions in generated file: 34
+Regenerating C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\src\statDataAnal.wl
+  selected initialization Input/Code cells: 25
+  imported held expressions: 25
+  parsed expressions in generated file: 52
+Regenerating C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\src\inputDataForRICH.wl
+  selected initialization Input/Code cells: 112
+  imported held expressions: 112
+  parsed expressions in generated file: 226
+Regenerating C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\src\calculator-reboot.wl
+  selected initialization Input/Code cells: 38
+  imported held expressions: 38
+  parsed expressions in generated file: 78
+Regenerating C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\src\RICH.wl
+  selected initialization Input/Code cells: 62
+  imported held expressions: 62
+  parsed expressions in generated file: 126
+  CellStyleDataRules.wl: 9 cells, 9 expressions
+  base.wl: 69 cells, 69 expressions
+  physics-general.wl: 16 cells, 16 expressions
+  statDataAnal.wl: 25 cells, 25 expressions
+  inputDataForRICH.wl: 112 cells, 112 expressions
+  calculator-reboot.wl: 38 cells, 38 expressions
+  RICH.wl: 62 cells, 62 expressions
+Source regeneration completed successfully.
+__WOLFRAM_EXIT_CODE__=0

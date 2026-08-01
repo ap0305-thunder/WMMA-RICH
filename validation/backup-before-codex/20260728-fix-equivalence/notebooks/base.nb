@@ -1,0 +1,524 @@
+Notebook[{
+Cell["This working notebook loads executable definitions from src/LoadProject.wl. The original notebook, including its initialization cells, is preserved under legacy-original/.", "Text", Background->RGBColor[0.92,0.97,1.0]],
+
+Cell[BoxData[RowBox[{"Get", "[", RowBox[{"FileNameJoin", "[", RowBox[{"{", RowBox[{RowBox[{"ParentDirectory", "[", RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ",", "\"src\"", ",", "\"LoadProject.wl\""}], "}"}], "]"}], "]", ";"}]], "Input", InitializationCell->True],
+
+Cell["\<\
+This package/notebook defines several tools of Mathematica/Wolfram which I \
+find useful and/or use later.\
+\>",
+ "Text",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"47093f00-4721-ad47-9f3e-7ac46e9da01e"],
+
+Cell[CellGroupData[{
+Cell["SETUP",
+ "Title",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"61e6a8ec-a857-184a-a052-e03584b605f0"],
+
+Cell[CellGroupData[{
+Cell["SETUP",
+ "Subtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"df255c23-88c2-854b-a2b9-7c9ba9fb7bf6"],
+
+Cell["Additional general settings for any (complex) notebook",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->True,
+ CellTags->
+  "Notebook settings --- general settings for any \
+notebook",
+ ExpressionUUID->"51cda1e8-b15f-7347-bec1-b61d56b3dabe"]
+},Closed]]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["BASE",
+ "Title",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"a5d86393-b9c5-b94b-888c-f0c88d9c24d6"],
+
+Cell[CellGroupData[{
+Cell["INIT PACKAGE",
+ \
+"Subtitle",
+ ExpressionUUID->"83797704-cc91-8d4d-b6b0-912d3f555110"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["START",
+ "Subtitle",
+ InitializationCell->False,
+ InitializationGroup->True,
+ CellTags->
+  ">>> START \
+INITIALIZATION",
+ ExpressionUUID->"4a9d78b3-1177-004a-85be-61b12deac765"],
+
+Cell[CellGroupData[{
+Cell["INIT",
+ "Section",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"5f16d989-d485-5c4e-b48d-eda72b98a8f3"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["MESSAGES",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"1f72453a-baba-2f47-8ea0-ed06ac9222ef"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["SYSTEM Setup",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"c94c0195-07b0-974b-800f-8002020328d2"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["MATHEMATICA setup",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"40e4dca9-5964-9648-abf1-20bfa7574c3e"],
+
+Cell[CellGroupData[{
+Cell["general tools for variables management",
+ "Subsection",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"07be7cd9-abf0-a84c-8cdb-2dec9e313d21"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["error propagation formulas",
+ "Subsection",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"8e53b68a-0b03-6040-8ec3-9c0b7a91bd3a"]
+},Closed]]
+},Closed]]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["GENERAL",
+ "Subtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"d5350682-8f81-fb4c-8dc8-ee734e47623c"],
+
+Cell[CellGroupData[{
+Cell["DEBUG",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"958d99a8-c4a6-a045-9970-d7fcef2d20fe"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["WOLFRAM MATHEMATICA workings",
+ "Subsubtitle",
+ InitializationCell->False,
+ $CellContext`InitializationGroup -> 
+ True,
+ ExpressionUUID->"fe98d707-eb46-a74e-a803-01262a5a38d7"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["pretty print",
+ "Subsubtitle",
+ InitializationCell->False,
+ ExpressionUUID->"d80c78d5-6e04-7c45-a0ec-1e6213959c49"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["RE-WRITE EXPRESSIONS",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"97e0d1aa-b77e-2945-ab88-e3008bf518b0"]
+},Closed]]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["useful tools",
+ "Subtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"6dd6fbd0-1ba0-c748-9968-95996de04b7a"],
+
+Cell["styles",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->True,
+ CellTags->{
+  "i:3", "i:4"},
+ ExpressionUUID->"9e0d6a32-7a05-0e40-a6fc-800ae882cb0e"],
+
+Cell[CellGroupData[{
+Cell["RunScheduledTask",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"840fc3b1-8c6f-0f4c-b090-2e1181261a14"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["MergeAppendNotebooks",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->True,
+ CellTags->{
+  "MergeAppendNotebooks", "i:3", 
+   "i:4"},
+ ExpressionUUID->"2c570dac-3c6b-431d-9e02-012012a5b749"],
+
+Cell["TO CHECK",
+ "Text",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"eb87c476-0390-a24f-ab00-6ccde4e17d13"]
+},Closed]]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["MATHEMATICAL FUNCTIONS",
+ "Subtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"c7727c79-b03e-2a46-bef9-038b4721c1d0"],
+
+Cell[CellGroupData[{
+Cell["numbers formatting",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"11acaa64-ac90-0642-8b31-881e66a2d387"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["vector/matrix/tensor operations",
+ "Subsubtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"c938990c-6b62-b643-8d6a-5e65c832204b"]
+},Closed]]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["text",
+ "Subtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"8f4eb001-7e6d-8d4a-95cf-3be8ed4eeeeb"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["MISCELLANEA // TO BE SORTED",
+ "Subtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"bbd6be30-7fdf-cb4e-a036-783ff11c2389"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["BaseNew - latest additions TO DOUBLE CHECK",
+ "Subtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"de9d7604-b5ef-7e41-af40-22a7148e63ab"]
+},Closed]],
+
+Cell[CellGroupData[{
+Cell["END PACKAGE",
+ "Subtitle",
+ InitializationCell->False,
+ InitializationGroup->
+  True,
+ ExpressionUUID->"e81c2820-8cc3-4148-9285-b2babb319e9a"]
+},Closed]]
+},Closed]]
+},
+AutoGeneratedPackage->Automatic,
+InitializationCellEvaluation->False,
+InitializationCellWarning->False,
+WindowSize->{949, 497},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowTitle->" ------- C:\\Users\\Ale\\My Drive\\allRICHWMMA\\base.nb",
+WindowStatusArea->"",
+DockedCells->{
+  Cell[
+   BoxData[
+    TagBox[
+     GridBox[{{
+        ItemBox[
+         TemplateBox[{
+           TemplateBox[{10}, "Spacer1"], 
+           StyleBox[
+           "\"\"", 8, Bold, FontFamily -> "Helvetica", StripOnInput -> False], 
+           StyleBox[
+           "\"\"", 8, Bold, FontFamily -> "Helvetica", StripOnInput -> 
+            False]}, "RowWithSeparator"], Alignment -> Left, StripOnInput -> 
+         False], 
+        ItemBox[
+         InterpretationBox[
+          GridBox[{{
+             ButtonBox[
+              StyleBox["\"Evl Cel\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["EvaluateCells"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingRight"}, Evaluator -> 
+              Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"GTo Evl Cel\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["FindEvaluatingCell"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Sel All\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["SelectAll"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Clo All Sel\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> 
+              FrontEndTokenExecute["SelectionCloseAllGroups"], FrameMargins -> 
+              3, Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+              Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Opn All Sel\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> 
+              FrontEndTokenExecute["SelectionOpenAllGroups"], FrameMargins -> 
+              3, Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+              Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Cel Grp\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["CellGroup"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox["\"Sav\"", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> 
+               RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["Save"], FrameMargins -> 
+              3, Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+              Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Evl Ini Cel\"", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+              ButtonFunction :> 
+              FrontEndTokenExecute["EvaluateInitialization"], FrameMargins -> 
+              3, Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+              Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Evl Ntb\"", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["EvaluateNotebook"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Del All Out\"", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["DeleteGeneratedCells"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Cel Mrg\"", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["CellMerge"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Abort\"", 10, FontColor -> RGBColor[1, 0, 0], Bold, 
+               Background -> RGBColor[1, 0.85, 0.85], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["EvaluatorAbort"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             ButtonBox[
+              StyleBox[
+              "\"Quit\"", 10, FontColor -> RGBColor[1, 0, 0], Bold, 
+               Background -> RGBColor[1, 0.85, 0.85], StripOnInput -> False], 
+              ButtonFunction :> FrontEndTokenExecute["EvaluatorQuit"], 
+              FrameMargins -> 3, Appearance -> {"AbuttingLeft"}, Evaluator -> 
+              Automatic, Method -> "Preemptive"]}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+           ColumnSpacings -> 0], 
+          ButtonBar[{Style["Evl Cel", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> 
+            FrontEndTokenExecute["EvaluateCells"], 
+            Style["GTo Evl Cel", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> 
+            FrontEndTokenExecute["FindEvaluatingCell"], 
+            Style["Sel All", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute["SelectAll"], 
+            Style["Clo All Sel", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> 
+            FrontEndTokenExecute["SelectionCloseAllGroups"], 
+            Style["Opn All Sel", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> 
+            FrontEndTokenExecute["SelectionOpenAllGroups"], 
+            Style["Cel Grp", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute["CellGroup"], 
+            Style["Sav", 10, FontColor -> RGBColor[0, 
+                Rational[2, 3], 0], Bold, Background -> 
+              RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute["Save"], 
+            Style["Evl Ini Cel", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+              Background -> RGBColor[1, 0.9, 0.8]] :> 
+            FrontEndTokenExecute["EvaluateInitialization"], 
+            Style["Evl Ntb", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+              Background -> RGBColor[1, 0.9, 0.8]] :> 
+            FrontEndTokenExecute["EvaluateNotebook"], 
+            Style["Del All Out", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+              Background -> RGBColor[1, 0.9, 0.8]] :> 
+            FrontEndTokenExecute["DeleteGeneratedCells"], 
+            Style["Cel Mrg", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+              Background -> RGBColor[1, 0.9, 0.8]] :> 
+            FrontEndTokenExecute["CellMerge"], 
+            Style["Abort", 10, FontColor -> RGBColor[1, 0, 0], Bold, 
+              Background -> RGBColor[1, 0.85, 0.85]] :> 
+            FrontEndTokenExecute["EvaluatorAbort"], 
+            Style["Quit", 10, FontColor -> RGBColor[1, 0, 0], Bold, 
+              Background -> RGBColor[1, 0.85, 0.85]] :> 
+            FrontEndTokenExecute["EvaluatorQuit"]}, FrameMargins -> 3, 
+           Appearance -> {Automatic}]], Alignment -> Right, StripOnInput -> 
+         False]}}, AutoDelete -> False, GridBoxItemSize -> {"Columns" -> {
+          Scaled[0.3], 
+          Scaled[0.7]}}], "Grid"]], "DockedCell", Background -> 
+   RGBColor[1, 0.992, 0.866]]},
+PrivateNotebookOptions->{"FileOutlineCache"->False,
+"SafeFileOpen"->"IgnoreCache"},
+TaggingRules-><|"TryRealOnly" -> False|>,
+OutputSizeLimit->1000000,
+CellProlog:>SelectionMove[
+  EvaluationCell[], All, Cell],
+CellEpilog:>SelectionMove[
+  EvaluationNotebook[], Next, Cell],
+DynamicUpdating->True,
+ShowCellLabel->False,
+CodeAssistOptions->{"CodeToolsOptions"-><|
+ "CodeFormatterInteractiveReparse" -> True, 
+  "CodeFormatterInteractiveAiriness" -> -0.85, 
+  "CodeInspect" -> <|
+   "Disableds" -> {"PrefixPlus"}, 
+    "Tags" -> <|
+     "NoVariables" -> <|"Module" -> <|Enabled -> False|>|>, 
+      "PrefixPlus" -> <|Enabled -> False|>|>|>, 
+  "CodeFormat" -> <|
+   "InteractiveReparse" -> True, "LastPresetUsed" -> None, "Presets" -> <||>, 
+    "FormatMethod" -> "AirinessSlider", "InteractiveIndentationCharacter" -> 
+    "space", "InteractiveTabWidth" -> "4", "Airiness" -> 0, 
+    "NewlinesBetweenSemicolons" -> Automatic, "NewlinesBetweenOperators" -> 
+    Automatic, "NewlinesInGroups" -> Automatic, "NewlinesBetweenCommas" -> 
+    Automatic, "NewlinesInControl" -> Automatic, "NewlinesInScoping" -> 
+    Automatic, "NewlinesInComments" -> Automatic|>|>},
+AutoMultiplicationSymbol->True,
+"NotebookPersistence"-><|"Hashes/Once/FqeNo654-3D" -> <|"HeldValue" -> Hold[
+      Hold[Null]], "CreationDate" -> 3.9498332189841768`17.349153747165136*^9,
+     "Creator" -> "Ale", "ModificationDate" -> 
+    3.9498332189841768`17.349153747165136*^9, "LanguageVersion" -> 14.1, 
+    "ValuePreprocessingFunction" -> Identity|>|>,
+Magnification->Rational[3, 4],
+Background->RGBColor[0.88, 1, 0.88],
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "myStyle.nb"]], 
+   Cell[
+    StyleData["Title"], CellGroupingRules -> {"SectionGrouping", 0}, FontSize -> 
+    28], 
+   Cell[
+    StyleData["Subtitle"], CellGroupingRules -> {"SectionGrouping", 10}, 
+    FontSize -> 26], 
+   Cell[
+    StyleData["Subsubtitle"], CellGroupingRules -> {"SectionGrouping", 20}, 
+    FontSize -> 24], 
+   Cell[
+    StyleData["Chapter"], CellGroupingRules -> {"SectionGrouping", 30}, 
+    FontSize -> 22], 
+   Cell[
+    StyleData["Section"], CellGroupingRules -> {"SectionGrouping", 40}, 
+    FontSize -> 20], 
+   Cell[
+    StyleData["Subsection"], CellGroupingRules -> {"SectionGrouping", 50}, 
+    FontSize -> 18], 
+   Cell[
+    StyleData["Subsubsection"], CellGroupingRules -> {"SectionGrouping", 60}, 
+    FontSize -> 16], 
+   Cell[
+    StyleData["Code"], CellGroupingRules -> {"SectionGrouping", 90}, FontSize -> 
+    14], 
+   Cell[
+    StyleData["Input"], CellGroupingRules -> {"SectionGrouping", 90}, 
+    FontSize -> 14], 
+   Cell[
+    StyleData["Text"], CellGroupingRules -> {"SectionGrouping", 90}, FontSize -> 
+    12], 
+   Cell[
+    StyleData["Output"], CellGroupingRules -> {"SectionGrouping", 90}, 
+    FontSize -> 14], 
+   Cell[
+    StyleData["Message"], CellGroupingRules -> {"SectionGrouping", 92}, 
+    FontSize -> 12], 
+   Cell[
+    StyleData["ExampleText"], CellGroupingRules -> {"SectionGrouping", 91}, 
+    FontSize -> 12]}, Visible -> False, FrontEndVersion -> 
+  "15.0 for Microsoft Windows (64-bit) (July 2, 2026)", StyleDefinitions -> 
+  "Default.nb"],
+ExpressionUUID->"b82189d2-5b63-eb41-9371-ae686e193b55"
+]
+

@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "root": "WolframMMAProjectRICH-Git-restructured-validation-v5",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "size": 11,
+      "sha256": "e91f4b88dd27f4b6c52be012bab40d08dd4cf0af77e97ea0dbca5813146a2ccf"
+    },
+    {
+      "path": ".gitignore",
+      "size": 117,
+      "sha256": "09e89f74559a8f37c2d1d75fa95bc7ee66820a8ad1d06c15a213380b0374bae9"
+    },
+    {
+      "path": "README.md",
+      "size": 1941,
+      "sha256": "683c1772a89bd0405f313eb9ff4859c085a20e1d67b7a80575c95074d2676bcd"
+    },
+    {
+      "path": "data/README.md",
+      "size": 68,
+      "sha256": "122e0b2f6599c462664bed41b5986d32cf785f8f4838da49d7506c04df08b7dc"
+    },
+    {
+      "path": "docs/RESTRUCTURING_REPORT.md",
+      "size": 2623,
+      "sha256": "3bf9c1887de7b79ea8d79196a0a202688f6cfc0df43d11f3013019324b35d4e2"
+    },
+    {
+      "path": "generated/.gitkeep",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "legacy-original/CellStyleDataRules.nb",
+      "size": 23269,
+      "sha256": "ea4f93529d693903b21a6e737d8596e470829078be237074698ba968c57ef956"
+    },
+    {
+      "path": "legacy-original/RICH.nb",
+      "size": 478376,
+      "sha256": "c1ee28ba20854c5016e67df3a91f90910bf9270b19eb40398831844237c05840"
+    },
+    {
+      "path": "legacy-original/base.nb",
+      "size": 158579,
+      "sha256": "eab5a4a6c589f8475d32e05794e9e9602c8df2313aeafcd7660c1c8075066baa"
+    },
+    {
+      "path": "legacy-original/calculator-reboot.nb",
+      "size": 1986509,
+      "sha256": "94786473ff5c5133326c5fdb591c0302ff3267cdb680fb47640daad9afbffe17"
+    },
+    {
+      "path": "legacy-original/inputDataForRICH.nb",
+      "size": 7035051,
+      "sha256": "320f1c65eb3bf99e2c4587b78b1cd9c4e91ed71b93ebbb4bacfe019ea7d21688"
+    },
+    {
+      "path": "legacy-original/myDockedCells.wl",
+      "size": 18902,
+      "sha256": "03e1f42f7bb67f39b663a2e67471bb7360fba7a96ff576956e6a9f0e04585f8f"
+    },
+    {
+      "path": "legacy-original/myNotebookInit.wl",
+      "size": 95257,
+      "sha256": "0c6c160b19c6f939d446701b481e9568599ba9ed32c9cf12195442ac95818830"
+    },
+    {
+      "path": "legacy-original/myStyle.nb",
+      "size": 4733,
+      "sha256": "e76e343b0a460c66278990016ce9400a71bfa11729f7b656e123d0cef07baa0e"
+    },
+    {
+      "path": "legacy-original/physics-general.nb",
+      "size": 82560,
+      "sha256": "1701a477bde212ca544cc2565af25a0f025323b805b95b46c033b6d422cc66bc"
+    },
+    {
+      "path": "legacy-original/statDataAnal.nb",
+      "size": 88858,
+      "sha256": "3417de68abd639626e59fcd8ed778f4ae1e4b843b84b4134995996a3cc687948"
+    },
+    {
+      "path": "notebooks/CellStyleDataRules.nb",
+      "size": 23269,
+      "sha256": "ea4f93529d693903b21a6e737d8596e470829078be237074698ba968c57ef956"
+    },
+    {
+      "path": "notebooks/base.nb",
+      "size": 19353,
+      "sha256": "be1aca11af1f232efec72c55ba920b8a934878364a13b20f9335fae426b1c929"
+    },
+    {
+      "path": "notebooks/calculator-reboot.nb",
+      "size": 884775,
+      "sha256": "50ae3f763e4b69cfa74ef8bc8dba9d4a5617ad8a26d4dccb61bd064600248446"
+    },
+    {
+      "path": "notebooks/inputDataForRICH.nb",
+      "size": 6624062,
+      "sha256": "e9fd52b0f055ad226f5324077b2ac555b77307e4652c035232823cf5f3e953da"
+    },
+    {
+      "path": "notebooks/myStyle.nb",
+      "size": 4733,
+      "sha256": "e76e343b0a460c66278990016ce9400a71bfa11729f7b656e123d0cef07baa0e"
+    },
+    {
+      "path": "notebooks/physics-general.nb",
+      "size": 15888,
+      "sha256": "10bbe58fdb73cff3423ebde0011e69b606d958b164091fbf3e584d36cbde90d8"
+    },
+    {
+      "path": "notebooks/statDataAnal.nb",
+      "size": 14329,
+      "sha256": "da9030f7c4d4d0530f347e9a748878d65dd3a48bbacc8c62c1f943d88d694aab"
+    },
+    {
+      "path": "src/CellStyleDataRules.wl",
+      "size": 3563,
+      "sha256": "66e019b2dc02bdef015746b4f303eaafbe5314e5c79a2aef83e9e3dc78059358"
+    },
+    {
+      "path": "src/LoadProject.wl",
+      "size": 963,
+      "sha256": "1a5527f6e041371adfac17ea246d175d889ffb8b2f155f926214bebe985b504c"
+    },
+    {
+      "path": "src/RICH.wl",
+      "size": 98588,
+      "sha256": "c474c7745c8eb30d1f25e89799226be8a78f744c612197cb341df7afc8316626"
+    },
+    {
+      "path": "src/base.wl",
+      "size": 36312,
+      "sha256": "a24336353189a5ac88f654b2c96a5b0a806aa29a3030322381cca25263321621"
+    },
+    {
+      "path": "src/calculator-reboot.wl",
+      "size": 26286,
+      "sha256": "ba43fb8c77aaa65be34f566e5c29bc346a031a0d6204ae4fc95a67331cdb0234"
+    },
+    {
+      "path": "src/inputDataForRICH.wl",
+      "size": 102869,
+      "sha256": "f1b2d7ab7f80a29d80945fc7d9d06715b70e02cf8de85599f3955abe368d70d3"
+    },
+    {
+      "path": "src/myDockedCells.wl",
+      "size": 18902,
+      "sha256": "03e1f42f7bb67f39b663a2e67471bb7360fba7a96ff576956e6a9f0e04585f8f"
+    },
+    {
+      "path": "src/myNotebookInit.wl",
+      "size": 95257,
+      "sha256": "0c6c160b19c6f939d446701b481e9568599ba9ed32c9cf12195442ac95818830"
+    },
+    {
+      "path": "src/physics-general.wl",
+      "size": 14999,
+      "sha256": "4312a6f68696cd6b8650bf72d679d12c644ce14a364a58560359b03f493bb284"
+    },
+    {
+      "path": "src/statDataAnal.wl",
+      "size": 19822,
+      "sha256": "3d072a83ac291679f06b2506fb93f3dd1c4c6cbd22f2a3970ec6bae33754ba9a"
+    },
+    {
+      "path": "tests/SmokeTests.wlt",
+      "size": 415,
+      "sha256": "5b296ba4a3ca5bd07cd52e9ff84e54ee63541cf522c48c4e3aa7aefb377e2a2a"
+    },
+    {
+      "path": "validation/CompareBaselines.wls",
+      "size": 12903,
+      "sha256": "5f67bb83e516dde24db01431977f9e821c243d80d9fec2f58bca5b8c4157886c"
+    },
+    {
+      "path": "validation/README.md",
+      "size": 2798,
+      "sha256": "4fbb15b9613778cbf9b18d2c30f1601e3cf6a32a8c7216b71cc917b9e0499eb0"
+    },
+    {
+      "path": "validation/RunNotebookCase.wls",
+      "size": 17624,
+      "sha256": "6a646b5c4de34ca73ee41d7a2c3c0951fe989861d64f18e42600d16dbfe05ada"
+    },
+    {
+      "path": "validation/RunValidation.ps1",
+      "size": 12045,
+      "sha256": "d9074871a23223f2587a35664bdda04cef8150e99e580e7ce94a4d886ce978ed"
+    },
+    {
+      "path": "validation/ValidationConfig.wl",
+      "size": 3505,
+      "sha256": "7cb08d0f41b4655adbcb3ef2f8d845b0dffeb2dd3b88c317c2708ef5a638936a"
+    },
+    {
+      "path": "validation/results/README.md",
+      "size": 135,
+      "sha256": "f4aa331c8d5706672fe3b249096062154f0ea4a786ab6e9f8592811ae5bccad7"
+    }
+  ]
+}

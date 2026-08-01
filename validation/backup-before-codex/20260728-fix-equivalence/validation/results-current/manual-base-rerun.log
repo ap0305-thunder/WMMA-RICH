@@ -1,0 +1,147 @@
+Running original / base
+Target: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\legacy-original\base.nb
+[20:09:04] Opening source notebook
+[20:09:05] Reading notebook expression
+[20:09:06] Creating temporary validation notebook
+[20:09:08] Evaluating initialization cells
+[20:09:46] Collecting generated notebook cells
+[20:10:04] Capturing symbol state
+Length@Cells[CellStyle -> Title                PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Subtitle             PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Subsubtitle          PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Section              PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Subsection           PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Subsubsection        PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Input                PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Text                 PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> ExampleText          PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Code                 PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Output                           PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Print                            PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Message                          PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> MSG                              PaddedForm[0, {3, 4}]
+                       Total Number of Cells ->                                    PaddedForm[0, {3, 4}]
+[20:10:07] Writing result files
+Status: Success
+Captured symbols: 482
+Result: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\validation\results\current\raw\original\base.wxf
+__WOLFRAM_EXIT_CODE__=0
+Running restructured / base
+Target: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\src\base.wl
+[20:10:16] Source preflight parsed 140 held expressions
+[20:10:16] Evaluating source directly in the validation kernel
+*==================================================================================================*
+*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*
+***--- base ---***
+*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*
+*==================================================================================================*
+*==================================================================================================*
+*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*
+***----------------------------------- myNotebookInit ---------------------------------------------***
+*==================================================================================================*
+============================================================
+ myNotebookInit  loaded  |  Version: v.09-05-2026
+ Kernel: 15.0.1 for Microsoft Windows (64-bit) (July 2, 2026)
+ Context: myNotebookInit`Private`
+============================================================
+Explicit Load Tracker ready. Functions: loadMyFile[], loadNeeds[], summarizeLoads[], saveLoadLog[], loadSavedLog[], clearLoadLog[]
+*==================================================================================================*
+*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*
+***---                  LOADING base                                                                  ---***
+*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*
+*==================================================================================================*
+============================================================
+[loadMyFile] START
+  timestamp:  2026-07-27  20:10:16
+  requested:  CellStyleDataRules.m
+  dir mode:   Automatic
+  cwd:        C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\notebooks
+  nb dir:     C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\notebooks
+  local path: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\notebooks\CellStyleDataRules.m
+  ref path:   C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\notebooks\CellStyleDataRules.m
+  resolved:   C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\notebooks\CellStyleDataRules.m
+  loading...
+
+NotebookDirectory::nosv: The notebook NotebookObject[<<Messages>>] is not saved.
+
+SetDirectory::badfile: The specified argument, $Failed, should be a valid string or File object.
+NotebookDirectory[] : C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\notebooks
+ SETTING CELL STYLE DATA RULES - CellStyleDataRules 
+ InputNotebook                           $Failed
+ EvaluationNotebook                      NotebookObject[FrontEndObject[LinkObject[C:\Program Files\Wolfram Research\Wolfram\15.0\SystemFiles\FrontEnd\Binaries\Windows-x86-64\WolframNB.exe /b /min -mathlink -server, 89, 2]], 1]
+ This package lives at $InputFileName    C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\notebooks\CellStyleDataRules.m
+ This package lives at $Input           C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\notebooks\CellStyleDataRules.m
+  END  NotebookObject[FrontEndObject[LinkObject[C:\Program Files\Wolfram Research\Wolfram\15.0\SystemFiles\FrontEnd\Binaries\Windows-x86-64\WolframNB.exe /b /min -mathlink -server, 89, 2]], 1]
+  new symbols: Column[{}]
+  elapsed (s): NumberForm[0.8650572`7.38858981867529, {6, 3}]
+[loadMyFile] END  |  C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\notebooks\CellStyleDataRules.m
+============================================================
+ ************************************************************************************************* 
+ Start running  -D260727T201017
+ t0=AbsoluteTime[]   3.9941718172886774`17.354001732142155*^9
+ ************************************************************************************************* 
+32
+ape = 20
+nut = 400
+mouse = 400 + cat
+HoldForm[ape]=20
+HoldForm[nut]=400
+HoldForm[mouse]=400 + cat
+HoldForm[ape] = 20
+HoldForm[nut] = 400
+HoldForm[mouse] = 400 + cat
+*==================================================================================================*
+*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*
+***---                  END base                                                                       ---***
+*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*
+*==================================================================================================*
+---------------- Context Diagnostics ----------------
+$Context        : Validation`Private`
+
+$ContextPath    :
+   base`
+   myNotebookInit`
+   OpticaDocumentation`
+   System`
+   Global`
+
+Your loaded packages (lowercase only):
+   myNotebookInit`
+   base`
+
+Recently created lowercase contexts:
+   base`Private`
+   com`wolfram`alpha`parser`FileManager`
+   com`wolfram`alpha`parser`math`expr`FullContext`
+   com`wolfram`alpha`parser`math`expr`FullSymbol`
+   com`wolfram`alpha`parser`templateparser`ParserGrammar`
+   com`wolfram`alpha`parser`tokenizer`Tokenizer`
+   com`wolfram`interpreter`ParseTelephoneNumber`
+   com`wolfram`jlink`ObjectMaker`
+   com`wolfram`jlink`Utils`
+   java`lang`System`
+
+Loaded lowercase packages NOT on $ContextPath:
+   (none)
+------------------------------------------------------
+[20:10:45] Capturing symbol state
+Length@Cells[CellStyle -> Title                PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Subtitle             PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Subsubtitle          PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Section              PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Subsection           PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Subsubsection        PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Input                PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Text                 PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> ExampleText          PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Code                 PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Output                           PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Print                            PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> Message                          PaddedForm[0, {3, 4}]
+Length@Cells[CellStyle -> MSG                              PaddedForm[0, {3, 4}]
+                       Total Number of Cells ->                                    PaddedForm[0, {3, 4}]
+[20:10:47] Writing result files
+Status: Success
+Captured symbols: 477
+Result: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c\validation\results\current\raw\restructured\base.wxf
+__WOLFRAM_EXIT_CODE__=0

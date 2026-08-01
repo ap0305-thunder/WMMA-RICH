@@ -1,0 +1,29 @@
+[2026-07-30 20:19:29] Project root: C:\Users\Ale\OneDrive - unige.it\Documenti\WolframMMAProjectRICH-Git-new
+[2026-07-30 20:19:29] Cases: base
+[2026-07-30 20:19:29] Wolfram executable: C:\Program Files\Wolfram Research\Wolfram\15.0\wolfram.exe
+[2026-07-30 20:19:29] Creating validation workspace: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c
+[2026-07-30 20:19:29] Workspace copy completed: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c
+[2026-07-30 20:19:29] Invocation mode: standalone kernel (-script)
+[2026-07-30 20:19:29] Starting: C:\Program Files\Wolfram Research\Wolfram\15.0\wolfram.exe -script C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c\validation\RegenerateSources.wls C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c base
+[2026-07-30 20:19:29] Started PID 4424; hard timeout 300 seconds
+[2026-07-30 20:19:38] PID 4424 exited with code 0
+[2026-07-30 20:19:38] Notebook-derived WL sources regenerated successfully.
+[2026-07-30 20:19:38] Temporarily staged: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c\legacy-original\CellStyleDataRules.m
+[2026-07-30 20:19:38] Temporarily staged: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c\notebooks\CellStyleDataRules.m
+[2026-07-30 20:19:38] Invocation mode: standalone kernel (-script)
+[2026-07-30 20:19:38] Starting: C:\Program Files\Wolfram Research\Wolfram\15.0\wolfram.exe -script C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c\validation\RunNotebookCase.wls C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c original base
+[2026-07-30 20:19:38] Started PID 1356; hard timeout 300 seconds
+[2026-07-30 20:19:48] PID 1356 still running after 10 seconds; stdout=316 bytes, stderr=0 bytes
+[2026-07-30 20:19:58] PID 1356 still running after 20 seconds; stdout=364 bytes, stderr=0 bytes
+[2026-07-30 20:20:05] PID 1356 exited with code 0
+[2026-07-30 20:20:05] Invocation mode: standalone kernel (-script)
+[2026-07-30 20:20:05] Starting: C:\Program Files\Wolfram Research\Wolfram\15.0\wolfram.exe -script C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c\validation\RunNotebookCase.wls C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c restructured base
+[2026-07-30 20:20:05] Started PID 21628; hard timeout 300 seconds
+[2026-07-30 20:20:15] PID 21628 still running after 10 seconds; stdout=5090 bytes, stderr=0 bytes
+[2026-07-30 20:20:22] PID 21628 exited with code 0
+[2026-07-30 20:20:22] Invocation mode: standalone kernel (-script)
+[2026-07-30 20:20:22] Starting: C:\Program Files\Wolfram Research\Wolfram\15.0\wolfram.exe -script C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c\validation\CompareBaselines.wls C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c base
+[2026-07-30 20:20:22] Started PID 37704; hard timeout 300 seconds
+[2026-07-30 20:20:25] PID 37704 exited with code 0
+[2026-07-30 20:20:25] Validation finished. Report: C:\Users\Ale\OneDrive - unige.it\Documenti\WolframMMAProjectRICH-Git-new\validation\results\current\VALIDATION_REPORT.md
+[2026-07-30 20:20:25] Workspace retained: C:\Users\Ale\AppData\Local\Temp\WolframRICHValidation-bd0860acdd184d0b87755813f479372c

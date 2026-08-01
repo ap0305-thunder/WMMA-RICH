@@ -1,0 +1,8 @@
+generated/*
+!generated/.gitkeep
+*.mx
+*.wdx
+load_log.wdx
+.DS_Store
+validation/results/*
+!validation/results/README.md
