@@ -24,13 +24,11 @@ $RICHProjectComponents = <|
   },
   "RICH-source" -> {
     "myNotebookInit.wl", "myDockedCells.wl", "CellStyleDataRules.wl",
-    "base.wl", "statDataAnal.wl", "physics-general.wl",
-    "inputDataForRICH.wl", "RICH.wl"
+    "base.wl", "statDataAnal.wl", "RICH.wl"
   },
   "calculator-reboot" -> {
     "myNotebookInit.wl", "myDockedCells.wl", "CellStyleDataRules.wl",
-    "base.wl", "statDataAnal.wl", "physics-general.wl",
-    "inputDataForRICH.wl", "RICH.wl", "calculator-reboot.wl"
+    "base.wl", "statDataAnal.wl", "RICH.wl", "calculator-reboot.wl"
   },
   "CellStyleDataRules-source" -> {
     "CellStyleDataRules.wl"
@@ -44,7 +42,11 @@ LoadRICHFiles[files_List] := Module[
   If[missing =!= {}, Print["Project load aborted. Missing files:", Column[missing]]; Return[$Failed]];
   Internal`WithLocalSettings[
     SetDirectory[src]; If[! MemberQ[$Path, src], AppendTo[$Path, src]],
-    Scan[Get[FileNameJoin[{src, #}]] &, files],
+    (* Some legacy-derived components change Directory[] while loading.
+       Re-anchor each component at src so later dependency lookups stay local. *)
+    Block[{Global`$RICHProjectManagedLoad = True},
+      Scan[(SetDirectory[src]; Get[FileNameJoin[{src, #}]]) &, files]
+    ],
     SetDirectory[oldDirectory]
   ];
   True

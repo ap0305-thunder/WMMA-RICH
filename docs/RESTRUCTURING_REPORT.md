@@ -10,19 +10,18 @@
 
 ## Important limitations
 
-- Mathematica/Wolfram Engine was unavailable in the restructuring environment, so the project has not yet been executed there.
-- A local Wolfram 15 validation harness is now included under `validation/`. It performs separate clean-process original and restructured runs, captures notebook side effects and project-symbol state, and produces a strict comparison report.
+- The restructuring has been executed and validated locally with Wolfram 15. The harness under `validation/` performs separate clean-process original and restructured runs, captures notebook side effects and project-symbol state, and produces a strict comparison report.
 - Ordinary box-form input was converted to textual Wolfram Language. Special front-end constructs retain an exact `ToExpression[..., StandardForm, HoldComplete]` wrapper.
 
 ## Extraction summary
 
 | Notebook | Initialization code cells | Exact-box fallbacks | Source |
 |---|---:|---:|---|
-| `base.nb` | 70 | 1 | `src/base.wl` |
+| `base.nb` | 69 | 1 | `src/base.wl` |
 | `physics-general.nb` | 16 | 0 | `src/physics-general.wl` |
 | `statDataAnal.nb` | 25 | 0 | `src/statDataAnal.wl` |
 | `inputDataForRICH.nb` | 112 | 0 | `src/inputDataForRICH.wl` |
-| `RICH.nb` | 68 | 0 | `src/RICH.wl` |
+| `RICH.nb` | 62 | 0 | `src/RICH.wl` |
 | `calculator-reboot.nb` | 38 | 1 | `src/calculator-reboot.wl` |
 | `CellStyleDataRules.nb` | 9 | 0 | `src/CellStyleDataRules.wl` |
 
@@ -37,7 +36,14 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 The launcher uses a temporary copy of the project by default, runs every original/restructured case in a separate Wolfram process, enforces the calculator-body cutoff, removes the obsolete `LHCb-optics.m` cell only from the temporary original calculator copy, and writes `validation/results/current/VALIDATION_REPORT.md`.
 
-The harness has been statically checked and packaged, but its numerical results can only be produced on a machine with Wolfram 15.
+The installed report generated on 2026-08-01 is **PASS** for all seven cases:
+
+- 7 PASS, 0 WARNING, 0 FAIL, 0 NOT RUN;
+- zero missing canonical symbols;
+- zero definition differences;
+- zero assigned-value differences.
+
+See `validation/results/current/VALIDATION_REPORT.md` for the complete evidence. The six RICH example cells marked `Evaluatable -> False` are intentionally excluded from executable source generation.
 
 ## Suggested Git commits
 

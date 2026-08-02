@@ -33,7 +33,7 @@ If[!NameQ["\<myNotebookInit`loadMyFile\>"], Message[base::nodep, "\<myNotebookIn
 checkNewCreatedSymbols[]
 showContextInfo[]
 
-(*Once[*)myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>"(*,$dirSWRoot*)](*,"\<Notebook\>"]*)
+(*Once[*)If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>",DirectoryName[$InputFileName]]](*,"\<Notebook\>"]*)
 
 (*EXPORT*)
 

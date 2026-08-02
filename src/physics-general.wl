@@ -33,7 +33,7 @@ SetOptions[EvaluationNotebook[],WindowTitle->StringJoin["\< ------- \>",nbFileNa
 (**)
 SetOptions[EvaluationNotebook[],"\<DynamicUpdating\>"->True];(* It looks ok, even if it does not affect the tick in the Evaluation Menu ??? *)
 (**)
-(*Once[*)myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>"(*,$dirSWRoot*)](*,"\<Notebook\>"]*)
+(*Once[*)If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>",DirectoryName[$InputFileName]]](*,"\<Notebook\>"]*)
 (**)
 ];
 

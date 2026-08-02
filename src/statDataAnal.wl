@@ -20,7 +20,7 @@ Print["\<*======================================================================
 
 (* ---- initialization cell 4 | 9c3cf64a-6227-ec47-b068-27541583e18e ---- *)
 (*Once[*)
-myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>"]
+If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>",DirectoryName[$InputFileName]]]
 (*,"\<Notebook\>"]*)
 
 (* ---- initialization cell 5 | 4ecce8f7-4d29-6b48-a6b1-2b4ad1053604 ---- *)

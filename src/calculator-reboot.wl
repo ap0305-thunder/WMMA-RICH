@@ -59,7 +59,7 @@ myNotebookInit`saveLoadLog[];
 myNotebookInit`loadSavedLog[];
 
 (* ---- initialization cell 8 | 1e9a93ef-9e87-fd4f-9d07-6d4c9d4262f8 ---- *)
-loadMyFile["\<myDockedCells.wl\>"]
+If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<myDockedCells.wl\>",DirectoryName[$InputFileName]]]
 
 (* ---- initialization cell 9 | dd067d3e-30ec-3a47-a655-fa168c1d7dd5 ---- *)
 (*
@@ -90,7 +90,7 @@ $dirOut="\<C:\\TEMP\\\>";
 setProtection[{$dirBackup,$dirSWRoot,$dirSW,$dirOut},True];
 
 (* ---- initialization cell 12 | 36066e36-9e65-dc46-bb0e-c9222b14252f ---- *)
-myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>"]
+If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>",DirectoryName[$InputFileName]]]
 
 (* ---- initialization cell 13 | 848a8e45-7277-bb40-9292-126b1a108982 ---- *)
 (*nb[]:=EvaluationNotebook[];
@@ -174,7 +174,7 @@ thisTimeStamp:=theTimeStamp<>"\<--\>"<>ToString[Round[1000000*(1000000+(Absolute
 (* rich *)
 (**************************************************************************************************)
 checkNewCreatedSymbols[]
-(*Once[*)myNotebookInit`loadMyFile["\<RICH.wl\>",NotebookDirectory[]](*,"\<KernelSession\>"];*)
+(*Once[*)If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<RICH.wl\>",DirectoryName[$InputFileName]]](*,"\<KernelSession\>"];*)
 checkNewCreatedSymbols[]
 
 (* ---- initialization cell 21 | 6484e006-f257-8543-8199-b33b221ce6d3 ---- *)

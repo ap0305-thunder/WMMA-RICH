@@ -119,7 +119,7 @@ Unprotect[LAPPDTMEnergyData,MAPMT22EnergyData,MPPCHPKEnergyData,SIPMFBKEnergyDat
 If[$Notebooks,
 bigBanner["\<$Notebooks == True\>"];
 (*(*Once[*)myNotebookInit`loadMyFile["\<myDockedCells.wl\>"(*,$dirSWRoot*)](*,"\<Notebook\>"]*);*)
-(*Once[*)myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>"(*,$dirSWRoot*)](*,"\<Notebook\>"]*);
+(*Once[*)If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>",DirectoryName[$InputFileName]]](*,"\<Notebook\>"]*);
 (**)
 (* HERE TO ALLOW CHANGE SPECIFIC OPTIONS BELOW *)
 (**)

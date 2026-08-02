@@ -8,7 +8,10 @@ ClearAll[
   cellStyle, explicitInitializationCellQ, explicitlyNonEvaluatableQ,
   initializationCodeCells, contextCommands, advanceImportContext,
   heldExpressionsForCell, heldExpressionsForCells, heldExpressionText,
-  repairGeneratedSourceText, generatedFileExpressionCount, regenerateOne, main
+  directContextSymbolNames, usageSymbolNames, packageUsageSymbolNames,
+  dependencyContextOwners, reassignDependencyContexts,
+  repairGeneratedSourceText,
+  generatedFileExpressionCount, regenerateOne, main
 ];
 
 flushOutput[] := Scan[(Quiet@Check[Flush[#], Null]) &, Flatten[{$Output}]];
@@ -281,24 +284,172 @@ heldExpressionText[held_HoldComplete, scratchPrefix_String] := Module[
   ]
 ];
 
+(* Return only symbols directly in context, excluding symbols in nested
+   contexts such as base`Private`. Earlier generated files have already been
+   syntax-read by the time a dependent package is repaired, so their explicit
+   package symbols are present in the generator kernel without having executed
+   any project initialization code. *)
+directContextSymbolNames[context_String] := Select[
+  Names[context <> "*"],
+  ! StringContainsQ[StringDrop[#, StringLength[context]], "`"] &
+];
+
+(* myNotebookInit.wl is maintained source rather than a regenerated FullForm
+   file. Its public API is therefore obtained from usage declarations. *)
+usageSymbolNames[path_String, context_String] := Module[{sourceText, names},
+  If[! FileExistsQ[path], Return[{}]];
+  sourceText = Quiet@Check[Import[path, "Text"], $Failed];
+  If[sourceText === $Failed, Return[{}]];
+  names = StringCases[
+    sourceText,
+    RegularExpression["([A-Za-z$][A-Za-z0-9$]*)::usage"] -> "$1"
+  ];
+  (context <> #) & /@ DeleteDuplicates[names]
+];
+
+(* FullForm writes usage declarations as MessageName[symbol, "usage"]. These
+   declarations are authoritative: even if a legacy notebook box still carries
+   Global`, the declared public symbol belongs to the package being generated. *)
+packageUsageSymbolNames[text_String] := DeleteDuplicates @ StringCases[
+  text,
+  RegularExpression[
+    "MessageName\\[(?:Global|[A-Za-z$][A-Za-z0-9$]*)`" <>
+    "([A-Za-z$][A-Za-z0-9$]*), \\\"usage\\\"\\]"
+  ] -> "$1"
+];
+
+(* Reconstruct the resolution that BeginPackage would have performed if all
+   dependencies had already existed when NotebookImport parsed each cell.
+   Dependency order is significant: the first context on $ContextPath owns an
+   ambiguous bare name. *)
+dependencyContextOwners[destinationPath_String] := Module[
+  {fileName, srcDirectory, dependencyContexts, dependencyNames, owners = <||>},
+  fileName = FileNameTake[destinationPath];
+  srcDirectory = DirectoryName[destinationPath];
+  dependencyContexts = Switch[fileName,
+    "base.wl", {"myNotebookInit`"},
+    "statDataAnal.wl", {"myNotebookInit`", "base`"},
+    "RICH.wl", {"myNotebookInit`", "base`", "statDataAnal`"},
+    "calculator-reboot.wl",
+      {"myNotebookInit`", "base`", "statDataAnal`", "rich`"},
+    _, {}
+  ];
+  Scan[
+    Function[context,
+      dependencyNames = If[context === "myNotebookInit`",
+        usageSymbolNames[
+          FileNameJoin[{srcDirectory, "myNotebookInit.wl"}],
+          context
+        ],
+        directContextSymbolNames[context]
+      ];
+      Scan[
+        Function[fullName,
+          With[{name = StringDrop[fullName, StringLength[context]]},
+            If[! KeyExistsQ[owners, name], AssociateTo[owners, name -> context]]
+          ]
+        ],
+        dependencyNames
+      ]
+    ],
+    dependencyContexts
+  ];
+  owners
+];
+
+reassignDependencyContexts[text_String, destinationPath_String] := Module[
+  {fileName, currentContext, packageNames, owners, packageRules, dependencyRules,
+   normalizedText},
+  fileName = FileNameTake[destinationPath];
+  currentContext = Switch[fileName,
+    "base.wl", "base`",
+    "statDataAnal.wl", "statDataAnal`",
+    "RICH.wl", "rich`",
+    "calculator-reboot.wl", "calculator`",
+    _, Return[text]
+  ];
+  packageNames = packageUsageSymbolNames[text];
+  packageRules = Function[name,
+      RegularExpression[
+        "Global`\\Q" <> name <> "\\E(?![\\p{L}\\p{N}$\\\\])"
+      ] -> currentContext <> name
+    ] /@ packageNames;
+  normalizedText = StringReplace[text, packageRules];
+  owners = dependencyContextOwners[destinationPath];
+  owners = KeyDrop[owners, packageNames];
+  dependencyRules = KeyValueMap[
+    Function[{name, ownerContext},
+      RegularExpression[
+        "(?:Global|" <> StringDrop[currentContext, -1] <> ")`\\Q" <>
+        name <> "\\E(?![\\p{L}\\p{N}$\\\\])"
+      ] -> ownerContext <> name
+    ],
+    owners
+  ];
+  StringReplace[normalizedText, dependencyRules]
+];
+
 (* NotebookImport interprets the escaped quotes inside two RICH StyleBox label
    strings as expression boundaries. Repair those audited artifacts after
    context-preserving serialization. The legacy notebook also resolves the two
    bare killStop references through myNotebookInit`; make that ownership
    explicit in the generated package. *)
 repairGeneratedSourceText[text_String, destinationPath_String] := Module[
-  {oldEnergy, newEnergy, oldWavelength, newWavelength},
-  If[FileNameTake[destinationPath] =!= "RICH.wl", Return[text]];
+  {fileName, repairedText, oldEnergy, newEnergy, oldWavelength, newWavelength},
+  fileName = FileNameTake[destinationPath];
+  repairedText = StringReplace[
+    If[
+      MemberQ[{"physics-general.wl", "inputDataForRICH.wl"}, fileName],
+      StringReplace[text, "Global`" -> ""],
+      reassignDependencyContexts[text, destinationPath]
+    ], {
+    "myNotebookInit`loadMyFile[\"CellStyleDataRules.m\"]" ->
+      "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\", DirectoryName[$InputFileName]]]",
+    "myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\"]" ->
+      "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\", DirectoryName[$InputFileName]]]"
+  }];
+  If[fileName === "calculator-reboot.wl",
+    Return @ StringReplace[repairedText, {
+      "loadMyFile[\"myDockedCells.wl\"]" ->
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"myDockedCells.wl\", DirectoryName[$InputFileName]]]",
+      "myNotebookInit`loadMyFile[\"myDockedCells.wl\"]" ->
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"myDockedCells.wl\", DirectoryName[$InputFileName]]]",
+      "myNotebookInit`loadMyFile[\"RICH.m\", NotebookDirectory[]]" ->
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\", DirectoryName[$InputFileName]]]",
+      "myNotebookInit`loadMyFile[\"RICH.m\",NotebookDirectory[]]" ->
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\",DirectoryName[$InputFileName]]]",
+      "myNotebookInit`loadMyFile[\"RICH.wl\", NotebookDirectory[]]" ->
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\", DirectoryName[$InputFileName]]]",
+      "myNotebookInit`loadMyFile[\"RICH.wl\",NotebookDirectory[]]" ->
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\",DirectoryName[$InputFileName]]]"
+    }]
+  ];
+  If[fileName =!= "RICH.wl", Return[repairedText]];
   oldEnergy =
     "myNotebookInit`bigBanner[Times[\" integral yield function \\!\\(\\*StyleBox[\", rich`per, \",Background->RGBColor[1, 1, 0]]\\)\\!\\(\\*StyleBox[\", \",Background->RGBColor[1, 1, 0]]\\)\\!\\(\\*StyleBox[\", rich`meter, \",Background->RGBColor[1, 1, 0]]\\) all effects included (via ene calculation) \"]]";
   newEnergy =
     "myNotebookInit`bigBanner[\" integral yield function \\!\\(\\*StyleBox[\\\"per\\\",Background->RGBColor[1, 1, 0]]\\)\\!\\(\\*StyleBox[\\\" \\\",Background->RGBColor[1, 1, 0]]\\)\\!\\(\\*StyleBox[\\\"meter\\\",Background->RGBColor[1, 1, 0]]\\) all effects included (via ene calculation) \"]";
   oldWavelength = StringReplace[oldEnergy, "ene calculation" -> "lam calculation"];
   newWavelength = StringReplace[newEnergy, "ene calculation" -> "lam calculation"];
-  StringReplace[text, {
+  repairedText = StringReplace[repairedText, {
     oldEnergy -> newEnergy,
     oldWavelength -> newWavelength,
+    "CellStyleDataRules.m" -> "CellStyleDataRules.wl",
+    "base.m" -> "base.wl",
+    "statDataAnal.m" -> "statDataAnal.wl",
+    "physics-general.m" -> "physics-general.wl",
+    "inputDataForRICH.m" -> "inputDataForRICH.wl",
     "rich`killStop" -> "myNotebookInit`killStop"
+  }];
+  StringReplace[repairedText, {
+    "myNotebookInit`loadMyFile[\"base.wl\"]" ->
+      "If[TrueQ[Global`$RICHProjectManagedLoad], 1, myNotebookInit`loadMyFile[\"base.wl\", DirectoryName[$InputFileName]]]",
+    "myNotebookInit`loadMyFile[\"statDataAnal.wl\"]" ->
+      "If[TrueQ[Global`$RICHProjectManagedLoad], 1, myNotebookInit`loadMyFile[\"statDataAnal.wl\", DirectoryName[$InputFileName]]]",
+    "myNotebookInit`loadMyFile[\"physics-general.wl\"]" ->
+      "myNotebookInit`loadMyFile[\"physics-general.wl\", DirectoryName[$InputFileName]]",
+    "myNotebookInit`loadMyFile[\"inputDataForRICH.wl\"]" ->
+      "myNotebookInit`loadMyFile[\"inputDataForRICH.wl\", DirectoryName[$InputFileName]]"
   }]
 ];
 
@@ -472,8 +623,8 @@ main[] := Module[
     <|"Key" -> "physics-general", "Source" -> {"legacy-original", "physics-general.nb"}, "Destination" -> {"src", "physics-general.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "statDataAnal", "Source" -> {"legacy-original", "statDataAnal.nb"}, "Destination" -> {"src", "statDataAnal.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "inputDataForRICH", "Source" -> {"legacy-original", "inputDataForRICH.nb"}, "Destination" -> {"src", "inputDataForRICH.wl"}, "Cutoff" -> None|>,
-    <|"Key" -> "calculator-reboot", "Source" -> {"legacy-original", "calculator-reboot.nb"}, "Destination" -> {"src", "calculator-reboot.wl"}, "Cutoff" -> "CALCULATOR BODY"|>,
-    <|"Key" -> "RICH-source", "Source" -> {"legacy-original", "RICH.nb"}, "Destination" -> {"src", "RICH.wl"}, "Cutoff" -> None|>
+    <|"Key" -> "RICH-source", "Source" -> {"legacy-original", "RICH.nb"}, "Destination" -> {"src", "RICH.wl"}, "Cutoff" -> None|>,
+    <|"Key" -> "calculator-reboot", "Source" -> {"legacy-original", "calculator-reboot.nb"}, "Destination" -> {"src", "calculator-reboot.wl"}, "Cutoff" -> "CALCULATOR BODY"|>
   };
 
   needsAllSources = requestedCases === {} || AnyTrue[requestedCases, # =!= "base" &];

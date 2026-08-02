@@ -1,5 +1,58 @@
 # Codex validation work record
 
+## Completed - 2026-08-01 15:47 Europe/Rome
+
+The notebook restructuring and strict behavioral-equivalence validation are
+complete. The installed aggregate report is **PASS** for all seven cases, with
+zero missing canonical symbols, zero definition differences, and zero assigned
+value differences in every case. No Wolfram validation process remains active.
+
+| Case | Status | Original symbols | Restructured symbols | Missing | Definition differences | Value differences |
+|---|---:|---:|---:|---:|---:|---:|
+| base | PASS | 251 | 263 | 0 | 0 | 0 |
+| physics-general | PASS | 0 | 307 | 0 | 0 | 0 |
+| statDataAnal | PASS | 178 | 312 | 0 | 0 | 0 |
+| inputDataForRICH | PASS | 117 | 438 | 0 | 0 | 0 |
+| calculator-reboot | PASS | 114 | 750 | 0 | 0 | 0 |
+| RICH-source | PASS | 297 | 739 | 0 | 0 | 0 |
+| CellStyleDataRules-source | PASS | 0 | 10 | 0 | 0 | 0 |
+
+### Final installed evidence
+
+- Report: `validation/results/current/VALIDATION_REPORT.md`
+- Report SHA-256:
+  `CEF1D7CBD186A399B02A3E2DB1CFDA4D8D7C53EAFB4B5948118EDC626F967819`
+- Installed result files: 62
+- Previous installed results archived at
+  `validation/results/archive/20260801-154705-pre-final-equivalence-install/`
+- The final RICH pair was captured without temporary diagnostic text fields and
+  against a disposable `src/` tree whose 11 files matched the project tree by
+  SHA-256.
+
+### Corrections completed after the paused checkpoint
+
+- Removed six `RICH.nb` example cells marked `Evaluatable -> False` from the
+  executable generated source. This eliminated the apparent numerical stall.
+- Replaced the readable RICH extraction with context-preserving FullForm so
+  common names such as `nf`, `num`, `x`, and `numSim` cannot be captured by the
+  `statDataAnal`` dependency context.
+- Explicitly resolved two legacy `killStop` references to
+  `myNotebookInit`killStop`.
+- Repaired two escaped `StyleBox` label strings that `NotebookImport` had
+  interpreted as multiplication expressions.
+- Made those RICH source repairs part of `RegenerateSources.wls`; a fresh
+  regeneration reproduced the validated `src/RICH.wl` byte-for-byte with
+  SHA-256
+  `1EC933E7EA05341811B5D95B5B8A30ECC5EC892D0EFB07440B0C8E8E5F554696`.
+- Scoped dynamic context aliases to the records they canonicalize, preserved
+  quoted strings during normalization, and retained explicit package aliases
+  for cross-context comparisons.
+- Preserved the pre-FullForm readable RICH source at
+  `validation/backup-before-codex/20260801-context-preserving-rich/RICH-readable-before-fullform.wl`.
+
+The following paused checkpoints are retained as historical recovery notes and
+are superseded by this completed result.
+
 ## Paused checkpoint - 2026-08-01 06:47
 
 The resumed equivalence task was stopped cleanly because the execution-time
