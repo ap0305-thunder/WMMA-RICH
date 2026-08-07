@@ -20698,8 +20698,7 @@ WindowSize->{
    Rational[3, 4]], 
   Scaled[1.]},
 WindowMargins->{{-5.5, Automatic}, {Automatic, -5.5}},
-WindowTitle->" ------- C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git\\calculator-reboot.nb",
+WindowTitle->Automatic,
 WindowStatusArea->"",
 DockedCells->{
   Cell[
@@ -20933,8 +20932,7 @@ AutoMultiplicationSymbol->True,
 Magnification->Rational[3, 4],
 Background->RGBColor[0.88, 1, 0.88],
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
-StyleDefinitions->"C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git\\myStyle.nb",
+StyleDefinitions->"myStyle.nb",
 ExpressionUUID->"3ba97c2e-5614-fc49-ae93-df50b26509af"
 ]
 

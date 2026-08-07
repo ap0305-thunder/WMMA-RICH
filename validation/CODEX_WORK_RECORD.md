@@ -450,3 +450,28 @@ is PASS: 7, WARNING: 0, FAIL: 0, NOT RUN: 0, with zero missing symbols, zero
 definition differences, zero value differences, and identical compared
 outputs in every case. The intentionally deleted `src/base (2).wl` was neither
 restored nor included in validation.
+
+## Package-editor structure recovery — 2026-08-07
+
+Generated `src/*.wl` files now include Wolfram package-editor metadata. Each
+recovered initialization Input/Code cell has an
+`(* ::Input::Initialization:: *)` boundary, and the original Title/Chapter/
+Subtitle/Subsubtitle/Section/Subsection/Subsubsection cells are reinserted in
+source order as non-evaluating commented header cells. The generator produces
+this structure automatically on every regeneration.
+
+A fresh regeneration and clean-kernel validation of every original and
+restructured case completed with 7 PASS, 0 WARNING, 0 FAIL, and 0 NOT RUN.
+
+## Portable stylesheet resolution — 2026-08-07
+
+`myStyle.nb` is now installed at the project root. `LoadProject.wl` resolves
+the stylesheet from that location first and otherwise supplies the bare name
+`myStyle.nb`, allowing the Front End to use its standard stylesheet search
+path. Generated sources consume the resolved setting. The two working
+notebooks that retained legacy absolute metadata now store
+`StyleDefinitions -> "myStyle.nb"` and `WindowTitle -> Automatic`.
+
+Both modified notebook expressions passed syntax/option checks. A fresh source
+regeneration and complete clean-kernel comparison again produced 7 PASS,
+0 WARNING, 0 FAIL, and 0 NOT RUN.

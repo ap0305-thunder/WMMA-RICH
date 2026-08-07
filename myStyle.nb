@@ -1,0 +1,109 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      4428,         99]
+NotebookOptionsPosition[      2540,         74]
+NotebookOutlinePosition[      2862,         88]
+CellTagsIndexPosition[      2819,         85]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[StyleData[StyleDefinitions -> "myStyle.nb"],ExpressionUUID->"3134da95-00e6-7647-a281-01839f9d4782"],
+
+Cell[StyleData["Title"],
+ CellGroupingRules->{"SectionGrouping", 0},
+ FontSize->28,ExpressionUUID->"a813abb9-d616-a540-b428-7c921d7ae45e"],
+
+Cell[StyleData["Subtitle"],
+ CellGroupingRules->{"SectionGrouping", 10},
+ FontSize->26,ExpressionUUID->"2fe42825-d177-e54a-9ab5-ea8dc543c371"],
+
+Cell[StyleData["Subsubtitle"],
+ CellGroupingRules->{"SectionGrouping", 20},
+ FontSize->24,ExpressionUUID->"b1f5ba53-9f5a-134d-8f06-1f482fc50142"],
+
+Cell[StyleData["Chapter"],
+ CellGroupingRules->{"SectionGrouping", 30},
+ FontSize->22,ExpressionUUID->"6b625c39-2fd9-5245-a2ee-ca3881e0bfe2"],
+
+Cell[StyleData["Section"],
+ CellGroupingRules->{"SectionGrouping", 40},
+ FontSize->20,ExpressionUUID->"ef9a3549-846e-6e4d-bff0-794c0f405ee2"],
+
+Cell[StyleData["Subsection"],
+ CellGroupingRules->{"SectionGrouping", 50},
+ FontSize->18,ExpressionUUID->"7f7e1124-34ce-6247-9d34-e8886779bd02"],
+
+Cell[StyleData["Subsubsection"],
+ CellGroupingRules->{"SectionGrouping", 60},
+ FontSize->16,ExpressionUUID->"8701330e-fffc-194f-aef0-dd2f29d64554"],
+
+Cell[StyleData["Code"],
+ CellGroupingRules->{"SectionGrouping", 90},
+ FontSize->14,ExpressionUUID->"6a56c92f-c3d8-f54c-83e3-2e29f974df5a"],
+
+Cell[StyleData["Input"],
+ CellGroupingRules->{"SectionGrouping", 90},
+ FontSize->14,ExpressionUUID->"d37a27eb-c828-c045-8173-9abaad118e3c"],
+
+Cell[StyleData["Text"],
+ CellGroupingRules->{"SectionGrouping", 90},
+ FontSize->12,ExpressionUUID->"0ff61ded-14fa-514f-b36d-cf2f1cb6f247"],
+
+Cell[StyleData["Output"],
+ CellGroupingRules->{"SectionGrouping", 90},
+ FontSize->14,ExpressionUUID->"adc28475-6f42-0847-bffc-04b38a45bce9"],
+
+Cell[StyleData["Message"],
+ CellGroupingRules->{"SectionGrouping", 92},
+ FontSize->12,ExpressionUUID->"349eb0fe-38a4-0c4f-84d8-87ffa40eb76f"],
+
+Cell[StyleData["ExampleText"],
+ CellGroupingRules->{"SectionGrouping", 91},
+ FontSize->12,ExpressionUUID->"48b55b6b-23e5-fb4a-8945-ac52c9152e79"]
+},
+FrontEndVersion->"14.3 for Microsoft Windows (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"eec34675-6673-ad4b-868e-2149b4aaf05b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 104, 0, 19, 49, 0, "StyleData", "StyleDefinitions", "",ExpressionUUID->"3134da95-00e6-7647-a281-01839f9d4782"],
+Cell[661, 22, 138, 2, 67, 24, 0, "StyleData", "Title", "All",ExpressionUUID->"a813abb9-d616-a540-b428-7c921d7ae45e"],
+Cell[802, 26, 142, 2, 50, 27, 0, "StyleData", "Subtitle", "All",ExpressionUUID->"2fe42825-d177-e54a-9ab5-ea8dc543c371"],
+Cell[947, 30, 145, 2, 54, 30, 0, "StyleData", "Subsubtitle", "All",ExpressionUUID->"b1f5ba53-9f5a-134d-8f06-1f482fc50142"],
+Cell[1095, 34, 141, 2, 44, 26, 0, "StyleData", "Chapter", "All",ExpressionUUID->"6b625c39-2fd9-5245-a2ee-ca3881e0bfe2"],
+Cell[1239, 38, 141, 2, 52, 26, 0, "StyleData", "Section", "All",ExpressionUUID->"ef9a3549-846e-6e4d-bff0-794c0f405ee2"],
+Cell[1383, 42, 144, 2, 39, 29, 0, "StyleData", "Subsection", "All",ExpressionUUID->"7f7e1124-34ce-6247-9d34-e8886779bd02"],
+Cell[1530, 46, 147, 2, 37, 32, 0, "StyleData", "Subsubsection", "All",ExpressionUUID->"8701330e-fffc-194f-aef0-dd2f29d64554"],
+Cell[1680, 50, 138, 2, 47, 23, 0, "StyleData", "Code", "All",ExpressionUUID->"6a56c92f-c3d8-f54c-83e3-2e29f974df5a"],
+Cell[1821, 54, 139, 2, 40, 24, 0, "StyleData", "Input", "All",ExpressionUUID->"d37a27eb-c828-c045-8173-9abaad118e3c"],
+Cell[1963, 58, 138, 2, 43, 23, 0, "StyleData", "Text", "All",ExpressionUUID->"0ff61ded-14fa-514f-b36d-cf2f1cb6f247"],
+Cell[2104, 62, 140, 2, 41, 25, 0, "StyleData", "Output", "All",ExpressionUUID->"adc28475-6f42-0847-bffc-04b38a45bce9"],
+Cell[2247, 66, 141, 2, 30, 26, 0, "StyleData", "Message", "All",ExpressionUUID->"349eb0fe-38a4-0c4f-84d8-87ffa40eb76f"],
+Cell[2391, 70, 145, 2, 31, 30, 0, "StyleData", "ExampleText", "All",ExpressionUUID->"48b55b6b-23e5-fb4a-8945-ac52c9152e79"]
+}
+]
+*)
+
+(* End of internal cache information *)
+

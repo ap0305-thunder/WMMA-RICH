@@ -7,6 +7,15 @@
 - `legacy-original/`: every supplied file, unchanged
 - `docs/RESTRUCTURING_REPORT.md`: scope, limitations and validation procedure
 
+The project stylesheet is resolved portably: `myStyle.nb` in the project root
+is preferred; if it is absent, the Front End searches its standard stylesheet
+locations for `myStyle.nb`.
+
+When a generated `src/*.wl` file is opened in the Wolfram package editor, its
+original initialization-cell boundaries and structural notebook headers are
+shown as separate cells. Header cells are stored as comments and do not affect
+evaluation with `Get`.
+
 The working `calculator-reboot.nb` includes the complete `---... CALCULATOR BODY`
 top-level group and excludes everything after it.
 

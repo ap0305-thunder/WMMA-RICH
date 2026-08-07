@@ -1,10 +1,14 @@
 (* Project loader for WolframMMAProjectRICH-Git. *)
 ClearAll[
-  $RICHProjectRoot, $RICHProjectComponents,
+  $RICHProjectRoot, $RICHProjectStyleDefinitions, $RICHProjectComponents,
   RICHProjectPath, LoadRICHFiles, LoadRICHCase, LoadRICHProject
 ];
 $RICHProjectRoot = ParentDirectory[DirectoryName[$InputFileName]];
 RICHProjectPath[parts__String] := FileNameJoin[{$RICHProjectRoot, parts}];
+$RICHProjectStyleDefinitions = With[
+  {localStyleSheet = RICHProjectPath["myStyle.nb"]},
+  If[FileExistsQ[localStyleSheet], localStyleSheet, "myStyle.nb"]
+];
 
 $RICHProjectComponents = <|
   "base" -> {

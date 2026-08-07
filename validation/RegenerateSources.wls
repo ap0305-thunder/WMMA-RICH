@@ -6,7 +6,9 @@ Begin["Validation`SourceGeneration`Private`"];
 ClearAll[
   flushOutput, exitWithCode, fail, commandLineArguments, truncateAtMarker,
   cellStyle, explicitInitializationCellQ, explicitlyNonEvaluatableQ,
-  initializationCodeCells, contextCommands, advanceImportContext,
+  initializationCodeCells, sourceHeaderCellQ, sourceStructureCells,
+  sourceHeaderText, sourceHeaderBlock, inputCellBlock,
+  contextCommands, advanceImportContext,
   heldExpressionsForCell, heldExpressionsForCells, heldExpressionText,
   directContextSymbolNames, usageSymbolNames, packageUsageSymbolNames,
   dependencyContextOwners, reassignDependencyContexts,
@@ -98,6 +100,57 @@ initializationCodeCells[notebookExpression_] := Module[{codeCells},
     explicitInitializationCellQ[#] && ! explicitlyNonEvaluatableQ[#] &
   ]
 ];
+
+sourceHeaderCellQ[cell_Cell] := MemberQ[
+  {
+    "Title", "Chapter", "Subtitle", "Subsubtitle",
+    "Section", "Subsection", "Subsubsection"
+  },
+  cellStyle[cell]
+];
+
+(* Preserve the notebook's structural headings in their original order while
+   retaining only executable initialization Input/Code cells. Package-file
+   cell markers make these boundaries visible when a generated .wl file is
+   opened in the Wolfram Front End; headings remain comments and therefore
+   have no kernel effect when the file is loaded with Get. *)
+sourceStructureCells[notebookExpression_] := Select[
+  Cases[notebookExpression, cell_Cell :> cell, Infinity],
+  sourceHeaderCellQ[#] || (
+    MemberQ[{"Input", "Code"}, cellStyle[#]] &&
+    explicitInitializationCellQ[#] &&
+    ! explicitlyNonEvaluatableQ[#]
+  ) &
+];
+
+sourceHeaderText[cell_Cell] := Module[{content, strings},
+  content = Replace[cell, Cell[value_, _String, ___] :> value, {0}];
+  If[StringQ[content], Return[content]];
+  strings = Cases[Unevaluated[content], text_String :> text, Infinity];
+  If[
+    strings =!= {},
+    StringJoin[strings],
+    ToString[Unevaluated[content], InputForm, PageWidth -> Infinity]
+  ]
+];
+
+sourceHeaderBlock[cell_Cell] := Module[{text},
+  text = StringReplace[sourceHeaderText[cell], {
+    "(*" -> "( *", "*)" -> "* )"
+  }];
+  "(* ::" <> cellStyle[cell] <> ":: *)\n(* " <> text <> " *)"
+];
+
+inputCellBlock[cellTexts_List, cellIndex_Integer] :=
+  "(* ::Input::Initialization:: *)\n" <>
+  StringRiffle[
+    MapIndexed[
+      "(* ---- initialization cell " <> ToString[cellIndex] <>
+      ", expression " <> ToString[First[#2]] <> " ---- *)\n" <> #1 &,
+      cellTexts
+    ],
+    "\n"
+  ];
 
 (* NotebookImport without an explicit form returns Input-cell expressions held
    in HoldComplete. This preserves the actual expression boundaries in cells
@@ -420,6 +473,10 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
       StringReplace[text, "Global`" -> ""],
       reassignDependencyContexts[text, destinationPath]
     ], {
+    "FileNameJoin[List[NotebookDirectory[], \"myStyle.nb\"]]" ->
+      "If[StringQ[Global`$RICHProjectStyleDefinitions], Global`$RICHProjectStyleDefinitions, \"myStyle.nb\"]",
+    "Rule[StyleDefinitions, \"myStyle.nb\"]" ->
+      "Rule[StyleDefinitions, If[StringQ[Global`$RICHProjectStyleDefinitions], Global`$RICHProjectStyleDefinitions, \"myStyle.nb\"]]",
     "myNotebookInit`loadMyFile[\"CellStyleDataRules.m\"]" ->
       "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\", DirectoryName[$InputFileName]]]",
     "myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\"]" ->
@@ -496,9 +553,9 @@ regenerateOne[
   destinationRelative_List,
   cutoff_: None
 ] := UsingFrontEnd@Module[
-  {sourcePath, destinationPath, sourceNotebook, expression, cells,
+  {sourcePath, destinationPath, sourceNotebook, expression, structureCells, cells,
    importResult, heldByCell, scratchPrefix, failedCells, textByCell,
-    failedTexts, blocks, header, generatedText,
+    failedTexts, importedExpressionCount, blocks, codeCellIndex, header, generatedText,
    parsedExpressionCount},
 
   sourcePath = FileNameJoin[Prepend[sourceRelative, projectRoot]];
@@ -522,7 +579,8 @@ regenerateOne[
     If[FailureQ[expression], Return[expression]]
   ];
 
-  cells = initializationCodeCells[expression];
+  structureCells = sourceStructureCells[expression];
+  cells = Select[structureCells, ! sourceHeaderCellQ[#] &];
   WriteString[$Output,
     "  selected initialization Input/Code cells: " <>
       ToString[Length[cells]] <> "\n"
@@ -566,18 +624,19 @@ regenerateOne[
     |>]]
   ];
 
-  blocks = Flatten@MapIndexed[
-    Function[{cellTexts, cellIndex},
-      MapIndexed[
-        Function[{sourceText, expressionIndex},
-          "(* ---- initialization cell " <> ToString[First[cellIndex]] <>
-          ", expression " <> ToString[First[expressionIndex]] <> " ---- *)\n" <>
-          sourceText
-        ],
-        cellTexts
+  importedExpressionCount = Total[Length /@ textByCell];
+
+  codeCellIndex = 0;
+  blocks = Map[
+    Function[cell,
+      If[
+        sourceHeaderCellQ[cell],
+        sourceHeaderBlock[cell],
+        codeCellIndex++;
+        inputCellBlock[textByCell[[codeCellIndex]], codeCellIndex]
       ]
     ],
-    textByCell
+    structureCells
   ];
 
   If[blocks === {},
@@ -585,6 +644,7 @@ regenerateOne[
   ];
 
   header =
+    "(* ::Package:: *)\n\n" <>
     "(* Regenerated from " <> FileNameTake[sourcePath] <>
     " using NotebookImport without a text conversion. *)\n" <>
     "(* Each source cell was imported under HoldComplete, serialized in context-preserving FullForm, and syntax-checked without evaluation. *)\n\n";
@@ -605,7 +665,7 @@ regenerateOne[
   If[FailureQ[parsedExpressionCount], Return[parsedExpressionCount]];
 
   WriteString[$Output,
-    "  imported held expressions: " <> ToString[Length[blocks]] <> "\n" <>
+    "  imported held expressions: " <> ToString[importedExpressionCount] <> "\n" <>
     "  parsed expressions in generated file: " <>
       ToString[parsedExpressionCount] <> "\n"
   ];
@@ -615,7 +675,7 @@ regenerateOne[
     "Source" -> sourcePath,
     "Destination" -> destinationPath,
     "CellCount" -> Length[cells],
-    "ExpressionCount" -> Length[blocks],
+    "ExpressionCount" -> importedExpressionCount,
     "ParsedExpressionCount" -> parsedExpressionCount
   |>
 ];

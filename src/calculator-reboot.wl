@@ -1,631 +1,459 @@
-(* Extracted from calculator-reboot.nb. Definitions preserve original initialization-cell order. *)
-(* Generated mechanically; validate in a clean Wolfram kernel before deleting legacy-original/. *)
-
-(* ---- initialization cell 1 | 7352a6e7-3289-7f40-9628-4c004cde9271 ---- *)
-$trackedContext=$Context;
-
-$trackedPath=$ContextPath;
-
-$Post=Function[expr,
-If[$Context=!=$trackedContext,
-Print["\<Changed Context to: \>",$Context];
-$trackedContext=$Context
-];
-If[$ContextPath=!=$trackedPath,
-Print["\<Changed ContextPath to: \>",$ContextPath];
-$trackedPath=$ContextPath];
-expr];
+(* ::Package:: *)
 
-(* ---- initialization cell 2 | c8cdfcaa-d51c-b34f-bd73-1d7810eb3370 ---- *)
-(*TO FIX*)
-(*SetDirectory[NotebookDirectory[]];Needs["\<packageLoadDebugger`\>"];installPackageLoadDebugger[];clearPackageLoadLog[]*)
+(* Regenerated from calculator-reboot.nb using NotebookImport without a text conversion. *)
+(* Each source cell was imported under HoldComplete, serialized in context-preserving FullForm, and syntax-checked without evaluation. *)
 
-(* ---- initialization cell 3 | 60a63adc-7445-c348-a339-0150d2c449bf ---- *)
-(*TO FIX*)
-(*Needs["\<myNotebookInit`\>"];*)(*check with loadMyFile: with package can use Needs instead; with notebook need to Get*)
-(*Needs["\<base`\>"];*)(*check with loadMyFile: with package can use Needs instead; with notebook need to Get*)
-(*Needs["\<statDataAnal`\>"];*)(*check with loadMyFile: with package can use Needs instead; with notebook need to Get*)
-(**)
+(* ::Title:: *)
+(* ---... SETUP *)
 
-(* ---- initialization cell 4 | 3e022f8b-8b80-0145-87b6-cbef45d9ff96 ---- *)
-(*Off[Unset::norep];*)(*for superClearSet complaints...*)
+(* ::Subtitle:: *)
+(* PREAMBLE *)
 
-(* ---- initialization cell 5 | fda25420-f9b6-b44d-ab84-fed6dd52857c ---- *)
-(* ::Section::Initialization::*)
-Module[{dir,pkg},
-dir=Quiet@NotebookDirectory[];
-If[!StringQ[dir],dir=$HomeDirectory];(*unsaved notebook fallback*)
-pkg=FileNameJoin[{dir,"\<myNotebookInit.wl\>"}];
-If[!FileExistsQ[pkg],MessageDialog["\<Missing myNotebookInit.wl at:\n\>"<>pkg];Return[$Failed];];
-Get[pkg];
-Print@Column[{
-Button["\<Save a versioned copy\>",myNotebookInit`saveVersionedCopy[myNotebookInit`versionTAG,NotebookDirectory[]],Method->"\<Queued\>"],Button["\<Save a txt copy\>",With[{out=myNotebookInit`saveNotebookTextCopy[]},If[StringQ[out],Print["\<Saved: \>",out]]],Method->"\<Queued\>"],Button["\<List init code (prints)\>",Print/@myNotebookInit`listInitializationCells[],Method->"\<Queued\>"],Button["\<Highlight init cells\>",myNotebookInit`selectInitializationCells[],Method->"\<Queued\>"],Button["\<Mark ALL Input cells as initialization\>",myNotebookInit`markInputCellsAsInitialization[True],Method->"\<Queued\>"],Button["\<Clear initialization on Input cells\>",myNotebookInit`markInputCellsAsInitialization[False],Method->"\<Queued\>"],Button["\<Delete all empty cells\>",myNotebookInit`deleteAllEmptyCellsInNotebook,Method->"\<Queued\>"],Button["\<Export all Output cells to PNG (notebook dir)\>",myNotebookInit`saveAsPngAllOutputCells[],Method->"\<Queued\>"],Button["\<Export all Output cells to PDF (notebook dir)\>",myNotebookInit`saveAsPdfAllOutputCells[],Method->"\<Queued\>"],Button["\<Show diagnostics\>",myNotebookInit`showDiagnostics[],Method->"\<Queued\>"],
-Button["\<Show error message cells\>",Print[Cells[CellStyle->{"\<MSG\>","\<Message\>"}]],Method->"\<Preemptive\>"]
-}]
-];
-(**)
-(*Apply default options+optional stylesheet+optional session init*)
-myNotebookInit`manageMyStyleNotebook[];
-(**)
-
-(* ---- initialization cell 6 | f4d784b5-6c21-c048-90e7-5ee9ac5fabcc ---- *)
-myNotebookInit`clearLoadLog[];
-
-myNotebookInit`summarizeLoads[];
-
-myNotebookInit`saveLoadLog[];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 1, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[Global`$trackedContext, $Context], Null], Null, CompoundExpression[Set[Global`$trackedPath, $ContextPath], Null], Null, CompoundExpression[Set[$Post, Function[Global`expr, CompoundExpression[If[UnsameQ[$Context, Global`$trackedContext], CompoundExpression[Print["Changed Context to: ", $Context], Set[Global`$trackedContext, $Context]]], If[UnsameQ[$ContextPath, Global`$trackedPath], CompoundExpression[Print["Changed ContextPath to: ", $ContextPath], Set[Global`$trackedPath, $ContextPath]]], Global`expr]]], Null]]
 
-(* ---- initialization cell 7 | bc176284-fb72-b749-9f52-9179049d2ae2 ---- *)
-myNotebookInit`loadSavedLog[];
+(* ::Subtitle:: *)
+(* COMMON NOTEBOOK SETUP *)
 
-(* ---- initialization cell 8 | 1e9a93ef-9e87-fd4f-9d07-6d4c9d4262f8 ---- *)
-If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<myDockedCells.wl\>",DirectoryName[$InputFileName]]]
+(* ::Subsubtitle:: *)
+(* bootstrap *)
 
-(* ---- initialization cell 9 | dd067d3e-30ec-3a47-a655-fa168c1d7dd5 ---- *)
-(*
-Context/@{Global`s,rich`s}
-OwnValues/@{Global`s,rich`s}
-DownValues/@{Global`s,rich`s}
-UpValues/@{Global`s,rich`s}
-*)
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 2, expression 1 ---- *)
+CompoundExpression[Null]
 
-(* ---- initialization cell 10 | a9b78f3e-c289-4d46-bc55-33ca3e863ece ---- *)
-(*cellStylesScannerPalette*)
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 3, expression 1 ---- *)
+CompoundExpression[Null]
 
-(* ---- initialization cell 11 | 691ec283-9550-a348-a6df-fa9da925af55 ---- *)
-checkProtection[{$dirBackup,$dirSWRoot,$dirSW,$dirOut}];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 4, expression 1 ---- *)
+CompoundExpression[Null]
 
-setProtection[{$dirBackup,$dirSWRoot,$dirSW,$dirOut},False]
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 5, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Module[List[Global`dir, Global`pkg], CompoundExpression[Set[Global`dir, Quiet[NotebookDirectory[]]], If[Not[StringQ[Global`dir]], Set[Global`dir, $HomeDirectory]], Set[Global`pkg, FileNameJoin[List[Global`dir, "myNotebookInit.wl"]]], If[Not[FileExistsQ[Global`pkg]], CompoundExpression[MessageDialog[StringJoin["Missing myNotebookInit.wl at:\n", Global`pkg]], Return[$Failed], Null]], Get[Global`pkg], Print[Column[List[Button["Save a versioned copy", myNotebookInit`saveVersionedCopy[myNotebookInit`versionTAG, NotebookDirectory[]], Rule[Method, "Queued"]], Button["Save a txt copy", With[List[Set[Global`out, myNotebookInit`saveNotebookTextCopy[]]], If[StringQ[Global`out], Print["Saved: ", Global`out]]], Rule[Method, "Queued"]], Button["List init code (prints)", Map[Print, myNotebookInit`listInitializationCells[]], Rule[Method, "Queued"]], Button["Highlight init cells", myNotebookInit`selectInitializationCells[], Rule[Method, "Queued"]], Button["Mark ALL Input cells as initialization", myNotebookInit`markInputCellsAsInitialization[True], Rule[Method, "Queued"]], Button["Clear initialization on Input cells", myNotebookInit`markInputCellsAsInitialization[False], Rule[Method, "Queued"]], Button["Delete all empty cells", myNotebookInit`deleteAllEmptyCellsInNotebook, Rule[Method, "Queued"]], Button["Export all Output cells to PNG (notebook dir)", myNotebookInit`saveAsPngAllOutputCells[], Rule[Method, "Queued"]], Button["Export all Output cells to PDF (notebook dir)", myNotebookInit`saveAsPdfAllOutputCells[], Rule[Method, "Queued"]], Button["Show diagnostics", myNotebookInit`showDiagnostics[], Rule[Method, "Queued"]], Button["Show error message cells", Print[Cells[Rule[CellStyle, List["MSG", "Message"]]]], Rule[Method, "Preemptive"]]]]]]], Null], CompoundExpression[myNotebookInit`manageMyStyleNotebook[], Null]]]
 
-ClearAll[$dirBackup,$dirSWRoot,$dirSW,$dirOut]
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 6, expression 1 ---- *)
+CompoundExpression[CompoundExpression[myNotebookInit`clearLoadLog[], Null], Null, CompoundExpression[myNotebookInit`summarizeLoads[], Null], Null, CompoundExpression[myNotebookInit`saveLoadLog[], Null]]
 
-$dirBackup="\<C:\\Users\\Ale\\My Drive\\Mathematica\>";
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 7, expression 1 ---- *)
+CompoundExpression[CompoundExpression[myNotebookInit`loadSavedLog[], Null]]
 
-$dirSWRoot="\<D:\\Users\\Ale\\Mathematica\>";
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 8, expression 1 ---- *)
+CompoundExpression[If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile["myDockedCells.wl", DirectoryName[$InputFileName]]]]
 
-$dirSW="\<\>";
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 9, expression 1 ---- *)
+CompoundExpression[Null]
 
-$dirOut="\<C:\\TEMP\\\>";
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 10, expression 1 ---- *)
+CompoundExpression[Null]
 
-setProtection[{$dirBackup,$dirSWRoot,$dirSW,$dirOut},True];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 11, expression 1 ---- *)
+CompoundExpression[CompoundExpression[myNotebookInit`checkProtection[List[Global`$dirBackup, Global`$dirSWRoot, Global`$dirSW, Global`$dirOut]], Null], Null, myNotebookInit`setProtection[List[Global`$dirBackup, Global`$dirSWRoot, Global`$dirSW, Global`$dirOut], False], Null, ClearAll[Global`$dirBackup, Global`$dirSWRoot, Global`$dirSW, Global`$dirOut], Null, CompoundExpression[Set[Global`$dirBackup, "C:\\Users\\Ale\\My Drive\\Mathematica"], Null], Null, CompoundExpression[Set[Global`$dirSWRoot, "D:\\Users\\Ale\\Mathematica"], Null], Null, CompoundExpression[Set[Global`$dirSW, ""], Null], Null, CompoundExpression[Set[Global`$dirOut, "C:\\TEMP\\"], Null], Null, CompoundExpression[myNotebookInit`setProtection[List[Global`$dirBackup, Global`$dirSWRoot, Global`$dirSW, Global`$dirOut], True], Null]]
 
-(* ---- initialization cell 12 | 36066e36-9e65-dc46-bb0e-c9222b14252f ---- *)
-If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>",DirectoryName[$InputFileName]]]
+(* ::Subsubtitle:: *)
+(* BASE OPTIONS *)
 
-(* ---- initialization cell 13 | 848a8e45-7277-bb40-9292-126b1a108982 ---- *)
-(*nb[]:=EvaluationNotebook[];
-nbFileName:=NotebookFileName[EvaluationNotebook[]];
-nbFileDirectory:=NotebookDirectory[EvaluationNotebook[]];
-nbFileBaseName:=FileBaseName[NotebookFileName[EvaluationNotebook[]]];*)
-printD[nb[]];
-printD[nbFileName];
-printD[nbFileDirectory];
-printD[nbFileBaseName ];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 12, expression 1 ---- *)
+CompoundExpression[If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile["CellStyleDataRules.wl", DirectoryName[$InputFileName]]]]
 
-(* ---- initialization cell 14 | cd8f3e07-fbcd-3d4d-8205-ad9d98578bac ---- *)
-$HistoryLength=100;
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 13, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[myNotebookInit`printD[myNotebookInit`nb[]], Null], CompoundExpression[myNotebookInit`printD[myNotebookInit`nbFileName], Null], CompoundExpression[myNotebookInit`printD[myNotebookInit`nbFileDirectory], Null], CompoundExpression[myNotebookInit`printD[myNotebookInit`nbFileBaseName], Null]]]
 
-SetOptions[EvaluationNotebook[],Background->LightGreen];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 14, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[$HistoryLength, 100], Null], Null, CompoundExpression[SetOptions[EvaluationNotebook[], Rule[Background, LightGreen]], Null], Null, CompoundExpression[SetOptions[EvaluationNotebook[], Rule[Magnification, Times[3, Power[4, -1]]]], Null], Null, CompoundExpression[SetOptions[EvaluationNotebook[], Rule[WindowMargins, List[List[0, Automatic], List[Automatic, 0]]]], Null], Null, CompoundExpression[SetOptions[EvaluationNotebook[], Rule[WindowSize, List[Scaled[Times[3, Power[4, -1]]], Scaled[1.`]]]], Null], Null, CompoundExpression[SetOptions[EvaluationNotebook[], Rule[WindowTitle, StringJoin[" ------- ", myNotebookInit`nbFileName]]], Null], Null, CompoundExpression[SetOptions[EvaluationNotebook[], Rule[StyleDefinitions, If[StringQ[Global`$RICHProjectStyleDefinitions], Global`$RICHProjectStyleDefinitions, "myStyle.nb"]]], Null]]
 
-SetOptions[EvaluationNotebook[],Magnification->3/4];
+(* ::Subsubtitle:: *)
+(* DETECT AND LOG SOME PROPERTIES OF THIS NOTEBOOK *)
 
-SetOptions[EvaluationNotebook[],WindowMargins->{{0,Automatic},{Automatic,0}}];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 15, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[If[Greater[Length[Cells[Rule[CellStyle, "Output"]]], 0], CompoundExpression[Echo[Cells[Rule[CellStyle, "Output"]]], Print["Length@Cells[CellStyle->Output]  ", Length[Cells[Rule[CellStyle, "Output"]]]]]], Null], CompoundExpression[If[Greater[Length[Cells[Rule[CellStyle, "Print"]]], 0], CompoundExpression[Echo[Cells[Rule[CellStyle, "Print"]]], Print["Length@Cells[CellStyle->Print]  ", Length[Cells[Rule[CellStyle, "Print"]]]]]], Null]]]
 
-SetOptions[EvaluationNotebook[],WindowSize->{Scaled[3/4],Scaled[1.0]}];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 16, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Print["Length@Cells[CellStyle -> Title                ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Title"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Subtitle             ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Subtitle"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Subsubtitle          ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Subsubtitle"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Section              ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Section"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Subsection           ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Subsection"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Subsubsection        ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Subsubsection"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Input                ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Input"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Text                 ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Text"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> ExampleText          ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "ExampleText"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Code                 ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Code"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Output                           ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Output"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Print                            ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Print"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> Message                          ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "Message"]]]]], Null], CompoundExpression[Print["Length@Cells[CellStyle -> MSG                              ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[Rule[CellStyle, "MSG"]]]]], Null], CompoundExpression[Print["                       Total Number of Cells ->                                    ", Function[PaddedForm[Slot[1], List[3, 4]]][Length[Cells[]]]], Null]]]
 
-SetOptions[EvaluationNotebook[],WindowTitle->StringJoin["\< ------- \>",nbFileName]];
+(* ::Subsubtitle:: *)
+(* END *)
 
-SetOptions[EvaluationNotebook[],StyleDefinitions->FileNameJoin[{NotebookDirectory[],"\<myStyle.nb\>"}]];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 17, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Print["*==================================================================================================*"], Null], Null, CompoundExpression[Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"], Null], Null, CompoundExpression[Print["***--- calculator ---***"], Null], Null, CompoundExpression[Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"], Null], Null, CompoundExpression[Print["*==================================================================================================*"], Null]]
 
-(* ---- initialization cell 15 | 37125f97-8abb-094f-8a1e-38bcbe4f3935 ---- *)
-(* output/print cells *)
-If[Length@Cells[CellStyle->"\<Output\>"]>0,Echo@Cells[CellStyle->"\<Output\>"];Print[      "\<Length@Cells[CellStyle->Output]  \>",       Length@Cells[CellStyle->"\<Output\>"]      ]];
-If[Length@Cells[CellStyle->"\<Print\>"]>0,Echo@Cells[CellStyle->"\<Print\>"];Print[     "\<Length@Cells[CellStyle->Print]  \>",           Length@Cells[CellStyle->"\<Print\>"]               ]];
-(**)
+(* ::Subtitle:: *)
+(* THIS NOTEBOOK INITIALIZATION *)
 
-(* ---- initialization cell 16 | a3e54289-b413-3d45-b1a2-72c5ab52e4d0 ---- *)
-(* Cells type inventory for this notebook *)
-(**)
-Print["\<Length@Cells[CellStyle -> Title                \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Title\>"]];
-Print["\<Length@Cells[CellStyle -> Subtitle             \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Subtitle\>"]];
-Print["\<Length@Cells[CellStyle -> Subsubtitle          \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Subsubtitle\>"]];
-Print["\<Length@Cells[CellStyle -> Section              \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Section\>"]];
-Print["\<Length@Cells[CellStyle -> Subsection           \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Subsection\>"]];
-Print["\<Length@Cells[CellStyle -> Subsubsection        \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Subsubsection\>"]];
-Print["\<Length@Cells[CellStyle -> Input                \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Input\>"]];
-Print["\<Length@Cells[CellStyle -> Text                 \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Text\>"]];
-Print["\<Length@Cells[CellStyle -> ExampleText          \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<ExampleText\>"]];
-Print["\<Length@Cells[CellStyle -> Code                 \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Code\>"]];
-Print["\<Length@Cells[CellStyle -> Output                           \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Output\>"]];
-Print["\<Length@Cells[CellStyle -> Print                            \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Print\>"]];
-Print["\<Length@Cells[CellStyle -> Message                          \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<Message\>"]];
-Print["\<Length@Cells[CellStyle -> MSG                              \>",PaddedForm[#,{3,4}]&@Length@Cells[CellStyle->"\<MSG\>"]];
-Print["\<                       Total Number of Cells ->             \>",PaddedForm[#,{3,4}]&@Length@Cells[]];
+(* ::Subsubtitle:: *)
+(* INIT *)
 
-(* ---- initialization cell 17 | 81811305-9ab7-7d4b-96a3-fea749c4b587 ---- *)
-Print["\<*==================================================================================================*\>"];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 18, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Print[" ************************************************************************************************* "], Null], Null, CompoundExpression[Print[" Start running  ", Set[Global`theTimeStamp, myNotebookInit`timeStamp]], Null], Null, CompoundExpression[Print[" t0=AbsoluteTime[]   ", Set[Global`t0, AbsoluteTime[]]], Null], Null, CompoundExpression[Print[" ************************************************************************************************* "], Null], Null, SetDelayed[Global`thisTimeStamp, StringJoin[Global`theTimeStamp, "--", ToString[Round[Times[1000000, Plus[1000000, Plus[AbsoluteTime[], Times[-1, Global`t0]]]]]]]]]
 
-Print["\<*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*\>"];
+(* ::Subsubtitle:: *)
+(* MY LIBRARIES *)
 
-Print["\<***--- calculator ---***\>"];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 19, expression 1 ---- *)
+CompoundExpression[Null]
 
-Print["\<*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*\>"];
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 20, expression 1 ---- *)
+CompoundExpression[Times[myNotebookInit`checkNewCreatedSymbols[], If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile["RICH.wl", DirectoryName[$InputFileName]]], myNotebookInit`checkNewCreatedSymbols[]]]
 
-Print["\<*==================================================================================================*\>"];
+(* ::Subsubtitle:: *)
+(* stuff specific to this notebook *)
 
-(* ---- initialization cell 18 | 4a3e4955-026d-4740-ad7d-1ea10dac0667 ---- *)
-Print["\< ************************************************************************************************* \>"];
-
-Print["\< Start running  \>",theTimeStamp=timeStamp];
-
-Print["\< t0=AbsoluteTime[]   \>",t0=AbsoluteTime[]];
-
-Print["\< ************************************************************************************************* \>"];
-
-thisTimeStamp:=theTimeStamp<>"\<--\>"<>ToString[Round[1000000*(1000000+(AbsoluteTime[]-t0))]]
-
-(* ---- initialization cell 19 | 8b82798e-562a-e34d-b993-7a123f6498b3 ---- *)
-(**************************************************************************************************)
-(* my personal stuff *)
-(**************************************************************************************************)
-
-(* ---- initialization cell 20 | 26a8ece2-274a-5849-bd08-e9fa4d1a996e ---- *)
-(**************************************************************************************************)
-(* rich *)
-(**************************************************************************************************)
-checkNewCreatedSymbols[]
-(*Once[*)If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<RICH.wl\>",DirectoryName[$InputFileName]]](*,"\<KernelSession\>"];*)
-checkNewCreatedSymbols[]
-
-(* ---- initialization cell 21 | 6484e006-f257-8543-8199-b33b221ce6d3 ---- *)
-SetOptions[{LogPlot,Plot,Graphics,ListPlot,Histogram},Ticks->{Automatic,Automatic}];
-
-SetOptions[{LogPlot,Plot,Graphics,ListPlot,Histogram},AxesOrigin->{0,0}];
-
-SetOptions[{LogPlot,Plot,(*Graphics,*)ListPlot,Histogram},Frame->True];
-
-SetOptions[{Graphics},AspectRatio->Automatic];
-
-SetOptions[TableForm,TableAlignments->Center](*works?????*);
-
-(* ---- initialization cell 22 | 599f650f-3675-5c4a-abeb-870e15917e3a ---- *)
-(*<<AuthorTools`OpenAuthorTool[]*)
-
-(* ---- initialization cell 23 | 55edd580-6069-dc47-824f-d50394e720cd ---- *)
-(**)
-(*NotebookDelete[Cells[nb,CellStyle->{"\<Output\>"}]];*)
-(*NotebookDelete[Cells[nb,GeneratedCell->True]];*)
-(*FrontEndExecute[FrontEndToken["\<DeleteGeneratedCells\>"]]*)
-(**)
-bigBanner["\< FINISHING INITIALIZATION \>"]
-(**)
-(*FrontEndExecute[FrontEndToken[nb,"\<SelectAll\>"]];*)
-(*FrontEndTokenExecute["\<SelectionCloseAllGroups\>"];*)
-(*FrontEndTokenExecute["\<SelectionOpenAllGroups\>"]*)
-(**)
-
-(* ---- initialization cell 24 | d651f60b-ecc4-104e-a704-4919076918b1 ---- *)
-endEvalPrintOut[]
-
-(* ---- initialization cell 25 | 68af2530-cbfe-bc4e-8cb4-c52536c5a067 ---- *)
-BeginPackage["\<calculator`\>",{"\<myNotebookInit`\>","\<base`\>","\<statDataAnal`\>","\<rich`\>"}]
-(**)
-
-Print["\< loading calculator \>"]
-(**)
-
-Begin["\<`Private`\>"] (* Begin Private Context *) 
-(**)
-
-showContextInfo[]
-(**)
-
-versionTAG="\<v.15-03-2026\>";
-(**)
-
-End[] (* End Private Context *)
-(**)
-
-showContextInfo[]
-(**)
-
-Print@Cells[CellStyle->{"\<MSG\>","\<Message\>"}]
-(**)
-
-EndPackage[]
-
-(* ---- initialization cell 26 | 2bd4c87c-d49c-49a6-b17d-cda9b42996b0 ---- *)
-(* Exact box evaluation retained because this cell uses special front-end constructs. *)
-ReleaseHold[ToExpression[BoxData[{
- RowBox[{
-  RowBox[{"checkNewCreatedSymbols", "[", "]"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Notation`AutoLoadNotationPalette", "=", "False"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"BEFORE", " ", "LOADING", " ", 
-    RowBox[{"Notations", "!"}]}], "*)"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", 
-   RowBox[{
-    RowBox[{"Notation`AutoLoadNotationPalette", "=", "True"}], ";"}], "*)"}], 
-  RowBox[{"(*", 
-   RowBox[{"BEFORE", " ", "LOADING", " ", 
-    RowBox[{"Notations", "!"}]}], "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"loadNeeds", "[", "\"\<Notation`\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Off", "[", 
-    RowBox[{"Notation`Symbolize", "::", "bsymbexs"}], "]"}], ";"}], 
-  "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"ClearNotations", "[", "]"}], 
-  RowBox[{"(*", 
-   RowBox[{
-    RowBox[{"clears", " ", "all", " ", "notations"}], ",", "symbolizations", ",", 
-    RowBox[{"and", " ", "infix", " ", "notations"}]}], "*)"}], 
-  "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubscriptBox["n", "s"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubscriptBox["n", "\[Sigma]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubscriptBox["f", "\[Sigma]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubscriptBox["\[Lambda]", "1"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubscriptBox["\[Lambda]", "2"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubscriptBox["\[Delta]\[Theta]", "R"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubsuperscriptBox["\[Sigma]", "R", "\[Infinity]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubscriptBox["\[ScriptCapitalF]", "\[Lambda]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubscriptBox["\[ScriptCapitalD]", "\[Lambda]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"Symbolize", "[", 
-  TemplateBox[{
-    SubscriptBox["\[ScriptCapitalF]", "\[Theta]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"Symbolize", "[", 
-   TemplateBox[{
-     SubscriptBox["\[ScriptCapitalD]", "\[Theta]"]},
-    "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubscriptBox["n", "s"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubscriptBox["n", "\[Sigma]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubscriptBox["f", "\[Sigma]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubscriptBox["\[Lambda]", "1"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubscriptBox["\[Lambda]", "2"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubscriptBox["\[Delta]\[Theta]", "R"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubsuperscriptBox["\[Sigma]", "R", "\[Infinity]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubscriptBox["\[ScriptCapitalF]", "\[Lambda]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubscriptBox["\[ScriptCapitalD]", "\[Lambda]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  TemplateBox[{
-    SubscriptBox["\[ScriptCapitalF]", "\[Theta]"]},
-   "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"FullForm", "[", 
-   TemplateBox[{
-     SubscriptBox["\[ScriptCapitalD]", "\[Theta]"]},
-    "NotationTemplateTag"], "]"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubscriptBox["n", "s"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubscriptBox["n", "\[Sigma]"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubscriptBox["f", "\[Sigma]"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubscriptBox["\[Lambda]", "1"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubscriptBox["\[Lambda]", "2"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubscriptBox["\[Delta]\[Theta]", "R"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubsuperscriptBox["\[Sigma]", "R", "\[Infinity]"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubscriptBox["\[ScriptCapitalF]", "\[Lambda]"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubscriptBox["\[ScriptCapitalD]", "\[Lambda]"], "]"}], "\[IndentingNewLine]", 
- RowBox[{"FullForm", "[", 
-  SubscriptBox["\[ScriptCapitalF]", "\[Theta]"], "]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"FullForm", "[", 
-   SubscriptBox["\[ScriptCapitalD]", "\[Theta]"], "]"}], 
-  "\[IndentingNewLine]", 
-  RowBox[{"(*", 
-   RowBox[{
-   "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
-     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
-     "===", "===", "===", "=="}], "*)"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", " ", 
-   RowBox[{"some", " ", "checks", " ", "on", " ", "new", " ", "symbols"}], 
-   " ", "*)"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", 
-   RowBox[{
-   "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
-     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
-     "===", "===", "===", "=="}], "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{
-     SubscriptBox["\[Delta]\[Theta]", "R"], "/.", 
-     RowBox[{"R", "->", "1"}]}], "]"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"/.", 
-    RowBox[{"X", "->", 
-     RowBox[{"...", ":", " ", 
-      RowBox[{
-      "X", " ", "becomes", " ", "a", " ", "new", " ", "symbol"}]}]}]}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{
-     SubscriptBox["\[Delta]\[Theta]", "R"], "/.", 
-     RowBox[{"\[Theta]", "->", "1"}]}], "]"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"/.", 
-    RowBox[{"X", "->", 
-     RowBox[{"...", ":", " ", 
-      RowBox[{
-      "X", " ", "becomes", " ", "a", " ", "new", " ", "symbol"}]}]}]}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{
-     SubscriptBox["n", "s"], "/.", 
-     RowBox[{"s", "->", "1"}]}], "]"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"/.", 
-    RowBox[{"X", "->", 
-     RowBox[{"...", ":", " ", 
-      RowBox[{
-      "X", " ", "becomes", " ", "a", " ", "new", " ", "symbol"}]}]}]}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{
-     SubscriptBox["n", "\[Sigma]"], "/.", 
-     RowBox[{"\[Sigma]", "->", "11"}]}], "]"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"/.", 
-    RowBox[{"X", "->", 
-     RowBox[{"...", ":", " ", 
-      RowBox[{
-      "X", " ", "becomes", " ", "a", " ", "new", " ", "symbol"}]}]}]}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{
-     SubscriptBox["\[Lambda]", "1"], "/.", 
-     RowBox[{"\[Lambda]", "->", "x1"}]}], "]"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"/.", 
-    RowBox[{"X", "->", 
-     RowBox[{"...", ":", " ", 
-      RowBox[{
-      "X", " ", "becomes", " ", "a", " ", "new", " ", "symbol"}]}]}]}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{
-     SubscriptBox["\[Lambda]", "2"], "/.", 
-     RowBox[{"\[Lambda]", "->", "x2"}]}], "]"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"/.", 
-    RowBox[{"X", "->", 
-     RowBox[{"...", ":", " ", 
-      RowBox[{
-      "X", " ", "becomes", " ", "a", " ", "new", " ", "symbol"}]}]}]}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{
-     SubscriptBox["\[Lambda]", "1"], "/.", 
-     RowBox[{
-      SubscriptBox["\[Lambda]", "1"], "->", "x1"}]}], "]"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"/.", 
-    RowBox[{"X", "->", 
-     RowBox[{"...", ":", " ", 
-      RowBox[{
-      "X", " ", "becomes", " ", "a", " ", "new", " ", "symbol"}]}]}]}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{
-     SubscriptBox["\[Lambda]", "2"], "/.", 
-     RowBox[{
-      SubscriptBox["\[Lambda]", "2"], "->", "x2"}]}], "]"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"/.", 
-    RowBox[{"X", "->", 
-     RowBox[{"...", ":", " ", 
-      RowBox[{
-      "X", " ", "becomes", " ", "a", " ", "new", " ", "symbol"}]}]}]}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{
-     SubscriptBox["\[ScriptCapitalD]", "\[Lambda]"], "/.", 
-     RowBox[{"\[Lambda]", "->", "1"}]}], "]"}], ";"}], 
-  RowBox[{"(*", 
-   RowBox[{"/.", 
-    RowBox[{"X", "->", 
-     RowBox[{"...", ":", " ", 
-      RowBox[{
-      "X", " ", "becomes", " ", "a", " ", "new", " ", "symbol"}]}]}]}], 
-   "*)"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"On", "[", 
-   RowBox[{"Symbolize", "::", "bsymbexs"}], "]"}], ";"}], "\[IndentingNewLine]", 
- RowBox[{"checkNewCreatedSymbols", "[", "]"}]}], StandardForm, HoldComplete]];
-
-(* ---- initialization cell 27 | e17c3409-7689-3449-bcf9-b0b36e9085e4 ---- *)
-SetAttributes[debugPrintD,HoldAll];
-
-debugPrintD[input__]:=Module[{},If[debugPrintEnabledFlag,printD[input]]];
-
-(* ---- initialization cell 28 | 1772c2f4-7289-6e4b-a36f-4d32892210af ---- *)
-fullRationalize=Rationalize[#,0]&;
-
-(* ---- initialization cell 29 | fff8e5d3-257a-244a-9b46-2a7fc101e779 ---- *)
-(*ClearAll[thisDataPlotInset];*)
-printD@tagDataPlot;
-printD@thisDataPlotInset;
-(**)
-
-(* ---- initialization cell 30 | 3fa80105-cd59-a14b-8c88-afe908c92a29 ---- *)
-(* \[Lambda]MinRef and \[Lambda]MaxRef can only be changed HERE *)
-Unprotect[\[Lambda]MinRef,\[Lambda]MaxRef];
-\[Lambda]MinRef=200;(*OK FOR MAPMT22*)
-(*\[Lambda]MinRef:=270; FOR SIPMFBK/MPPCHPK // but are zero below 270-280 so you can use 200 anyway *)
-\[Lambda]MaxRef=700;
-Protect[\[Lambda]MinRef,\[Lambda]MaxRef];
-bigBanner["\< SETTING WAVELENGTH RANGE (\[Lambda]MinRef,\[Lambda]MaxRef) : \>","\<(\>",\[Lambda]MinRef,"\<-\>",\[Lambda]MaxRef,"\<)\>","\< nm\>"];
-(**)
-Print[Column[Sort[searchForGivenNames["\<*pde*\>"]]]];
-(**)
-
-(* ---- initialization cell 31 | 81c92161-b12e-0b4e-a7e8-707c29bb176f ---- *)
-Names["\<*EnergyData*\>"]//TableForm
-
-Names["\<*label*\>"]//TableForm
-
-Names["\<*nRefr*\>"]//TableForm
-
-Names["\<*theRef*\>"]//TableForm
-
-Names["\<*refrI*\>"]//TableForm
-
-(* ---- initialization cell 32 | 4eaf34dd-6d69-dc4b-ab1d-220ab26664fa ---- *)
-allSensorsPDEEnergyData={LAPPDTMEnergyData,MAPMT22EnergyData,MPPCHPKEnergyData,SIPMFBKEnergyData};
-
-allSensorsPDEWavLenData={
-Map[{\[Lambda][#[[1]]],#[[2]]}&,LAPPDTMEnergyData],
-Map[{\[Lambda][#[[1]]],#[[2]]}&,MAPMT22EnergyData],
-Map[{\[Lambda][#[[1]]],#[[2]]}&,MPPCHPKEnergyData],
-Map[{\[Lambda][#[[1]]],#[[2]]}&,SIPMFBKEnergyData]
-};
-
-Interpolation/@allSensorsPDEEnergyData
-
-(* ---- initialization cell 33 | ff658c73-7662-1f4a-904a-91904282d95a ---- *)
-legend=SwatchLegend[{Orange,Blue,Yellow,Green},{"\<LAPPDTMEnergyData\>","\<MAPMT22EnergyData\>","\<MPPCHPKEnergyData\>","\<SIPMFBKEnergyData\>"},LegendMarkers->Graphics[{Rectangle[]}],LegendLabel->"\<sensors\>",LegendFunction->(Framed[#,RoundingRadius->5]&),LegendMargins->5];
-
-(* ---- initialization cell 34 | 2c045e51-e569-7949-9cd6-a14a68b30185 ---- *)
-plot=ListLinePlot[{Style[LAPPDTMEnergyData,Orange],Style[MAPMT22EnergyData,Blue],Style[MPPCHPKEnergyData,Yellow],Style[SIPMFBKEnergyData,Green]},
-PlotRange->{{eneMin,eneMax},{0,0.7}},
-PlotLegends->legend,
-GridLines->Automatic,Epilog->{},AxesLabel->labelEffVsEv];
-
-Print[plot];
-
-exportGraphicsToPDF[plot,"\<allSensorsPDEEnergyData\>","\<\>","\<\>",False];
-
-(**)
-
-(* ---- initialization cell 35 | 2e19d584-f1e5-8041-87cb-e644182c17d6 ---- *)
-plot=ListLinePlot[{Style[allSensorsPDEWavLenData[[1]],Orange],Style[allSensorsPDEWavLenData[[2]],Blue],Style[allSensorsPDEWavLenData[[3]],Yellow],Style[allSensorsPDEWavLenData[[4]],Green]},
-PlotRange->{{\[Lambda][eneMin],\[Lambda][eneMax]},{0,0.7}},
-PlotLegends->legend,
-GridLines->Automatic,Epilog->{},AxesLabel->labelEffVsNm];
-
-Print[plot];
-
-exportGraphicsToPDF[plot,"\<allSensorsPDEWavLenData\>","\<\>","\<\>",False];
-
-(* ---- initialization cell 36 | 6bb3b2c5-5504-4f18-8efc-71b59c7d7e5b ---- *)
-(*fixed data calculated by calcAllRadiators*)
-(**)
-theWavLen1={200.0,200.0,200.0,200.0,200.0};
-theWavLen2={700.0,700.0,700.0,700.0,700.0};
-theWavLenMean={346.3,347.7,345.4,347.4,350.2};
-theWavLenMedian={305.4,307.2,304.4,306.9,310.3};
-nRefrAtTheWavLen1={1.0015657,1.0005187,1.0005132,1.5505055,1.0308707};
-nRefrAtTheWavLenMedian={1.0014367,1.0004890,1.0004633,1.4859271,1.0304975};
-nRefrAtTheWavLenMean={1.0014173,1.0004845,1.0004558,1.4773295,1.0304414};
-nRefrAtTheWavLen2={1.0013682,1.0004729,1.0004373,1.4552925,1.0302885};
-(**)
-(*===================================================================================*)
-(*DETECTOR SETUP // TO BE CHECKED LATER FOR SPECIFIC APPLICATIONS*)
-(*===================================================================================*)
-printD@theWavLen1;
-printD@theWavLen2;
-printD@theWavLenMean;
-printD@theWavLenMedian;
-printD@nRefrAtTheWavLen1;
-printD@nRefrAtTheWavLen2;
-printD@nRefrAtTheWavLenMean;
-printD@nRefrAtTheWavLenMedian;
-(**)
-
-(* ---- initialization cell 37 | c8ad9c84-0a77-4618-b43c-032212a7047c ---- *)
-(* momentum thr and asymptotic number of photons *)
-printD@momentumCherenkovThreshold[m,n];
-Plot[{(Sin[thetaChrTheMax[n]])^(2)},{n,1.0001,1.0027},PlotRange->All,PlotLegends->"\<Expressions\>",GridLines->Automatic]
-Plot[{momentumCherenkovThreshold[m,n]/m},{n,1.0001,1.0027},PlotRange->All,PlotLegends->"\<Expressions\>",GridLines->Automatic]
-
-(* ---- initialization cell 38 | 6663ff6d-8d85-b249-82b3-3601a8d702b8 ---- *)
-endEvalPrintOut[]
+(* ::Section:: *)
+(* functions *)
+
+(* ::Section:: *)
+(* mathematica options *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 21, expression 1 ---- *)
+CompoundExpression[CompoundExpression[SetOptions[List[LogPlot, Plot, Graphics, ListPlot, Histogram], Rule[Ticks, List[Automatic, Automatic]]], Null], Null, CompoundExpression[SetOptions[List[LogPlot, Plot, Graphics, ListPlot, Histogram], Rule[AxesOrigin, List[0, 0]]], Null], Null, CompoundExpression[SetOptions[List[LogPlot, Plot, ListPlot, Histogram], Rule[Frame, True]], Null], Null, CompoundExpression[SetOptions[List[Graphics], Rule[AspectRatio, Automatic]], Null], Null, CompoundExpression[SetOptions[TableForm, Rule[TableAlignments, Center]], Null]]
+
+(* ::Subsubtitle:: *)
+(* loading other packages *)
+
+(* ::Section:: *)
+(* authorTools *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 22, expression 1 ---- *)
+CompoundExpression[Null]
+
+(* ::Subtitle:: *)
+(* END ALL SETUP *)
+
+(* ::Subsubtitle:: *)
+(* END *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 23, expression 1 ---- *)
+CompoundExpression[myNotebookInit`bigBanner[" FINISHING INITIALIZATION "]]
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 24, expression 1 ---- *)
+CompoundExpression[myNotebookInit`endEvalPrintOut[]]
+
+(* ::Title:: *)
+(* ---... CALCULATOR INIT *)
+
+(* ::Subtitle:: *)
+(* >>> INIT FAKE PACKAGE *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 25, expression 1 ---- *)
+CompoundExpression[BeginPackage["calculator`", List["myNotebookInit`", "base`", "statDataAnal`", "rich`"]], Null, Print[" loading calculator "], Null, Begin["`Private`"], Null, myNotebookInit`showContextInfo[], Null, CompoundExpression[Set[myNotebookInit`versionTAG, "v.15-03-2026"], Null], Null, End[], Null, myNotebookInit`showContextInfo[], Null, Print[Cells[Rule[CellStyle, List["MSG", "Message"]]]], Null, EndPackage[]]
+
+(* ::Subtitle:: *)
+(* <<< END FAKE PACKAGE *)
+
+(* ::Subtitle:: *)
+(* DEFINITIONS FOR THIS NOTEBOOK *)
+
+(* ::Section:: *)
+(* symbolics for variables to use in this notebook *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 26, expression 1 ---- *)
+CompoundExpression[myNotebookInit`checkNewCreatedSymbols[], Null, CompoundExpression[Set[Notation`AutoLoadNotationPalette, False], Null], Null, CompoundExpression[myNotebookInit`loadNeeds["Notation`"], Null], Null, CompoundExpression[Off[MessageName[Notation`Symbolize, "bsymbexs"]], Null], Null, Global`ClearNotations[], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`n, Global`s]]], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`n, Global`\[Sigma]]]], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`f, Global`\[Sigma]]]], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`\[Lambda], 1]]], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`\[Lambda], 2]]], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`\[Delta]\[Theta], Global`R]]], Null, Global`Symbolize[Global`NotationTemplateTag[Power[Subscript[Global`\[Sigma], Global`R], Infinity]]], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`\[ScriptCapitalF], Global`\[Lambda]]]], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`\[ScriptCapitalD], Global`\[Lambda]]]], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`\[ScriptCapitalF], Global`\[Theta]]]], Null, Global`Symbolize[Global`NotationTemplateTag[Subscript[Global`\[ScriptCapitalD], Global`\[Theta]]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`n, Global`s]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`n, Global`\[Sigma]]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`f, Global`\[Sigma]]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`\[Lambda], 1]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`\[Lambda], 2]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`\[Delta]\[Theta], Global`R]]], Null, FullForm[Global`NotationTemplateTag[Power[Subscript[Global`\[Sigma], Global`R], Infinity]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`\[ScriptCapitalF], Global`\[Lambda]]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`\[ScriptCapitalD], Global`\[Lambda]]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`\[ScriptCapitalF], Global`\[Theta]]]], Null, FullForm[Global`NotationTemplateTag[Subscript[Global`\[ScriptCapitalD], Global`\[Theta]]]], Null, FullForm[Subscript[Global`n, Global`s]], Null, FullForm[Subscript[Global`n, Global`\[Sigma]]], Null, FullForm[Subscript[Global`f, Global`\[Sigma]]], Null, FullForm[Subscript[Global`\[Lambda], 1]], Null, FullForm[Subscript[Global`\[Lambda], 2]], Null, FullForm[Subscript[Global`\[Delta]\[Theta], Global`R]], Null, FullForm[Power[Subscript[Global`\[Sigma], Global`R], Infinity]], Null, FullForm[Subscript[Global`\[ScriptCapitalF], Global`\[Lambda]]], Null, FullForm[Subscript[Global`\[ScriptCapitalD], Global`\[Lambda]]], Null, FullForm[Subscript[Global`\[ScriptCapitalF], Global`\[Theta]]], Null, FullForm[Subscript[Global`\[ScriptCapitalD], Global`\[Theta]]], Null, CompoundExpression[Print[ReplaceAll[Subscript[Global`\[Delta]\[Theta], Global`R], Rule[Global`R, 1]]], Null], Null, CompoundExpression[Print[ReplaceAll[Subscript[Global`\[Delta]\[Theta], Global`R], Rule[Global`\[Theta], 1]]], Null], Null, CompoundExpression[Print[ReplaceAll[Subscript[Global`n, Global`s], Rule[Global`s, 1]]], Null], Null, CompoundExpression[Print[ReplaceAll[Subscript[Global`n, Global`\[Sigma]], Rule[Global`\[Sigma], 11]]], Null], Null, CompoundExpression[Print[ReplaceAll[Subscript[Global`\[Lambda], 1], Rule[Global`\[Lambda], Global`x1]]], Null], Null, CompoundExpression[Print[ReplaceAll[Subscript[Global`\[Lambda], 2], Rule[Global`\[Lambda], Global`x2]]], Null], Null, CompoundExpression[Print[ReplaceAll[Subscript[Global`\[Lambda], 1], Rule[Subscript[Global`\[Lambda], 1], Global`x1]]], Null], Null, CompoundExpression[Print[ReplaceAll[Subscript[Global`\[Lambda], 2], Rule[Subscript[Global`\[Lambda], 2], Global`x2]]], Null], Null, CompoundExpression[Print[ReplaceAll[Subscript[Global`\[ScriptCapitalD], Global`\[Lambda]], Rule[Global`\[Lambda], 1]]], Null], Null, CompoundExpression[On[MessageName[Global`Symbolize, "bsymbexs"]], Null], Null, myNotebookInit`checkNewCreatedSymbols[]]
+
+(* ::Section:: *)
+(* MISCELLANEA DEFINITIONS *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 27, expression 1 ---- *)
+CompoundExpression[CompoundExpression[SetAttributes[Global`debugPrintD, HoldAll], Null], Null, CompoundExpression[SetDelayed[Global`debugPrintD[Pattern[Global`input, BlankSequence[]]], Module[List[], If[base`debugPrintEnabledFlag, myNotebookInit`printD[Global`input]]]], Null]]
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 28, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[Global`fullRationalize, Function[Rationalize[Slot[1], 0]]], Null]]
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 29, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[myNotebookInit`printD[Global`tagDataPlot], Null], CompoundExpression[myNotebookInit`printD[Global`thisDataPlotInset], Null]]]
+
+(* ::Subtitle:: *)
+(* OPTIONS FOR THIS NOTEBOOK *)
+
+(* ::Subtitle:: *)
+(* RICH SPECIFIC FOR THIS NOTEBOOK *)
+
+(* ::Subsubtitle:: *)
+(* SETUP for RICH *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 30, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Unprotect[Global`\[Lambda]MinRef, Global`\[Lambda]MaxRef], Null], CompoundExpression[Set[Global`\[Lambda]MinRef, 200], Null], CompoundExpression[Set[Global`\[Lambda]MaxRef, 700], Null], CompoundExpression[Protect[Global`\[Lambda]MinRef, Global`\[Lambda]MaxRef], Null], CompoundExpression[myNotebookInit`bigBanner[" SETTING WAVELENGTH RANGE (\[Lambda]MinRef,\[Lambda]MaxRef) : ", "(", Global`\[Lambda]MinRef, "-", Global`\[Lambda]MaxRef, ")", " nm"], Null], CompoundExpression[Print[Column[Sort[base`searchForGivenNames["*pde*"]]]], Null]]]
+
+(* ::Subsubtitle:: *)
+(* CALC/PREPARE data needed by this notebook *)
+
+(* ::Section:: *)
+(* sensors *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 31, expression 1 ---- *)
+CompoundExpression[TableForm[Names["*EnergyData*"]], Null, TableForm[Names["*label*"]], Null, TableForm[Names["*nRefr*"]], Null, TableForm[Names["*theRef*"]], Null, TableForm[Names["*refrI*"]]]
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 32, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[Global`allSensorsPDEEnergyData, List[Global`LAPPDTMEnergyData, Global`MAPMT22EnergyData, Global`MPPCHPKEnergyData, Global`SIPMFBKEnergyData]], Null], Null, CompoundExpression[Set[Global`allSensorsPDEWavLenData, List[Map[Function[List[Global`\[Lambda][Part[Slot[1], 1]], Part[Slot[1], 2]]], Global`LAPPDTMEnergyData], Map[Function[List[Global`\[Lambda][Part[Slot[1], 1]], Part[Slot[1], 2]]], Global`MAPMT22EnergyData], Map[Function[List[Global`\[Lambda][Part[Slot[1], 1]], Part[Slot[1], 2]]], Global`MPPCHPKEnergyData], Map[Function[List[Global`\[Lambda][Part[Slot[1], 1]], Part[Slot[1], 2]]], Global`SIPMFBKEnergyData]]], Null], Null, Map[Interpolation, Global`allSensorsPDEEnergyData]]
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 33, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[Global`legend, SwatchLegend[List[Orange, Blue, Yellow, Green], List["LAPPDTMEnergyData", "MAPMT22EnergyData", "MPPCHPKEnergyData", "SIPMFBKEnergyData"], Rule[LegendMarkers, Graphics[List[Rectangle[]]]], Rule[LegendLabel, "sensors"], Rule[LegendFunction, Function[Framed[Slot[1], Rule[RoundingRadius, 5]]]], Rule[LegendMargins, 5]]], Null]]
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 34, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[Global`plot, ListLinePlot[List[Style[Global`LAPPDTMEnergyData, Orange], Style[Global`MAPMT22EnergyData, Blue], Style[Global`MPPCHPKEnergyData, Yellow], Style[Global`SIPMFBKEnergyData, Green]], Rule[PlotRange, List[List[Global`eneMin, Global`eneMax], List[0, 0.7`]]], Rule[PlotLegends, Global`legend], Rule[GridLines, Automatic], Rule[Epilog, List[]], Rule[AxesLabel, Global`labelEffVsEv]]], Null], Null, CompoundExpression[Print[Global`plot], Null], Null, CompoundExpression[myNotebookInit`exportGraphicsToPDF[Global`plot, "allSensorsPDEEnergyData", "", "", False], Null], Null, Null]
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 35, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[Global`plot, ListLinePlot[List[Style[Part[Global`allSensorsPDEWavLenData, 1], Orange], Style[Part[Global`allSensorsPDEWavLenData, 2], Blue], Style[Part[Global`allSensorsPDEWavLenData, 3], Yellow], Style[Part[Global`allSensorsPDEWavLenData, 4], Green]], Rule[PlotRange, List[List[Global`\[Lambda][Global`eneMin], Global`\[Lambda][Global`eneMax]], List[0, 0.7`]]], Rule[PlotLegends, Global`legend], Rule[GridLines, Automatic], Rule[Epilog, List[]], Rule[AxesLabel, Global`labelEffVsNm]]], Null], Null, CompoundExpression[Print[Global`plot], Null], Null, CompoundExpression[myNotebookInit`exportGraphicsToPDF[Global`plot, "allSensorsPDEWavLenData", "", "", False], Null]]
+
+(* ::Section:: *)
+(* all radiators info: to check/update (now only the standard LHCb/RICH rads) *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 36, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[Global`theWavLen1, List[200.`, 200.`, 200.`, 200.`, 200.`]], Null], CompoundExpression[Set[Global`theWavLen2, List[700.`, 700.`, 700.`, 700.`, 700.`]], Null], CompoundExpression[Set[Global`theWavLenMean, List[346.3`, 347.7`, 345.4`, 347.4`, 350.2`]], Null], CompoundExpression[Set[Global`theWavLenMedian, List[305.4`, 307.2`, 304.4`, 306.9`, 310.3`]], Null], CompoundExpression[Set[Global`nRefrAtTheWavLen1, List[1.0015657`, 1.0005187`, 1.0005132`, 1.5505055`, 1.0308707`]], Null], CompoundExpression[Set[Global`nRefrAtTheWavLenMedian, List[1.0014367`, 1.000489`, 1.0004633`, 1.4859271`, 1.0304975`]], Null], CompoundExpression[Set[Global`nRefrAtTheWavLenMean, List[1.0014173`, 1.0004845`, 1.0004558`, 1.4773295`, 1.0304414`]], Null], CompoundExpression[Set[Global`nRefrAtTheWavLen2, List[1.0013682`, 1.0004729`, 1.0004373`, 1.4552925`, 1.0302885`]], Null], CompoundExpression[myNotebookInit`printD[Global`theWavLen1], Null], CompoundExpression[myNotebookInit`printD[Global`theWavLen2], Null], CompoundExpression[myNotebookInit`printD[Global`theWavLenMean], Null], CompoundExpression[myNotebookInit`printD[Global`theWavLenMedian], Null], CompoundExpression[myNotebookInit`printD[Global`nRefrAtTheWavLen1], Null], CompoundExpression[myNotebookInit`printD[Global`nRefrAtTheWavLen2], Null], CompoundExpression[myNotebookInit`printD[Global`nRefrAtTheWavLenMean], Null], CompoundExpression[myNotebookInit`printD[Global`nRefrAtTheWavLenMedian], Null]]]
+
+(* ::Section:: *)
+(* momentum related things *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 37, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[myNotebookInit`printD[Global`momentumCherenkovThreshold[Global`m, Global`n]], Null], Plot[List[Power[Sin[Global`thetaChrTheMax[Global`n]], 2]], List[Global`n, 1.0001`, 1.0027`], Rule[PlotRange, All], Rule[PlotLegends, "Expressions"], Rule[GridLines, Automatic]], Plot[List[Times[Global`momentumCherenkovThreshold[Global`m, Global`n], Power[Global`m, -1]]], List[Global`n, 1.0001`, 1.0027`], Rule[PlotRange, All], Rule[PlotLegends, "Expressions"], Rule[GridLines, Automatic]]]]
+
+(* ::Subtitle:: *)
+(* END INITIALIZATION CELLS *)
+
+(* ::Input::Initialization:: *)
+(* ---- initialization cell 38, expression 1 ---- *)
+CompoundExpression[myNotebookInit`endEvalPrintOut[]]
+
+(* ::Title:: *)
+(* ---... CALCULATOR BODY *)
+
+(* ::Subtitle:: *)
+(* SOME PRELIMINARY CALCULATIONS *)
+
+(* ::Section:: *)
+(* calculate RICH results *)
+
+(* ::Subsection:: *)
+(* INIT *)
+
+(* ::Subsection:: *)
+(* RICH-2022 *)
+
+(* ::Subsection:: *)
+(* RICH-Upg2 *)
+
+(* ::Subsubsection:: *)
+(* summary results *)
+
+(* ::Subsection:: *)
+(* RICH1 *)
+
+(* ::Subsubsection:: *)
+(* C4F10 *)
+
+(* ::Subsection:: *)
+(* RICH2 *)
+
+(* ::Subsubsection:: *)
+(* C1F04 *)
+
+(* ::Subsubsection:: *)
+(* C1O02 *)
+
+(* ::Subsubsection:: *)
+(* summary results *)
+
+(* ::Subsection:: *)
+(* ALADDIN *)
+
+(* ::Subsubsection:: *)
+(* INIT *)
+
+(* ::Subsubsection:: *)
+(* He *)
+
+(* ::Subsubsection:: *)
+(* Ne *)
+
+(* ::Subsubsection:: *)
+(* summary results *)
+
+(* ::Subtitle:: *)
+(* INPUT DATA *)
+
+(* ::Subsubtitle:: *)
+(* INIT *)
+
+(* ::Subsubtitle:: *)
+(* FUNCTIONS *)
+
+(* ::Section:: *)
+(* basic *)
+
+(* ::Subsection:: *)
+(* pixel geometrical filling factors *)
+
+(* ::Subsubsection:: *)
+(* in pixel *)
+
+(* ::Subsubsection:: *)
+(* in device *)
+
+(* ::Subsubsection:: *)
+(* calcPixRelGeomAccept *)
+
+(* ::Subsection:: *)
+(* fiducialAreaOfTheRing *)
+
+(* ::Subsection:: *)
+(* theIntensityPhysBack *)
+
+(* ::Subsection:: *)
+(* fakeRound? *)
+
+(* ::Subsubtitle:: *)
+(* variables *)
+
+(* ::Subsubtitle:: *)
+(* basic experiment quantities *)
+
+(* ::Subsubtitle:: *)
+(* ALL BASIC INPUTs *)
+
+(* ::Section:: *)
+(* INIT *)
+
+(* ::Section:: *)
+(* single photon angular precision, ring angular precision and number of photons *)
+
+(* ::Section:: *)
+(* PDA *)
+
+(* ::Section:: *)
+(* general *)
+
+(* ::Section:: *)
+(* RICH1 *)
+
+(* ::Section:: *)
+(* RICH2 *)
+
+(* ::Section:: *)
+(* some calculations *)
+
+(* ::Section:: *)
+(* one specific radiator to exemplify gamma lists  *)
+
+(* ::Section:: *)
+(* gamma lists *)
+
+(* ::Subsubtitle:: *)
+(* general functions *)
+
+(* ::Section:: *)
+(* significances *)
+
+(* ::Section:: *)
+(* binary readout *)
+
+(* ::Section:: *)
+(* units of measure *)
+
+(* ::Subtitle:: *)
+(* detector design *)
+
+(* ::Subsubtitle:: *)
+(* DETECTOR FUNCTIONS *)
+
+(* ::Section:: *)
+(* doSetExperiment *)
+
+(* ::Section:: *)
+(* doCalcExperiment *)
+
+(* ::Section:: *)
+(* doCalcSignificance *)
+
+(* ::Section:: *)
+(* Significance plots functions *)
+
+(* ::Section:: *)
+(* modelChromaEvolutionWithGamma *)
+
+(* ::Section:: *)
+(* significance functions *)
+
+(* ::Subsubtitle:: *)
+(* CALC ALL EXPERIMENTS *)
+
+(* ::Section:: *)
+(* init *)
+
+(* ::Section:: *)
+(* definition doCalcAllExperiments *)
+
+(* ::Subsection:: *)
+(* general functions *)
+
+(* ::Subsection:: *)
+(* NEW TO IMPLEMENT AND CHECK - non evaluatable cells *)
+
+(* ::Subsection:: *)
+(* SAFE version - production version *)
+
+(* ::Section:: *)
+(* do calculations allCalcAllExperiments *)
+
+(* ::Section:: *)
+(* Summary results *)
+
+(* ::Section:: *)
+(* short summary results *)
+
+(* ::Subsection:: *)
+(* END *)
+
+(* ::Section:: *)
+(* Cross-Checks *)
+
+(* ::Section:: *)
+(* doAllCalcOneExperimentShort TO DELETE *)
+
+(* ::Subtitle:: *)
+(* significance and detector design (cont) *)
+
+(* ::Subsubtitle:: *)
+(* doAllSignificancePlots *)
+
+(* ::Section:: *)
+(* dataset *)
+
+(* ::Subsubtitle:: *)
+(* miscellanea *)
+
+(* ::Subsubtitle:: *)
+(* END *)
