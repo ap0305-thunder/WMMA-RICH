@@ -24,11 +24,13 @@ $RICHProjectComponents = <|
   },
   "RICH-source" -> {
     "myNotebookInit.wl", "myDockedCells.wl", "CellStyleDataRules.wl",
-    "base.wl", "statDataAnal.wl", "RICH.wl"
+    "base.wl", "statDataAnal.wl", "physics-general.wl",
+    "inputDataForRICH.wl", "RICH.wl"
   },
   "calculator-reboot" -> {
     "myNotebookInit.wl", "myDockedCells.wl", "CellStyleDataRules.wl",
-    "base.wl", "statDataAnal.wl", "RICH.wl", "calculator-reboot.wl"
+    "base.wl", "statDataAnal.wl", "physics-general.wl",
+    "inputDataForRICH.wl", "RICH.wl", "calculator-reboot.wl"
   },
   "CellStyleDataRules-source" -> {
     "CellStyleDataRules.wl"

@@ -426,3 +426,27 @@ those cells as unambiguous held FullForm compound expressions, and all seven
 derived sources pass syntax regeneration. Full behavioral validation then
 completed for six of seven cases, exposing five genuine failures, one pass, and
 one calculator timeout/not-run case.
+
+## Resumed validation — 2026-08-07
+
+The interrupted run was traced to antivirus termination of PowerShell. Work
+resumed in a disposable project copy using hidden direct Wolfram processes;
+the user's open Wolfram session was not stopped or modified.
+
+The source generator now assigns dependency contexts from audited public
+exports rather than every symbol seen in a dependency, preventing local RICH
+symbols from being rewritten into `statDataAnal``. Managed project loads also
+preserve dependency order and suppress RICH's legacy nested dependency loads.
+`LoadProject.wl` now loads physics and input-data dependencies before RICH.
+
+The behavioral validator now ignores `::usage` documentation when hashing
+runtime definitions and no longer discards an otherwise valid symbol record
+because an unrelated message occurred. Four additional legacy Global-to-
+`myNotebookInit`` migrations were added to the audited equivalence table.
+
+After regenerating the derived sources, a completely fresh run evaluated all
+seven original/restructured pairs successfully. The strict comparison report
+is PASS: 7, WARNING: 0, FAIL: 0, NOT RUN: 0, with zero missing symbols, zero
+definition differences, zero value differences, and identical compared
+outputs in every case. The intentionally deleted `src/base (2).wl` was neither
+restored nor included in validation.

@@ -1,1410 +1,338 @@
-(* Extracted from inputDataForRICH.nb. Definitions preserve original initialization-cell order. *)
-(* Generated mechanically; validate in a clean Wolfram kernel before deleting legacy-original/. *)
-
-(* ---- initialization cell 1 | 6562bde0-b65e-4c47-9c1e-b38979a10e22 ---- *)
-(*$NewSymbol=Print["\<New symbol: \>",#2,#1]&*)
-
-(* ---- initialization cell 2 | a02dd9c1-b9d4-da42-aa4c-efc8eac8b7b8 ---- *)
-Print["\<*==================================================================================================*\>"];
-
-Print["\<*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*\>"];
-
-Print["\<***--- inputDataForRICH ---***\>"];
-
-Print["\<*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*\>"];
-
-Print["\<*==================================================================================================*\>"];
-
-Print["\<--->>> might need some specific symbols defined elsewhere!\>"];
-
-(* ---- initialization cell 3 | 5560c886-8808-9847-8b70-3b5a369bd600 ---- *)
-base::nodep = "\<Required dependency `1` is not available. Load or install it before loading base`.\>";
-
-base::depdebug = "\<Dependency debug info:\n  target file = `1`\n  file exists = `2`\n  $Notebooks = `3`\n  NotebookDirectory[] = `4`\n  Directory[] = `5`\n  $Path = `6`\>";
-
-Module[{depOK = False, nbDir, depFile, getOK, depSource = "\<unknown\>"},
-  
-  If[NameQ["\<myNotebookInit`loadMyFile\>"],
-    depOK = True; depSource = "\<already loaded\>"
-    ,
-    If[TrueQ[$Notebooks],
-      nbDir = Quiet @ Check[NotebookDirectory[], $Failed];
-      depFile = If[StringQ[nbDir],
-        FileNameJoin[{nbDir, "\<myNotebookInit.wl\>"}]
-        ,
-        $Failed
-      ];
-      getOK = If[StringQ[depFile] && FileExistsQ[depFile],
-        Quiet @ Check[Get[depFile]; True, False]
-        ,
-        False
-      ];
-      depOK = TrueQ[getOK] && NameQ["\<myNotebookInit`loadMyFile\>"];
-      depSource = If[TrueQ[depOK],
-        depFile
-        ,
-        "\<load attempt failed\>"
-      ];
-      If[!TrueQ[depOK],
-        Message[base::nodep, "\<myNotebookInit`loadMyFile\>"];
-        Message[
-          base::depdebug
-          ,
-          depFile
-          ,
-          If[StringQ[depFile],
-            FileExistsQ[depFile]
-            ,
-            False
-          ]
-          ,
-          $Notebooks
-          ,
-          nbDir
-          ,
-          Directory[]
-          ,
-          $Path
-        ];
-      ]
-      ,
-      Message[base::nodep, "\<myNotebookInit`loadMyFile\>"]; Message[base
-        ::depdebug, "\<not available because $Notebooks is False\>", False, $Notebooks,
-         "\<not available\>", Directory[], $Path];
-    ];
-  ];
-  If[TrueQ[depOK],
-    Print["\<Dependency myNotebookInit`loadMyFile is available. Source: \>",
-       depSource]
-    ,
-    Abort[]
-  ];
-];
-
-Print["\<MemberQ[$Packages, myNotebookInit`] = \>", MemberQ[$Packages, "\<myNotebookInit`\>"
-  ]];
-
-(* ---- initialization cell 4 | aae1a8b7-065b-1b4b-8960-c7f2b4b1ba66 ---- *)
-ClearAll[debugDoVerbose,debugMakePlots,debugDoExports];
-
-SetAttributes[{debugDoVerbose,debugMakePlots,debugDoExports},HoldAll];
-
-inputDataForRICH$DoVerbose=False;
+(* Regenerated from inputDataForRICH.nb using NotebookImport without a text conversion. *)
+(* Each source cell was imported under HoldComplete, serialized in context-preserving FullForm, and syntax-checked without evaluation. *)
 
-inputDataForRICH$MakePlots=False;
+(* ---- initialization cell 1, expression 1 ---- *)
+CompoundExpression[Null]
 
-inputDataForRICH$DoExports=False;
+(* ---- initialization cell 2, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Print["*==================================================================================================*"], Null], Null, CompoundExpression[Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"], Null], Null, CompoundExpression[Print["***--- inputDataForRICH ---***"], Null], Null, CompoundExpression[Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"], Null], Null, CompoundExpression[Print["*==================================================================================================*"], Null], Null, CompoundExpression[Print["--->>> might need some specific symbols defined elsewhere!"], Null]]
 
-If[!ValueQ[inputDataForRICH$DoVerbose],inputDataForRICH$DoVerbose=False];
+(* ---- initialization cell 3, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[MessageName[base, "nodep"], "Required dependency `1` is not available. Load or install it before loading base`."], Null], Null, CompoundExpression[Set[MessageName[base, "depdebug"], "Dependency debug info:\n  target file = `1`\n  file exists = `2`\n  $Notebooks = `3`\n  NotebookDirectory[] = `4`\n  Directory[] = `5`\n  $Path = `6`"], Null], Null, CompoundExpression[Module[List[Set[depOK, False], nbDir, depFile, getOK, Set[depSource, "unknown"]], CompoundExpression[If[NameQ["myNotebookInit`loadMyFile"], CompoundExpression[Set[depOK, True], Set[depSource, "already loaded"]], CompoundExpression[If[TrueQ[$Notebooks], CompoundExpression[Set[nbDir, Quiet[Check[NotebookDirectory[], $Failed]]], Set[depFile, If[StringQ[nbDir], FileNameJoin[List[nbDir, "myNotebookInit.wl"]], $Failed]], Set[getOK, If[And[StringQ[depFile], FileExistsQ[depFile]], Quiet[Check[CompoundExpression[Get[depFile], True], False]], False]], Set[depOK, And[TrueQ[getOK], NameQ["myNotebookInit`loadMyFile"]]], Set[depSource, If[TrueQ[depOK], depFile, "load attempt failed"]], If[Not[TrueQ[depOK]], CompoundExpression[Message[MessageName[base, "nodep"], "myNotebookInit`loadMyFile"], Message[MessageName[base, "depdebug"], depFile, If[StringQ[depFile], FileExistsQ[depFile], False], $Notebooks, nbDir, Directory[], $Path], Null]]], CompoundExpression[Message[MessageName[base, "nodep"], "myNotebookInit`loadMyFile"], Message[MessageName[base, "depdebug"], "not available because $Notebooks is False", False, $Notebooks, "not available", Directory[], $Path], Null]], Null]], If[TrueQ[depOK], Print["Dependency myNotebookInit`loadMyFile is available. Source: ", depSource], Abort[]], Null]], Null], Null, CompoundExpression[Print["MemberQ[$Packages, myNotebookInit`] = ", MemberQ[$Packages, "myNotebookInit`"]], Null]]
 
-If[!ValueQ[inputDataForRICH$MakePlots],inputDataForRICH$MakePlots=False];
+(* ---- initialization cell 4, expression 1 ---- *)
+CompoundExpression[CompoundExpression[ClearAll[debugDoVerbose, debugMakePlots, debugDoExports], Null], Null, CompoundExpression[SetAttributes[List[debugDoVerbose, debugMakePlots, debugDoExports], HoldAll], Null], Null, CompoundExpression[Set[inputDataForRICH$DoVerbose, False], Null], Null, CompoundExpression[Set[inputDataForRICH$MakePlots, False], Null], Null, CompoundExpression[Set[inputDataForRICH$DoExports, False], Null], Null, CompoundExpression[If[Not[ValueQ[inputDataForRICH$DoVerbose]], Set[inputDataForRICH$DoVerbose, False]], Null], Null, CompoundExpression[If[Not[ValueQ[inputDataForRICH$MakePlots]], Set[inputDataForRICH$MakePlots, False]], Null], Null, CompoundExpression[If[Not[ValueQ[inputDataForRICH$DoExports]], Set[inputDataForRICH$DoExports, False]], Null], Null, CompoundExpression[SetDelayed[debugDoVerbose[Pattern[args, BlankNullSequence[]]], If[TrueQ[inputDataForRICH$DoVerbose], Print[args], ""]], Null], Null, CompoundExpression[SetDelayed[debugMakePlots[Pattern[expr1, Blank[]]], If[TrueQ[inputDataForRICH$MakePlots], expr1, ""]], Null], Null, CompoundExpression[SetDelayed[debugDoExports[Pattern[expr2, Blank[]]], If[TrueQ[inputDataForRICH$DoExports], expr2, ""]], Null], Null]
 
-If[!ValueQ[inputDataForRICH$DoExports],inputDataForRICH$DoExports=False];
-(*debugDoVerbose[args___]:=If[TrueQ[inputDataForRICH$DoVerbose],Print[args],"\<\>"];
-debugMakePlots[expr1_]:=If[TrueQ[inputDataForRICH$MakePlots],expr1,"\<\>"];
-debugDoExports[expr2_]:=If[TrueQ[inputDataForRICH$DoExports],expr2,"\<\>"];*)
+(* ---- initialization cell 5, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Unprotect[LAPPDTMEnergyData, MAPMT22EnergyData, MPPCHPKEnergyData, SIPMFBKEnergyData], Null]]
 
-debugDoVerbose[args___]:=If[TrueQ[inputDataForRICH$DoVerbose],Print[args],"\<\>"];
+(* ---- initialization cell 6, expression 1 ---- *)
+CompoundExpression[CompoundExpression[If[$Notebooks, CompoundExpression[bigBanner["$Notebooks == True"], If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile["CellStyleDataRules.wl", DirectoryName[$InputFileName]]], SetOptions[EvaluationNotebook[], Rule[StyleDefinitions, FileNameJoin[List[NotebookDirectory[], "myStyle.nb"]]]], SetOptions[EvaluationNotebook[], Rule[AutoGeneratedPackage, Automatic]], SetOptions[EvaluationNotebook[], Rule[AutoMultiplicationSymbol, True]], SetOptions[EvaluationNotebook[], Rule[Background, LightGreen]], SetOptions[EvaluationNotebook[], RuleDelayed[CellEpilog, SelectionMove[EvaluationNotebook[], Next, Cell]]], SetOptions[EvaluationNotebook[], RuleDelayed[CellProlog, SelectionMove[EvaluationCell[], All, Cell]]], SetOptions[EvaluationNotebook[], Rule[InitializationCellEvaluation, False]], SetOptions[EvaluationNotebook[], Rule[InitializationCellWarning, False]], SetOptions[EvaluationNotebook[], Rule[Magnification, Times[3, Power[4, -1]]]], SetOptions[EvaluationNotebook[], Rule[OutputSizeLimit, 1000000]], SetOptions[EvaluationNotebook[], Rule[PrivateNotebookOptions, List[Rule["FileOutlineCache", False], Rule["SafeFileOpen", "IgnoreCache"]]]], SetOptions[EvaluationNotebook[], Rule[ShowCellLabel, False]], SetOptions[EvaluationNotebook[], Rule[WindowMargins, List[List[0, Automatic], List[Automatic, 0]]]], SetOptions[EvaluationNotebook[], Rule[WindowSize, List[Scaled[Times[3, Power[4, -1]]], Scaled[1.`]]]], SetOptions[EvaluationNotebook[], Rule[WindowTitle, StringJoin[" ------- ", nbFileName]]], SetOptions[EvaluationNotebook[], Rule["DynamicUpdating", True]], Null], CompoundExpression[bigBanner["$Notebooks = False"], Null]], Null]]
 
-debugMakePlots[expr1_]:=If[TrueQ[inputDataForRICH$MakePlots],expr1,"\<\>"];
+(* ---- initialization cell 7, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugDoVerbose["loading INPUT DATA FOR RICH"], Null], Null, CompoundExpression[debugDoVerbose["--->>> might need some specific symbols defined elsewhere!"], Null]]
 
-debugDoExports[expr2_]:=If[TrueQ[inputDataForRICH$DoExports],expr2,"\<\>"];
+(* ---- initialization cell 8, expression 1 ---- *)
+CompoundExpression[Null]
 
-(* ---- initialization cell 5 | 2546e2a0-02cc-e948-9138-a8d70c3e5d45 ---- *)
-(*these will be redefined here*)
-Unprotect[LAPPDTMEnergyData,MAPMT22EnergyData,MPPCHPKEnergyData,SIPMFBKEnergyData];
+(* ---- initialization cell 9, expression 1 ---- *)
+CompoundExpression[CompoundExpression[SetDelayed[thisGraphicsInsetText, tagDataPlot], Null]]
 
-(* ---- initialization cell 6 | a020cbee-0d86-914e-a197-0f5095bf5116 ---- *)
-(**)
-If[$Notebooks,
-bigBanner["\<$Notebooks == True\>"];
-(*(*Once[*)myNotebookInit`loadMyFile["\<myDockedCells.wl\>"(*,$dirSWRoot*)](*,"\<Notebook\>"]*);*)
-(*Once[*)If[TrueQ[Global`$RICHProjectManagedLoad],Null,myNotebookInit`loadMyFile["\<CellStyleDataRules.wl\>",DirectoryName[$InputFileName]]](*,"\<Notebook\>"]*);
-(**)
-(* HERE TO ALLOW CHANGE SPECIFIC OPTIONS BELOW *)
-(**)
-(*SetOptions[EvaluationNotebook[],StyleDefinitions->"\<myStyle.nb\>"];*)(*SetOptions[EvaluationNotebook[],StyleDefinitions->"\<StandardReport.nb\>"]*)(*SetOptions[EvaluationNotebook[],StyleDefinitions->"\<Default.nb\>"]*)
-SetOptions[EvaluationNotebook[],StyleDefinitions->FileNameJoin[{NotebookDirectory[],"\<myStyle.nb\>"}]];
-SetOptions[EvaluationNotebook[],AutoGeneratedPackage->Automatic];SetOptions[EvaluationNotebook[],AutoMultiplicationSymbol->True];SetOptions[EvaluationNotebook[],Background->LightGreen];SetOptions[EvaluationNotebook[],CellEpilog:>SelectionMove[EvaluationNotebook[],Next,Cell]];SetOptions[EvaluationNotebook[],CellProlog:>SelectionMove[EvaluationCell[],All,Cell]];
-SetOptions[EvaluationNotebook[],InitializationCellEvaluation->False];
-SetOptions[EvaluationNotebook[],InitializationCellWarning->False];SetOptions[EvaluationNotebook[],Magnification->3/4];SetOptions[EvaluationNotebook[],OutputSizeLimit->1000000](*maximum size for output*);
-SetOptions[EvaluationNotebook[],PrivateNotebookOptions->{"\<FileOutlineCache\>"->False,"\<SafeFileOpen\>"->"\<IgnoreCache\>"}];  SetOptions[EvaluationNotebook[],ShowCellLabel->False];SetOptions[EvaluationNotebook[],WindowMargins->{{0,Automatic},{Automatic,0}}];SetOptions[EvaluationNotebook[],WindowSize->{Scaled[3/4],Scaled[1.0]}];(*SetOptions[EvaluationNotebook[],WindowSize->Full]*)
-SetOptions[EvaluationNotebook[],WindowTitle->StringJoin["\< ------- \>",nbFileName]];
-SetOptions[EvaluationNotebook[],"\<DynamicUpdating\>"->True];(* It looks ok, even if it does not affect the tick in the Evaluation Menu ??? *)
-(**)
-,
-bigBanner["\<$Notebooks = False\>"];
-];
+(* ---- initialization cell 10, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "test"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null], Null, CompoundExpression[debugDoVerbose[Head[thisDataPlotInset]], Null], Null, CompoundExpression[debugDoVerbose[Head[thisGraphicsInset]], Null], Null, CompoundExpression[debugDoVerbose[OwnValues[thisDataPlotInset]], Null], Null, CompoundExpression[debugDoVerbose[OwnValues[thisGraphicsInset]], Null]]
 
-(**)
+(* ---- initialization cell 11, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "testtest"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null], Null, CompoundExpression[debugDoVerbose[Head[thisDataPlotInset]], Null], Null, CompoundExpression[debugDoVerbose[Head[thisGraphicsInset]], Null], Null, CompoundExpression[debugDoVerbose[OwnValues[thisDataPlotInset]], Null], Null, CompoundExpression[debugDoVerbose[OwnValues[thisGraphicsInset]], Null]]
 
-(* ---- initialization cell 7 | dfead663-6d25-914e-8206-31f44f0d2d99 ---- *)
-debugDoVerbose["\<loading INPUT DATA FOR RICH\>"];
+(* ---- initialization cell 12, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Print[debugMakePlots[Plot[Sin[x], List[x, 0, 99], Rule[AxesLabel, labelNmVsEv]]]], Null]]
 
-debugDoVerbose["\<--->>> might need some specific symbols defined elsewhere!\>"];
+(* ---- initialization cell 13, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Print[debugMakePlots[ListPlot[List[2, 33, 2, 3, 27], Rule[AxesLabel, labelNmVsEv]]]], Null]]
 
-(* ---- initialization cell 8 | 565fd51d-8df8-6845-b374-b9bba2258f70 ---- *)
-(*Options[#,Epilog]&/@{Plot,ListPlot,LogPlot,Graphics,Histogram}*)
-(*?thisGraphicsInsetText*)
-(*?thisGraphicsInset*)
+(* ---- initialization cell 14, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[superClearSet[LAPPDTMEnergyData], Null], CompoundExpression[superClearSet[MAPMT22EnergyData], Null], CompoundExpression[superClearSet[MPPCHPKEnergyData], Null], CompoundExpression[superClearSet[SIPMFBKEnergyData], Null]]]
 
-(* ---- initialization cell 9 | 1d89202c-3fd9-e242-95aa-6ebaf5e18d83 ---- *)
-thisGraphicsInsetText:=tagDataPlot;
+(* ---- initialization cell 15, expression 1 ---- *)
+CompoundExpression[Clear[setNominalDefaultForUndefined], Null, SetAttributes[setNominalDefaultForUndefined, HoldFirst], Null, CompoundExpression[SetDelayed[setNominalDefaultForUndefined[Pattern[x, Blank[]], Pattern[y, Blank[]]], If[Equal[ValueQ[x], False], CompoundExpression[Set[Unevaluated[x], y], debugDoVerbose["setting a nominal default value ", y, " for the undefined ", Unevaluated[x]]], debugDoVerbose[Unevaluated[x], " is alredy defined : ", x]]], Null], Null, CompoundExpression[setNominalDefaultForUndefined[\[Lambda]MinRef, 200], Null], Null, CompoundExpression[setNominalDefaultForUndefined[\[Lambda]MaxRef, 700], Null], Null, CompoundExpression[setNominalDefaultForUndefined[lengthRich1, 1000], Null], Null, CompoundExpression[setNominalDefaultForUndefined[lengthRich2, 2000], Null], Null, CompoundExpression[setNominalDefaultForUndefined[theHighPrecision, 24], Null], Null, CompoundExpression[setNominalDefaultForUndefined[numPrecision, 24], Null], Null, CompoundExpression[setNominalDefaultForUndefined[precisionify, Function[SetPrecision[Slot[1], theHighPrecision]]], Null], Null, CompoundExpression[setNominalDefaultForUndefined[window[Pattern[sss, Blank[]], Pattern[x1, Blank[]], Pattern[x2, Blank[]]], UnitBox[Plus[Times[sss, Power[Plus[x2, Times[-1, x1]], -1]], Times[-1, Times[Times[Plus[x1, x2], Power[2, -1]], Power[Plus[x2, Times[-1, x1]], -1]]]]]], Null]]
 
-(* ---- initialization cell 10 | cf70c635-f85c-c145-84b3-58bc0fb01282 ---- *)
-tagDataPlot="\<test\>";
+(* ---- initialization cell 16, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[title, " "], Null], CompoundExpression[Set[labelEffVsEv, List["\[Epsilon] (eV)", " efficiency "]], Null], CompoundExpression[Set[labelEffVsNm, List["\[Lambda] (nm)", " efficiency "]], Null], CompoundExpression[Set[labelNmVsEv, List["\[Epsilon] (eV)", "\[Lambda] (nm)"]], Null], CompoundExpression[Set[labelEvVsNm, List["\[Lambda] (nm)", "\[Epsilon] (eV)"]], Null]]]
 
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
+(* ---- initialization cell 17, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Unprotect[theChrYieldConstant], Null], Null, CompoundExpression[Set[theChrYieldConstant, 37000], Null], Null, CompoundExpression[Protect[theChrYieldConstant], Null]]
 
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
+(* ---- initialization cell 18, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[speedOfLightSI, QuantityMagnitude[N[Entity["PhysicalConstant", "SpeedOfLight"]["Value"]]]], Null], CompoundExpression[Set[elementaryChargeSI, QuantityMagnitude[N[Entity["PhysicalConstant", "ElementaryCharge"]["Value"]]]], Null], CompoundExpression[Set[PlanckConstantSI, QuantityMagnitude[N[Entity["PhysicalConstant", "PlanckConstant"]["Value"]]]], Null], CompoundExpression[Set[PlanckConstantBarSI, QuantityMagnitude[N[Times[Entity["PhysicalConstant", "PlanckConstant"]["Value"], Power[Times[2, Pi], -1]]]]], Null], CompoundExpression[Set[speedOfLight, QuantityMagnitude[N[UnitConvert[Entity["PhysicalConstant", "SpeedOfLight"]["Value"], "Millimeters/Picoseconds"]]]], Null], CompoundExpression[Set[hBar, QuantityMagnitude[N[Times[UnitConvert[Quantity[1, "PlanckConstant"]], Power[Times[2, Pi], -1]]]]], Null], CompoundExpression[Set[theConstantWavLenFromToEnergy, Times[Times[Times[2, Pi, speedOfLightSI, PlanckConstantBarSI], Power[elementaryChargeSI, -1]], Power[10, 9]]], Null]]]
 
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
+(* ---- initialization cell 19, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Unprotect[\[Lambda]], Null], CompoundExpression[Set[\[Lambda][Pattern[\[Epsilon], Blank[]]], Times[theConstantWavLenFromToEnergy, Power[\[Epsilon], -1]]], Null], CompoundExpression[Protect[\[Lambda]], Null], CompoundExpression[Unprotect[\[Epsilon]], Null], CompoundExpression[Set[\[Epsilon][Pattern[\[Lambda], Blank[]]], Times[theConstantWavLenFromToEnergy, Power[\[Lambda], -1]]], Null], CompoundExpression[Protect[\[Epsilon]], Null], CompoundExpression[Unprotect[waveln], Null], CompoundExpression[Set[waveln[Pattern[energy, Blank[]]], Times[theConstantWavLenFromToEnergy, Power[energy, -1]]], Null], CompoundExpression[Protect[waveln], Null], CompoundExpression[Unprotect[energy], Null], CompoundExpression[Set[energy[Pattern[waveln, Blank[]]], Times[theConstantWavLenFromToEnergy, Power[waveln, -1]]], Null], CompoundExpression[Protect[energy], Null]]]
 
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
+(* ---- initialization cell 20, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Unprotect[\[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Null], Null, CompoundExpression[Set[\[Lambda]ThisMinRef, 200], Null], Null, CompoundExpression[Set[\[Lambda]ThisMaxRef, 700], Null], Null, CompoundExpression[Protect[\[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Null], Null, CompoundExpression[Unprotect[\[Epsilon]Min, \[Epsilon]Max], Null], Null, CompoundExpression[SetDelayed[\[Epsilon]Min, \[Epsilon][\[Lambda]ThisMaxRef]], Null], Null, CompoundExpression[SetDelayed[\[Epsilon]Max, \[Epsilon][\[Lambda]ThisMinRef]], Null], Null, CompoundExpression[Protect[\[Epsilon]Min, \[Epsilon]Max], Null], Null, CompoundExpression[debugDoVerbose[\[Epsilon]Min], Null], Null, CompoundExpression[debugDoVerbose[\[Epsilon]Max], Null], Null, CompoundExpression[Print[debugMakePlots[Plot[\[Epsilon][x], List[x, \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[AxesLabel, labelEvVsNm]]]], Null], Null, CompoundExpression[Print[debugMakePlots[Plot[\[Lambda][x], List[x, \[Epsilon]Min, \[Epsilon]Max], Rule[AxesLabel, labelNmVsEv]]]], Null]]
 
-debugDoVerbose@Head@thisDataPlotInset;
+(* ---- initialization cell 21, expression 1 ---- *)
+CompoundExpression[Null]
 
-debugDoVerbose@Head@thisGraphicsInset;
+(* ---- initialization cell 22, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Clear[doInterpolateFromGraphicsData], Null], CompoundExpression[SetDelayed[doInterpolateFromGraphicsData[Pattern[xPltMin, Blank[]], Pattern[xPltMax, Blank[]], Pattern[yPltMin, Blank[]], Pattern[yPltMax, Blank[]], Pattern[xLowBrd, Blank[]], Pattern[xHghBrd, Blank[]], Pattern[yLowBrd, Blank[]], Pattern[yHghBrd, Blank[]], Pattern[dat, Blank[]], Optional[Pattern[additionalFakeDataFlag, Blank[]], False], Optional[Pattern[additionalFakeData, Blank[]], List[]], Optional[Pattern[movAverage, Blank[]], 4]], Module[List[x, y, solX, solY, aaa, bbb, mapX, mapY, dataX, dataY, allDataRaw, allData, xDataMin, xDataMax, func], CompoundExpression[Set[x, Map[Round, Part[Transpose[dat], 1]]], Set[y, Map[Round, Part[Transpose[dat], 2]]], Set[solX, N[Solve[And[Equal[xPltMin, Plus[Times[xLowBrd, aaa], bbb]], Equal[xPltMax, Plus[Times[xHghBrd, aaa], bbb]]], List[aaa, bbb]]]], Set[solY, N[Solve[And[Equal[yPltMin, Plus[Times[yLowBrd, aaa], bbb]], Equal[yPltMax, Plus[Times[yHghBrd, aaa], bbb]]], List[aaa, bbb]]]], SetDelayed[mapX, ReplaceAll[Function[Plus[Times[aaa, Slot[1]], bbb]], First[solX]]], Set[dataX, Round[Map[mapX, x], 0.001`]], SetDelayed[mapY, ReplaceAll[Function[Plus[Times[aaa, Slot[1]], bbb]], First[solY]]], Set[dataY, Round[Map[mapY, y], 0.001`]], Set[allDataRaw, Transpose[List[dataX, dataY]]], SetDelayed[xDataMin, Min[Map[Function[Part[Slot[1], 1]], allDataRaw]]], SetDelayed[xDataMax, Max[Map[Function[Part[Slot[1], 1]], allDataRaw]]], debugDoVerbose["xDataMin=   ", xDataMin], debugDoVerbose["xDataMax=   ", xDataMax], debugDoVerbose["xDataPlotRangeMin=   ", xDataPlotRangeMin], debugDoVerbose["xDataPlotRangeMax=   ", xDataPlotRangeMax], Clear[func], If[Equal[additionalFakeDataFlag, False], CompoundExpression[debugDoVerbose["additionalFakeData : ", additionalFakeData], Set[allDataRaw, DeleteDuplicates[Join[additionalFakeData, allDataRaw]]], Set[allDataRaw, Sort[allDataRaw, Function[Less[Part[Slot[1], 1], Part[Slot[2], 1]]]]], Set[allDataExport, Set[allData, Round[MovingAverage[allDataRaw, movAverage], 0.001`]]], Set[func, Interpolation[allData]], Print[debugMakePlots[Plot[func[x], List[x, xDataPlotRangeMin, xDataPlotRangeMax], Rule[AxesLabel, labelEffVsNm]]]], Print[debugMakePlots[ListPlot[List[Style[allDataRaw, Red], Style[allData, Green]], Rule[PlotRange, List[List[xDataPlotRangeMin, xDataPlotRangeMax], All]]]]], debugDoVerbose["False"]], CompoundExpression[debugDoVerbose["additionalFakeData : ", additionalFakeData], Set[allDataRaw, DeleteDuplicates[Join[additionalFakeData, allDataRaw]]], Set[allDataRaw, Sort[allDataRaw, Function[Less[Part[Slot[1], 1], Part[Slot[2], 1]]]]], Set[allDataExport, Set[allData, Round[MovingAverage[allDataRaw, movAverage], 0.001`]]], Set[func, Interpolation[allData]], Print[debugMakePlots[Plot[func[x], List[x, xDataPlotRangeMin, xDataPlotRangeMax], Rule[AxesLabel, labelEffVsNm], Rule[PlotRange, List[0, 1]]]]], Print[debugMakePlots[ListPlot[List[Style[allDataRaw, Red], Style[allData, Green], Style[additionalFakeData, Blue]], Rule[PlotRange, List[List[xDataPlotRangeMin, xDataPlotRangeMax], List[0, 1]]], Rule[AxesLabel, labelEffVsNm]]]], debugDoVerbose["True"]]], Return[func]]]], Null]]]
 
-debugDoVerbose@OwnValues@thisDataPlotInset;
+(* ---- initialization cell 23, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[tagDataPlot, "MAPMT ORIGINAL"], Null], CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]]
 
-debugDoVerbose@OwnValues@thisGraphicsInset;
+(* ---- initialization cell 24, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[R11265SBAUVdata, List[List[1.77438`, 0.`], List[1.77692`, 0.0002`], List[1.77946`, 0.00038`], List[1.78201`, 0.00052`], List[1.78457`, 0.00065`], List[1.78714`, 0.00075`], List[1.78972`, 0.00083`], List[1.7923`, 0.0009`], List[1.79489`, 0.00094`], List[1.79749`, 0.00098`], List[1.80009`, 0.001`], List[1.80271`, 0.00101`], List[1.80533`, 0.00102`], List[1.80795`, 0.00101`], List[1.81059`, 0.00101`], List[1.81323`, 0.001`], List[1.81588`, 0.00099`], List[1.81854`, 0.00099`], List[1.82121`, 0.00098`], List[1.82388`, 0.00099`], List[1.82656`, 0.001`], List[1.82925`, 0.00107`], List[1.83195`, 0.00115`], List[1.83466`, 0.00124`], List[1.83737`, 0.00134`], List[1.84009`, 0.00144`], List[1.84282`, 0.00154`], List[1.84556`, 0.00165`], List[1.84831`, 0.00177`], List[1.85106`, 0.00188`], List[1.85383`, 0.002`], List[1.8566`, 0.00208`], List[1.85938`, 0.00217`], List[1.86216`, 0.00225`], List[1.86496`, 0.00234`], List[1.86777`, 0.00244`], List[1.87058`, 0.00254`], List[1.8734`, 0.00264`], List[1.87623`, 0.00275`], List[1.87907`, 0.00287`], List[1.88192`, 0.003`], List[1.88477`, 0.00314`], List[1.88764`, 0.00329`], List[1.89051`, 0.00345`], List[1.89339`, 0.00362`], List[1.89628`, 0.00381`], List[1.89918`, 0.00402`], List[1.90209`, 0.00424`], List[1.90501`, 0.00447`], List[1.90793`, 0.00473`], List[1.91087`, 0.005`], List[1.91381`, 0.00534`], List[1.91677`, 0.0057`], List[1.91973`, 0.00608`], List[1.9227`, 0.00647`], List[1.92568`, 0.00688`], List[1.92867`, 0.00729`], List[1.93167`, 0.00771`], List[1.93468`, 0.00814`], List[1.9377`, 0.00857`], List[1.94072`, 0.009`], List[1.94376`, 0.00938`], List[1.94681`, 0.00977`], List[1.94986`, 0.01015`], List[1.95293`, 0.01054`], List[1.95601`, 0.01094`], List[1.95909`, 0.01134`], List[1.96219`, 0.01174`], List[1.96529`, 0.01215`], List[1.96841`, 0.01257`], List[1.97153`, 0.013`], List[1.97466`, 0.01344`], List[1.97781`, 0.01389`], List[1.98096`, 0.01435`], List[1.98413`, 0.01482`], List[1.9873`, 0.01531`], List[1.99049`, 0.01582`], List[1.99368`, 0.01634`], List[1.99689`, 0.01687`], List[2.0001`, 0.01743`], List[2.00333`, 0.018`], List[2.00657`, 0.01863`], List[2.00981`, 0.01927`], List[2.01307`, 0.01994`], List[2.01634`, 0.02062`], List[2.01962`, 0.02131`], List[2.02291`, 0.02202`], List[2.02621`, 0.02275`], List[2.02952`, 0.02349`], List[2.03284`, 0.02424`], List[2.03617`, 0.025`], List[2.03951`, 0.02577`], List[2.04287`, 0.02655`], List[2.04623`, 0.02734`], List[2.04961`, 0.02814`], List[2.053`, 0.02894`], List[2.0564`, 0.02974`], List[2.05981`, 0.03055`], List[2.06323`, 0.03137`], List[2.06666`, 0.03218`], List[2.07011`, 0.033`], List[2.07356`, 0.03378`], List[2.07703`, 0.03457`], List[2.08051`, 0.03535`], List[2.084`, 0.03614`], List[2.0875`, 0.03694`], List[2.09102`, 0.03774`], List[2.09454`, 0.03854`], List[2.09808`, 0.03935`], List[2.10163`, 0.04017`], List[2.10519`, 0.041`], List[2.10877`, 0.04187`], List[2.11235`, 0.04275`], List[2.11595`, 0.04364`], List[2.11956`, 0.04454`], List[2.12319`, 0.04544`], List[2.12682`, 0.04634`], List[2.13047`, 0.04725`], List[2.13413`, 0.04817`], List[2.1378`, 0.04908`], List[2.14149`, 0.05`], List[2.14519`, 0.05087`], List[2.1489`, 0.05174`], List[2.15262`, 0.05261`], List[2.15636`, 0.05349`], List[2.16011`, 0.05438`], List[2.16387`, 0.05527`], List[2.16765`, 0.05618`], List[2.17144`, 0.0571`], List[2.17524`, 0.05804`], List[2.17906`, 0.059`], List[2.18289`, 0.06001`], List[2.18673`, 0.06104`], List[2.19059`, 0.06209`], List[2.19446`, 0.06316`], List[2.19834`, 0.06425`], List[2.20224`, 0.06536`], List[2.20615`, 0.06649`], List[2.21008`, 0.06764`], List[2.21402`, 0.06881`], List[2.21797`, 0.07`], List[2.22194`, 0.07111`], List[2.22592`, 0.07225`], List[2.22992`, 0.07342`], List[2.23393`, 0.07462`], List[2.23795`, 0.07588`], List[2.24199`, 0.07718`], List[2.24605`, 0.07853`], List[2.25012`, 0.07995`], List[2.2542`, 0.08144`], List[2.2583`, 0.083`], List[2.26241`, 0.08472`], List[2.26654`, 0.08653`], List[2.27068`, 0.08841`], List[2.27484`, 0.09038`], List[2.27902`, 0.09244`], List[2.28321`, 0.09458`], List[2.28741`, 0.0968`], List[2.29163`, 0.09911`], List[2.29587`, 0.10151`], List[2.30012`, 0.104`], List[2.30439`, 0.10673`], List[2.30867`, 0.10954`], List[2.31297`, 0.11242`], List[2.31728`, 0.11537`], List[2.32161`, 0.11838`], List[2.32596`, 0.12143`], List[2.33033`, 0.12453`], List[2.33471`, 0.12766`], List[2.3391`, 0.13082`], List[2.34352`, 0.134`], List[2.34795`, 0.13729`], List[2.35239`, 0.14057`], List[2.35686`, 0.14383`], List[2.36134`, 0.14706`], List[2.36584`, 0.15025`], List[2.37035`, 0.15338`], List[2.37488`, 0.15643`], List[2.37943`, 0.15939`], List[2.384`, 0.16225`], List[2.38858`, 0.165`], List[2.39319`, 0.16725`], List[2.39781`, 0.16938`], List[2.40244`, 0.1714`], List[2.4071`, 0.17331`], List[2.41177`, 0.17513`], List[2.41647`, 0.17685`], List[2.42118`, 0.17849`], List[2.42591`, 0.18006`], List[2.43065`, 0.18156`], List[2.43542`, 0.183`], List[2.4402`, 0.18444`], List[2.44501`, 0.18584`], List[2.44983`, 0.1872`], List[2.45467`, 0.18852`], List[2.45953`, 0.18981`], List[2.46441`, 0.19108`], List[2.46931`, 0.19233`], List[2.47423`, 0.19356`], List[2.47917`, 0.19478`], List[2.48413`, 0.196`], List[2.48911`, 0.19723`], List[2.4941`, 0.19847`], List[2.49912`, 0.19972`], List[2.50416`, 0.20098`], List[2.50922`, 0.20225`], List[2.5143`, 0.20354`], List[2.5194`, 0.20486`], List[2.52452`, 0.20621`], List[2.52966`, 0.20759`], List[2.53482`, 0.209`], List[2.54001`, 0.21057`], List[2.54521`, 0.21218`], List[2.55044`, 0.21382`], List[2.55569`, 0.21549`], List[2.56096`, 0.21719`], List[2.56625`, 0.21891`], List[2.57156`, 0.22066`], List[2.5769`, 0.22242`], List[2.58225`, 0.22421`], List[2.58763`, 0.226`], List[2.59304`, 0.22771`], List[2.59846`, 0.22942`], List[2.60391`, 0.23116`], List[2.60938`, 0.23291`], List[2.61487`, 0.23469`], List[2.62039`, 0.23649`], List[2.62593`, 0.23832`], List[2.63149`, 0.24018`], List[2.63708`, 0.24207`], List[2.64269`, 0.244`], List[2.64832`, 0.24618`], List[2.65398`, 0.2484`], List[2.65967`, 0.25063`], List[2.66537`, 0.25288`], List[2.67111`, 0.25513`], List[2.67686`, 0.25736`], List[2.68264`, 0.25958`], List[2.68845`, 0.26176`], List[2.69428`, 0.26391`], List[2.70014`, 0.266`], List[2.70602`, 0.26782`], List[2.71193`, 0.26958`], List[2.71786`, 0.27129`], List[2.72382`, 0.27295`], List[2.72981`, 0.27456`], List[2.73582`, 0.27613`], List[2.74186`, 0.27765`], List[2.74793`, 0.27914`], List[2.75402`, 0.28058`], List[2.76014`, 0.282`], List[2.76629`, 0.28335`], List[2.77246`, 0.28468`], List[2.77867`, 0.28599`], List[2.7849`, 0.28728`], List[2.79116`, 0.28856`], List[2.79744`, 0.28984`], List[2.80376`, 0.29112`], List[2.8101`, 0.2924`], List[2.81647`, 0.29369`], List[2.82287`, 0.295`], List[2.8293`, 0.29656`], List[2.83576`, 0.29813`], List[2.84225`, 0.2997`], List[2.84877`, 0.30126`], List[2.85532`, 0.30281`], List[2.8619`, 0.30434`], List[2.86851`, 0.30583`], List[2.87515`, 0.30727`], List[2.88182`, 0.30867`], List[2.88852`, 0.31`], List[2.89525`, 0.31097`], List[2.90202`, 0.31187`], List[2.90881`, 0.31273`], List[2.91564`, 0.31354`], List[2.9225`, 0.31431`], List[2.9294`, 0.31506`], List[2.93632`, 0.3158`], List[2.94328`, 0.31653`], List[2.95027`, 0.31726`], List[2.9573`, 0.318`], List[2.96435`, 0.31898`], List[2.97144`, 0.31997`], List[2.97857`, 0.32097`], List[2.98573`, 0.32198`], List[2.99293`, 0.323`], List[3.00015`, 0.32402`], List[3.00742`, 0.32503`], List[3.01472`, 0.32603`], List[3.02205`, 0.32702`], List[3.02942`, 0.328`], List[3.03683`, 0.32886`], List[3.04427`, 0.3297`], List[3.05175`, 0.33052`], List[3.05927`, 0.33133`], List[3.06682`, 0.33213`], List[3.07442`, 0.33291`], List[3.08204`, 0.33369`], List[3.08971`, 0.33446`], List[3.09742`, 0.33523`], List[3.10516`, 0.336`], List[3.11294`, 0.33693`], List[3.12076`, 0.33786`], List[3.12862`, 0.33876`], List[3.13653`, 0.33965`], List[3.14447`, 0.3405`], List[3.15245`, 0.34131`], List[3.16047`, 0.34208`], List[3.16853`, 0.34278`], List[3.17663`, 0.34343`], List[3.18478`, 0.344`], List[3.19297`, 0.3442`], List[3.2012`, 0.34432`], List[3.20947`, 0.34438`], List[3.21778`, 0.3444`], List[3.22614`, 0.34438`], List[3.23454`, 0.34432`], List[3.24299`, 0.34425`], List[3.25148`, 0.34416`], List[3.26001`, 0.34408`], List[3.26859`, 0.344`], List[3.27721`, 0.34411`], List[3.28588`, 0.34424`], List[3.2946`, 0.34439`], List[3.30336`, 0.34456`], List[3.31217`, 0.34475`], List[3.32103`, 0.34496`], List[3.32993`, 0.34519`], List[3.33888`, 0.34544`], List[3.34788`, 0.34571`], List[3.35693`, 0.346`], List[3.36603`, 0.34638`], List[3.37517`, 0.34677`], List[3.38437`, 0.34717`], List[3.39362`, 0.34758`], List[3.40292`, 0.348`], List[3.41226`, 0.34842`], List[3.42166`, 0.34883`], List[3.43112`, 0.34923`], List[3.44062`, 0.34962`], List[3.45018`, 0.35`], List[3.45979`, 0.35031`], List[3.46945`, 0.35059`], List[3.47917`, 0.35086`], List[3.48894`, 0.3511`], List[3.49877`, 0.35131`], List[3.50866`, 0.3515`], List[3.51859`, 0.35167`], List[3.52859`, 0.35181`], List[3.53864`, 0.35192`], List[3.54875`, 0.352`], List[3.55892`, 0.35199`], List[3.56915`, 0.35194`], List[3.57944`, 0.35188`], List[3.58978`, 0.35179`], List[3.60019`, 0.35169`], List[3.61065`, 0.35157`], List[3.62118`, 0.35144`], List[3.63177`, 0.3513`], List[3.64242`, 0.35115`], List[3.65313`, 0.351`], List[3.66391`, 0.351`], List[3.67475`, 0.35099`], List[3.68565`, 0.35097`], List[3.69662`, 0.35094`], List[3.70765`, 0.35088`], List[3.71875`, 0.35078`], List[3.72992`, 0.35066`], List[3.74116`, 0.35049`], List[3.75246`, 0.35027`], List[3.76383`, 0.35`], List[3.77527`, 0.34954`], List[3.78678`, 0.34902`], List[3.79836`, 0.34844`], List[3.81001`, 0.34781`], List[3.82174`, 0.34713`], List[3.83353`, 0.34639`], List[3.8454`, 0.34561`], List[3.85734`, 0.34478`], List[3.86936`, 0.34391`], List[3.88145`, 0.343`], List[3.89362`, 0.34216`], List[3.90586`, 0.34128`], List[3.91818`, 0.34035`], List[3.93058`, 0.33936`], List[3.94306`, 0.33831`], List[3.95562`, 0.3372`], List[3.96826`, 0.33602`], List[3.98097`, 0.33476`], List[3.99377`, 0.33342`], List[4.00666`, 0.332`], List[4.01962`, 0.33022`], List[4.03268`, 0.32837`], List[4.04581`, 0.32644`], List[4.05903`, 0.32446`], List[4.07234`, 0.32244`], List[4.08574`, 0.32038`], List[4.09922`, 0.31829`], List[4.11279`, 0.31619`], List[4.12646`, 0.31409`], List[4.14021`, 0.312`], List[4.15406`, 0.31021`], List[4.168`, 0.30843`], List[4.18203`, 0.30666`], List[4.19616`, 0.3049`], List[4.21039`, 0.30313`], List[4.22471`, 0.30134`], List[4.23913`, 0.29955`], List[4.25364`, 0.29773`], List[4.26826`, 0.29588`], List[4.28298`, 0.294`], List[4.2978`, 0.29196`], List[4.31272`, 0.28989`], List[4.32775`, 0.28777`], List[4.34288`, 0.28562`], List[4.35812`, 0.28344`], List[4.37346`, 0.28122`], List[4.38892`, 0.27896`], List[4.40448`, 0.27667`], List[4.42016`, 0.27435`], List[4.43594`, 0.272`], List[4.45184`, 0.26944`], List[4.46786`, 0.26686`], List[4.48399`, 0.26427`], List[4.50023`, 0.26169`], List[4.5166`, 0.25913`], List[4.53308`, 0.25659`], List[4.54968`, 0.2541`], List[4.56641`, 0.25166`], List[4.58326`, 0.24929`], List[4.60024`, 0.247`], List[4.61734`, 0.24518`], List[4.63457`, 0.24343`], List[4.65193`, 0.24176`], List[4.66941`, 0.24014`], List[4.68703`, 0.23856`], List[4.70479`, 0.23702`], List[4.72268`, 0.23551`], List[4.7407`, 0.23401`], List[4.75887`, 0.23251`], List[4.77717`, 0.231`], List[4.79561`, 0.22929`], List[4.8142`, 0.22756`], List[4.83293`, 0.22581`], List[4.85181`, 0.22404`], List[4.87084`, 0.22225`], List[4.89002`, 0.22044`], List[4.90934`, 0.21861`], List[4.92883`, 0.21676`], List[4.94846`, 0.21489`], List[4.96826`, 0.213`], List[4.98821`, 0.21111`], List[5.00832`, 0.20919`], List[5.0286`, 0.20726`], List[5.04904`, 0.2053`], List[5.06965`, 0.20331`], List[5.09043`, 0.2013`], List[5.11137`, 0.19927`], List[5.1325`, 0.19721`], List[5.15379`, 0.19512`], List[5.17527`, 0.193`], List[5.19692`, 0.1907`], List[5.21876`, 0.18838`], List[5.24078`, 0.18605`], List[5.26298`, 0.18371`], List[5.28538`, 0.18138`], List[5.30797`, 0.17905`], List[5.33075`, 0.17674`], List[5.35372`, 0.17446`], List[5.3769`, 0.17221`], List[5.40028`, 0.17`], List[5.42386`, 0.16809`], List[5.44765`, 0.16622`], List[5.47165`, 0.16439`], List[5.49586`, 0.16259`], List[5.52028`, 0.16081`], List[5.54493`, 0.15905`], List[5.56979`, 0.15729`], List[5.59488`, 0.15554`], List[5.6202`, 0.15377`], List[5.64575`, 0.152`], List[5.67153`, 0.15001`], List[5.69754`, 0.148`], List[5.7238`, 0.14598`], List[5.7503`, 0.14396`], List[5.77704`, 0.14194`], List[5.80404`, 0.13992`], List[5.83129`, 0.13791`], List[5.85879`, 0.13592`], List[5.88656`, 0.13395`], List[5.91459`, 0.132`], List[5.94289`, 0.13008`], List[5.97146`, 0.1282`], List[6.00031`, 0.12636`], List[6.02944`, 0.12456`], List[6.05885`, 0.12281`], List[6.08855`, 0.12112`], List[6.11854`, 0.11949`], List[6.14883`, 0.11792`], List[6.17942`, 0.11642`], List[6.21032`, 0.115`]]], Null]]
 
-(* ---- initialization cell 11 | d67fdbd1-dec5-5f4e-8a25-4b045b9f1a2b ---- *)
-tagDataPlot="\<testtest\>";
+(* ---- initialization cell 25, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[R11265SBABSdata, List[List[1.77438`, 0.`], List[1.77692`, 0.0002`], List[1.77946`, 0.00038`], List[1.78201`, 0.00052`], List[1.78457`, 0.00065`], List[1.78714`, 0.00075`], List[1.78972`, 0.00083`], List[1.7923`, 0.0009`], List[1.79489`, 0.00094`], List[1.79749`, 0.00098`], List[1.80009`, 0.001`], List[1.80271`, 0.00101`], List[1.80533`, 0.00102`], List[1.80795`, 0.00101`], List[1.81059`, 0.00101`], List[1.81323`, 0.001`], List[1.81588`, 0.00099`], List[1.81854`, 0.00099`], List[1.82121`, 0.00098`], List[1.82388`, 0.00099`], List[1.82656`, 0.001`], List[1.82925`, 0.00107`], List[1.83195`, 0.00115`], List[1.83466`, 0.00124`], List[1.83737`, 0.00134`], List[1.84009`, 0.00144`], List[1.84282`, 0.00154`], List[1.84556`, 0.00165`], List[1.84831`, 0.00177`], List[1.85106`, 0.00188`], List[1.85383`, 0.002`], List[1.8566`, 0.00208`], List[1.85938`, 0.00217`], List[1.86216`, 0.00225`], List[1.86496`, 0.00234`], List[1.86777`, 0.00244`], List[1.87058`, 0.00254`], List[1.8734`, 0.00264`], List[1.87623`, 0.00275`], List[1.87907`, 0.00287`], List[1.88192`, 0.003`], List[1.88477`, 0.00314`], List[1.88764`, 0.00329`], List[1.89051`, 0.00345`], List[1.89339`, 0.00362`], List[1.89628`, 0.00381`], List[1.89918`, 0.00402`], List[1.90209`, 0.00424`], List[1.90501`, 0.00447`], List[1.90793`, 0.00473`], List[1.91087`, 0.005`], List[1.91381`, 0.00534`], List[1.91677`, 0.0057`], List[1.91973`, 0.00608`], List[1.9227`, 0.00647`], List[1.92568`, 0.00688`], List[1.92867`, 0.00729`], List[1.93167`, 0.00771`], List[1.93468`, 0.00814`], List[1.9377`, 0.00857`], List[1.94072`, 0.009`], List[1.94376`, 0.00938`], List[1.94681`, 0.00977`], List[1.94986`, 0.01015`], List[1.95293`, 0.01054`], List[1.95601`, 0.01094`], List[1.95909`, 0.01134`], List[1.96219`, 0.01174`], List[1.96529`, 0.01215`], List[1.96841`, 0.01257`], List[1.97153`, 0.013`], List[1.97466`, 0.01344`], List[1.97781`, 0.01389`], List[1.98096`, 0.01435`], List[1.98413`, 0.01482`], List[1.9873`, 0.01531`], List[1.99049`, 0.01582`], List[1.99368`, 0.01634`], List[1.99689`, 0.01687`], List[2.0001`, 0.01743`], List[2.00333`, 0.018`], List[2.00657`, 0.01863`], List[2.00981`, 0.01927`], List[2.01307`, 0.01994`], List[2.01634`, 0.02062`], List[2.01962`, 0.02131`], List[2.02291`, 0.02202`], List[2.02621`, 0.02275`], List[2.02952`, 0.02349`], List[2.03284`, 0.02424`], List[2.03617`, 0.025`], List[2.03951`, 0.02577`], List[2.04287`, 0.02655`], List[2.04623`, 0.02734`], List[2.04961`, 0.02814`], List[2.053`, 0.02894`], List[2.0564`, 0.02974`], List[2.05981`, 0.03055`], List[2.06323`, 0.03137`], List[2.06666`, 0.03218`], List[2.07011`, 0.033`], List[2.07356`, 0.03378`], List[2.07703`, 0.03457`], List[2.08051`, 0.03535`], List[2.084`, 0.03614`], List[2.0875`, 0.03694`], List[2.09102`, 0.03774`], List[2.09454`, 0.03854`], List[2.09808`, 0.03935`], List[2.10163`, 0.04017`], List[2.10519`, 0.041`], List[2.10877`, 0.04187`], List[2.11235`, 0.04275`], List[2.11595`, 0.04364`], List[2.11956`, 0.04454`], List[2.12319`, 0.04544`], List[2.12682`, 0.04634`], List[2.13047`, 0.04725`], List[2.13413`, 0.04817`], List[2.1378`, 0.04908`], List[2.14149`, 0.05`], List[2.14519`, 0.05087`], List[2.1489`, 0.05174`], List[2.15262`, 0.05261`], List[2.15636`, 0.05349`], List[2.16011`, 0.05438`], List[2.16387`, 0.05527`], List[2.16765`, 0.05618`], List[2.17144`, 0.0571`], List[2.17524`, 0.05804`], List[2.17906`, 0.059`], List[2.18289`, 0.06001`], List[2.18673`, 0.06104`], List[2.19059`, 0.06209`], List[2.19446`, 0.06316`], List[2.19834`, 0.06425`], List[2.20224`, 0.06536`], List[2.20615`, 0.06649`], List[2.21008`, 0.06764`], List[2.21402`, 0.06881`], List[2.21797`, 0.07`], List[2.22194`, 0.07111`], List[2.22592`, 0.07225`], List[2.22992`, 0.07342`], List[2.23393`, 0.07462`], List[2.23795`, 0.07588`], List[2.24199`, 0.07718`], List[2.24605`, 0.07853`], List[2.25012`, 0.07995`], List[2.2542`, 0.08144`], List[2.2583`, 0.083`], List[2.26241`, 0.08472`], List[2.26654`, 0.08653`], List[2.27068`, 0.08841`], List[2.27484`, 0.09038`], List[2.27902`, 0.09244`], List[2.28321`, 0.09458`], List[2.28741`, 0.0968`], List[2.29163`, 0.09911`], List[2.29587`, 0.10151`], List[2.30012`, 0.104`], List[2.30439`, 0.10673`], List[2.30867`, 0.10954`], List[2.31297`, 0.11242`], List[2.31728`, 0.11537`], List[2.32161`, 0.11838`], List[2.32596`, 0.12143`], List[2.33033`, 0.12453`], List[2.33471`, 0.12766`], List[2.3391`, 0.13082`], List[2.34352`, 0.134`], List[2.34795`, 0.13729`], List[2.35239`, 0.14057`], List[2.35686`, 0.14383`], List[2.36134`, 0.14706`], List[2.36584`, 0.15025`], List[2.37035`, 0.15338`], List[2.37488`, 0.15643`], List[2.37943`, 0.15939`], List[2.384`, 0.16225`], List[2.38858`, 0.165`], List[2.39319`, 0.16725`], List[2.39781`, 0.16938`], List[2.40244`, 0.1714`], List[2.4071`, 0.17331`], List[2.41177`, 0.17513`], List[2.41647`, 0.17685`], List[2.42118`, 0.17849`], List[2.42591`, 0.18006`], List[2.43065`, 0.18156`], List[2.43542`, 0.183`], List[2.4402`, 0.18444`], List[2.44501`, 0.18584`], List[2.44983`, 0.1872`], List[2.45467`, 0.18852`], List[2.45953`, 0.18981`], List[2.46441`, 0.19108`], List[2.46931`, 0.19233`], List[2.47423`, 0.19356`], List[2.47917`, 0.19478`], List[2.48413`, 0.196`], List[2.48911`, 0.19723`], List[2.4941`, 0.19847`], List[2.49912`, 0.19972`], List[2.50416`, 0.20098`], List[2.50922`, 0.20225`], List[2.5143`, 0.20354`], List[2.5194`, 0.20486`], List[2.52452`, 0.20621`], List[2.52966`, 0.20759`], List[2.53482`, 0.209`], List[2.54001`, 0.21057`], List[2.54521`, 0.21218`], List[2.55044`, 0.21382`], List[2.55569`, 0.21549`], List[2.56096`, 0.21719`], List[2.56625`, 0.21891`], List[2.57156`, 0.22066`], List[2.5769`, 0.22242`], List[2.58225`, 0.22421`], List[2.58763`, 0.226`], List[2.59304`, 0.22771`], List[2.59846`, 0.22942`], List[2.60391`, 0.23116`], List[2.60938`, 0.23291`], List[2.61487`, 0.23469`], List[2.62039`, 0.23649`], List[2.62593`, 0.23832`], List[2.63149`, 0.24018`], List[2.63708`, 0.24207`], List[2.64269`, 0.244`], List[2.64832`, 0.24618`], List[2.65398`, 0.2484`], List[2.65967`, 0.25063`], List[2.66537`, 0.25288`], List[2.67111`, 0.25513`], List[2.67686`, 0.25736`], List[2.68264`, 0.25958`], List[2.68845`, 0.26176`], List[2.69428`, 0.26391`], List[2.70014`, 0.266`], List[2.70602`, 0.26782`], List[2.71193`, 0.26958`], List[2.71786`, 0.27129`], List[2.72382`, 0.27295`], List[2.72981`, 0.27456`], List[2.73582`, 0.27613`], List[2.74186`, 0.27765`], List[2.74793`, 0.27914`], List[2.75402`, 0.28058`], List[2.76014`, 0.282`], List[2.76629`, 0.28335`], List[2.77246`, 0.28468`], List[2.77867`, 0.28599`], List[2.7849`, 0.28728`], List[2.79116`, 0.28856`], List[2.79744`, 0.28984`], List[2.80376`, 0.29112`], List[2.8101`, 0.2924`], List[2.81647`, 0.29369`], List[2.82287`, 0.295`], List[2.8293`, 0.29656`], List[2.83576`, 0.29813`], List[2.84225`, 0.2997`], List[2.84877`, 0.30126`], List[2.85532`, 0.30281`], List[2.8619`, 0.30434`], List[2.86851`, 0.30583`], List[2.87515`, 0.30727`], List[2.88182`, 0.30867`], List[2.88852`, 0.31`], List[2.89525`, 0.31097`], List[2.90202`, 0.31187`], List[2.90881`, 0.31273`], List[2.91564`, 0.31354`], List[2.9225`, 0.31431`], List[2.9294`, 0.31506`], List[2.93632`, 0.3158`], List[2.94328`, 0.31653`], List[2.95027`, 0.31726`], List[2.9573`, 0.318`], List[2.96435`, 0.31898`], List[2.97144`, 0.31997`], List[2.97857`, 0.32097`], List[2.98573`, 0.32198`], List[2.99293`, 0.323`], List[3.00015`, 0.32402`], List[3.00742`, 0.32503`], List[3.01472`, 0.32603`], List[3.02205`, 0.32702`], List[3.02942`, 0.328`], List[3.03683`, 0.32886`], List[3.04427`, 0.3297`], List[3.05175`, 0.33052`], List[3.05927`, 0.33133`], List[3.06682`, 0.33213`], List[3.07442`, 0.33291`], List[3.08204`, 0.33369`], List[3.08971`, 0.33446`], List[3.09742`, 0.33523`], List[3.10516`, 0.336`], List[3.11294`, 0.33693`], List[3.12076`, 0.33786`], List[3.12862`, 0.33876`], List[3.13653`, 0.33965`], List[3.14447`, 0.3405`], List[3.15245`, 0.34131`], List[3.16047`, 0.34208`], List[3.16853`, 0.34278`], List[3.17663`, 0.34343`], List[3.18478`, 0.344`], List[3.19297`, 0.3442`], List[3.2012`, 0.34432`], List[3.20947`, 0.34438`], List[3.21778`, 0.3444`], List[3.22614`, 0.34438`], List[3.23454`, 0.34432`], List[3.24299`, 0.34425`], List[3.25148`, 0.34416`], List[3.26001`, 0.34408`], List[3.26859`, 0.344`], List[3.27721`, 0.34411`], List[3.28588`, 0.34424`], List[3.2946`, 0.34439`], List[3.30336`, 0.34456`], List[3.31217`, 0.34475`], List[3.32103`, 0.34496`], List[3.32993`, 0.34519`], List[3.33888`, 0.34544`], List[3.34788`, 0.34571`], List[3.35693`, 0.346`], List[3.36603`, 0.34638`], List[3.37517`, 0.34677`], List[3.38437`, 0.34717`], List[3.39362`, 0.34758`], List[3.40292`, 0.348`], List[3.41226`, 0.34842`], List[3.42166`, 0.34883`], List[3.43112`, 0.34923`], List[3.44062`, 0.34962`], List[3.45018`, 0.35`], List[3.45979`, 0.35031`], List[3.46945`, 0.35059`], List[3.47917`, 0.35086`], List[3.48894`, 0.3511`], List[3.49877`, 0.35131`], List[3.50866`, 0.3515`], List[3.51859`, 0.35167`], List[3.52859`, 0.35181`], List[3.53864`, 0.35192`], List[3.54875`, 0.352`], List[3.55892`, 0.35199`], List[3.56915`, 0.35194`], List[3.57944`, 0.35188`], List[3.58978`, 0.35179`], List[3.60019`, 0.35169`], List[3.61065`, 0.35157`], List[3.62118`, 0.35144`], List[3.63177`, 0.3513`], List[3.64242`, 0.35115`], List[3.65313`, 0.351`], List[3.66391`, 0.351`], List[3.67475`, 0.35099`], List[3.68565`, 0.35097`], List[3.69662`, 0.35094`], List[3.70765`, 0.35088`], List[3.71875`, 0.35078`], List[3.72992`, 0.35066`], List[3.74116`, 0.35049`], List[3.75246`, 0.35027`], List[3.76383`, 0.35`], List[3.77527`, 0.34954`], List[3.78678`, 0.34902`], List[3.79836`, 0.34844`], List[3.81001`, 0.34781`], List[3.82174`, 0.34713`], List[3.83353`, 0.34639`], List[3.8454`, 0.34561`], List[3.85734`, 0.34478`], List[3.86936`, 0.34391`], List[3.88145`, 0.343`], List[3.89362`, 0.34216`], List[3.90586`, 0.34128`], List[3.91818`, 0.34035`], List[3.93058`, 0.33936`], List[3.94306`, 0.33831`], List[3.95562`, 0.3372`], List[3.96826`, 0.33602`], List[3.98097`, 0.33476`], List[3.99377`, 0.33342`], List[4.00666`, 0.332`], List[4.01962`, 0.33041`], List[4.03268`, 0.32872`], List[4.04581`, 0.32695`], List[4.05903`, 0.32508`], List[4.07234`, 0.32313`], List[4.08574`, 0.32108`], List[4.09922`, 0.31895`], List[4.11279`, 0.31672`], List[4.12646`, 0.31441`], List[4.14021`, 0.312`], List[4.15406`, 0.30954`], List[4.168`, 0.30698`], List[4.18203`, 0.30434`], List[4.19616`, 0.30159`], List[4.21039`, 0.29875`], List[4.22471`, 0.29581`], List[4.23913`, 0.29276`], List[4.25364`, 0.28962`], List[4.26826`, 0.28636`], List[4.28298`, 0.283`], List[4.2978`, 0.27659`], List[4.31272`, 0.27099`], List[4.32775`, 0.2661`], List[4.34288`, 0.26183`], List[4.35812`, 0.25805`], List[4.37346`, 0.25467`], List[4.38892`, 0.25158`], List[4.40448`, 0.24868`], List[4.42016`, 0.24585`], List[4.43594`, 0.243`], List[4.45184`, 0.24034`], List[4.46786`, 0.2369`], List[4.48399`, 0.23283`], List[4.50023`, 0.22827`], List[4.5166`, 0.22338`], List[4.53308`, 0.21829`], List[4.54968`, 0.21317`], List[4.56641`, 0.20867`], List[4.58326`, 0.20407`], List[4.60024`, 0.199`], List[4.61734`, 0.19295`], List[4.63457`, 0.18653`], List[4.65193`, 0.18035`], List[4.66941`, 0.17436`], List[4.68703`, 0.16839`], List[4.70479`, 0.1624`], List[4.72268`, 0.15633`], List[4.7407`, 0.15`], List[4.75887`, 0.14348`], List[4.77717`, 0.13683`], List[4.79561`, 0.13005`], List[4.8142`, 0.12313`], List[4.83293`, 0.11607`], List[4.85181`, 0.10887`], List[4.87084`, 0.10153`], List[4.89002`, 0.09405`], List[4.90934`, 0.08643`], List[4.92883`, 0.07866`], List[4.94846`, 0.07074`], List[4.96826`, 0.06268`], List[4.98821`, 0.05447`], List[5.00832`, 0.04611`], List[5.0286`, 0.03578`], List[5.04904`, 0.02523`], List[5.06965`, 0.01555`], List[5.09043`, 0.00729`], List[5.11137`, 0.00104`], List[5.1325`, 0.`], List[5.15379`, 0.`], List[5.17527`, 0.`], List[5.19692`, 0.`], List[5.21876`, 0.`], List[5.24078`, 0.`], List[5.26298`, 0.`], List[5.28538`, 0.`], List[5.30797`, 0.`], List[5.33075`, 0.`], List[5.35372`, 0.`], List[5.3769`, 0.`], List[5.40028`, 0.`], List[5.42386`, 0.`], List[5.44765`, 0.`], List[5.47165`, 0.`], List[5.49586`, 0.`], List[5.52028`, 0.`], List[5.54493`, 0.`], List[5.56979`, 0.`], List[5.59488`, 0.`], List[5.6202`, 0.`], List[5.64575`, 0.`], List[5.67153`, 0.`], List[5.69754`, 0.`], List[5.7238`, 0.`], List[5.7503`, 0.`], List[5.77704`, 0.`], List[5.80404`, 0.`], List[5.83129`, 0.`], List[5.85879`, 0.`], List[5.88656`, 0.`], List[5.91459`, 0.`], List[5.94289`, 0.`], List[5.97146`, 0.`], List[6.00031`, 0.`], List[6.02944`, 0.`], List[6.05885`, 0.`], List[6.08855`, 0.`], List[6.11854`, 0.`], List[6.14883`, 0.`], List[6.17942`, 0.`], List[6.21032`, 0.`]]], Null], Null, Null]
 
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
+(* ---- initialization cell 26, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[MaPMTSBAUVGlassEffEnergyDataRawSE, List[List[1.5`, 0], List[1.6`, 0], List[1.61445`, 0.`], List[1.63569`, 0.`], List[1.6575`, 0.0007`], List[1.6799`, 0.0014`], List[1.70291`, 0.0028`], List[1.72656`, 0.0056`], List[1.75088`, 0.01`], List[1.77589`, 0.0181`], List[1.80163`, 0.03`], List[1.82812`, 0.06`], List[1.85541`, 0.1`], List[1.88352`, 0.18`], List[1.9125`, 0.3`], List[1.94238`, 0.49`], List[1.97321`, 0.77`], List[2.00504`, 1.21`], List[2.03791`, 1.71`], List[2.07187`, 2.29`], List[2.10699`, 3.`], List[2.14332`, 3.7`], List[2.18092`, 4.5`], List[2.21987`, 5.2`], List[2.26023`, 6.1`], List[2.30208`, 7.`], List[2.34552`, 8.3`], List[2.39062`, 10.8`], List[2.4375`, 13.6`], List[2.48625`, 17.5`], List[2.53699`, 19.6`], List[2.58984`, 21.7`], List[2.64495`, 23.8`], List[2.70245`, 25.9`], List[2.7625`, 28.`], List[2.82528`, 30.`], List[2.89099`, 31.2`], List[2.95982`, 32.`], List[3.03201`, 32.5`], List[3.10781`, 33.`], List[3.1875`, 33.5`], List[3.27138`, 34.`], List[3.3598`, 34.5`], List[3.45312`, 35.`], List[3.55179`, 35.`], List[3.65625`, 34.9`], List[3.76705`, 34.3`], List[3.88477`, 33.5`], List[4.01008`, 32.8`], List[4.14375`, 32.1`], List[4.28664`, 29.2`], List[4.43973`, 26.9`], List[4.60417`, 24.4`], List[4.78125`, 23.`], List[4.9725`, 21.`], List[5.17969`, 17.`], List[5.40489`, 7.8`], List[5.65057`, 6.1`], List[5.91964`, 5.2`], List[6.21563`, 3.9`], List[6.54276`, 2.7`], List[6.90625`, 0.`], List[6.95`, 0], List[7.`, 0]]], Null], CompoundExpression[Set[MaPMTSBAUVGlassEffEnergyDataSE, Transpose[List[Part[Transpose[MaPMTSBAUVGlassEffEnergyDataRawSE], 1], Times[Part[Transpose[MaPMTSBAUVGlassEffEnergyDataRawSE], 2], Power[100, -1]]]]], Null], CompoundExpression[Set[MaPMTSBABSGlassEffEnergyDataRawSE, List[List[1.5`, 0], List[1.6`, 0], List[1.61445`, 0.`], List[1.63569`, 0.`], List[1.6575`, 0.0007`], List[1.6799`, 0.0014`], List[1.70291`, 0.0028`], List[1.72656`, 0.0056`], List[1.75088`, 0.01`], List[1.77589`, 0.0181`], List[1.80163`, 0.03`], List[1.82812`, 0.06`], List[1.85541`, 0.1`], List[1.88352`, 0.18`], List[1.9125`, 0.3`], List[1.94238`, 0.49`], List[1.97321`, 0.77`], List[2.00504`, 1.21`], List[2.03791`, 1.71`], List[2.07187`, 2.29`], List[2.10699`, 3.`], List[2.14332`, 3.7`], List[2.18092`, 4.5`], List[2.21987`, 5.2`], List[2.26023`, 6.1`], List[2.30208`, 7.`], List[2.34552`, 8.3`], List[2.39062`, 10.8`], List[2.4375`, 13.6`], List[2.48625`, 17.5`], List[2.53699`, 19.6`], List[2.58984`, 21.7`], List[2.64495`, 23.8`], List[2.70245`, 25.9`], List[2.7625`, 28.`], List[2.82528`, 30.`], List[2.89099`, 31.2`], List[2.95982`, 32.`], List[3.03201`, 32.5`], List[3.10781`, 33.`], List[3.1875`, 33.5`], List[3.27138`, 34.`], List[3.3598`, 34.5`], List[3.45312`, 35.`], List[3.55179`, 35.`], List[3.65625`, 35.`], List[3.76705`, 34.`], List[3.88477`, 33.`], List[4.01008`, 32.`], List[4.14375`, 31.`], List[4.28664`, 27.2`], List[4.43973`, 23.6`], List[4.60417`, 20.`], List[4.78125`, 16.5`], List[4.9725`, 13.`], List[5.17969`, 10.`], List[5.40489`, 1.5`], List[5.65057`, 1.`], List[5.91964`, 0.5`], List[6.21563`, 0.`], List[6.54276`, 0.`], List[6.90625`, 0.`], List[6.95`, 0], List[7.`, 0]]], Null], CompoundExpression[Set[MaPMTSBABSGlassEffEnergyDataSE, Transpose[List[Part[Transpose[MaPMTSBABSGlassEffEnergyDataRawSE], 1], Times[Part[Transpose[MaPMTSBABSGlassEffEnergyDataRawSE], 2], Power[100, -1]]]]], Null], CompoundExpression[Set[MaPMTSBAUVGlassEffEnergyData, R11265SBAUVdata], Null], CompoundExpression[Set[MaPMTSBABSGlassEffEnergyData, R11265SBABSdata], Null]]]
 
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
+(* ---- initialization cell 27, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugMakePlots[ListPlot[List[MaPMTSBAUVGlassEffEnergyDataSE, R11265SBAUVdata], Rule[PlotRange, All], Rule[GridLines, Automatic], Rule[AxesLabel, labelEffVsEv]]], Null], Null, CompoundExpression[debugMakePlots[ListPlot[List[MaPMTSBABSGlassEffEnergyDataSE, R11265SBABSdata], Rule[PlotRange, All], Rule[GridLines, Automatic], Rule[AxesLabel, labelEffVsEv]]], Null], Null, Null]
 
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
+(* ---- initialization cell 28, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "MAPMT OLD22"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
+(* ---- initialization cell 29, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[rawDatMAPMTOLD22, List[List[1.61445`, Times[0.`, Power[100, -1]]], List[1.6575`, Times[0.`, Power[100, -1]]], List[1.70291`, Times[0.`, Power[100, -1]]], List[1.72656`, Times[0.01`, Power[100, -1]]], List[1.77589`, Times[0.01`, Power[100, -1]]], List[1.82813`, Times[0.11`, Power[100, -1]]], List[1.88352`, Times[0.36`, Power[100, -1]]], List[1.94238`, Times[0.91`, Power[100, -1]]], List[2.00504`, Times[1.93`, Power[100, -1]]], List[2.07188`, Times[3.32`, Power[100, -1]]], List[2.14332`, Times[5.02`, Power[100, -1]]], List[2.21987`, Times[6.97`, Power[100, -1]]], List[2.30208`, Times[9.47`, Power[100, -1]]], List[2.39063`, Times[12.31`, Power[100, -1]]], List[2.48625`, Times[17.96`, Power[100, -1]]], List[2.58984`, Times[22.8`, Power[100, -1]]], List[2.70245`, Times[25.57`, Power[100, -1]]], List[2.82528`, Times[28.72`, Power[100, -1]]], List[2.95982`, Times[31.32`, Power[100, -1]]], List[3.10781`, Times[33.03`, Power[100, -1]]], List[3.27138`, Times[33.93`, Power[100, -1]]], List[3.45313`, Times[37.01`, Power[100, -1]]], List[3.65625`, Times[38.29`, Power[100, -1]]], List[3.88477`, Times[39.29`, Power[100, -1]]], List[4.14375`, Times[38.72`, Power[100, -1]]], List[4.43973`, Times[34.83`, Power[100, -1]]], List[4.78125`, Times[32.23`, Power[100, -1]]], List[5.17969`, Times[26.65`, Power[100, -1]]], List[5.65057`, Times[20.72`, Power[100, -1]]], List[6.21563`, Times[15.29`, Power[100, -1]]], List[6.23`, Times[0.`, Power[100, -1]]], List[6.25`, Times[0.`, Power[100, -1]]], List[6.5`, Times[0.`, Power[100, -1]]], List[6.54276`, Times[0.`, Power[100, -1]]], List[6.90625`, 0.`]]], Null], Null, CompoundExpression[debugMakePlots[ListPlot[rawDatMAPMTOLD22, Rule[Joined, True], Rule[AxesLabel, labelEffVsEv]]], Null], Null, CompoundExpression[debugDoVerbose[TableForm[rawDatMAPMTOLD22]], Null], Null, CompoundExpression[Set[rawDatMAPMTOLD22, Drop[rawDatMAPMTOLD22, -5]], Null], Null, CompoundExpression[Set[rawDatMAPMTOLD22, Drop[rawDatMAPMTOLD22, Plus[5]]], Null], Null, CompoundExpression[debugDoVerbose[TableForm[rawDatMAPMTOLD22]], Null]]
 
-debugDoVerbose@Head@thisDataPlotInset;
+(* ---- initialization cell 30, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[eneMin, Min[Map[Function[Part[Slot[1], 1]], rawDatMAPMTOLD22]]], Null], Null, CompoundExpression[Set[eneMax, Max[Map[Function[Part[Slot[1], 1]], rawDatMAPMTOLD22]]], Null], Null, CompoundExpression[Set[lamMin, Ceiling[\[Lambda][eneMax]]], Null], Null, CompoundExpression[Set[lamMax, Floor[\[Lambda][eneMin]]], Null], Null, CompoundExpression[Set[minE, \[Epsilon][\[Lambda][eneMin]]], Null], Null, CompoundExpression[Set[maxE, \[Epsilon][\[Lambda][eneMax]]], Null], Null, CompoundExpression[Set[MAPMTOLD22EnergyFunc, Interpolation[rawDatMAPMTOLD22]], Null], Null, CompoundExpression[debugMakePlots[Plot[MAPMTOLD22EnergyFunc[s], List[s, minE, maxE], Rule[AxesLabel, labelEffVsEv]]], Null], Null, CompoundExpression[Set[MAPMTOLD22EnergyData, Table[List[s, MAPMTOLD22EnergyFunc[s]], List[s, minE, maxE, 0.01`]]], Null], Null, CompoundExpression[debugMakePlots[ListPlot[MAPMTOLD22EnergyData, Rule[AxesLabel, labelEffVsEv]]], Null], Null, CompoundExpression[Set[deltaE, Plus[maxE, Times[-1, minE]]], Null], Null, CompoundExpression[Set[energyAveragedMAPMTOLD22, Times[NIntegrate[MAPMTOLD22EnergyFunc[s], List[s, minE, maxE]], Power[Plus[maxE, Times[-1, minE]], -1]]], Null], Null, CompoundExpression[debugDoVerbose[Times[37000, Power[0.05`, 2], deltaE, energyAveragedMAPMTOLD22]], Null]]
 
-debugDoVerbose@Head@thisGraphicsInset;
+(* ---- initialization cell 31, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[tagDataPlot, "MAPMT2022"], Null], CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]]
 
-debugDoVerbose@OwnValues@thisDataPlotInset;
+(* ---- initialization cell 32, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[rawDatMAPMT22, List[List[220.98381839766935`, 12.554706795254475`], List[213.67252581213853`, 13.042126300956511`], List[204.89897470950157`, 14.504384818062675`], List[197.10026261826866`, 15.2355140766158`], List[189.54526027988678`, 19.1348701222322`], List[181.01541893010082`, 24.009065179252758`], List[172.72928733316587`, 30.34551875337948`], List[164.44315573623095`, 37.169391833208266`], List[157.13186315070013`, 45.69923318299422`], List[147.13976328380798`, 55.20391354418433`], List[140.0721804511282`, 75.1881132779686`], List[132.2734683598953`, 91.2729569661364`], List[124.71846602151344`, 99.55908856307136`], List[117.40717343598261`, 111.5008664527717`], List[106.92765406338842`, 121.73667607251487`], List[99.12894197215553`, 128.3168393994926`], List[91.33022988092264`, 130.9976466808539`], List[82.80038853113666`, 136.11555149072552`], List[74.75796668705274`, 138.55264901923576`], List[67.44667410152192`, 144.64539284051145`], List[58.91683275173595`, 144.50168308766044`], List[51.11812066050307`, 133.92216371506626`], List[43.319408569270166`, 129.0479686580457`], List[35.23327697233523`, 117.34990052119637`], List[26.74714537540029`, 94.19747400034875`], List[19.19214303701843`, 51.79197700426994`]]], Null], CompoundExpression[Set[border, Round[List[List[17.5`, 157.9`], List[222.4`, 157.9`], List[222.4`, 12.5`], List[17.5`, 12.5`]], 0.1`]], Null], CompoundExpression[Graphics[List[Point[rawDatMAPMT22], Point[border]]], Null], CompoundExpression[Quiet[CompoundExpression[WithCleanup[CompoundExpression[Set[x, Map[Round, Part[Transpose[rawDatMAPMT22], 1]]], Set[y, Map[Round, Part[Transpose[rawDatMAPMT22], 2]]], Set[solX, N[Solve[And[Equal[200, Plus[Times[17.5`, aaa], bbb]], Equal[700, Plus[Times[222.4`, aaa], bbb]]], List[aaa, bbb]]]], Set[solY, N[Solve[And[Equal[0, Plus[Times[12.5`, aaa], bbb]], Equal[42.5`, Plus[Times[157.9`, aaa], bbb]]], List[aaa, bbb]]]], SetDelayed[mapX, ReplaceAll[Function[Plus[Times[aaa, Slot[1]], bbb]], First[solX]]], Set[lambdaData, Round[Map[mapX, x], 0.01`]], SetDelayed[mapY, ReplaceAll[Function[Plus[Times[aaa, Slot[1]], bbb]], First[solY]]], Set[rawDatMAPMT22Data, Round[Map[mapY, y], 0.01`]], Set[lambdaMinPlot, 170], Set[lambdaMaxPlot, 730], Set[rawDatMAPMT22WavLenRaw, Transpose[List[lambdaData, rawDatMAPMT22Data]]], Set[lambdaMin, Min[Map[Function[Part[Slot[1], 1]], rawDatMAPMT22WavLenRaw]]], Set[lambdaMax, Max[Map[Function[Part[Slot[1], 1]], rawDatMAPMT22WavLenRaw]]], Set[rawDatMAPMT22WavLen, Round[MovingAverage[rawDatMAPMT22WavLenRaw, 4], 0.01`]], Set[func, Interpolation[rawDatMAPMT22WavLen]], Print[debugMakePlots[Plot[func[x], List[x, Plus[lambdaMin, 1], Plus[lambdaMax, -1]], Rule[AxesLabel, labelEffVsNm]]]], Set[additionalFakeData, Join[Table[List[\[Lambda], 0], List[\[Lambda], Plus[lambdaMax, 1], lambdaMaxPlot, Plus[5]]], Table[List[\[Lambda], 0], List[\[Lambda], Plus[lambdaMin, -1], lambdaMinPlot, -5]]]], debugDoVerbose[additionalFakeData], Set[rawDatMAPMT22WavLenRaw, Transpose[List[lambdaData, rawDatMAPMT22Data]]], Set[rawDatMAPMT22WavLenRaw, DeleteDuplicates[Join[additionalFakeData, rawDatMAPMT22WavLenRaw]]], Set[rawDatMAPMT22WavLenRaw, Sort[rawDatMAPMT22WavLenRaw, Function[Less[Part[Slot[1], 1], Part[Slot[2], 1]]]]], Set[rawDatMAPMT22WavLen, Round[MovingAverage[rawDatMAPMT22WavLenRaw, 4], 0.01`]], Print[debugMakePlots[ListPlot[List[Style[rawDatMAPMT22WavLenRaw, Red], Style[rawDatMAPMT22WavLen, Green], Style[additionalFakeData, Blue]], Rule[PlotRange, List[List[lambdaMinPlot, lambdaMaxPlot], All]], Rule[AxesLabel, labelEffVsNm]]]], Set[MAPMT22EnergyData, Map[Function[List[\[Epsilon][Part[Slot[1], 1]], Times[Part[Slot[1], 2], Power[100, -1]]]], rawDatMAPMT22WavLen]], Print[debugMakePlots[ListPlot[MAPMT22EnergyData, Rule[PlotRange, List[List[\[Epsilon][lambdaMaxPlot], \[Epsilon][lambdaMinPlot]], All]], Rule[AxesLabel, labelEffVsEv]]]], debugDoVerbose[" RAW DATA \n", TableForm[nf[rawDatMAPMT22WavLenRaw]]], debugDoVerbose[" CLEAN DATA \n", TableForm[nf[rawDatMAPMT22WavLen]]], Null], ClearAll[x, y, solX, solY, mapX, mapY, aaa, bbb]], Null], List[MessageName[InterpolatingFunction, "dmval"]]], Null], CompoundExpression[Set[pdeMAPMT22WavLen, rawDatMAPMT22WavLen], Null]]]
 
-debugDoVerbose@OwnValues@thisGraphicsInset;
+(* ---- initialization cell 33, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "TB2021A"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-(* ---- initialization cell 12 | 6008b17c-d7c9-3c43-92e0-2058fae63174 ---- *)
-Print@debugMakePlots@Plot[Sin[x],{x,0,99},AxesLabel->labelNmVsEv];
+(* ---- initialization cell 34, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[R5900WavLenRawData, List[List[200.`, 0.`], List[210.`, 0.`], List[220.`, 0.`], List[230.`, 0.`], List[240.`, 0.`], List[250.`, 0.`], List[260.`, 0.01`], List[270.`, 0.04`], List[280.`, 0.09`], List[290.`, 0.12`], List[300.`, 0.15`], List[310.`, 0.17`], List[320.`, 0.18`], List[330.`, 0.19`], List[340.`, 0.197`], List[350.`, 0.2`], List[360.`, 0.202`], List[370.`, 0.203`], List[380.`, 0.204`], List[390.`, 0.203`], List[400.`, 0.202`], List[410.`, 0.201`], List[420.`, 0.2`], List[430.`, 0.197`], List[440.`, 0.19`], List[450.`, 0.18`], List[460.`, 0.17`], List[470.`, 0.16`], List[480.`, 0.145`], List[490.`, 0.135`], List[500.`, 0.12`], List[510.`, 0.11`], List[520.`, 0.1`], List[530.`, 0.09`], List[540.`, 0.07`], List[550.`, 0.05`], List[560.`, 0.04`], List[570.`, 0.035`], List[580.`, 0.03`], List[590.`, 0.025`], List[600.`, 0.02`], List[610.`, 0.017`], List[620.`, 0.01`], List[630.`, 0.007`], List[640.`, 0.004`], List[650.`, 0.002`], List[660.`, 0.001`], List[670.`, 0.0008`], List[680.`, 0.0004`], List[690.`, 0.0002`], List[700.`, 0.0001`], List[710.`, 0.`], List[720.`, 0.`], List[800.`, 0.`]]], Null], Null, CompoundExpression[Set[R5900WavLenData, R5900WavLenRawData], Null], Null, CompoundExpression[Set[R5900EnergyData, Transpose[List[\[Epsilon][Part[Transpose[R5900WavLenData], 1]], Part[Transpose[R5900WavLenData], 2]]]], Null], Null, CompoundExpression[Set[R5900EnergyFunc, Interpolation[R5900EnergyData]], Null], Null, CompoundExpression[debugMakePlots[Plot[R5900EnergyFunc[\[FormalX]], List[\[FormalX], 1.8`, 6.2`], Rule[AxesLabel, labelEffVsEv]]], Null]]
 
-(* ---- initialization cell 13 | 83f07bb3-6537-494e-813d-635c5c03ecc5 ---- *)
-Print@debugMakePlots@ListPlot[{2,33,2,3,27},AxesLabel->labelNmVsEv];
+(* ---- initialization cell 35, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[lensTransWavLen, List[List[800.`, 0.6496`], List[799.`, 0.6516`], List[798.`, 0.6505`], List[797.`, 0.6506`], List[796.`, 0.6522`], List[795.`, 0.6514`], List[794.`, 0.6525`], List[793.`, 0.6523`], List[792.`, 0.6528`], List[791.`, 0.6531`], List[790.`, 0.6539`], List[789.`, 0.6535`], List[788.`, 0.6534`], List[787.`, 0.6552`], List[786.`, 0.6543`], List[785.`, 0.6538`], List[784.`, 0.6531`], List[783.`, 0.655`], List[782.`, 0.6545`], List[781.`, 0.6557`], List[780.`, 0.6559`], List[779.`, 0.6543`], List[778.`, 0.6556`], List[777.`, 0.6567`], List[776.`, 0.6573`], List[775.`, 0.6576`], List[774.`, 0.6582`], List[773.`, 0.6568`], List[772.`, 0.658`], List[771.`, 0.6584`], List[770.`, 0.6594`], List[769.`, 0.6591`], List[768.`, 0.6594`], List[767.`, 0.6585`], List[766.`, 0.6593`], List[765.`, 0.6603`], List[764.`, 0.6598`], List[763.`, 0.6593`], List[762.`, 0.6612`], List[761.`, 0.6608`], List[760.`, 0.6607`], List[759.`, 0.6616`], List[758.`, 0.6612`], List[757.`, 0.662`], List[756.`, 0.6627`], List[755.`, 0.6623`], List[754.`, 0.6618`], List[753.`, 0.6629`], List[752.`, 0.6637`], List[751.`, 0.6637`], List[750.`, 0.6645`], List[749.`, 0.6633`], List[748.`, 0.6637`], List[747.`, 0.6644`], List[746.`, 0.665`], List[745.`, 0.665`], List[744.`, 0.6666`], List[743.`, 0.6656`], List[742.`, 0.6666`], List[741.`, 0.6671`], List[740.`, 0.6669`], List[739.`, 0.6667`], List[738.`, 0.667`], List[737.`, 0.6668`], List[736.`, 0.668`], List[735.`, 0.6682`], List[734.`, 0.6679`], List[733.`, 0.6684`], List[732.`, 0.6688`], List[731.`, 0.6687`], List[730.`, 0.6691`], List[729.`, 0.6695`], List[728.`, 0.6702`], List[727.`, 0.6708`], List[726.`, 0.6708`], List[725.`, 0.6702`], List[724.`, 0.671`], List[723.`, 0.6714`], List[722.`, 0.6721`], List[721.`, 0.6728`], List[720.`, 0.6721`], List[719.`, 0.6711`], List[718.`, 0.6716`], List[717.`, 0.6728`], List[716.`, 0.6732`], List[715.`, 0.6727`], List[714.`, 0.6725`], List[713.`, 0.6725`], List[712.`, 0.6731`], List[711.`, 0.6736`], List[710.`, 0.674`], List[709.`, 0.6744`], List[708.`, 0.6741`], List[707.`, 0.6736`], List[706.`, 0.6742`], List[705.`, 0.675`], List[704.`, 0.6749`], List[703.`, 0.675`], List[702.`, 0.6747`], List[701.`, 0.6743`], List[700.`, 0.6748`], List[699.`, 0.6755`], List[698.`, 0.6758`], List[697.`, 0.6756`], List[696.`, 0.6749`], List[695.`, 0.6754`], List[694.`, 0.6765`], List[693.`, 0.676`], List[692.`, 0.6758`], List[691.`, 0.676`], List[690.`, 0.6758`], List[689.`, 0.6757`], List[688.`, 0.6762`], List[687.`, 0.6762`], List[686.`, 0.676`], List[685.`, 0.6764`], List[684.`, 0.6771`], List[683.`, 0.6773`], List[682.`, 0.6771`], List[681.`, 0.6765`], List[680.`, 0.6764`], List[679.`, 0.6776`], List[678.`, 0.678`], List[677.`, 0.6778`], List[676.`, 0.6776`], List[675.`, 0.6768`], List[674.`, 0.6767`], List[673.`, 0.6775`], List[672.`, 0.6776`], List[671.`, 0.6771`], List[670.`, 0.6767`], List[669.`, 0.6759`], List[668.`, 0.6759`], List[667.`, 0.6765`], List[666.`, 0.6767`], List[665.`, 0.6763`], List[664.`, 0.6766`], List[663.`, 0.6757`], List[662.`, 0.6755`], List[661.`, 0.6762`], List[660.`, 0.6764`], List[659.`, 0.6764`], List[658.`, 0.6767`], List[657.`, 0.6761`], List[656.`, 0.6759`], List[655.`, 0.6765`], List[654.`, 0.677`], List[653.`, 0.6773`], List[652.`, 0.6771`], List[651.`, 0.6765`], List[650.`, 0.6765`], List[649.`, 0.6774`], List[648.`, 0.6775`], List[647.`, 0.6781`], List[646.`, 0.6781`], List[645.`, 0.6776`], List[644.`, 0.6775`], List[643.`, 0.6783`], List[642.`, 0.6788`], List[641.`, 0.6788`], List[640.`, 0.6785`], List[639.`, 0.6779`], List[638.`, 0.6782`], List[637.`, 0.6792`], List[636.`, 0.6798`], List[635.`, 0.6798`], List[634.`, 0.6796`], List[633.`, 0.6793`], List[632.`, 0.6798`], List[631.`, 0.6809`], List[630.`, 0.6809`], List[629.`, 0.6814`], List[628.`, 0.6809`], List[627.`, 0.6808`], List[626.`, 0.6811`], List[625.`, 0.6825`], List[624.`, 0.6829`], List[623.`, 0.6832`], List[622.`, 0.6835`], List[621.`, 0.6822`], List[620.`, 0.6829`], List[619.`, 0.6838`], List[618.`, 0.6844`], List[617.`, 0.6848`], List[616.`, 0.6848`], List[615.`, 0.6843`], List[614.`, 0.6847`], List[613.`, 0.6857`], List[612.`, 0.6854`], List[611.`, 0.6861`], List[610.`, 0.6861`], List[609.`, 0.6858`], List[608.`, 0.6864`], List[607.`, 0.6875`], List[606.`, 0.6875`], List[605.`, 0.6878`], List[604.`, 0.6875`], List[603.`, 0.6877`], List[602.`, 0.6876`], List[601.`, 0.6886`], List[600.`, 0.6894`], List[599.`, 0.6889`], List[598.`, 0.6896`], List[597.`, 0.6881`], List[596.`, 0.6892`], List[595.`, 0.6894`], List[594.`, 0.6902`], List[593.`, 0.69`], List[592.`, 0.6899`], List[591.`, 0.6896`], List[590.`, 0.6901`], List[589.`, 0.691`], List[588.`, 0.6918`], List[587.`, 0.6916`], List[586.`, 0.6917`], List[585.`, 0.6911`], List[584.`, 0.6921`], List[583.`, 0.6931`], List[582.`, 0.693`], List[581.`, 0.6936`], List[580.`, 0.6939`], List[579.`, 0.6934`], List[578.`, 0.6943`], List[577.`, 0.6946`], List[576.`, 0.6953`], List[575.`, 0.6953`], List[574.`, 0.6957`], List[573.`, 0.6952`], List[572.`, 0.6957`], List[571.`, 0.696`], List[570.`, 0.6968`], List[569.`, 0.6972`], List[568.`, 0.6974`], List[567.`, 0.6965`], List[566.`, 0.6973`], List[565.`, 0.6979`], List[564.`, 0.6979`], List[563.`, 0.698`], List[562.`, 0.6981`], List[561.`, 0.6979`], List[560.`, 0.6981`], List[559.`, 0.6976`], List[558.`, 0.6978`], List[557.`, 0.6982`], List[556.`, 0.6979`], List[555.`, 0.6985`], List[554.`, 0.6981`], List[553.`, 0.6971`], List[552.`, 0.6975`], List[551.`, 0.6977`], List[550.`, 0.698`], List[549.`, 0.698`], List[548.`, 0.6977`], List[547.`, 0.6973`], List[546.`, 0.6977`], List[545.`, 0.698`], List[544.`, 0.6975`], List[543.`, 0.6974`], List[542.`, 0.6969`], List[541.`, 0.6968`], List[540.`, 0.6967`], List[539.`, 0.6969`], List[538.`, 0.6965`], List[537.`, 0.6963`], List[536.`, 0.6956`], List[535.`, 0.6956`], List[534.`, 0.6955`], List[533.`, 0.6955`], List[532.`, 0.695`], List[531.`, 0.6947`], List[530.`, 0.6943`], List[529.`, 0.6937`], List[528.`, 0.6939`], List[527.`, 0.6935`], List[526.`, 0.6932`], List[525.`, 0.6927`], List[524.`, 0.692`], List[523.`, 0.6917`], List[522.`, 0.6917`], List[521.`, 0.691`], List[520.`, 0.6903`], List[519.`, 0.6896`], List[518.`, 0.6889`], List[517.`, 0.6883`], List[516.`, 0.6882`], List[515.`, 0.6875`], List[514.`, 0.6871`], List[513.`, 0.6864`], List[512.`, 0.6855`], List[511.`, 0.685`], List[510.`, 0.685`], List[509.`, 0.6845`], List[508.`, 0.684`], List[507.`, 0.6836`], List[506.`, 0.6832`], List[505.`, 0.6833`], List[504.`, 0.6836`], List[503.`, 0.6834`], List[502.`, 0.6836`], List[501.`, 0.6835`], List[500.`, 0.6832`], List[499.`, 0.6833`], List[498.`, 0.6836`], List[497.`, 0.6834`], List[496.`, 0.6833`], List[495.`, 0.6835`], List[494.`, 0.6833`], List[493.`, 0.6833`], List[492.`, 0.6835`], List[491.`, 0.6833`], List[490.`, 0.6829`], List[489.`, 0.6829`], List[488.`, 0.6827`], List[487.`, 0.6825`], List[486.`, 0.6823`], List[485.`, 0.682`], List[484.`, 0.6814`], List[483.`, 0.6811`], List[482.`, 0.6809`], List[481.`, 0.6809`], List[480.`, 0.6803`], List[479.`, 0.6794`], List[478.`, 0.6787`], List[477.`, 0.6777`], List[476.`, 0.6765`], List[475.`, 0.6761`], List[474.`, 0.6758`], List[473.`, 0.6751`], List[472.`, 0.6744`], List[471.`, 0.6731`], List[470.`, 0.6724`], List[469.`, 0.672`], List[468.`, 0.6711`], List[467.`, 0.6704`], List[466.`, 0.6699`], List[465.`, 0.669`], List[464.`, 0.6676`], List[463.`, 0.6678`], List[462.`, 0.6676`], List[461.`, 0.6669`], List[460.`, 0.6662`], List[459.`, 0.6651`], List[458.`, 0.6643`], List[457.`, 0.6645`], List[456.`, 0.6636`], List[455.`, 0.6626`], List[454.`, 0.6623`], List[453.`, 0.6609`], List[452.`, 0.6599`], List[451.`, 0.6595`], List[450.`, 0.6587`], List[449.`, 0.6577`], List[448.`, 0.6569`], List[447.`, 0.6558`], List[446.`, 0.655`], List[445.`, 0.655`], List[444.`, 0.654`], List[443.`, 0.6528`], List[442.`, 0.6519`], List[441.`, 0.6512`], List[440.`, 0.6504`], List[439.`, 0.6507`], List[438.`, 0.6506`], List[437.`, 0.651`], List[436.`, 0.6506`], List[435.`, 0.6498`], List[434.`, 0.6499`], List[433.`, 0.6509`], List[432.`, 0.6511`], List[431.`, 0.6507`], List[430.`, 0.6512`], List[429.`, 0.6506`], List[428.`, 0.6504`], List[427.`, 0.6512`], List[426.`, 0.651`], List[425.`, 0.6507`], List[424.`, 0.6501`], List[423.`, 0.6501`], List[422.`, 0.6497`], List[421.`, 0.6504`], List[420.`, 0.6492`], List[419.`, 0.6492`], List[418.`, 0.6495`], List[417.`, 0.6492`], List[416.`, 0.6489`], List[415.`, 0.6495`], List[414.`, 0.6495`], List[413.`, 0.6498`], List[412.`, 0.6507`], List[411.`, 0.6502`], List[410.`, 0.6494`], List[409.`, 0.6508`], List[408.`, 0.6504`], List[407.`, 0.6504`], List[406.`, 0.6501`], List[405.`, 0.6493`], List[404.`, 0.6486`], List[403.`, 0.648`], List[402.`, 0.6468`], List[401.`, 0.6455`], List[400.`, 0.6433`], List[399.`, 0.6405`], List[398.`, 0.6382`], List[397.`, 0.6355`], List[396.`, 0.6327`], List[395.`, 0.6289`], List[394.`, 0.6246`], List[393.`, 0.6201`], List[392.`, 0.6141`], List[391.`, 0.6098`], List[390.`, 0.6025`], List[389.`, 0.596`], List[388.`, 0.5876`], List[387.`, 0.5797`], List[386.`, 0.5707`], List[385.`, 0.5633`], List[384.`, 0.5545`], List[383.`, 0.546`], List[382.`, 0.5386`], List[381.`, 0.5321`], List[380.`, 0.528`], List[379.`, 0.5261`], List[378.`, 0.5295`], List[377.`, 0.5293`], List[376.`, 0.5314`], List[375.`, 0.5326`], List[374.`, 0.5335`], List[373.`, 0.5332`], List[372.`, 0.5317`], List[371.`, 0.5288`], List[370.`, 0.5243`], List[369.`, 0.5202`], List[368.`, 0.5126`], List[367.`, 0.5065`], List[366.`, 0.4982`], List[365.`, 0.4899`], List[364.`, 0.4799`], List[363.`, 0.4706`], List[362.`, 0.4592`], List[361.`, 0.4481`], List[360.`, 0.4363`], List[359.`, 0.4231`], List[358.`, 0.4102`], List[357.`, 0.3966`], List[356.`, 0.3821`], List[355.`, 0.3669`], List[354.`, 0.3518`], List[353.`, 0.3358`], List[352.`, 0.3193`], List[351.`, 0.3028`], List[350.`, 0.2855`], List[349.`, 0.268`], List[348.`, 0.2505`], List[347.`, 0.2326`], List[346.`, 0.2148`], List[345.`, 0.1973`], List[344.`, 0.1796`], List[343.`, 0.162`], List[342.`, 0.1454`], List[341.`, 0.1291`], List[340.`, 0.1137`], List[339.`, 0.0989`], List[338.`, 0.0849`], List[337.`, 0.0721`], List[336.`, 0.0603`], List[335.`, 0.0497`], List[334.`, 0.0403`], List[333.`, 0.0322`], List[332.`, 0.0251`], List[331.`, 0.0192`], List[330.`, 0.0144`], List[329.`, 0.0105`], List[328.`, 0.0075`], List[327.`, 0.0052`], List[326.`, 0.0035`], List[325.`, 0.0022`], List[324.`, 0.0014`], List[323.`, 0.0008`], List[322.`, 0.0005`], List[321.`, 0.0003`], List[320.`, 0.0001`], List[319.`, 0.`], List[318.`, 0.`], List[317.`, 0.`], List[316.`, 0.`], List[315.`, 0.`], List[314.`, 0.`], List[313.`, 0.`], List[312.`, 0.`], List[311.`, 0.`], List[310.`, 0.`], List[309.`, 0.`], List[308.`, 0.`], List[307.`, 0.`], List[306.`, 0.`], List[300.`, 0.`], List[275.`, 0.`], List[250.`, 0.`], List[225.`, 0.`], List[200.`, 0.`]]], Null], Null, CompoundExpression[Set[lensTransWavLenData, lensTransWavLen], Null], Null, CompoundExpression[Set[lensTransEnergyData, Transpose[List[\[Epsilon][Part[Transpose[lensTransWavLenData], 1]], Part[Transpose[lensTransWavLenData], 2]]]], Null], Null, CompoundExpression[Set[lensTransEnergyFunc, Interpolation[lensTransEnergyData]], Null], Null, CompoundExpression[debugMakePlots[Plot[lensTransEnergyFunc[\[FormalX]], List[\[FormalX], 1.8`, 6.2`]]], Null]]
 
-(* ---- initialization cell 14 | 3c4e7259-5441-da4b-b741-91093e9e0dbc ---- *)
-(* TEST *)
-superClearSet[LAPPDTMEnergyData];
-superClearSet[MAPMT22EnergyData];
-superClearSet[MPPCHPKEnergyData];
-superClearSet[SIPMFBKEnergyData];
+(* ---- initialization cell 36, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[mminE, \[Epsilon][\[Lambda]ThisMaxRef]], Null], Null, CompoundExpression[Set[mmaxE, \[Epsilon][\[Lambda]ThisMinRef]], Null], Null, CompoundExpression[Set[TB2021AEnergyFunc[Pattern[sss, Blank[]]], Times[lensTransEnergyFunc[sss], R5900EnergyFunc[sss], window[sss, mminE, mmaxE]]], Null], Null, CompoundExpression[debugMakePlots[Plot[TB2021AEnergyFunc[s], List[s, mminE, mmaxE], Rule[AxesLabel, labelEffVsEv]]], Null], Null, CompoundExpression[Set[TB2021AEnergyData, Table[List[s, TB2021AEnergyFunc[s]], List[s, mminE, mmaxE, 0.01`]]], Null], Null, CompoundExpression[debugMakePlots[ListPlot[TB2021AEnergyData, Rule[AxesLabel, labelEffVsEv]]], Null]]
 
-(* ---- initialization cell 15 | 1b869d7a-6026-b74c-9e22-a8c10cf7f152 ---- *)
-Clear[setNominalDefaultForUndefined]
+(* ---- initialization cell 37, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "SIPMFBK"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-SetAttributes[setNominalDefaultForUndefined,HoldFirst]
+(* ---- initialization cell 38, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[rawDatSIPMFBK, List[List[61.2`, 34.5`], List[61.5`, 37.8`], List[61.9`, 44.3`], List[62.1`, 49.6`], List[62.6`, 60.5`], List[63.8`, 69.3`], List[63.8`, 65.4`], List[64.7`, 73.7`], List[65.1`, 78.6`], List[65.4`, 85.2`], List[66.3`, 90.5`], List[67.`, 97.5`], List[67.2`, 102.5`], List[68.2`, 106.7`], List[69.3`, 111.2`], List[70.7`, 114.8`], List[71.4`, 116.7`], List[72.3`, 118.6`], List[73.3`, 121.3`], List[73.8`, 123.2`], List[74.7`, 124.6`], List[76.3`, 125.6`], List[78.1`, 126.`], List[78.8`, 126.`], List[80.3`, 126.3`], List[81.7`, 126.7`], List[83.9`, 127.`], List[84.`, 128.2`], List[94.4`, 140.1`], List[104.4`, 153.3`], List[106.9`, 156.1`], List[110.7`, 156.1`], List[115.4`, 151.7`], List[121.3`, 142.6`], List[126.`, 136.`], List[128.2`, 131.9`], List[137.5`, 115.2`], List[139.1`, 113.8`], List[140.1`, 113.2`], List[143.9`, 111.6`], List[146.4`, 110.3`], List[149.8`, 107.4`], List[153.2`, 104.6`], List[159.2`, 98.7`], List[165.7`, 92.3`], List[173.7`, 85.3`], List[181.2`, 78.3`], List[188.4`, 73.4`], List[198.`, 66.6`], List[215.3`, 55.9`], List[223.5`, 50.1`]]], Null], CompoundExpression[Set[rawDatSIPMFBK, Sort[Round[rawDatSIPMFBK, 0.01`], Function[Less[Part[Slot[1], 1], Part[Slot[2], 1]]]]], Null], CompoundExpression[Set[border, List[List[50.16`, 197.14`], List[242.03`, 198.4`], List[242.03`, 32.86`], List[49.22`, 31.92`]]], Null], CompoundExpression[Show[Graphics[List[Point[rawDatSIPMFBK], Point[border]]], Rule[PlotLabel, "raw points"], Rule[AxesOrigin, List[0, 0]]], Null], Quiet[CompoundExpression[WithCleanup[CompoundExpression[Set[x, Map[Round, Part[Transpose[rawDatSIPMFBK], 1]]], Set[y, Map[Round, Part[Transpose[rawDatSIPMFBK], 2]]], Set[solX, N[Solve[And[Equal[250, Plus[Times[50, aaa], bbb]], Equal[750, Plus[Times[244, aaa], bbb]]], List[aaa, bbb]]]], Set[solY, N[Solve[And[Equal[10, Plus[Times[32, aaa], bbb]], Equal[65, Plus[Times[198, aaa], bbb]]], List[aaa, bbb]]]], SetDelayed[mapX, ReplaceAll[Function[Plus[Times[aaa, Slot[1]], bbb]], First[solX]]], Set[lambdaData, Round[Map[mapX, x], 0.01`]], SetDelayed[mapY, ReplaceAll[Function[Plus[Times[aaa, Slot[1]], bbb]], First[solY]]], Set[rawDatSIPMFBKData, Round[Map[mapY, y], 0.01`]], Set[lambdaMinPlot, 170], Set[lambdaMaxPlot, 730], Set[rawDatSIPMFBKWavLenRaw, Transpose[List[lambdaData, rawDatSIPMFBKData]]], Set[lambdaMin, Min[Map[Function[Part[Slot[1], 1]], rawDatSIPMFBKWavLenRaw]]], Set[lambdaMax, Max[Map[Function[Part[Slot[1], 1]], rawDatSIPMFBKWavLenRaw]]], Set[pdeSIPMFBKWavLen, Round[MovingAverage[rawDatSIPMFBKWavLenRaw, 4], 0.01`]], Set[func, Interpolation[pdeSIPMFBKWavLen]], Print[debugMakePlots[Plot[func[x], List[x, Plus[lambdaMin, 1], Plus[lambdaMax, -1]]]]], Set[additionalFakeData, Join[Table[List[\[Lambda], func[\[Lambda]]], List[\[Lambda], Plus[lambdaMax, 1], lambdaMaxPlot, Plus[5]]], Table[List[\[Lambda], 0], List[\[Lambda], Plus[lambdaMin, -1], lambdaMinPlot, -5]]]], debugDoVerbose[additionalFakeData], Set[rawDatSIPMFBKWavLenRaw, Transpose[List[lambdaData, rawDatSIPMFBKData]]], Set[rawDatSIPMFBKWavLenRaw, DeleteDuplicates[Join[additionalFakeData, rawDatSIPMFBKWavLenRaw]]], Set[rawDatSIPMFBKWavLenRaw, Sort[rawDatSIPMFBKWavLenRaw, Function[Less[Part[Slot[1], 1], Part[Slot[2], 1]]]]], Set[pdeSIPMFBKWavLen, Round[MovingAverage[rawDatSIPMFBKWavLenRaw, 5], 0.01`]], Print[debugMakePlots[ListPlot[List[Style[rawDatSIPMFBKWavLenRaw, Red], Style[pdeSIPMFBKWavLen, Green], Style[additionalFakeData, Blue]], Rule[PlotRange, List[List[lambdaMinPlot, lambdaMaxPlot], All]]]]], Set[SIPMFBKEnergyData, Map[Function[List[\[Epsilon][Part[Slot[1], 1]], Times[Part[Slot[1], 2], Power[100, -1]]]], pdeSIPMFBKWavLen]], Print[debugMakePlots[ListPlot[SIPMFBKEnergyData, Rule[PlotRange, List[List[\[Epsilon][lambdaMaxPlot], \[Epsilon][lambdaMinPlot]], All]]]]], debugDoVerbose[" RAW DATA \n ", TableForm[nf[rawDatSIPMFBKWavLenRaw]]], debugDoVerbose[" CLEAN DATA \n ", TableForm[nf[pdeSIPMFBKWavLen]]], Null], ClearAll[x, y, solX, solY, border, mapX, mapY, aaa, bbb]], Null], List[MessageName[InterpolatingFunction, "dmval"]]]]]
 
-setNominalDefaultForUndefined[x_,y_]:=If[ValueQ[x]==False
-,
-Unevaluated@x=y;  
-debugDoVerbose["\<setting a nominal default value \>",y,"\< for the undefined \>",Unevaluated@x]
-,
-debugDoVerbose[Unevaluated@x,"\< is alredy defined : \>",x]
-];
+(* ---- initialization cell 39, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "HPK S14160-S14161"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-setNominalDefaultForUndefined[\[Lambda]MinRef,200];
+(* ---- initialization cell 40, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[border, List[List[69.62990268357444`, 415.5770665533149`], List[375.9702152757313`, 414.95188224190235`], List[376.28280743143756`, 109.54934611686443`], List[68.37953406074931`, 109.54934611686443`]]], Null], Null, CompoundExpression[Set[data, List[List[101.22118470965898`, 109.05004362891941`], List[85.6`, 109.05`], List[76.24`, 108.9`], List[78.18`, 108.9`], List[80.96`, 109.05`], List[375.84`, 129.05`], List[376.69`, 127.97`], List[365.78299776286497`, 135.23815762561242`], List[367.32953992802396`, 134.46488654303292`], List[368.876082093183`, 133.6916154604534`], List[370.1133158253102`, 132.60903594484208`], List[371.96916642350106`, 131.68111064574663`], List[373.3610543721442`, 130.7531853466512`], List[376.3`, 128.59`], List[68.74379924131921`, 108.79228660139289`], List[70.13568718996234`, 108.94694081790881`], List[71.52757513860547`, 108.94694081790881`], List[73.15`, 108.95`], List[75.01`, 108.87`], List[77.4`, 108.95`], List[79.34`, 109.02`], List[82.82`, 109.1`], List[84.21`, 109.1`], List[87.14765100671173`, 108.94694081790881`], List[89.31281003793438`, 108.94694081790881`], List[91.4`, 109.1`], List[94.03`, 109.1`], List[96.27224978115007`, 109.25624925094061`], List[97.97`, 109.18`], List[99.95`, 109.22`], List[109.17`, 136.59`], List[101.83`, 110.33`], List[102.29`, 112.13`], List[102.6`, 113.53`], List[103.14`, 114.87`], List[103.54`, 116.19`], List[104.01`, 117.6`], List[107.60984960188776`, 125.96043429144423`], List[145.2772043644948`, 320.2364590628987`], List[139.49424948392857`, 313.0468394816542`], List[138.40017693895658`, 311.4838787031228`], List[182.63196697139554`, 368.06305888595995`], List[176.3801238572699`, 368.5319471195194`], List[178.09938071365445`, 368.6882431973725`], List[104.64022412267806`, 119.1355055585237`], List[105.57800058979691`, 121.94883495988023`], List[106.82836921262205`, 123.82438789411796`], List[107.76614567974087`, 128.20067807400588`], List[108.39132999115347`, 131.32659963106872`], List[109.64169861397858`, 142.2673250807886`], List[109.95429076968489`, 155.39619562045246`], List[110.57947508109746`, 168.8376583158226`], List[110.26688292539114`, 191.9694778380875`], List[111.51725154821631`, 211.35019149187704`], List[112.76762017104141`, 231.6686816127854`], List[113.39280448245398`, 247.9234737095121`], List[116.8313181952231`, 267.3041873633016`], List[119.33205544087335`, 279.4952814358466`], List[123.70834562076129`, 290.12341472986026`], List[127.77204364494298`, 298.2508107782236`], List[131.37`, 303.41`], List[134.02388675906863`, 307.9411676051184`], List[137.14980831613147`, 310.12931269506237`], List[141.21350634031313`, 314.50560287495034`], List[144.33942789737597`, 317.6315244320131`], List[145.75`, 322.32`], List[147.1527572987325`, 327.0092891032016`], List[148.87`, 331.85`], List[151.21645532291416`, 338.2626067086278`], List[154.0297847242707`, 343.88926551134085`], List[157.15570628133352`, 350.76629293687904`], List[159.81`, 354.99`], List[162.7823650840466`, 357.95591251812357`], List[165.59569448540316`, 360.7692419194801`], List[169.03420819817225`, 364.8329399436618`], List[174.97345915659162`, 368.2714536564309`], List[180.6001179593047`, 368.58404581213716`], List[184.3512238277801`, 367.333677189312`], List[187.16455322913666`, 364.8329399436618`], List[191.5408434090246`, 361.0818340751864`], List[193.72898849896856`, 357.0181360510047`], List[198.10527867885654`, 347.64037137981626`], List[206.54526688292617`, 329.51002634885185`], List[216.86080802123348`, 310.4419048507686`], List[228.7393099380722`, 287.62267748421`], List[238.11707460926067`, 270.11751676465815`], List[249.99557652609946`, 251.98717173369377`], List[265.9377764671198`, 225.1042463429535`], List[288.7570038336785`, 196.65836017368179`], List[323.76732527278205`, 164.14877598022838`], List[336.5836036567397`, 153.83323484192107`], List[357.2146859333543`, 140.07917999084464`], List[375.03243880861237`, 129.76363885253733`]]], Null], Null, CompoundExpression[debugDoVerbose[Length[data]], Null], Null, CompoundExpression[debugDoVerbose[Length[DeleteDuplicates[data]]], Null], Null, CompoundExpression[Set[data, Round[Sort[Sort[data, Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]], Function[Less[Part[Slot[1], 1], Part[Slot[2], 1]]]], 0.001`]], Null], Null, CompoundExpression[debugDoVerbose[data], Null], Null, CompoundExpression[TableForm[data], Null], Null, CompoundExpression[debugMakePlots[ListPlot[data, Rule[PlotLabel, "raw points"], Rule[AxesLabel, List["", ""]]]], Null], Null, CompoundExpression[Length[data], Null], Null, CompoundExpression[Length[DeleteDuplicates[data]], Null]]
 
-setNominalDefaultForUndefined[\[Lambda]MaxRef,700];
+(* ---- initialization cell 41, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Quiet[CompoundExpression[Times[CompoundExpression[Set[xDataMinPlot, \[Lambda]ThisMinRef], Null], CompoundExpression[Set[xDataMaxPlot, \[Lambda]ThisMaxRef], Null], CompoundExpression[Set[xDataPlotRangeMin, Plus[xDataMinPlot, -5]], Null], CompoundExpression[Set[xDataPlotRangeMax, Plus[xDataMaxPlot, 5]], Null], CompoundExpression[Set[typicalHPKMPPCPDE, Times[window[x, \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], doInterpolateFromGraphicsData[200, 900, 0, 60, 69.5`, 375.6`, 109.`, 414.6`, data, False]]], Null], CompoundExpression[debugMakePlots[ListPlot[data, Rule[PlotLabel, "raw points"], Rule[AxesLabel, List["", ""]]]], Null], Print[debugMakePlots[Plot[typicalHPKMPPCPDE[x], List[x, xDataPlotRangeMin, xDataPlotRangeMax], Rule[PlotRange, List[List[xDataPlotRangeMin, xDataPlotRangeMax], List[0, 100]]], Rule[AxesLabel, labelEffVsNm]]]]], Set[pdeMPPCHPKWavLen, Table[List[x, Max[0, typicalHPKMPPCPDE[x]]], List[x, \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef, 5]]], debugMakePlots[ListPlot[pdeMPPCHPKWavLen]], Set[MPPCHPKEnergyData, Map[Function[List[\[Epsilon][Part[Slot[1], 1]], Times[Part[Slot[1], 2], Power[100, -1]]]], pdeMPPCHPKWavLen]], debugMakePlots[ListPlot[MPPCHPKEnergyData]], Null], List[MessageName[InterpolatingFunction, "dmval"]]], Null]]
 
-setNominalDefaultForUndefined[lengthRich1,1000];
+(* ---- initialization cell 42, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "LAPPD126"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-setNominalDefaultForUndefined[lengthRich2,2000];
+(* ---- initialization cell 43, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[border, List[List[620, 2749], List[3536, 2749], List[3541, 453], List[615, 451]]], Null], Null, CompoundExpression[Set[data, List[List[2633, 1273], List[2604, 1310], List[2531, 1390], List[2492, 1448], List[2427, 1557], List[2401, 1599], List[2331, 1690], List[2315, 1750], List[2240, 1872], List[2216, 1932], List[2201, 1966], List[2130, 2119], List[2102, 2169], List[2057, 2302], List[2011, 2421], List[2037, 2364], List[1985, 2473], List[1914, 2549], List[1828, 2557], List[1735, 2533], List[1641, 2528], List[1545, 2531], List[1427, 2518], List[1037, 2153], List[1079, 2169], List[3533, 662], List[3497, 672], List[3450, 683], List[3398, 698], List[3344, 722], List[3252, 755], List[3161, 823], List[3047, 896], List[2966, 961], List[2854, 1042], List[2758, 1135], List[2664, 1224], List[2568, 1354], List[2466, 1495], List[2367, 1646], List[2276, 1810], List[2175, 2010], List[2083, 2239], List[1956, 2520], List[1883, 2567], List[1792, 2546], List[1690, 2533], List[1586, 2528], List[1485, 2536], List[1378, 2505], List[1347, 2481], List[1305, 2481], List[1279, 2455], List[1256, 2403], List[1237, 2364], List[1219, 2335], List[1198, 2309], List[1170, 2268], List[1154, 2239], List[1115, 2200], List[1102, 2177]]], Null], Null, CompoundExpression[debugDoVerbose[Length[data]], Null], Null, CompoundExpression[debugDoVerbose[Length[DeleteDuplicates[data]]], Null], Null, CompoundExpression[Set[data, Round[Sort[Sort[data, Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]], Function[Less[Part[Slot[1], 1], Part[Slot[2], 1]]]], 0.001`]], Null], Null, CompoundExpression[debugDoVerbose[data], Null], Null, CompoundExpression[TableForm[data], Null], Null, CompoundExpression[debugMakePlots[ListPlot[data, Rule[PlotLabel, "raw points"], Rule[AxesLabel, List["", ""]]]], Null], Null, CompoundExpression[debugMakePlots[Length[data]], Null], Null, CompoundExpression[debugMakePlots[Length[DeleteDuplicates[data]]], Null]]
 
-setNominalDefaultForUndefined[theHighPrecision,24];
+(* ---- initialization cell 44, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[LAPPDTMCE, 0.9`], Null], Null, CompoundExpression[Quiet[CompoundExpression[Times[CompoundExpression[Set[xDataMinPlot, \[Lambda]ThisMinRef], Null], CompoundExpression[Set[xDataMaxPlot, \[Lambda]ThisMaxRef], Null], CompoundExpression[Set[xDataPlotRangeMin, Plus[xDataMinPlot, -5]], Null], CompoundExpression[Set[xDataPlotRangeMax, Plus[xDataMaxPlot, 5]], Null], CompoundExpression[Set[typicalLAPPDTMPDE, Times[window[x, \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], doInterpolateFromGraphicsData[100, 700, 0, 0.4`, 618, 3539, 452, 2749, data, False]]], Null], CompoundExpression[debugMakePlots[ListPlot[data, Rule[PlotLabel, "raw points"], Rule[AxesLabel, List["", ""]]]], Null], Print[debugMakePlots[Plot[typicalLAPPDTMPDE[x], List[x, xDataPlotRangeMin, xDataPlotRangeMax], Rule[PlotRange, List[List[xDataPlotRangeMin, xDataPlotRangeMax], List[0, 1]]], Rule[AxesLabel, labelEffVsNm]]]]], Set[pdeLAPPDTMWavLen, Table[List[x, Max[0, Times[LAPPDTMCE, typicalLAPPDTMPDE[x]]]], List[x, \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef, 5]]], debugMakePlots[ListPlot[pdeLAPPDTMWavLen]], Set[LAPPDTMEnergyData, Map[Function[List[\[Epsilon][Part[Slot[1], 1]], Part[Slot[1], 2]]], pdeLAPPDTMWavLen]], debugMakePlots[ListPlot[LAPPDTMEnergyData]], Null], List[MessageName[InterpolatingFunction, "dmval"]]], Null]]
 
-setNominalDefaultForUndefined[numPrecision,24];
+(* ---- initialization cell 45, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "Mirror reflectivity RICH1 2022 sample"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-setNominalDefaultForUndefined[precisionify,(SetPrecision[#,theHighPrecision]&)];
+(* ---- initialization cell 46, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[data, List[List[30.`, 186.`], List[31.`, 187.`], List[32.`, 188.`], List[33.`, 189.`], List[34.`, 190.`], List[35.`, 191.`], List[36.`, 192.`], List[38.559`, 193.894`], List[42.917`, 196.241`], List[51.97`, 212.335`], List[53.647`, 222.729`], List[55.659`, 238.153`], List[61.024`, 266.318`], List[62.029`, 270.677`], List[66.053`, 281.406`], List[69.071`, 287.441`], List[74.1`, 293.812`], List[78.794`, 297.5`], List[86.506`, 300.853`], List[93.547`, 303.536`], List[103.941`, 306.218`], List[113.665`, 306.889`], List[124.395`, 306.218`], List[135.124`, 305.883`], List[143.842`, 303.2`], List[155.912`, 302.53`], List[161.948`, 300.853`], List[173.683`, 299.512`], List[178.713`, 298.506`], List[190.113`, 295.824`], List[201.513`, 292.136`], List[211.236`, 289.453`], List[218.948`, 287.441`], List[226.66`, 282.077`], List[234.372`, 281.071`], List[242.084`, 278.053`], List[250.466`, 274.03`], List[258.178`, 270.006`], List[267.566`, 267.324`], List[273.937`, 266.318`], List[279.972`, 265.312`], List[288.019`, 262.965`], List[295.396`, 261.288`], List[305.79`, 257.6`], List[310.484`, 255.588`], List[316.184`, 253.912`], List[319.873`, 253.576`], List[325.573`, 251.229`], List[333.955`, 248.212`], List[339.99`, 245.529`], List[347.367`, 244.859`], List[352.732`, 242.176`], List[362.791`, 238.488`], List[375.197`, 232.453`]]], Null], Null, CompoundExpression[Set[data, Sort[Sort[data, Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]], Function[Less[Part[Slot[1], 1], Part[Slot[2], 1]]]]], Null], Null, CompoundExpression[TableForm[data], Null], Null, CompoundExpression[debugMakePlots[ListPlot[data, Rule[PlotLabel, "raw points"], Rule[AxesLabel, List["", ""]]]], Null]]
 
-setNominalDefaultForUndefined[window[sss_,x1_,x2_],UnitBox[sss/(x2-x1)-(x1+x2)/2/(x2-x1)]];
+(* ---- initialization cell 47, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[xDataMinPlot, Plus[\[Lambda]ThisMinRef, -1]], Null], CompoundExpression[Set[xDataMaxPlot, Plus[\[Lambda]ThisMaxRef, 1]], Null], CompoundExpression[Clear[averageMirrorReflectivityFunctionWavLen], Null]]]
 
-(* ---- initialization cell 16 | ca717fa9-b0de-4bfb-8592-72bfa36e8d48 ---- *)
-(**)
-title="\< \>";
-labelEffVsEv={"\<\[Epsilon] (eV)\>","\< efficiency \>"};
-labelEffVsNm={"\<\[Lambda] (nm)\>","\< efficiency \>"};
-labelNmVsEv={"\<\[Epsilon] (eV)\>","\<\[Lambda] (nm)\>"};
-labelEvVsNm={"\<\[Lambda] (nm)\>","\<\[Epsilon] (eV)\>"};
-(**)
+(* ---- initialization cell 48, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[averageMirrorReflectivityFunctionWavLen[Pattern[x, Blank[]]], Times[window[x, \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], doInterpolateFromGraphicsData[180, 880, 0, 1, 24, 420, 44, 315, data, False, List[List[180, 0], List[185, 0], List[190, 0]]][x]]], Null]]
 
-(* ---- initialization cell 17 | cd4f90f1-ef06-954b-b35f-fcc57d63cb50 ---- *)
-Unprotect[theChrYieldConstant];
+(* ---- initialization cell 49, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugDoVerbose[averageMirrorReflectivityFunctionWavLen], Null]]
 
-theChrYieldConstant=37000;(*in Meter^-1 eV^-1*)
+(* ---- initialization cell 50, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[plotRefl, debugMakePlots[Plot[averageMirrorReflectivityFunctionWavLen[x], List[x, xDataMinPlot, xDataMaxPlot], Rule[AxesLabel, List["\[Lambda] (nm)", "reflectivity"]], Rule[PlotRange, List[0, 1]], Rule[PlotLabel, "mirrors"]]]], Null]]
 
-Protect[theChrYieldConstant];
+(* ---- initialization cell 51, expression 1 ---- *)
+CompoundExpression[exportGraphicsToPDF[plotRefl, "mirror-reflectivity", "", ""]]
 
-(* ---- initialization cell 18 | d3e8794e-0f44-4fa0-990e-1a5d197a903e ---- *)
-(**)
-speedOfLightSI=QuantityMagnitude@N[Entity["\<PhysicalConstant\>","\<SpeedOfLight\>"]["\<Value\>"]];
-elementaryChargeSI=QuantityMagnitude@N[Entity["\<PhysicalConstant\>","\<ElementaryCharge\>"]["\<Value\>"]];
-PlanckConstantSI=QuantityMagnitude@N[Entity["\<PhysicalConstant\>","\<PlanckConstant\>"]["\<Value\>"]];
-PlanckConstantBarSI=QuantityMagnitude@N[Entity["\<PhysicalConstant\>","\<PlanckConstant\>"]["\<Value\>"]/(2\[Pi])];
-(*speedOfLight=0.300 ;(* mm/ps *)*)
-speedOfLight=QuantityMagnitude[N[UnitConvert[Entity["\<PhysicalConstant\>","\<SpeedOfLight\>"]["\<Value\>"],"\<Millimeters/Picoseconds\>"]]];
-hBar=                   QuantityMagnitude[N[UnitConvert[Quantity[1,"\<PlanckConstant\>"]]/(2\[Pi])]];
-theConstantWavLenFromToEnergy=((2*\[Pi]*speedOfLightSI*PlanckConstantBarSI)/((elementaryChargeSI)))*(10)^(9);
-(**)
-
-(* ---- initialization cell 19 | 2ac2a8f3-d1d8-43e6-8410-e4eddac6986c ---- *)
-(**)
-(* Units: electronVolt and nanoMeter *)
-Unprotect[\[Lambda]];
-\[Lambda][\[Epsilon]_]=theConstantWavLenFromToEnergy/\[Epsilon];(* VACUUM ! *)
-Protect[\[Lambda]];
-(* Units: electronVolt and nanoMeter *)
-Unprotect[\[Epsilon]];
-\[Epsilon][\[Lambda]_]=theConstantWavLenFromToEnergy/\[Lambda];(* VACUUM ! *)
-Protect[\[Epsilon]];
-(**)
-Unprotect[waveln];
-waveln[energy_]=theConstantWavLenFromToEnergy/energy; (* same as \[Lambda][\[Epsilon]_] *)
-Protect[waveln];
-(**)
-Unprotect[energy];
-energy[waveln_]=theConstantWavLenFromToEnergy/waveln;(* same as \[Epsilon][\[Lambda]_] *)
-Protect[energy];
-(**)
-
-(* ---- initialization cell 20 | 2c893151-3817-6a40-8bc9-f89f4566c704 ---- *)
-Unprotect[\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef];
-
-\[Lambda]ThisMinRef=200;(*local to this part for plotting*)
-
-\[Lambda]ThisMaxRef=700;(*local to this part for plotting*)
-
-Protect[\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef];
-
-Unprotect[\[Epsilon]Min,\[Epsilon]Max];
-
-\[Epsilon]Min:=\[Epsilon][\[Lambda]ThisMaxRef];
-
-\[Epsilon]Max:=\[Epsilon][\[Lambda]ThisMinRef];
-
-Protect[\[Epsilon]Min,\[Epsilon]Max];
-
-debugDoVerbose[\[Epsilon]Min];
-
-debugDoVerbose[\[Epsilon]Max];
-
-Print@debugMakePlots@Plot[\[Epsilon][x],{x,\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},AxesLabel->labelEvVsNm];
-
-Print@debugMakePlots@Plot[\[Lambda][x],{x,\[Epsilon]Min,\[Epsilon]Max},AxesLabel->labelNmVsEv];
-
-(* ---- initialization cell 21 | bba5fa2d-fb6c-5e49-ad0c-6ca4407a70cc ---- *)
-(* used below only on the most recent sets *)
-
-(* ---- initialization cell 22 | 686cf816-5c3b-7c43-bda5-4a8cdb10cf60 ---- *)
-(*Off[InterpolatingFunction::dmval];*)
-Clear[doInterpolateFromGraphicsData];
-doInterpolateFromGraphicsData[xPltMin_,xPltMax_,yPltMin_,yPltMax_,
-xLowBrd_(*x pixels LL*),xHghBrd_(*x pixels UP*),yLowBrd_(*x pixels LL*),yHghBrd_(*x pixels UP*),
-dat_,
-additionalFakeDataFlag_:False,additionalFakeData_:{},
-movAverage_:4
-]:=Module[{x,y,solX,solY,aaa,bbb,mapX,mapY,dataX,dataY,allDataRaw,allData,xDataMin,xDataMax,func(*,xDataPlotRangeMin,xDataPlotRangeMax*)},
-x=Map[Round,Transpose[dat][[1]]];
-y=Map[Round,Transpose[dat][[2]]];
-solX=N@Solve[xPltMin==xLowBrd*aaa+bbb&&xPltMax==xHghBrd*aaa+bbb,{aaa,bbb}];
-solY=N@Solve[yPltMin==yLowBrd*aaa+bbb&&yPltMax==yHghBrd*aaa+bbb,{aaa,bbb}];
-mapX:=aaa*#1+bbb&/.First@solX;
-dataX=Round[mapX/@x,0.001];
-mapY:=aaa*#1+bbb&/.First@solY;
-dataY=Round[mapY/@y,0.001];
-allDataRaw=Transpose[{dataX,dataY}];
-(*debugDoVerbose[allDataRaw];*)
-xDataMin:=Min[Map[#[[1]]&,allDataRaw]];
-xDataMax:=Max[Map[#[[1]]&,allDataRaw]];
-debugDoVerbose["\<xDataMin=   \>",xDataMin];
-debugDoVerbose["\<xDataMax=   \>",xDataMax];
-debugDoVerbose["\<xDataPlotRangeMin=   \>",xDataPlotRangeMin];
-debugDoVerbose["\<xDataPlotRangeMax=   \>",xDataPlotRangeMax];
-(* predefined here with := *)
-(*func:=Interpolation[allData];*)
-Clear[func];
-If[additionalFakeDataFlag==False
-,
-debugDoVerbose["\<additionalFakeData : \>",additionalFakeData];
-allDataRaw=DeleteDuplicates[Join[additionalFakeData,allDataRaw]];
-allDataRaw=Sort[allDataRaw,#1[[1]]<#2[[1]]&];
-allDataExport=allData=Round[MovingAverage[allDataRaw,movAverage],0.001];
-func=Interpolation[allData];
-Print@debugMakePlots@Plot[func[x],{x,xDataPlotRangeMin,xDataPlotRangeMax},AxesLabel->labelEffVsNm];
-Print@debugMakePlots@ListPlot[{Style[allDataRaw,Red],Style[allData,Green]},PlotRange->{{xDataPlotRangeMin,xDataPlotRangeMax},All}];
-debugDoVerbose["\<False\>"]
-,
-(*additionalFakeData=Join[Table[{\[Lambda],func[\[Lambda]]},{\[Lambda],xDataMax+1,xDataMaxPlot,+5}],Table[{\[Lambda],0},{\[Lambda],xDataMin-1,xDataMinPlot,-5}]];*)
-debugDoVerbose["\<additionalFakeData : \>",additionalFakeData];
-allDataRaw=DeleteDuplicates[Join[additionalFakeData,allDataRaw]];
-allDataRaw=Sort[allDataRaw,#1[[1]]<#2[[1]]&];
-allDataExport=allData=Round[MovingAverage[allDataRaw,movAverage],0.001];
-func=Interpolation[allData];
-Print@debugMakePlots@Plot[func[x],{x,xDataPlotRangeMin,xDataPlotRangeMax},AxesLabel->labelEffVsNm,PlotRange->{0,1}];
-Print@debugMakePlots@ListPlot[{Style[allDataRaw,Red],Style[allData,Green],Style[additionalFakeData,Blue]},PlotRange->{{xDataPlotRangeMin,xDataPlotRangeMax},{0,1}},AxesLabel->labelEffVsNm];
-debugDoVerbose["\<True\>"]
-];
-(*debugDoVerbose["\< RAW   DATA \n\>",TableForm@allDataRaw];
-debugDoVerbose["\< CLEAN DATA \n\>",TableForm@allData];*)
-Return[func]
-];
+(* ---- initialization cell 52, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[averageMirrorReflectivityFunctionEnergy[Pattern[\[Epsilon], Blank[]]], ReplaceAll[averageMirrorReflectivityFunctionWavLen[x], Rule[x, \[Lambda][\[Epsilon]]]]], Null], Null, CompoundExpression[Print[debugMakePlots[Plot[averageMirrorReflectivityFunctionEnergy[x], List[x, \[Epsilon][xDataMinPlot], \[Epsilon][xDataMaxPlot]], Rule[AxesLabel, List["\[Lambda] (nm)", "reflectivity"]], Rule[PlotRange, List[0, 1]]]]], Null]]
 
-(* ---- initialization cell 23 | 271f42d7-a1a4-4743-81fc-abc9172b3e70 ---- *)
-tagDataPlot="\<MAPMT ORIGINAL\>";
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
+(* ---- initialization cell 53, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugMakePlots[\[Epsilon][xDataMinPlot]], Null], Null, CompoundExpression[debugMakePlots[\[Epsilon][xDataMaxPlot]], Null]]
 
-(* ---- initialization cell 24 | b2d2aa18-46c9-ba4f-9ef2-f6f95c14a48a ---- *)
-(**)R11265SBAUVdata={{1.77438,0.00000},{1.77692,0.00020},{1.77946,0.00038},{1.78201,0.00052},{1.78457,0.00065},{1.78714,0.00075},{1.78972,0.00083},{1.79230,0.00090},{1.79489,0.00094},{1.79749,0.00098},{1.80009,0.00100},{1.80271,0.00101},{1.80533,0.00102},{1.80795,0.00101},{1.81059,0.00101},{1.81323,0.00100},{1.81588,0.00099},{1.81854,0.00099},{1.82121,0.00098},{1.82388,0.00099},{1.82656,0.00100},{1.82925,0.00107},{1.83195,0.00115},{1.83466,0.00124},{1.83737,0.00134},{1.84009,0.00144},{1.84282,0.00154},{1.84556,0.00165},{1.84831,0.00177},{1.85106,0.00188},{1.85383,0.00200},{1.85660,0.00208},{1.85938,0.00217},{1.86216,0.00225},{1.86496,0.00234},{1.86777,0.00244},{1.87058,0.00254},{1.87340,0.00264},{1.87623,0.00275},{1.87907,0.00287},{1.88192,0.00300},{1.88477,0.00314},{1.88764,0.00329},{1.89051,0.00345},{1.89339,0.00362},{1.89628,0.00381},{1.89918,0.00402},{1.90209,0.00424},{1.90501,0.00447},{1.90793,0.00473},{1.91087,0.00500},{1.91381,0.00534},{1.91677,0.00570},{1.91973,0.00608},{1.92270,0.00647},{1.92568,0.00688},{1.92867,0.00729},{1.93167,0.00771},{1.93468,0.00814},{1.93770,0.00857},{1.94072,0.00900},{1.94376,0.00938},{1.94681,0.00977},{1.94986,0.01015},{1.95293,0.01054},{1.95601,0.01094},{1.95909,0.01134},{1.96219,0.01174},{1.96529,0.01215},{1.96841,0.01257},{1.97153,0.01300},{1.97466,0.01344},{1.97781,0.01389},{1.98096,0.01435},{1.98413,0.01482},{1.98730,0.01531},{1.99049,0.01582},{1.99368,0.01634},{1.99689,0.01687},{2.00010,0.01743},{2.00333,0.01800},{2.00657,0.01863},{2.00981,0.01927},{2.01307,0.01994},{2.01634,0.02062},{2.01962,0.02131},{2.02291,0.02202},{2.02621,0.02275},{2.02952,0.02349},{2.03284,0.02424},{2.03617,0.02500},{2.03951,0.02577},{2.04287,0.02655},{2.04623,0.02734},{2.04961,0.02814},{2.05300,0.02894},{2.05640,0.02974},{2.05981,0.03055},{2.06323,0.03137},{2.06666,0.03218},{2.07011,0.03300},{2.07356,0.03378},{2.07703,0.03457},{2.08051,0.03535},{2.08400,0.03614},{2.08750,0.03694},{2.09102,0.03774},{2.09454,0.03854},{2.09808,0.03935},{2.10163,0.04017},{2.10519,0.04100},{2.10877,0.04187},{2.11235,0.04275},{2.11595,0.04364},{2.11956,0.04454},{2.12319,0.04544},{2.12682,0.04634},{2.13047,0.04725},{2.13413,0.04817},{2.13780,0.04908},{2.14149,0.05000},{2.14519,0.05087},{2.14890,0.05174},{2.15262,0.05261},{2.15636,0.05349},{2.16011,0.05438},{2.16387,0.05527},{2.16765,0.05618},{2.17144,0.05710},{2.17524,0.05804},{2.17906,0.05900},{2.18289,0.06001},{2.18673,0.06104},{2.19059,0.06209},{2.19446,0.06316},{2.19834,0.06425},{2.20224,0.06536},{2.20615,0.06649},{2.21008,0.06764},{2.21402,0.06881},{2.21797,0.07000},{2.22194,0.07111},{2.22592,0.07225},{2.22992,0.07342},{2.23393,0.07462},{2.23795,0.07588},{2.24199,0.07718},{2.24605,0.07853},{2.25012,0.07995},{2.25420,0.08144},{2.25830,0.08300},{2.26241,0.08472},{2.26654,0.08653},{2.27068,0.08841},{2.27484,0.09038},{2.27902,0.09244},{2.28321,0.09458},{2.28741,0.09680},{2.29163,0.09911},{2.29587,0.10151},{2.30012,0.10400},{2.30439,0.10673},{2.30867,0.10954},{2.31297,0.11242},{2.31728,0.11537},{2.32161,0.11838},{2.32596,0.12143},{2.33033,0.12453},{2.33471,0.12766},{2.33910,0.13082},{2.34352,0.13400},{2.34795,0.13729},{2.35239,0.14057},{2.35686,0.14383},{2.36134,0.14706},{2.36584,0.15025},{2.37035,0.15338},{2.37488,0.15643},{2.37943,0.15939},{2.38400,0.16225},{2.38858,0.16500},{2.39319,0.16725},{2.39781,0.16938},{2.40244,0.17140},{2.40710,0.17331},{2.41177,0.17513},{2.41647,0.17685},{2.42118,0.17849},{2.42591,0.18006},{2.43065,0.18156},{2.43542,0.18300},{2.44020,0.18444},{2.44501,0.18584},{2.44983,0.18720},{2.45467,0.18852},{2.45953,0.18981},{2.46441,0.19108},{2.46931,0.19233},{2.47423,0.19356},{2.47917,0.19478},{2.48413,0.19600},{2.48911,0.19723},{2.49410,0.19847},{2.49912,0.19972},{2.50416,0.20098},{2.50922,0.20225},{2.51430,0.20354},{2.51940,0.20486},{2.52452,0.20621},{2.52966,0.20759},{2.53482,0.20900},{2.54001,0.21057},{2.54521,0.21218},{2.55044,0.21382},{2.55569,0.21549},{2.56096,0.21719},{2.56625,0.21891},{2.57156,0.22066},{2.57690,0.22242},{2.58225,0.22421},{2.58763,0.22600},{2.59304,0.22771},{2.59846,0.22942},{2.60391,0.23116},{2.60938,0.23291},{2.61487,0.23469},{2.62039,0.23649},{2.62593,0.23832},{2.63149,0.24018},{2.63708,0.24207},{2.64269,0.24400},{2.64832,0.24618},{2.65398,0.24840},{2.65967,0.25063},{2.66537,0.25288},{2.67111,0.25513},{2.67686,0.25736},{2.68264,0.25958},{2.68845,0.26176},{2.69428,0.26391},{2.70014,0.26600},{2.70602,0.26782},{2.71193,0.26958},{2.71786,0.27129},{2.72382,0.27295},{2.72981,0.27456},{2.73582,0.27613},{2.74186,0.27765},{2.74793,0.27914},{2.75402,0.28058},{2.76014,0.28200},{2.76629,0.28335},{2.77246,0.28468},{2.77867,0.28599},{2.78490,0.28728},{2.79116,0.28856},{2.79744,0.28984},{2.80376,0.29112},{2.81010,0.29240},{2.81647,0.29369},{2.82287,0.29500},{2.82930,0.29656},{2.83576,0.29813},{2.84225,0.29970},{2.84877,0.30126},{2.85532,0.30281},{2.86190,0.30434},{2.86851,0.30583},{2.87515,0.30727},{2.88182,0.30867},{2.88852,0.31000},{2.89525,0.31097},{2.90202,0.31187},{2.90881,0.31273},{2.91564,0.31354},{2.92250,0.31431},{2.92940,0.31506},{2.93632,0.31580},{2.94328,0.31653},{2.95027,0.31726},{2.95730,0.31800},{2.96435,0.31898},{2.97144,0.31997},{2.97857,0.32097},{2.98573,0.32198},{2.99293,0.32300},{3.00015,0.32402},{3.00742,0.32503},{3.01472,0.32603},{3.02205,0.32702},{3.02942,0.32800},{3.03683,0.32886},{3.04427,0.32970},{3.05175,0.33052},{3.05927,0.33133},{3.06682,0.33213},{3.07442,0.33291},{3.08204,0.33369},{3.08971,0.33446},{3.09742,0.33523},{3.10516,0.33600},{3.11294,0.33693},{3.12076,0.33786},{3.12862,0.33876},{3.13653,0.33965},{3.14447,0.34050},{3.15245,0.34131},{3.16047,0.34208},{3.16853,0.34278},{3.17663,0.34343},{3.18478,0.34400},{3.19297,0.34420},{3.20120,0.34432},{3.20947,0.34438},{3.21778,0.34440},{3.22614,0.34438},{3.23454,0.34432},{3.24299,0.34425},{3.25148,0.34416},{3.26001,0.34408},{3.26859,0.34400},{3.27721,0.34411},{3.28588,0.34424},{3.29460,0.34439},{3.30336,0.34456},{3.31217,0.34475},{3.32103,0.34496},{3.32993,0.34519},{3.33888,0.34544},{3.34788,0.34571},{3.35693,0.34600},{3.36603,0.34638},{3.37517,0.34677},{3.38437,0.34717},{3.39362,0.34758},{3.40292,0.34800},{3.41226,0.34842},{3.42166,0.34883},{3.43112,0.34923},{3.44062,0.34962},{3.45018,0.35000},{3.45979,0.35031},{3.46945,0.35059},{3.47917,0.35086},{3.48894,0.35110},{3.49877,0.35131},{3.50866,0.35150},{3.51859,0.35167},{3.52859,0.35181},{3.53864,0.35192},{3.54875,0.35200},{3.55892,0.35199},{3.56915,0.35194},{3.57944,0.35188},{3.58978,0.35179},{3.60019,0.35169},{3.61065,0.35157},{3.62118,0.35144},{3.63177,0.35130},{3.64242,0.35115},{3.65313,0.35100},{3.66391,0.35100},{3.67475,0.35099},{3.68565,0.35097},{3.69662,0.35094},{3.70765,0.35088},{3.71875,0.35078},{3.72992,0.35066},{3.74116,0.35049},{3.75246,0.35027},{3.76383,0.35000},{3.77527,0.34954},{3.78678,0.34902},{3.79836,0.34844},{3.81001,0.34781},{3.82174,0.34713},{3.83353,0.34639},{3.84540,0.34561},{3.85734,0.34478},{3.86936,0.34391},{3.88145,0.34300},{3.89362,0.34216},{3.90586,0.34128},{3.91818,0.34035},{3.93058,0.33936},{3.94306,0.33831},{3.95562,0.33720},{3.96826,0.33602},{3.98097,0.33476},{3.99377,0.33342},{4.00666,0.33200},{4.01962,0.33022},{4.03268,0.32837},{4.04581,0.32644},{4.05903,0.32446},{4.07234,0.32244},{4.08574,0.32038},{4.09922,0.31829},{4.11279,0.31619},{4.12646,0.31409},{4.14021,0.31200},{4.15406,0.31021},{4.16800,0.30843},{4.18203,0.30666},{4.19616,0.30490},{4.21039,0.30313},{4.22471,0.30134},{4.23913,0.29955},{4.25364,0.29773},{4.26826,0.29588},{4.28298,0.29400},{4.29780,0.29196},{4.31272,0.28989},{4.32775,0.28777},{4.34288,0.28562},{4.35812,0.28344},{4.37346,0.28122},{4.38892,0.27896},{4.40448,0.27667},{4.42016,0.27435},{4.43594,0.27200},{4.45184,0.26944},{4.46786,0.26686},{4.48399,0.26427},{4.50023,0.26169},{4.51660,0.25913},{4.53308,0.25659},{4.54968,0.25410},{4.56641,0.25166},{4.58326,0.24929},{4.60024,0.24700},{4.61734,0.24518},{4.63457,0.24343},{4.65193,0.24176},{4.66941,0.24014},{4.68703,0.23856},{4.70479,0.23702},{4.72268,0.23551},{4.74070,0.23401},{4.75887,0.23251},{4.77717,0.23100},{4.79561,0.22929},{4.81420,0.22756},{4.83293,0.22581},{4.85181,0.22404},{4.87084,0.22225},{4.89002,0.22044},{4.90934,0.21861},{4.92883,0.21676},{4.94846,0.21489},{4.96826,0.21300},{4.98821,0.21111},{5.00832,0.20919},{5.02860,0.20726},{5.04904,0.20530},{5.06965,0.20331},{5.09043,0.20130},{5.11137,0.19927},{5.13250,0.19721},{5.15379,0.19512},{5.17527,0.19300},{5.19692,0.19070},{5.21876,0.18838},{5.24078,0.18605},{5.26298,0.18371},{5.28538,0.18138},{5.30797,0.17905},{5.33075,0.17674},{5.35372,0.17446},{5.37690,0.17221},{5.40028,0.17000},{5.42386,0.16809},{5.44765,0.16622},{5.47165,0.16439},{5.49586,0.16259},{5.52028,0.16081},{5.54493,0.15905},{5.56979,0.15729},{5.59488,0.15554},{5.62020,0.15377},{5.64575,0.15200},{5.67153,0.15001},{5.69754,0.14800},{5.72380,0.14598},{5.75030,0.14396},{5.77704,0.14194},{5.80404,0.13992},{5.83129,0.13791},{5.85879,0.13592},{5.88656,0.13395},{5.91459,0.13200},{5.94289,0.13008},{5.97146,0.12820},{6.00031,0.12636},{6.02944,0.12456},{6.05885,0.12281},{6.08855,0.12112},{6.11854,0.11949},{6.14883,0.11792},{6.17942,0.11642},{6.21032,0.11500}};
-(**)
+(* ---- initialization cell 54, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "AEROGEL radiator"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-(* ---- initialization cell 25 | 1b9dca8e-3fe8-ce40-8511-7d49706363b4 ---- *)
-R11265SBABSdata={{1.77438,0.00000},{1.77692,0.00020},{1.77946,0.00038},{1.78201,0.00052},{1.78457,0.00065},{1.78714,0.00075},{1.78972,0.00083},{1.79230,0.00090},{1.79489,0.00094},{1.79749,0.00098},{1.80009,0.00100},{1.80271,0.00101},{1.80533,0.00102},{1.80795,0.00101},{1.81059,0.00101},{1.81323,0.00100},{1.81588,0.00099},{1.81854,0.00099},{1.82121,0.00098},{1.82388,0.00099},{1.82656,0.00100},{1.82925,0.00107},{1.83195,0.00115},{1.83466,0.00124},{1.83737,0.00134},{1.84009,0.00144},{1.84282,0.00154},{1.84556,0.00165},{1.84831,0.00177},{1.85106,0.00188},{1.85383,0.00200},{1.85660,0.00208},{1.85938,0.00217},{1.86216,0.00225},{1.86496,0.00234},{1.86777,0.00244},{1.87058,0.00254},{1.87340,0.00264},{1.87623,0.00275},{1.87907,0.00287},{1.88192,0.00300},{1.88477,0.00314},{1.88764,0.00329},{1.89051,0.00345},{1.89339,0.00362},{1.89628,0.00381},{1.89918,0.00402},{1.90209,0.00424},{1.90501,0.00447},{1.90793,0.00473},{1.91087,0.00500},{1.91381,0.00534},{1.91677,0.00570},{1.91973,0.00608},{1.92270,0.00647},{1.92568,0.00688},{1.92867,0.00729},{1.93167,0.00771},{1.93468,0.00814},{1.93770,0.00857},{1.94072,0.00900},{1.94376,0.00938},{1.94681,0.00977},{1.94986,0.01015},{1.95293,0.01054},{1.95601,0.01094},{1.95909,0.01134},{1.96219,0.01174},{1.96529,0.01215},{1.96841,0.01257},{1.97153,0.01300},{1.97466,0.01344},{1.97781,0.01389},{1.98096,0.01435},{1.98413,0.01482},{1.98730,0.01531},{1.99049,0.01582},{1.99368,0.01634},{1.99689,0.01687},{2.00010,0.01743},{2.00333,0.01800},{2.00657,0.01863},{2.00981,0.01927},{2.01307,0.01994},{2.01634,0.02062},{2.01962,0.02131},{2.02291,0.02202},{2.02621,0.02275},{2.02952,0.02349},{2.03284,0.02424},{2.03617,0.02500},{2.03951,0.02577},{2.04287,0.02655},{2.04623,0.02734},{2.04961,0.02814},{2.05300,0.02894},{2.05640,0.02974},{2.05981,0.03055},{2.06323,0.03137},{2.06666,0.03218},{2.07011,0.03300},{2.07356,0.03378},{2.07703,0.03457},{2.08051,0.03535},{2.08400,0.03614},{2.08750,0.03694},{2.09102,0.03774},{2.09454,0.03854},{2.09808,0.03935},{2.10163,0.04017},{2.10519,0.04100},{2.10877,0.04187},{2.11235,0.04275},{2.11595,0.04364},{2.11956,0.04454},{2.12319,0.04544},{2.12682,0.04634},{2.13047,0.04725},{2.13413,0.04817},{2.13780,0.04908},{2.14149,0.05000},{2.14519,0.05087},{2.14890,0.05174},{2.15262,0.05261},{2.15636,0.05349},{2.16011,0.05438},{2.16387,0.05527},{2.16765,0.05618},{2.17144,0.05710},{2.17524,0.05804},{2.17906,0.05900},{2.18289,0.06001},{2.18673,0.06104},{2.19059,0.06209},{2.19446,0.06316},{2.19834,0.06425},{2.20224,0.06536},{2.20615,0.06649},{2.21008,0.06764},{2.21402,0.06881},{2.21797,0.07000},{2.22194,0.07111},{2.22592,0.07225},{2.22992,0.07342},{2.23393,0.07462},{2.23795,0.07588},{2.24199,0.07718},{2.24605,0.07853},{2.25012,0.07995},{2.25420,0.08144},{2.25830,0.08300},{2.26241,0.08472},{2.26654,0.08653},{2.27068,0.08841},{2.27484,0.09038},{2.27902,0.09244},{2.28321,0.09458},{2.28741,0.09680},{2.29163,0.09911},{2.29587,0.10151},{2.30012,0.10400},{2.30439,0.10673},{2.30867,0.10954},{2.31297,0.11242},{2.31728,0.11537},{2.32161,0.11838},{2.32596,0.12143},{2.33033,0.12453},{2.33471,0.12766},{2.33910,0.13082},{2.34352,0.13400},{2.34795,0.13729},{2.35239,0.14057},{2.35686,0.14383},{2.36134,0.14706},{2.36584,0.15025},{2.37035,0.15338},{2.37488,0.15643},{2.37943,0.15939},{2.38400,0.16225},{2.38858,0.16500},{2.39319,0.16725},{2.39781,0.16938},{2.40244,0.17140},{2.40710,0.17331},{2.41177,0.17513},{2.41647,0.17685},{2.42118,0.17849},{2.42591,0.18006},{2.43065,0.18156},{2.43542,0.18300},{2.44020,0.18444},{2.44501,0.18584},{2.44983,0.18720},{2.45467,0.18852},{2.45953,0.18981},{2.46441,0.19108},{2.46931,0.19233},{2.47423,0.19356},{2.47917,0.19478},{2.48413,0.19600},{2.48911,0.19723},{2.49410,0.19847},{2.49912,0.19972},{2.50416,0.20098},{2.50922,0.20225},{2.51430,0.20354},{2.51940,0.20486},{2.52452,0.20621},{2.52966,0.20759},{2.53482,0.20900},{2.54001,0.21057},{2.54521,0.21218},{2.55044,0.21382},{2.55569,0.21549},{2.56096,0.21719},{2.56625,0.21891},{2.57156,0.22066},{2.57690,0.22242},{2.58225,0.22421},{2.58763,0.22600},{2.59304,0.22771},{2.59846,0.22942},{2.60391,0.23116},{2.60938,0.23291},{2.61487,0.23469},{2.62039,0.23649},{2.62593,0.23832},{2.63149,0.24018},{2.63708,0.24207},{2.64269,0.24400},{2.64832,0.24618},{2.65398,0.24840},{2.65967,0.25063},{2.66537,0.25288},{2.67111,0.25513},{2.67686,0.25736},{2.68264,0.25958},{2.68845,0.26176},{2.69428,0.26391},{2.70014,0.26600},{2.70602,0.26782},{2.71193,0.26958},{2.71786,0.27129},{2.72382,0.27295},{2.72981,0.27456},{2.73582,0.27613},{2.74186,0.27765},{2.74793,0.27914},{2.75402,0.28058},{2.76014,0.28200},{2.76629,0.28335},{2.77246,0.28468},{2.77867,0.28599},{2.78490,0.28728},{2.79116,0.28856},{2.79744,0.28984},{2.80376,0.29112},{2.81010,0.29240},{2.81647,0.29369},{2.82287,0.29500},{2.82930,0.29656},{2.83576,0.29813},{2.84225,0.29970},{2.84877,0.30126},{2.85532,0.30281},{2.86190,0.30434},{2.86851,0.30583},{2.87515,0.30727},{2.88182,0.30867},{2.88852,0.31000},{2.89525,0.31097},{2.90202,0.31187},{2.90881,0.31273},{2.91564,0.31354},{2.92250,0.31431},{2.92940,0.31506},{2.93632,0.31580},{2.94328,0.31653},{2.95027,0.31726},{2.95730,0.31800},{2.96435,0.31898},{2.97144,0.31997},{2.97857,0.32097},{2.98573,0.32198},{2.99293,0.32300},{3.00015,0.32402},{3.00742,0.32503},{3.01472,0.32603},{3.02205,0.32702},{3.02942,0.32800},{3.03683,0.32886},{3.04427,0.32970},{3.05175,0.33052},{3.05927,0.33133},{3.06682,0.33213},{3.07442,0.33291},{3.08204,0.33369},{3.08971,0.33446},{3.09742,0.33523},{3.10516,0.33600},{3.11294,0.33693},{3.12076,0.33786},{3.12862,0.33876},{3.13653,0.33965},{3.14447,0.34050},{3.15245,0.34131},{3.16047,0.34208},{3.16853,0.34278},{3.17663,0.34343},{3.18478,0.34400},{3.19297,0.34420},{3.20120,0.34432},{3.20947,0.34438},{3.21778,0.34440},{3.22614,0.34438},{3.23454,0.34432},{3.24299,0.34425},{3.25148,0.34416},{3.26001,0.34408},{3.26859,0.34400},{3.27721,0.34411},{3.28588,0.34424},{3.29460,0.34439},{3.30336,0.34456},{3.31217,0.34475},{3.32103,0.34496},{3.32993,0.34519},{3.33888,0.34544},{3.34788,0.34571},{3.35693,0.34600},{3.36603,0.34638},{3.37517,0.34677},{3.38437,0.34717},{3.39362,0.34758},{3.40292,0.34800},{3.41226,0.34842},{3.42166,0.34883},{3.43112,0.34923},{3.44062,0.34962},{3.45018,0.35000},{3.45979,0.35031},{3.46945,0.35059},{3.47917,0.35086},{3.48894,0.35110},{3.49877,0.35131},{3.50866,0.35150},{3.51859,0.35167},{3.52859,0.35181},{3.53864,0.35192},{3.54875,0.35200},{3.55892,0.35199},{3.56915,0.35194},{3.57944,0.35188},{3.58978,0.35179},{3.60019,0.35169},{3.61065,0.35157},{3.62118,0.35144},{3.63177,0.35130},{3.64242,0.35115},{3.65313,0.35100},{3.66391,0.35100},{3.67475,0.35099},{3.68565,0.35097},{3.69662,0.35094},{3.70765,0.35088},{3.71875,0.35078},{3.72992,0.35066},{3.74116,0.35049},{3.75246,0.35027},{3.76383,0.35000},{3.77527,0.34954},{3.78678,0.34902},{3.79836,0.34844},{3.81001,0.34781},{3.82174,0.34713},{3.83353,0.34639},{3.84540,0.34561},{3.85734,0.34478},{3.86936,0.34391},{3.88145,0.34300},{3.89362,0.34216},{3.90586,0.34128},{3.91818,0.34035},{3.93058,0.33936},{3.94306,0.33831},{3.95562,0.33720},{3.96826,0.33602},{3.98097,0.33476},{3.99377,0.33342},{4.00666,0.33200},{4.01962,0.33041},{4.03268,0.32872},{4.04581,0.32695},{4.05903,0.32508},{4.07234,0.32313},{4.08574,0.32108},{4.09922,0.31895},{4.11279,0.31672},{4.12646,0.31441},{4.14021,0.31200},{4.15406,0.30954},{4.16800,0.30698},{4.18203,0.30434},{4.19616,0.30159},{4.21039,0.29875},{4.22471,0.29581},{4.23913,0.29276},{4.25364,0.28962},{4.26826,0.28636},{4.28298,0.28300},{4.29780,0.27659},{4.31272,0.27099},{4.32775,0.26610},{4.34288,0.26183},{4.35812,0.25805},{4.37346,0.25467},{4.38892,0.25158},{4.40448,0.24868},{4.42016,0.24585},{4.43594,0.24300},{4.45184,0.24034},{4.46786,0.23690},{4.48399,0.23283},{4.50023,0.22827},{4.51660,0.22338},{4.53308,0.21829},{4.54968,0.21317},{4.56641,0.20867},{4.58326,0.20407},{4.60024,0.19900},{4.61734,0.19295},{4.63457,0.18653},{4.65193,0.18035},{4.66941,0.17436},{4.68703,0.16839},{4.70479,0.16240},{4.72268,0.15633},{4.74070,0.15000},{4.75887,0.14348},{4.77717,0.13683},{4.79561,0.13005},{4.81420,0.12313},{4.83293,0.11607},{4.85181,0.10887},{4.87084,0.10153},{4.89002,0.09405},{4.90934,0.08643},{4.92883,0.07866},{4.94846,0.07074},{4.96826,0.06268},{4.98821,0.05447},{5.00832,0.04611},{5.02860,0.03578},{5.04904,0.02523},{5.06965,0.01555},{5.09043,0.00729},{5.11137,0.00104},{5.13250,0.00000},{5.15379,0.00000},{5.17527,0.00000},{5.19692,0.00000},{5.21876,0.00000},{5.24078,0.00000},{5.26298,0.00000},{5.28538,0.00000},{5.30797,0.00000},{5.33075,0.00000},{5.35372,0.00000},{5.37690,0.00000},{5.40028,0.00000},{5.42386,0.00000},{5.44765,0.00000},{5.47165,0.00000},{5.49586,0.00000},{5.52028,0.00000},{5.54493,0.00000},{5.56979,0.00000},{5.59488,0.00000},{5.62020,0.00000},{5.64575,0.00000},{5.67153,0.00000},{5.69754,0.00000},{5.72380,0.00000},{5.75030,0.00000},{5.77704,0.00000},{5.80404,0.00000},{5.83129,0.00000},{5.85879,0.00000},{5.88656,0.00000},{5.91459,0.00000},{5.94289,0.00000},{5.97146,0.00000},{6.00031,0.00000},{6.02944,0.00000},{6.05885,0.00000},{6.08855,0.00000},{6.11854,0.00000},{6.14883,0.00000},{6.17942,0.00000},{6.21032,0.00000}};
+(* ---- initialization cell 55, expression 1 ---- *)
+CompoundExpression[Null]
 
-(**)
+(* ---- initialization cell 56, expression 1 ---- *)
+CompoundExpression[CompoundExpression[SetDelayed[nRefrAergl[Pattern[\[Lambda], Blank[]]], Sqrt[Plus[1, Times[Times[Plus[0.05639`, 0.005`], Power[Times[\[Lambda], Power[1000, -1]], 2]], Power[Plus[Power[Times[\[Lambda], Power[1000, -1]], 2], -0.0008322`], -1]]]]], Null]]
 
-(* ---- initialization cell 26 | cec175f5-a07f-3647-a606-85a24fbd42d7 ---- *)
-(**)
-MaPMTSBAUVGlassEffEnergyDataRawSE={{1.5,0},{1.6,0},{1.61445,0.0},{1.63569,0.0},{1.6575,0.0007},{1.6799,0.0014},{1.70291,0.0028},{1.72656,0.0056},{1.75088,0.01},{1.77589,0.0181},{1.80163,0.03},{1.82812,0.06},{1.85541,0.1},{1.88352,0.18},{1.9125,0.3},{1.94238,0.49},{1.97321,0.77},{2.00504,1.21},{2.03791,1.71},{2.07187,2.29},{2.10699,3.0},{2.14332,3.7},{2.18092,4.5},{2.21987,5.2},{2.26023,6.1},{2.30208,7.0},{2.34552,8.3},{2.39062,10.8},{2.4375,13.6},{2.48625,17.5},{2.53699,19.6},{2.58984,21.7},{2.64495,23.8},{2.70245,25.9},{2.7625,28.0},{2.82528,30.0},{2.89099,31.2},{2.95982,32.0},{3.03201,32.5},{3.10781,33.0},{3.1875,33.5},{3.27138,34.0},{3.3598,34.5},{3.45312,35.0},{3.55179,35.0},{3.65625,34.9},{3.76705,34.3},{3.88477,33.5},{4.01008,32.8},{4.14375,32.1},{4.28664,29.2},{4.43973,26.9},{4.60417,24.4},{4.78125,23.0},{4.9725,21.0},{5.17969,17.0},{5.40489,7.8},{5.65057,6.1},{5.91964,5.2},{6.21563,3.9},{6.54276,2.7},{6.90625,0.0},{6.95,0},{7.0,0}};
-(**)
-MaPMTSBAUVGlassEffEnergyDataSE=Transpose[{Transpose[MaPMTSBAUVGlassEffEnergyDataRawSE][[1]],Transpose[MaPMTSBAUVGlassEffEnergyDataRawSE][[2]]/100}];
-(**)
-MaPMTSBABSGlassEffEnergyDataRawSE={{1.5,0},{1.6,0},{1.61445,0.0},{1.63569,0.0},{1.6575,0.0007},{1.6799,0.0014},{1.70291,0.0028},{1.72656,0.0056},{1.75088,0.01},{1.77589,0.0181},{1.80163,0.03},{1.82812,0.06},{1.85541,0.1},{1.88352,0.18},{1.9125,0.3},{1.94238,0.49},{1.97321,0.77},{2.00504,1.21},{2.03791,1.71},{2.07187,2.29},{2.10699,3.0},{2.14332,3.7},{2.18092,4.5},{2.21987,5.2},{2.26023,6.1},{2.30208,7.0},{2.34552,8.3},{2.39062,10.8},{2.4375,13.6},{2.48625,17.5},{2.53699,19.6},{2.58984,21.7},{2.64495,23.8},{2.70245,25.9},{2.7625,28.0},{2.82528,30.0},{2.89099,31.2},{2.95982,32.0},{3.03201,32.5},{3.10781,33.0},{3.1875,33.5},{3.27138,34.0},{3.3598,34.5},{3.45312,35.0},{3.55179,35.0},{3.65625,35.0},{3.76705,34.0},{3.88477,33.0},{4.01008,32.0},{4.14375,31.0},{4.28664,27.2},{4.43973,23.6},{4.60417,20.0},{4.78125,16.5},{4.9725,13.0},{5.17969,10.0},{5.40489,1.5},{5.65057,1.0},{5.91964,0.5},{6.21563,0.0},{6.54276,0.0},{6.90625,0.0},{6.95,0},{7.0,0}};
-(**)
-MaPMTSBABSGlassEffEnergyDataSE=Transpose[{Transpose[MaPMTSBABSGlassEffEnergyDataRawSE][[1]],Transpose[MaPMTSBABSGlassEffEnergyDataRawSE][[2]]/100}];
-(**)
-MaPMTSBAUVGlassEffEnergyData=R11265SBAUVdata;
-MaPMTSBABSGlassEffEnergyData=R11265SBABSdata;
-
-(* ---- initialization cell 27 | ed10f78c-b882-6a42-9d59-943c81ea904d ---- *)
-debugMakePlots@ListPlot[{MaPMTSBAUVGlassEffEnergyDataSE,R11265SBAUVdata},PlotRange->All,GridLines->Automatic,AxesLabel->labelEffVsEv];
-
-debugMakePlots@ListPlot[{MaPMTSBABSGlassEffEnergyDataSE,R11265SBABSdata},PlotRange->All,GridLines->Automatic,AxesLabel->labelEffVsEv];
-
-(**)
-
-(* ---- initialization cell 28 | f876f480-961e-44a1-b70a-f36c10bb44d0 ---- *)
-tagDataPlot="\<MAPMT OLD22\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 29 | 427f7551-9eb1-8442-8168-f4b103940912 ---- *)
-rawDatMAPMTOLD22={{1.61445,0.00/100},{1.65750,0.00/100},{1.70291,0.00/100},{1.72656,0.01/100},{1.77589,0.01/100},{1.82813,0.11/100},{1.88352,0.36/100},{1.94238,0.91/100},{2.00504,1.93/100},{2.07188,3.32/100},{2.14332,5.02/100},{2.21987,6.97/100},{2.30208,9.47/100},{2.39063,12.31/100},{2.48625,17.96/100},{2.58984,22.80/100},{2.70245,25.57/100},{2.82528,28.72/100},{2.95982,31.32/100},{3.10781,33.03/100},{3.27138,33.93/100},{3.45313,37.01/100},{3.65625,38.29/100},{3.88477,39.29/100},{4.14375,38.72/100},{4.43973,34.83/100},{4.78125,32.23/100},{5.17969,26.65/100},{5.65057,20.72/100},{6.21563,15.29/100},{6.23000,0.00/100},{6.25000,0.00/100},{6.50000,0.00/100},{6.54276,0.00/100},{6.90625,0.00}};
-
-debugMakePlots@ListPlot[rawDatMAPMTOLD22,Joined->True,AxesLabel->labelEffVsEv];
-
-debugDoVerbose[rawDatMAPMTOLD22//TableForm];
+(* ---- initialization cell 57, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[nRefrAerglDat, List[List[1.77114`, 1.03054`], List[1.79681`, 1.03054`], List[1.82324`, 1.03055`], List[1.85045`, 1.03055`], List[1.87848`, 1.03056`], List[1.90738`, 1.03057`], List[1.93719`, 1.03057`], List[1.96794`, 1.03058`], List[1.99968`, 1.03059`], List[2.03246`, 1.0306`], List[2.06633`, 1.03061`], List[2.10136`, 1.03062`], List[2.13759`, 1.03063`], List[2.17509`, 1.03064`], List[2.21393`, 1.03065`], List[2.25418`, 1.03066`], List[2.29593`, 1.03067`], List[2.33925`, 1.03068`], List[2.38423`, 1.0307`], List[2.43098`, 1.03071`], List[2.4796`, 1.03073`], List[2.5302`, 1.03074`], List[2.58292`, 1.03076`], List[2.63787`, 1.03078`], List[2.69522`, 1.0308`], List[2.75511`, 1.03082`], List[2.81773`, 1.03084`], List[2.88326`, 1.03086`], List[2.9519`, 1.03089`], List[3.0239`, 1.03092`], List[3.0995`, 1.03095`], List[3.17897`, 1.03098`], List[3.26263`, 1.03102`], List[3.35081`, 1.03105`], List[3.44389`, 1.03109`], List[3.54229`, 1.03114`], List[3.64647`, 1.03119`], List[3.75697`, 1.03124`], List[3.87437`, 1.0313`], List[3.99935`, 1.03137`], List[4.13267`, 1.03144`], List[4.27517`, 1.03152`], List[4.42786`, 1.03161`], List[4.59185`, 1.03171`], List[4.76846`, 1.03182`], List[4.9592`, 1.03195`], List[5.16583`, 1.03209`], List[5.39043`, 1.03226`], List[5.63545`, 1.03245`], List[5.90381`, 1.03267`], List[6.199`, 1.03293`]]], Null], Null, CompoundExpression[debugMakePlots[TableForm[Map[Function[List[Part[Slot[1], 1], nf[Part[Slot[1], 2]]]], nRefrAerglDat]]], Null]]
 
-rawDatMAPMTOLD22=Drop[rawDatMAPMTOLD22,-5];
+(* ---- initialization cell 58, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugMakePlots[Plot[List[nRefrAergl[\[Lambda]]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[AxesLabel, List["\[Lambda] (nm)", "refractive index"]]]], Null]]
 
-rawDatMAPMTOLD22=Drop[rawDatMAPMTOLD22,+5];
+(* ---- initialization cell 59, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "QUARTZ"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-debugDoVerbose[rawDatMAPMTOLD22//TableForm];
+(* ---- initialization cell 60, expression 1 ---- *)
+CompoundExpression[CompoundExpression[SetDelayed[nRefrFQrtz[Pattern[\[Lambda], Blank[]]], Sqrt[Plus[1, Times[0.6961663`, Power[Plus[1, Times[-1, Power[Times[0.0684043`, Power[Times[\[Lambda], Power[1000, -1]], -1]], 2]]], -1]], Times[0.4079426`, Power[Plus[1, Times[-1, Power[Times[0.1162414`, Power[Times[\[Lambda], Power[1000, -1]], -1]], 2]]], -1]], Times[0.8974794`, Power[Plus[1, Times[-1, Power[Times[9.896161`, Power[Times[\[Lambda], Power[1000, -1]], -1]], 2]]], -1]]]]], Null]]
 
-(* ---- initialization cell 30 | fb2ee652-acbd-4321-8666-6bff2b314c4c ---- *)
-eneMin=Min[Map[#[[1]]&,rawDatMAPMTOLD22]];
+(* ---- initialization cell 61, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugMakePlots[Plot[List[nRefrFQrtz[\[Lambda]]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[PlotRange, List[0.999`, All]]]], Null]]
 
-eneMax=Max[Map[#[[1]]&,rawDatMAPMTOLD22]];
+(* ---- initialization cell 62, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "Gas Radiators"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-lamMin=Ceiling@\[Lambda][eneMax];
+(* ---- initialization cell 63, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Unprotect[theRealCf, theFullCf, cfFromSTPToReferenceCavern, referenceCavernTemp, referenceCavernPres], Null], CompoundExpression[ClearAll[theRealCf, theFullCf, cfFromSTPToReferenceCavern, referenceCavernTemp, referenceCavernPres], Null], CompoundExpression[Set[presSTP, 1013.25`], Null], CompoundExpression[Set[tempSTP, 273.15`], Null], CompoundExpression[Set[referenceCavernPres, presSTP], Null], CompoundExpression[Set[referenceCavernTemp, Plus[tempSTP, 25.`]], Null], CompoundExpression[SetDelayed[gasRefrIndexCorrectionFactorFunction[Pattern[pres, Blank[]], Pattern[temp, Blank[]], Optional[Pattern[refPres, Blank[]], referenceCavernPres], Optional[Pattern[refTemp, Blank[]], referenceCavernTemp]], precisionify[Times[Times[pres, Power[refPres, -1]], Power[Times[temp, Power[refTemp, -1]], -1]]]], Null], CompoundExpression[Set[cfFromSTPToReferenceCavern, gasRefrIndexCorrectionFactorFunction[referenceCavernPres, referenceCavernTemp, presSTP, tempSTP]], Null], CompoundExpression[Set[theRealGasPresMbar, referenceCavernPres], Null], CompoundExpression[Set[theRealGasTempKelv, referenceCavernTemp], Null], CompoundExpression[SetDelayed[theRealCf, gasRefrIndexCorrectionFactorFunction[theRealGasPresMbar, theRealGasTempKelv]], Null], CompoundExpression[SetDelayed[theFullCf, Times[cfFromSTPToReferenceCavern, theRealCf]], Null], CompoundExpression[printD[referenceCavernPres], Null], CompoundExpression[printD[referenceCavernTemp], Null], CompoundExpression[printD[theRealGasPresMbar], Null], CompoundExpression[printD[theRealGasTempKelv], Null], CompoundExpression[printD[theFullCf], Null], CompoundExpression[debugDoVerbose[" gasCorrFactFromSTPToReferenceCavern : ", cfFromSTPToReferenceCavern], Null], CompoundExpression[debugDoVerbose[" gasCorrFactToRealFromCavern         : ", theRealCf], Null], CompoundExpression[debugDoVerbose[" gasCorrFactFull                     : ", theFullCf], Null], CompoundExpression[Protect[theRealCf, theFullCf, cfFromSTPToReferenceCavern, referenceCavernTemp, referenceCavernPres], Null]]]
 
-lamMax=Floor@\[Lambda][eneMin];
+(* ---- initialization cell 64, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[cfToReferenceCavernTest, List[gasRefrIndexCorrectionFactorFunction[Plus[referenceCavernPres, 15], Plus[referenceCavernTemp, 25]], gasRefrIndexCorrectionFactorFunction[Plus[referenceCavernPres, 0], Plus[referenceCavernTemp, 25]], gasRefrIndexCorrectionFactorFunction[Plus[referenceCavernPres, -15], Plus[referenceCavernTemp, 25]], gasRefrIndexCorrectionFactorFunction[Plus[referenceCavernPres, 15], Plus[referenceCavernTemp, 25]], gasRefrIndexCorrectionFactorFunction[Plus[referenceCavernPres, 0], Plus[referenceCavernTemp, 25]], gasRefrIndexCorrectionFactorFunction[Plus[referenceCavernPres, -15], Plus[referenceCavernTemp, 25]]]], Null], Null, CompoundExpression[debugDoVerbose[Times[Plus[Max[cfToReferenceCavernTest], Times[-1, Min[cfToReferenceCavernTest]]], Power[Mean[cfToReferenceCavernTest], -1]]], Null]]
 
-minE=\[Epsilon][\[Lambda][eneMin]];
+(* ---- initialization cell 65, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "Helium"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-maxE=\[Epsilon][\[Lambda][eneMax]];
+(* ---- initialization cell 66, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[ClearAll[nRefrHe0], Null], CompoundExpression[SetDelayed[nRefrHe0[Pattern[\[Lambda], Blank[]]], precisionify[Plus[1, Times[Times[0.01470091`, Power[Plus[423.98`, Times[-1, Power[Times[\[Lambda], Power[1000, -1]], -2]]], -1]], theFullCf]]]], Null], CompoundExpression[nf[nRefrHe0[\[Lambda]ThisMinRef], 11, 8], Null], CompoundExpression[nf[nRefrHe0[\[Lambda]ThisMaxRef], 11, 8], Null], CompoundExpression[debugMakePlots[Plot[Plus[nRefrHe0[\[Lambda]], -1], List[\[Lambda], 400, 999], Rule[Ticks, Automatic]]], Null]]]
 
-MAPMTOLD22EnergyFunc=Interpolation[rawDatMAPMTOLD22];
+(* ---- initialization cell 67, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[ClearAll[nRefrHe], Null], CompoundExpression[ClearAll[ff, gg, cfHe], Null], CompoundExpression[Set[cfHe, gasRefrIndexCorrectionFactorFunction[presSTP, tempSTP, 1000, 273]], Null], CompoundExpression[SetDelayed[ff[Pattern[\[Lambda], Blank[]]], Plus[1, Times[Times[1, Power[2, -1]], ReleaseHold[HoldForm[Plus[Times[Times[4977.77`, Power[\[Lambda], 2]], Power[Times[Power[10, 8], Plus[Power[\[Lambda], 2], Times[-1, Times[28.54`, Power[Power[10, 6], -1]]]]], -1]], Times[Times[1856.94`, Power[\[Lambda], 2]], Power[Times[Power[10, 8], Plus[Power[\[Lambda], 2], Times[-1, Times[7.76`, Power[Power[10, 3], -1]]]]], -1]]]]], cfHe, theFullCf]]], Null], CompoundExpression[SetDelayed[gg[Pattern[\[Lambda], Blank[]]], ff[Times[\[Lambda], Power[1000, -1]]]], Null], CompoundExpression[debugDoVerbose[Function[NumberForm[Slot[1], 16]][ff[Times[300, Power[1000, -1]]]]], Null], CompoundExpression[debugDoVerbose[Function[NumberForm[Slot[1], 16]][gg[300]]], Null], CompoundExpression[debugDoVerbose[Function[NumberForm[Slot[1], 16]][ff[Times[600, Power[1000, -1]]]]], Null], CompoundExpression[debugDoVerbose[Function[NumberForm[Slot[1], 16]][gg[600]]], Null], CompoundExpression[debugDoVerbose[Function[NumberForm[Slot[1], 16]][ff[Times[800, Power[1000, -1]]]]], Null], CompoundExpression[debugDoVerbose[Function[NumberForm[Slot[1], 16]][gg[800]]], Null], CompoundExpression[debugMakePlots[Plot[Plus[gg[\[Lambda]], -1], List[\[Lambda], 400, 999], Rule[Ticks, Automatic]]], Null], CompoundExpression[debugDoVerbose[nf[gg[\[Lambda]ThisMinRef], 11, 8]], Null], CompoundExpression[debugDoVerbose[nf[gg[\[Lambda]ThisMaxRef], 11, 8]], Null]]]
 
-debugMakePlots@Plot[MAPMTOLD22EnergyFunc[s],{s,minE,maxE},AxesLabel->labelEffVsEv];
+(* ---- initialization cell 68, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Table[Times[Plus[gg[\[Lambda]], -1], Power[Plus[nRefrHe0[\[Lambda]], -1], -1]], List[\[Lambda], 400, 999, 50]], Null]]
 
-MAPMTOLD22EnergyData=Table[{s,MAPMTOLD22EnergyFunc[s]},{s,minE,maxE,0.01}];
+(* ---- initialization cell 69, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[ClearAll[nRefrHe], Null], CompoundExpression[SetDelayed[nRefrHe[Pattern[\[Lambda], Blank[]]], precisionify[gg[\[Lambda]]]], Null], CompoundExpression[nf[nRefrHe[\[Lambda]ThisMinRef], 11, 8], Null], CompoundExpression[nf[nRefrHe[\[Lambda]ThisMaxRef], 11, 8], Null], CompoundExpression[debugMakePlots[Plot[Plus[nRefrHe[\[Lambda]], -1], List[\[Lambda], 400, 999], Rule[Ticks, Automatic]]], Null]]]
 
-debugMakePlots@ListPlot[MAPMTOLD22EnergyData,AxesLabel->labelEffVsEv];
+(* ---- initialization cell 70, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "Neon"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-deltaE=(maxE-minE);
+(* ---- initialization cell 71, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[ClearAll[nRefrNe], Null], CompoundExpression[SetDelayed[nRefrNe[Pattern[\[Lambda], Blank[]]], precisionify[Plus[1, Times[Plus[Times[0.00128145`, Power[Plus[184.661`, Times[-1, Power[Times[\[Lambda], Power[1000, -1]], -2]]], -1]], Times[0.0220486`, Power[Plus[376.84`, Times[-1, Power[Times[\[Lambda], Power[1000, -1]], -2]]], -1]]], theFullCf]]]], Null], CompoundExpression[nf[nRefrNe[\[Lambda]ThisMinRef], 11, 8], Null], CompoundExpression[nf[nRefrNe[\[Lambda]ThisMaxRef], 11, 8], Null], CompoundExpression[debugMakePlots[Plot[Plus[nRefrNe[\[Lambda]], -1], List[\[Lambda], 140, 546], Rule[Ticks, Automatic]]], Null]]]
 
-energyAveragedMAPMTOLD22=NIntegrate[MAPMTOLD22EnergyFunc[s],{s,minE,maxE}]/(maxE-minE);
+(* ---- initialization cell 72, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "AIR"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-debugDoVerbose[(37000*(0.05)^(2)*deltaE*energyAveragedMAPMTOLD22)];
+(* ---- initialization cell 73, expression 1 ---- *)
+CompoundExpression[Null]
 
-(* ---- initialization cell 31 | 8d4bad59-7c5a-8f48-9279-15b4e8af98bc ---- *)
-(*MAPMT EDI22 -  should be similar to MAPMT2022*)
-tagDataPlot="\<MAPMT2022\>";
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
+(* ---- initialization cell 74, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, " \!\(\*SubscriptBox[\(C\), \(2\)]\)\!\(\*SubscriptBox[\(F\), \(6\)]\) "], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-(* ---- initialization cell 32 | 87dd1b82-a2eb-fd49-9dbc-a23e00990971 ---- *)
-(*rawDatMAPMT22A={};
-{{221.85906059393105`,12.76062120482213`},{213.5858824487254`,13.236393809662314`},{205.31270430351978`,14.001597926602969`},{197.17741246073425`,15.932006160484278`},{189.59366582762908`,19.241277418566533`},{181.32048768242345`,24.06729800326982`},{173.32308214205798`,30.54795421701423`},{164.77413139201218`,37.02861043075864`},{156.63883954922665`,45.81544748322456`},{148.77932031128128`,55.64326125747134`},{140.36825586365555`,74.94734359628447`},{132.5087366257102`,91.76947249153594`},{124.78710369018495`,99.76687803190137`},{115.96238033529896`,111.76298634244955`},{108.79229260945407`,120.58770969733553`},{99.69179664972786`,127.89568372560052`},{91.97016371420261`,131.89438649578324`},{83.55909926657688`,135.89308926596595`},{75.56169372621144`,139.0644742216281`},{67.6264018834259`,144.0283811087515`},{59.29111004064036`,144.4420400160118`},{43.15841265748938`,129.27454674980146`},{31.30019064936131`,105.9717616408056`},{23.027012504155675`,74.8094572938644`},{35.023120814703844`,117.1784384392533`},{27.0257152743384`,93.97565333025744`},{18.89042343155286`,52.0582173945489`}};*)
-rawDatMAPMT22={{220.98381839766935`,12.554706795254475`},{213.67252581213853`,13.042126300956511`},{204.89897470950157`,14.504384818062675`},{197.10026261826866`,15.2355140766158`},{189.54526027988678`,19.1348701222322`},{181.01541893010082`,24.009065179252758`},{172.72928733316587`,30.34551875337948`},{164.44315573623095`,37.169391833208266`},{157.13186315070013`,45.69923318299422`},{147.13976328380798`,55.20391354418433`},{140.0721804511282`,75.1881132779686`},{132.2734683598953`,91.2729569661364`},{124.71846602151344`,99.55908856307136`},{117.40717343598261`,111.5008664527717`},{106.92765406338842`,121.73667607251487`},{99.12894197215553`,128.3168393994926`},{91.33022988092264`,130.9976466808539`},{82.80038853113666`,136.11555149072552`},{74.75796668705274`,138.55264901923576`},{67.44667410152192`,144.64539284051145`},{58.91683275173595`,144.50168308766044`},{51.11812066050307`,133.92216371506626`},{43.319408569270166`,129.0479686580457`},{35.23327697233523`,117.34990052119637`},{26.74714537540029`,94.19747400034875`},{19.19214303701843`,51.79197700426994`}
-};
-(*(**)
-rawDatMAPMT22=Round[Join[rawDatMAPMT22A,rawDatMAPMT22B],0.01]*)
-(**)
-border=Round[{{17.5`,157.9`},{222.4`,157.9`},{222.4`,12.5`},{17.5`,12.5`}},0.1];
-Graphics[{Point[rawDatMAPMT22],Point@border}];
-(**)
-Quiet[WithCleanup[
-x=Map[Round,Transpose[rawDatMAPMT22][[1]]];
-y=Map[Round,Transpose[rawDatMAPMT22][[2]]];
-solX=N@Solve[200==17.5*aaa+bbb&&700==222.4*aaa+bbb,{aaa,bbb}];
-solY=N@Solve[0==12.5*aaa+bbb&&42.5==157.9*aaa+bbb,{aaa,bbb}];
-mapX:=aaa*#1+bbb&/.First@solX;
-lambdaData=Round[mapX/@x,0.01];
-mapY:=aaa*#1+bbb&/.First@solY;
-rawDatMAPMT22Data=Round[mapY/@y,0.01];
-lambdaMinPlot=170;
-lambdaMaxPlot=730;
-rawDatMAPMT22WavLenRaw=Transpose[{lambdaData,rawDatMAPMT22Data}];
-lambdaMin=Min[Map[#[[1]]&,rawDatMAPMT22WavLenRaw]];
-lambdaMax=Max[Map[#[[1]]&,rawDatMAPMT22WavLenRaw]];
-rawDatMAPMT22WavLen=Round[MovingAverage[rawDatMAPMT22WavLenRaw,4],0.01];
-func=Interpolation[rawDatMAPMT22WavLen];
-Print@debugMakePlots@Plot[func[x],{x,lambdaMin+1,lambdaMax-1},AxesLabel->labelEffVsNm];
-additionalFakeData=Join[Table[{\[Lambda],0},{\[Lambda],lambdaMax+1,lambdaMaxPlot,+5}],Table[{\[Lambda],0},{\[Lambda],lambdaMin-1,lambdaMinPlot,-5}]];
-debugDoVerbose@additionalFakeData;
-(*additionalFakeData={};*)
-rawDatMAPMT22WavLenRaw=Transpose[{lambdaData,rawDatMAPMT22Data}];
-rawDatMAPMT22WavLenRaw=DeleteDuplicates[Join[additionalFakeData,rawDatMAPMT22WavLenRaw]];
-rawDatMAPMT22WavLenRaw=Sort[rawDatMAPMT22WavLenRaw,#1[[1]]<#2[[1]]&];
-rawDatMAPMT22WavLen=Round[MovingAverage[rawDatMAPMT22WavLenRaw,4],0.01];
-Print@debugMakePlots@ListPlot[{Style[rawDatMAPMT22WavLenRaw,Red],Style[rawDatMAPMT22WavLen,Green],Style[additionalFakeData,Blue]},PlotRange->{{lambdaMinPlot,lambdaMaxPlot},All},AxesLabel->labelEffVsNm];
-MAPMT22EnergyData=Map[{\[Epsilon][#[[1]]],#[[2]]/100}&,rawDatMAPMT22WavLen];
-Print@debugMakePlots@ListPlot[MAPMT22EnergyData,PlotRange->{{\[Epsilon][lambdaMaxPlot],\[Epsilon][lambdaMinPlot]},All},AxesLabel->labelEffVsEv];
-debugDoVerbose["\< RAW DATA \n\>",TableForm@nf@rawDatMAPMT22WavLenRaw];
-debugDoVerbose["\< CLEAN DATA \n\>",TableForm@nf@rawDatMAPMT22WavLen];
-,
-ClearAll[x,y,solX,solY,mapX,mapY,aaa,bbb]
-];
-,{InterpolatingFunction::dmval}];
-(**)
+(* ---- initialization cell 75, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[ClearAll[nRefrC2F06], Null], CompoundExpression[SetDelayed[nRefrC2F06[Pattern[\[Lambda], Blank[]]], precisionify[Plus[1, Times[Times[Times[0.18994`, Power[Power[10, 6], -1]], Power[Plus[Power[65.47`, -2], Times[-1, Power[\[Lambda], -2]]], -1]], theFullCf]]]], Null], CompoundExpression[debugMakePlots[Plot[nRefrC2F06[\[Lambda]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef]]], Null]]]
 
+(* ---- initialization cell 76, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, " \!\(\*SubscriptBox[\(CO\), \(2\)]\) "], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-pdeMAPMT22WavLen=rawDatMAPMT22WavLen;
-
-(* ---- initialization cell 33 | 306ab33b-d956-4696-8903-ee1c4000b469 ---- *)
-tagDataPlot="\<TB2021A\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 34 | 8f4a3d17-06d6-5842-9554-0f4680d40a2b ---- *)
-R5900WavLenRawData={{200.`,0.`},{210.`,0.`},{220.`,0.`},{230.`,0.`},{240.`,0.`},{250.`,0.`},{260.`,0.01`},{270.`,0.04`},{280.`,0.09`},{290.`,0.12`},{300.`,0.15`},{310.`,0.17`},{320.`,0.18`},{330.`,0.19`},{340.`,0.197`},{350.`,0.2`},{360.`,0.202`},{370.`,0.203`},{380.`,0.204`},{390.`,0.203`},{400.`,0.202`},{410.`,0.201`},{420.`,0.2`},{430.`,0.197`},{440.`,0.19`},{450.`,0.18`},{460.`,0.17`},{470.`,0.16`},{480.`,0.145`},{490.`,0.135`},{500.`,0.12`},{510.`,0.11`},{520.`,0.1`},{530.`,0.09`},{540.`,0.07`},{550.`,0.05`},{560.`,0.04`},{570.`,0.035`},{580.`,0.03`},{590.`,0.025`},{600.`,0.02`},{610.`,0.017`},{620.`,0.01`},{630.`,0.007`},{640.`,0.004`},{650.`,0.002`},{660.`,0.001`},{670.`,0.0008`},{680.`,0.0004`},{690.`,0.0002`},{700.`,0.0001`},{710.`,0.`},{720.`,0.`},{800.`,0.`}};
-
-R5900WavLenData=R5900WavLenRawData;
-
-R5900EnergyData=Transpose[{\[Epsilon][Transpose[R5900WavLenData][[1]]],Transpose[R5900WavLenData][[2]]}];
-
-R5900EnergyFunc=Interpolation[R5900EnergyData];
-
-debugMakePlots@Plot[R5900EnergyFunc[\[FormalX]],{\[FormalX],1.8,6.2},AxesLabel->labelEffVsEv];
+(* ---- initialization cell 77, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[ClearAll[nRefrC1O02, nRefrC1O02All], Null], CompoundExpression[WithCleanup[CompoundExpression[Set[w, List[1, 1, 1, 1, 1]], SetDelayed[nRefrC1O02All[Pattern[\[Lambda], Blank[]]], precisionify[Plus[1, Times[Plus[Times[Part[w, 1], 6.991`, Times[1, Power[Times[Power[10, 2], Plus[166.175`, Times[-1, Power[Times[\[Lambda], Power[1000, -1]], -2]]]], -1]]], Times[Part[w, 2], 1.4472`, Times[1, Power[Times[Power[10, 3], Plus[79.609`, Times[-1, Power[Times[\[Lambda], Power[1000, -1]], -2]]]], -1]]], Times[Part[w, 3], 6.42941`, Times[1, Power[Times[Power[10, 5], Plus[56.3064`, Times[-1, Power[Times[\[Lambda], Power[1000, -1]], -2]]]], -1]]], Times[Part[w, 4], 5.21306`, Times[1, Power[Times[Power[10, 5], Plus[46.0196`, Times[-1, Power[Times[\[Lambda], Power[1000, -1]], -2]]]], -1]]], Times[Part[w, 5], 1.46847`, Times[1, Power[Times[Power[10, 6], Plus[0.0584738`, Times[-1, Power[Times[\[Lambda], Power[1000, -1]], -2]]]], -1]]]], theFullCf]]]], Simplify[FunctionDomain[nRefrC1O02All[\[Lambda]], \[Lambda]], Greater[\[Lambda], 0]], Do[CompoundExpression[Set[w, List[0, 0, 0, 0, 0]], Set[Part[w, k], 1], debugDoVerbose["   ", nf[nRefrC1O02All[\[Lambda]ThisMinRef], 15, 11], "   ", nf[nRefrC1O02All[450], 15, 11], "   ", nf[nRefrC1O02All[\[Lambda]ThisMaxRef], 15, 11]], debugDoVerbose[Simplify[FunctionDomain[nRefrC1O02All[\[Lambda]], \[Lambda]], Greater[\[Lambda], 0]]], Print[debugMakePlots[Plot[nRefrC1O02All[\[Lambda]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[GridLines, Automatic], Rule[PlotRange, List[0.998`, 1.002`]]]]], Null], List[k, 1, 5]], Set[w, List[1, 1, 0, 0, 0]], Set[nRefrC1O02[Pattern[\[Lambda], Blank[]]], nRefrC1O02All[\[Lambda]]], Null], ClearAll[w]], Null], CompoundExpression[nf[nRefrC1O02[\[Lambda]ThisMinRef], 11, 8], Null], CompoundExpression[nf[nRefrC1O02[\[Lambda]ThisMaxRef], 11, 8], Null]]]
 
-(* ---- initialization cell 35 | a9279377-695a-4ead-a39d-6e9b75ececc4 ---- *)
-lensTransWavLen={{800.,0.6496},{799.,0.6516},{798.,0.6505},{797.,0.6506},{796.,0.6522},{795.,0.6514},{794.,0.6525},{793.,0.6523},{792.,0.6528},{791.,0.6531},{790.,0.6539},{789.,0.6535},{788.,0.6534},{787.,0.6552},{786.,0.6543},{785.,0.6538},{784.,0.6531},{783.,0.655},{782.,0.6545},{781.,0.6557},{780.,0.6559},{779.,0.6543},{778.,0.6556},{777.,0.6567},{776.,0.6573},{775.,0.6576},{774.,0.6582},{773.,0.6568},{772.,0.658},{771.,0.6584},{770.,0.6594},{769.,0.6591},{768.,0.6594},{767.,0.6585},{766.,0.6593},{765.,0.6603},{764.,0.6598},{763.,0.6593},{762.,0.6612},{761.,0.6608},{760.,0.6607},{759.,0.6616},{758.,0.6612},{757.,0.662},{756.,0.6627},{755.,0.6623},{754.,0.6618},{753.,0.6629},{752.,0.6637},{751.,0.6637},{750.,0.6645},{749.,0.6633},{748.,0.6637},{747.,0.6644},{746.,0.665},{745.,0.665},{744.,0.6666},{743.,0.6656},{742.,0.6666},{741.,0.6671},{740.,0.6669},{739.,0.6667},{738.,0.667},{737.,0.6668},{736.,0.668},{735.,0.6682},{734.,0.6679},{733.,0.6684},{732.,0.6688},{731.,0.6687},{730.,0.6691},{729.,0.6695},{728.,0.6702},{727.,0.6708},{726.,0.6708},{725.,0.6702},{724.,0.671},{723.,0.6714},{722.,0.6721},{721.,0.6728},{720.,0.6721},{719.,0.6711},{718.,0.6716},{717.,0.6728},{716.,0.6732},{715.,0.6727},{714.,0.6725},{713.,0.6725},{712.,0.6731},{711.,0.6736},{710.,0.674},{709.,0.6744},{708.,0.6741},{707.,0.6736},{706.,0.6742},{705.,0.675},{704.,0.6749},{703.,0.675},{702.,0.6747},{701.,0.6743},{700.,0.6748},{699.,0.6755},{698.,0.6758},{697.,0.6756},{696.,0.6749},{695.,0.6754},{694.,0.6765},{693.,0.676},{692.,0.6758},{691.,0.676},{690.,0.6758},{689.,0.6757},{688.,0.6762},{687.,0.6762},{686.,0.676},{685.,0.6764},{684.,0.6771},{683.,0.6773},{682.,0.6771},{681.,0.6765},{680.,0.6764},{679.,0.6776},{678.,0.678},{677.,0.6778},{676.,0.6776},{675.,0.6768},{674.,0.6767},{673.,0.6775},{672.,0.6776},{671.,0.6771},{670.,0.6767},{669.,0.6759},{668.,0.6759},{667.,0.6765},{666.,0.6767},{665.,0.6763},{664.,0.6766},{663.,0.6757},{662.,0.6755},{661.,0.6762},{660.,0.6764},{659.,0.6764},{658.,0.6767},{657.,0.6761},{656.,0.6759},{655.,0.6765},{654.,0.677},{653.,0.6773},{652.,0.6771},{651.,0.6765},{650.,0.6765},{649.,0.6774},{648.,0.6775},{647.,0.6781},{646.,0.6781},{645.,0.6776},{644.,0.6775},{643.,0.6783},{642.,0.6788},{641.,0.6788},{640.,0.6785},{639.,0.6779},{638.,0.6782},{637.,0.6792},{636.,0.6798},{635.,0.6798},{634.,0.6796},{633.,0.6793},{632.,0.6798},{631.,0.6809},{630.,0.6809},{629.,0.6814},{628.,0.6809},{627.,0.6808},{626.,0.6811},{625.,0.6825},{624.,0.6829},{623.,0.6832},{622.,0.6835},{621.,0.6822},{620.,0.6829},{619.,0.6838},{618.,0.6844},{617.,0.6848},{616.,0.6848},{615.,0.6843},{614.,0.6847},{613.,0.6857},{612.,0.6854},{611.,0.6861},{610.,0.6861},{609.,0.6858},{608.,0.6864},{607.,0.6875},{606.,0.6875},{605.,0.6878},{604.,0.6875},{603.,0.6877},{602.,0.6876},{601.,0.6886},{600.,0.6894},{599.,0.6889},{598.,0.6896},{597.,0.6881},{596.,0.6892},{595.,0.6894},{594.,0.6902},{593.,0.69},{592.,0.6899},{591.,0.6896},{590.,0.6901},{589.,0.691},{588.,0.6918},{587.,0.6916},{586.,0.6917},{585.,0.6911},{584.,0.6921},{583.,0.6931},{582.,0.693},{581.,0.6936},{580.,0.6939},{579.,0.6934},{578.,0.6943},{577.,0.6946},{576.,0.6953},{575.,0.6953},{574.,0.6957},{573.,0.6952},{572.,0.6957},{571.,0.696},{570.,0.6968},{569.,0.6972},{568.,0.6974},{567.,0.6965},{566.,0.6973},{565.,0.6979},{564.,0.6979},{563.,0.698},{562.,0.6981},{561.,0.6979},{560.,0.6981},{559.,0.6976},{558.,0.6978},{557.,0.6982},{556.,0.6979},{555.,0.6985},{554.,0.6981},{553.,0.6971},{552.,0.6975},{551.,0.6977},{550.,0.698},{549.,0.698},{548.,0.6977},{547.,0.6973},{546.,0.6977},{545.,0.698},{544.,0.6975},{543.,0.6974},{542.,0.6969},{541.,0.6968},{540.,0.6967},{539.,0.6969},{538.,0.6965},{537.,0.6963},{536.,0.6956},{535.,0.6956},{534.,0.6955},{533.,0.6955},{532.,0.695},{531.,0.6947},{530.,0.6943},{529.,0.6937},{528.,0.6939},{527.,0.6935},{526.,0.6932},{525.,0.6927},{524.,0.692},{523.,0.6917},{522.,0.6917},{521.,0.691},{520.,0.6903},{519.,0.6896},{518.,0.6889},{517.,0.6883},{516.,0.6882},{515.,0.6875},{514.,0.6871},{513.,0.6864},{512.,0.6855},{511.,0.685},{510.,0.685},{509.,0.6845},{508.,0.684},{507.,0.6836},{506.,0.6832},{505.,0.6833},{504.,0.6836},{503.,0.6834},{502.,0.6836},{501.,0.6835},{500.,0.6832},{499.,0.6833},{498.,0.6836},{497.,0.6834},{496.,0.6833},{495.,0.6835},{494.,0.6833},{493.,0.6833},{492.,0.6835},{491.,0.6833},{490.,0.6829},{489.,0.6829},{488.,0.6827},{487.,0.6825},{486.,0.6823},{485.,0.682},{484.,0.6814},{483.,0.6811},{482.,0.6809},{481.,0.6809},{480.,0.6803},{479.,0.6794},{478.,0.6787},{477.,0.6777},{476.,0.6765},{475.,0.6761},{474.,0.6758},{473.,0.6751},{472.,0.6744},{471.,0.6731},{470.,0.6724},{469.,0.672},{468.,0.6711},{467.,0.6704},{466.,0.6699},{465.,0.669},{464.,0.6676},{463.,0.6678},{462.,0.6676},{461.,0.6669},{460.,0.6662},{459.,0.6651},{458.,0.6643},{457.,0.6645},{456.,0.6636},{455.,0.6626},{454.,0.6623},{453.,0.6609},{452.,0.6599},{451.,0.6595},{450.,0.6587},{449.,0.6577},{448.,0.6569},{447.,0.6558},{446.,0.655},{445.,0.655},{444.,0.654},{443.,0.6528},{442.,0.6519},{441.,0.6512},{440.,0.6504},{439.,0.6507},{438.,0.6506},{437.,0.651},{436.,0.6506},{435.,0.6498},{434.,0.6499},{433.,0.6509},{432.,0.6511},{431.,0.6507},{430.,0.6512},{429.,0.6506},{428.,0.6504},{427.,0.6512},{426.,0.651},{425.,0.6507},{424.,0.6501},{423.,0.6501},{422.,0.6497},{421.,0.6504},{420.,0.6492},{419.,0.6492},{418.,0.6495},{417.,0.6492},{416.,0.6489},{415.,0.6495},{414.,0.6495},{413.,0.6498},{412.,0.6507},{411.,0.6502},{410.,0.6494},{409.,0.6508},{408.,0.6504},{407.,0.6504},{406.,0.6501},{405.,0.6493},{404.,0.6486},{403.,0.648},{402.,0.6468},{401.,0.6455},{400.,0.6433},{399.,0.6405},{398.,0.6382},{397.,0.6355},{396.,0.6327},{395.,0.6289},{394.,0.6246},{393.,0.6201},{392.,0.6141},{391.,0.6098},{390.,0.6025},{389.,0.596},{388.,0.5876},{387.,0.5797},{386.,0.5707},{385.,0.5633},{384.,0.5545},{383.,0.546},{382.,0.5386},{381.,0.5321},{380.,0.528},{379.,0.5261},{378.,0.5295},{377.,0.5293},{376.,0.5314},{375.,0.5326},{374.,0.5335},{373.,0.5332},{372.,0.5317},{371.,0.5288},{370.,0.5243},{369.,0.5202},{368.,0.5126},{367.,0.5065},{366.,0.4982},{365.,0.4899},{364.,0.4799},{363.,0.4706},{362.,0.4592},{361.,0.4481},{360.,0.4363},{359.,0.4231},{358.,0.4102},{357.,0.3966},{356.,0.3821},{355.,0.3669},{354.,0.3518},{353.,0.3358},{352.,0.3193},{351.,0.3028},{350.,0.2855},{349.,0.268},{348.,0.2505},{347.,0.2326},{346.,0.2148},{345.,0.1973},{344.,0.1796},{343.,0.162},{342.,0.1454},{341.,0.1291},{340.,0.1137},{339.,0.0989},{338.,0.0849},{337.,0.0721},{336.,0.0603},{335.,0.0497},{334.,0.0403},{333.,0.0322},{332.,0.0251},{331.,0.0192},{330.,0.0144},{329.,0.0105},{328.,0.0075},{327.,0.0052},{326.,0.0035},{325.,0.0022},{324.,0.0014},{323.,0.0008},{322.,0.0005},{321.,0.0003},{320.,0.0001},{319.,0.},{318.,0.},{317.,0.},{316.,0.},{315.,0.},{314.,0.},{313.,0.},{312.,0.},{311.,0.},{310.,0.},{309.,0.},{308.,0.},{307.,0.},{306.,0.},{300.,0.},{275.,0.},{250.,0.},{225.,0.},{200.,0.}};
-
-lensTransWavLenData=lensTransWavLen;
-
-lensTransEnergyData=Transpose[{\[Epsilon][Transpose[lensTransWavLenData][[1]]],Transpose[lensTransWavLenData][[2]]}];
-
-lensTransEnergyFunc=Interpolation[lensTransEnergyData];
-
-debugMakePlots@Plot[lensTransEnergyFunc[\[FormalX]],{\[FormalX],1.8,6.2}];
+(* ---- initialization cell 78, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, " \!\(\*SubscriptBox[\(C\), \(4\)]\)\!\(\*SubscriptBox[\(F\), \(10\)]\) "], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-(* ---- initialization cell 36 | 7bcce46a-832b-4228-8de5-20c39d15e034 ---- *)
-mminE=\[Epsilon][\[Lambda]ThisMaxRef];
+(* ---- initialization cell 79, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[ClearAll[nRefrC4F10], Null], CompoundExpression[SetDelayed[nRefrC4F10[Pattern[\[Lambda], Blank[]]], precisionify[Plus[1, Times[Times[Times[0.25324`, Power[Power[10, 6], -1]], Power[Plus[Power[73.7`, -2], Times[-1, Power[\[Lambda], -2]]], -1]], theFullCf]]]], Null], CompoundExpression[nf[nRefrC4F10[\[Lambda]ThisMinRef], 11, 8], Null], CompoundExpression[nf[nRefrC4F10[\[Lambda]ThisMaxRef], 11, 8], Null]]]
 
-mmaxE=\[Epsilon][\[Lambda]ThisMinRef];
+(* ---- initialization cell 80, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, " \!\(\*SubscriptBox[\(CF\), \(4\)]\) "], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-TB2021AEnergyFunc[sss_]=lensTransEnergyFunc[sss]*R5900EnergyFunc[sss]*window[sss,mminE,mmaxE];
+(* ---- initialization cell 81, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[ClearAll[nRefrC1F04], Null], CompoundExpression[SetDelayed[nRefrC1F04[Pattern[\[Lambda], Blank[]]], precisionify[Plus[1, Times[Times[Times[0.12489`, Power[Power[10, 6], -1]], Power[Plus[Power[61.8`, -2], Times[-1, Power[\[Lambda], -2]]], -1]], theFullCf]]]], Null], CompoundExpression[nf[nRefrC1F04[\[Lambda]ThisMinRef], 11, 8], Null], CompoundExpression[nf[nRefrC1F04[\[Lambda]ThisMaxRef], 11, 8], Null]]]
 
-debugMakePlots@Plot[TB2021AEnergyFunc[s],{s,mminE,mmaxE},AxesLabel->labelEffVsEv];
+(* ---- initialization cell 82, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "Gas Radiators"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-TB2021AEnergyData=Table[   {s,                TB2021AEnergyFunc[s]},{s,mminE,mmaxE,0.01}];
+(* ---- initialization cell 83, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugDoVerbose[" gasCorrFactFromSTPToReferenceCavern : ", cfFromSTPToReferenceCavern], Null], Null, CompoundExpression[debugDoVerbose[" gasCorrFactToRealFromCavern         : ", theRealCf], Null], Null, CompoundExpression[debugDoVerbose[" gasCorrFactFull                     : ", theFullCf], Null]]
 
-debugMakePlots@ListPlot[TB2021AEnergyData,AxesLabel->labelEffVsEv];
+(* ---- initialization cell 84, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugMakePlots[Plot[List[nRefrC4F10[\[Lambda]], nRefrC1F04[\[Lambda]], nRefrC1O02[\[Lambda]]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[PlotRange, List[0.999`, All]], Rule[PlotLegends, List[Placed["Expressions", After]]], Rule[Filling, None]]], Null]]
 
-(* ---- initialization cell 37 | 906ecce1-3c59-4525-ba88-8304c0a63a9e ---- *)
-tagDataPlot="\<SIPMFBK\>";
+(* ---- initialization cell 85, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugMakePlots[Plot[List[nRefrC4F10[\[Lambda]]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[PlotRange, List[nRefrC4F10[\[Lambda]ThisMaxRef], nRefrC4F10[\[Lambda]ThisMinRef]]], Rule[PlotLegends, List[Placed["Expressions", After]]], Rule[Filling, None]]], Null]]
 
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
+(* ---- initialization cell 86, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugMakePlots[Plot[ArcCos[Times[1, Power[x, -1]]], List[x, nRefrC4F10[\[Lambda]ThisMinRef], nRefrC4F10[\[Lambda]ThisMaxRef]], Rule[GridLines, Automatic]]], Null], Null, CompoundExpression[Set[coeffDeltaThetaPerRefrIndex, Times[Plus[nRefrC4F10[\[Lambda]ThisMinRef], Times[-1, nRefrC4F10[\[Lambda]ThisMaxRef]]], Power[Plus[nRefrC4F10[\[Lambda]ThisMinRef], nRefrC4F10[\[Lambda]ThisMaxRef]], -1]]], Null], Null, CompoundExpression[debugDoVerbose[coeffDeltaThetaPerRefrIndex], Null]]
 
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
+(* ---- initialization cell 87, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugMakePlots[Plot[List[nRefrC1F04[\[Lambda]]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[PlotRange, List[nRefrC1F04[\[Lambda]ThisMaxRef], nRefrC1F04[\[Lambda]ThisMinRef]]], Rule[PlotLegends, List[Placed["Expressions", After]]], Rule[Filling, None]]], Null], Null, CompoundExpression[debugMakePlots[Plot[List[nRefrC1F04[\[Lambda]]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[PlotRange, List[nRefrC1F04[\[Lambda]ThisMaxRef], nRefrC1F04[\[Lambda]ThisMinRef]]], Rule[PlotLegends, List[Placed["Expressions", After]]], Rule[Filling, None]]], Null], Null, CompoundExpression[debugMakePlots[Plot[ArcCos[Times[1, Power[x, -1]]], List[x, nRefrC1F04[\[Lambda]ThisMinRef], nRefrC1F04[\[Lambda]ThisMaxRef]], Rule[GridLines, Automatic]]], Null], Null, CompoundExpression[Set[coeffDeltaThetaPerRefrIndex, Times[Plus[nRefrC1F04[\[Lambda]ThisMinRef], Times[-1, nRefrC1F04[\[Lambda]ThisMaxRef]]], Power[Plus[nRefrC1F04[\[Lambda]ThisMinRef], nRefrC1F04[\[Lambda]ThisMaxRef]], -1]]], Null], Null, CompoundExpression[debugDoVerbose[coeffDeltaThetaPerRefrIndex], Null]]
 
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
+(* ---- initialization cell 88, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "Gas Radiators - velocities"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
+(* ---- initialization cell 89, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[SetDelayed[vpC4F10[Pattern[\[Lambda], Blank[]]], Times[1, Power[nRefrC4F10[\[Lambda]], -1]]], Null], CompoundExpression[SetDelayed[vpC1F04[Pattern[\[Lambda], Blank[]]], Times[1, Power[nRefrC1F04[\[Lambda]], -1]]], Null], CompoundExpression[SetDelayed[vpC1O02[Pattern[\[Lambda], Blank[]]], Times[1, Power[nRefrC1O02[\[Lambda]], -1]]], Null], CompoundExpression[SetDelayed[vpFQrtz[Pattern[\[Lambda], Blank[]]], Times[1, Power[nRefrFQrtz[\[Lambda]], -1]]], Null], CompoundExpression[SetDelayed[vpAergl[Pattern[\[Lambda], Blank[]]], Times[1, Power[nRefrAergl[\[Lambda]], -1]]], Null], CompoundExpression[SetDelayed[vpC2F06[Pattern[\[Lambda], Blank[]]], Times[1, Power[nRefrC2F06[\[Lambda]], -1]]], Null], CompoundExpression[SetDelayed[vpHe[Pattern[\[Lambda], Blank[]]], Times[1, Power[nRefrHe[\[Lambda]], -1]]], Null], CompoundExpression[SetDelayed[vpNe[Pattern[\[Lambda], Blank[]]], Times[1, Power[nRefrNe[\[Lambda]], -1]]], Null]]]
 
-(* ---- initialization cell 38 | 71b09f33-7ba9-fe41-9e34-1b7e6924ae7e ---- *)
-(*rawDatSIPMFBK={
-{78.06486486486486`,126.0297297297288`},{84.02162162162162`,128.164864864864`},{94.36756756756756`,140.08405405405398`},{104.4`,153.25162162162155`},
-{106.90810810810811`,156.07324324324316`},{110.67027027027027`,156.07324324324316`},{115.37297297297297`,151.68405405405397`},{121.32972972972973`,142.59216216216208`},{126.03243243243242`,136.0083783783783`},
-{146.4108108108108`,110.30027027027022`},{181.2108108108108`,78.32189189189185`},{223.53513513513516`,50.10567567567563`},
-{128.23699421965318`,131.9267493979741`},
-{137.49017341040468`,115.23079564074868`},{139.09942196531796`,113.82270315519955`},{140.10520231213877`,113.21923494710705`},{143.92716763005785`,111.60998639219376`},{149.7606936416185`,107.38570893554636`},{153.1803468208093`,104.5695239644481`},{159.21502890173412`,98.7359979528874`},{165.65202312138734`,92.29900373323423`},{173.6982658959538`,85.25854130548856`},{188.3826589595376`,73.390333213003`},{198.03815028901738`,66.5510268546215`},{215.33757225433533`,55.889755178320925`},
-{61.1927321668907`,34.486594885599686`},{61.54401076715988`,37.82374158815688`},{61.89528936742905`,44.322395693136656`},{62.07092866756364`,49.59157469717432`},{62.597846567967416`,60.481211305518826`},{63.827321668909526`,65.39911170928731`},{63.827321668909526`,69.26317631224826`},{64.70551816958249`,73.65415881561297`},{65.05679676985164`,78.57205921938146`},{65.40807537012083`,85.24635262449583`},{66.28627187079377`,90.5155316285335`},{66.98882907133213`,97.54110363391705`},{67.16446837146671`,102.45900403768552`},{68.21830417227426`,106.67434724091565`},{69.27213997308178`,111.24096904441495`},{70.67725437415848`,114.75375504710674`},{71.37981157469684`,116.68578734858721`},{72.25800807536979`,118.61781965006769`},{73.31184387617733`,121.25240915208651`},{73.8387617765811`,123.18444145356699`},{74.71695827725404`,124.58955585464369`},{83.85020188425264`,127.04850605652798`},{81.74253028263757`,126.6972274562588`},{80.33741588156087`,126.34594885598963`},{78.75666218034957`,125.99467025572045`},{76.29771197846534`,125.64339165545127`}};
-*)
-rawDatSIPMFBK={
-{61.2,34.5},{61.5,37.8},{61.9,44.3},{62.1,49.6},{62.6,60.5},{63.8,69.3},{63.8,65.4},{64.7,73.7},{65.1,78.6},{65.4,85.2},{66.3,90.5},{67.,97.5},{67.2,102.5},{68.2,106.7},{69.3,111.2},{70.7,114.8},{71.4,116.7},{72.3,118.6},{73.3,121.3},{73.8,123.2},{74.7,124.6},{76.3,125.6},{78.1,126.},{78.8,126.},{80.3,126.3},{81.7,126.7},{83.9,127.},{84.,128.2},{94.4,140.1},{104.4,153.3},{106.9,156.1},{110.7,156.1},{115.4,151.7},{121.3,142.6},{126.,136.},{128.2,131.9},{137.5,115.2},{139.1,113.8},{140.1,113.2},{143.9,111.6},{146.4,110.3},{149.8,107.4},{153.2,104.6},{159.2,98.7},{165.7,92.3},{173.7,85.3},{181.2,78.3},{188.4,73.4},{198.,66.6},{215.3,55.9},{223.5,50.1}
-};
-(**)
-rawDatSIPMFBK=Sort[Round[rawDatSIPMFBK,0.01],#1[[1]]<#2[[1]]&];
-(**)
-border={{50.16,197.14},{242.03,198.4},{242.03,32.86},{49.22,31.92}};
-Show[Graphics[{Point[rawDatSIPMFBK],Point@border}],PlotLabel->"\<raw points\>",AxesOrigin->{0,0}];
-(**)
-Quiet[WithCleanup[
-x=Map[Round,Transpose[rawDatSIPMFBK][[1]]];
-y=Map[Round,Transpose[rawDatSIPMFBK][[2]]];
-solX=N@Solve[250==50aaa+bbb&&750==244aaa+bbb,{aaa,bbb}];
-solY=N@Solve[10==32aaa+bbb&&65==198aaa+bbb,{aaa,bbb}];
-mapX:=aaa*#1+bbb&/.First@solX;
-lambdaData=Round[mapX/@x,0.01];
-mapY:=aaa*#1+bbb&/.First@solY;
-rawDatSIPMFBKData=Round[mapY/@y,0.01];
-lambdaMinPlot=170;
-lambdaMaxPlot=730;
-rawDatSIPMFBKWavLenRaw=Transpose[{lambdaData,rawDatSIPMFBKData}];
-lambdaMin=Min[Map[#[[1]]&,rawDatSIPMFBKWavLenRaw]];
-lambdaMax=Max[Map[#[[1]]&,rawDatSIPMFBKWavLenRaw]];
-pdeSIPMFBKWavLen=Round[MovingAverage[rawDatSIPMFBKWavLenRaw,4],0.01];
-func=Interpolation[pdeSIPMFBKWavLen];
-Print@debugMakePlots@Plot[func[x],{x,lambdaMin+1,lambdaMax-1}];
-(**)
-additionalFakeData=Join[Table[{\[Lambda],func[\[Lambda]]},{\[Lambda],lambdaMax+1,lambdaMaxPlot,+5}],Table[{\[Lambda],0},{\[Lambda],lambdaMin-1,lambdaMinPlot,-5}]];
-debugDoVerbose@additionalFakeData;
-(**)
-rawDatSIPMFBKWavLenRaw=Transpose[{lambdaData,rawDatSIPMFBKData}];
-rawDatSIPMFBKWavLenRaw=DeleteDuplicates[Join[additionalFakeData,rawDatSIPMFBKWavLenRaw]];
-rawDatSIPMFBKWavLenRaw=Sort[rawDatSIPMFBKWavLenRaw,#1[[1]]<#2[[1]]&];
-pdeSIPMFBKWavLen=Round[MovingAverage[rawDatSIPMFBKWavLenRaw,5],0.01];
-Print@debugMakePlots@ListPlot[{Style[rawDatSIPMFBKWavLenRaw,Red],Style[pdeSIPMFBKWavLen,Green],Style[additionalFakeData,Blue]},PlotRange->{{lambdaMinPlot,lambdaMaxPlot},All}];
-SIPMFBKEnergyData=Map[{\[Epsilon][#[[1]]],#[[2]]/100}&,pdeSIPMFBKWavLen];
-Print@debugMakePlots@ListPlot[SIPMFBKEnergyData,PlotRange->{{\[Epsilon][lambdaMaxPlot],\[Epsilon][lambdaMinPlot]},All}];
-debugDoVerbose["\< RAW DATA \n \>",TableForm@nf@rawDatSIPMFBKWavLenRaw];
-debugDoVerbose["\< CLEAN DATA \n \>",TableForm@nf@pdeSIPMFBKWavLen];
-,
-ClearAll[x,y,solX,solY,border,mapX,mapY,aaa,bbb]
-];
-,{InterpolatingFunction::dmval}]
+(* ---- initialization cell 90, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[SetDelayed[vgC4F10[Pattern[\[Lambda], Blank[]]], Evaluate[Times[1, Power[Plus[nRefrC4F10[\[Lambda]], Times[-1, \[Lambda], D[nRefrC4F10[\[Lambda]], \[Lambda]]]], -1]]]], Null], CompoundExpression[SetDelayed[vgC1F04[Pattern[\[Lambda], Blank[]]], Evaluate[Times[1, Power[Plus[nRefrC1F04[\[Lambda]], Times[-1, \[Lambda], D[nRefrC1F04[\[Lambda]], \[Lambda]]]], -1]]]], Null], CompoundExpression[SetDelayed[vgC1O02[Pattern[\[Lambda], Blank[]]], Evaluate[Times[1, Power[Plus[nRefrC1O02[\[Lambda]], Times[-1, \[Lambda], D[nRefrC1O02[\[Lambda]], \[Lambda]]]], -1]]]], Null], CompoundExpression[SetDelayed[vgFQrtz[Pattern[\[Lambda], Blank[]]], Evaluate[Times[1, Power[Plus[nRefrFQrtz[\[Lambda]], Times[-1, \[Lambda], D[nRefrFQrtz[\[Lambda]], \[Lambda]]]], -1]]]], Null], CompoundExpression[SetDelayed[vgAergl[Pattern[\[Lambda], Blank[]]], Evaluate[Times[1, Power[Plus[nRefrAergl[\[Lambda]], Times[-1, \[Lambda], D[nRefrAergl[\[Lambda]], \[Lambda]]]], -1]]]], Null], CompoundExpression[SetDelayed[vgC2F06[Pattern[\[Lambda], Blank[]]], Evaluate[Times[1, Power[Plus[nRefrC2F06[\[Lambda]], Times[-1, \[Lambda], D[nRefrC2F06[\[Lambda]], \[Lambda]]]], -1]]]], Null], CompoundExpression[SetDelayed[vgHe[Pattern[\[Lambda], Blank[]]], Evaluate[Times[1, Power[Plus[nRefrHe[\[Lambda]], Times[-1, \[Lambda], D[nRefrHe[\[Lambda]], \[Lambda]]]], -1]]]], Null], CompoundExpression[SetDelayed[vgNe[Pattern[\[Lambda], Blank[]]], Evaluate[Times[1, Power[Plus[nRefrNe[\[Lambda]], Times[-1, \[Lambda], D[nRefrNe[\[Lambda]], \[Lambda]]]], -1]]]], Null]]]
 
-(* ---- initialization cell 39 | d76badc0-d290-df48-98b3-1cf1120988db ---- *)
-tagDataPlot="\<HPK S14160-S14161\>";
+(* ---- initialization cell 91, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[debugMakePlots[Plot[List[Times[1000000, Times[Times[Plus[vpC4F10[\[Lambda]], Times[-1, vgC4F10[\[Lambda]]]], Power[Plus[vpC4F10[\[Lambda]], vgC4F10[\[Lambda]]], -1]], Power[2, -1]]]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[PlotRange, All], Rule[PlotLegends, List[Placed["Expressions", After]]], Rule[Filling, None]]], Null], CompoundExpression[debugMakePlots[Plot[List[Times[1000000, Times[Times[Plus[vpFQrtz[\[Lambda]], Times[-1, vgFQrtz[\[Lambda]]]], Power[Plus[vpFQrtz[\[Lambda]], vgFQrtz[\[Lambda]]], -1]], Power[2, -1]]]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[PlotRange, All], Rule[PlotLegends, List[Placed["Expressions", After]]], Rule[Filling, None]]], Null]]]
 
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
+(* ---- initialization cell 92, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugMakePlots[Plot[List[vpC1O02[\[Lambda]], vpC4F10[\[Lambda]], vpC1F04[\[Lambda]], vgC1O02[\[Lambda]], vgC4F10[\[Lambda]], vgC1F04[\[Lambda]]], List[\[Lambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef], Rule[PlotRange, List[0.997`, 1]], Rule[PlotLegends, List[Placed["Expressions", After]]], Rule[Filling, None]]], Null], Null, Null]
 
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
+(* ---- initialization cell 93, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[tagDataPlot, "Gas Radiators - yields"], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
+(* ---- initialization cell 94, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugDoVerbose[Times[theChrYieldConstant, NIntegrate[Plus[1, Times[-1, Power[Times[1, Power[nRefrC4F10[\[Lambda][ene]], -1]], 2]]], List[ene, \[Epsilon]Min, \[Epsilon]Max]], Times[lengthRich1, Power[1000, -1]]]], Null], Null, CompoundExpression[debugDoVerbose[Times[theChrYieldConstant, theConstantWavLenFromToEnergy, NIntegrate[Times[Plus[1, Times[-1, Power[Times[1, Power[nRefrC4F10[\[CapitalLambda]], -1]], 2]]], Power[Power[\[CapitalLambda], 2], -1]], List[\[CapitalLambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef]], Times[lengthRich1, Power[1000, -1]]]], Null]]
 
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
+(* ---- initialization cell 95, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugDoVerbose[Times[theChrYieldConstant, NIntegrate[Plus[1, Times[-1, Power[Times[1, Power[nRefrC1F04[\[Lambda][ene]], -1]], 2]]], List[ene, \[Epsilon]Min, \[Epsilon]Max]], Times[lengthRich2, Power[1000, -1]]]], Null], Null, CompoundExpression[debugDoVerbose[Times[theChrYieldConstant, theConstantWavLenFromToEnergy, NIntegrate[Times[Plus[1, Times[-1, Power[Times[1, Power[nRefrC1F04[\[CapitalLambda]], -1]], 2]]], Power[Power[\[CapitalLambda], 2], -1]], List[\[CapitalLambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef]], Times[lengthRich2, Power[1000, -1]]]], Null]]
 
-(* ---- initialization cell 40 | c90b13a9-c0f0-e742-97d8-8a0520841367 ---- *)
-border=
-{{69.62990268357444`,415.5770665533149`},{375.9702152757313`,414.95188224190235`},{376.28280743143756`,109.54934611686443`},{68.37953406074931`,109.54934611686443`}};
+(* ---- initialization cell 96, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugDoVerbose[Times[theChrYieldConstant, NIntegrate[Plus[1, Times[-1, Power[Times[1, Power[nRefrC1O02[\[Lambda][ene]], -1]], 2]]], List[ene, \[Epsilon]Min, \[Epsilon]Max]], Times[lengthRich2, Power[1000, -1]]]], Null], Null, CompoundExpression[debugDoVerbose[Times[theChrYieldConstant, theConstantWavLenFromToEnergy, NIntegrate[Times[Plus[1, Times[-1, Power[Times[1, Power[nRefrC1O02[\[CapitalLambda]], -1]], 2]]], Power[Power[\[CapitalLambda], 2], -1]], List[\[CapitalLambda], \[Lambda]ThisMinRef, \[Lambda]ThisMaxRef]], Times[lengthRich2, Power[1000, -1]]]], Null]]
 
-data={
-{101.22118470965898`,109.05004362891941`},{85.6`,109.05`},{76.24`,108.9`},{78.18`,108.9`},{80.96`,109.05`},{375.84`,129.05`},{376.69`,127.97`},{365.78299776286497`,135.23815762561242`},{367.32953992802396`,134.46488654303292`},{368.876082093183`,133.6916154604534`},{370.1133158253102`,132.60903594484208`},{371.96916642350106`,131.68111064574663`},{373.3610543721442`,130.7531853466512`},{376.3`,128.59`},{68.74379924131921`,108.79228660139289`},{70.13568718996234`,108.94694081790881`},{71.52757513860547`,108.94694081790881`},{73.15`,108.95`},{75.01`,108.87`},{77.4`,108.95`},{79.34`,109.02`},{82.82`,109.1`},{84.21`,109.1`},{87.14765100671173`,108.94694081790881`},{89.31281003793438`,108.94694081790881`},{91.4`,109.1`},{94.03`,109.1`},{96.27224978115007`,109.25624925094061`},{97.97`,109.18`},{99.95`,109.22`},{109.17`,136.59`},{101.83`,110.33`},{102.29`,112.13`},{102.6`,113.53`},{103.14`,114.87`},{103.54`,116.19`},{104.01`,117.6`},{107.60984960188776`,125.96043429144423`},{145.2772043644948`,320.2364590628987`},{139.49424948392857`,313.0468394816542`},{138.40017693895658`,311.4838787031228`},{182.63196697139554`,368.06305888595995`},{176.3801238572699`,368.5319471195194`},{178.09938071365445`,368.6882431973725`},{104.64022412267806`,119.1355055585237`},{105.57800058979691`,121.94883495988023`},{106.82836921262205`,123.82438789411796`},{107.76614567974087`,128.20067807400588`},{108.39132999115347`,131.32659963106872`},{109.64169861397858`,142.2673250807886`},{109.95429076968489`,155.39619562045246`},{110.57947508109746`,168.8376583158226`},{110.26688292539114`,191.9694778380875`},{111.51725154821631`,211.35019149187704`},{112.76762017104141`,231.6686816127854`},{113.39280448245398`,247.9234737095121`},{116.8313181952231`,267.3041873633016`},{119.33205544087335`,279.4952814358466`},{123.70834562076129`,290.12341472986026`},{127.77204364494298`,298.2508107782236`},{131.37`,303.41`},{134.02388675906863`,307.9411676051184`},{137.14980831613147`,310.12931269506237`},{141.21350634031313`,314.50560287495034`},{144.33942789737597`,317.6315244320131`},{145.75`,322.32`},{147.1527572987325`,327.0092891032016`},{148.87`,331.85`},{151.21645532291416`,338.2626067086278`},{154.0297847242707`,343.88926551134085`},{157.15570628133352`,350.76629293687904`},{159.81`,354.99`},{162.7823650840466`,357.95591251812357`},{165.59569448540316`,360.7692419194801`},{169.03420819817225`,364.8329399436618`},{174.97345915659162`,368.2714536564309`},{180.6001179593047`,368.58404581213716`},{184.3512238277801`,367.333677189312`},{187.16455322913666`,364.8329399436618`},{191.5408434090246`,361.0818340751864`},{193.72898849896856`,357.0181360510047`},{198.10527867885654`,347.64037137981626`},{206.54526688292617`,329.51002634885185`},{216.86080802123348`,310.4419048507686`},{228.7393099380722`,287.62267748421`},{238.11707460926067`,270.11751676465815`},{249.99557652609946`,251.98717173369377`},{265.9377764671198`,225.1042463429535`},{288.7570038336785`,196.65836017368179`},{323.76732527278205`,164.14877598022838`},{336.5836036567397`,153.83323484192107`},{357.2146859333543`,140.07917999084464`},{375.03243880861237`,129.76363885253733`}
-};
+(* ---- initialization cell 97, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugDoVerbose[Set[tagDataPlot, "PDE"]], Null], Null, CompoundExpression[debugDoVerbose[" tagDataPlot           = ", tagDataPlot], Null], Null, CompoundExpression[debugDoVerbose[" thisDataPlotInset     = ", thisDataPlotInset], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInsetText = ", thisGraphicsInsetText], Null], Null, CompoundExpression[debugDoVerbose[" thisGraphicsInset     = ", thisGraphicsInset], Null]]
 
-debugDoVerbose[Length[data]];
+(* ---- initialization cell 98, expression 1 ---- *)
+CompoundExpression[CompoundExpression[bigBanner["Redefining the original xyzEnergyData for cleanup and aligning among the different sensors"], Null]]
 
-debugDoVerbose[Length[DeleteDuplicates@data]];
+(* ---- initialization cell 99, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[LAPPDTMEnergyDataSave, LAPPDTMEnergyData], Null], Null, CompoundExpression[Set[MAPMT22EnergyDataSave, MAPMT22EnergyData], Null], Null, CompoundExpression[Set[MPPCHPKEnergyDataSave, MPPCHPKEnergyData], Null], Null, CompoundExpression[Set[SIPMFBKEnergyDataSave, SIPMFBKEnergyData], Null]]
 
-data=Round[Sort[Sort[data,#1[[2]]<#2[[2]]&],#1[[1]]<#2[[1]]&],0.001];
+(* ---- initialization cell 100, expression 1 ---- *)
+CompoundExpression[ListPlot[List[LAPPDTMEnergyData, MAPMT22EnergyData, MPPCHPKEnergyData, SIPMFBKEnergyData]], Null, Null]
 
-debugDoVerbose[data];
+(* ---- initialization cell 101, expression 1 ---- *)
+CompoundExpression[LAPPDTMEnergyData, Null, MAPMT22EnergyData, Null, MPPCHPKEnergyData, Null, SIPMFBKEnergyData]
 
-TableForm[data];
+(* ---- initialization cell 102, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[LAPPDTMEnergyDataToWavLen, Map[Function[List[\[Lambda][Part[Slot[1], 1]], Part[Slot[1], 2]]], LAPPDTMEnergyData]], Null], Null, CompoundExpression[Set[MAPMT22EnergyDataToWavLen, Map[Function[List[\[Lambda][Part[Slot[1], 1]], Part[Slot[1], 2]]], MAPMT22EnergyData]], Null], Null, CompoundExpression[Set[MPPCHPKEnergyDataToWavLen, Map[Function[List[\[Lambda][Part[Slot[1], 1]], Part[Slot[1], 2]]], MPPCHPKEnergyData]], Null], Null, Set[SIPMFBKEnergyDataToWavLen, Map[Function[List[\[Lambda][Part[Slot[1], 1]], Part[Slot[1], 2]]], SIPMFBKEnergyData]], Null, Null]
 
-debugMakePlots@ListPlot[data,PlotLabel->"\<raw points\>",AxesLabel->{"\<\>","\<\>"}];
+(* ---- initialization cell 103, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[LAPPDTMEnergyDataToWavLenInterpol, Interpolation[LAPPDTMEnergyDataToWavLen]], Null], Null, CompoundExpression[Set[MAPMT22EnergyDataToWavLenInterpol, Interpolation[MAPMT22EnergyDataToWavLen]], Null], Null, CompoundExpression[Set[MPPCHPKEnergyDataToWavLenInterpol, Interpolation[MPPCHPKEnergyDataToWavLen]], Null], Null, CompoundExpression[Set[SIPMFBKEnergyDataToWavLenInterpol, Interpolation[SIPMFBKEnergyDataToWavLen]], Null], Null, CompoundExpression[SetDelayed[LAPPDTMEnergyDataToWavLenInterpolFix[Pattern[\[FormalX], Blank[]]], Max[0, LAPPDTMEnergyDataToWavLenInterpol[\[FormalX]]]], Null], Null, CompoundExpression[SetDelayed[MAPMT22EnergyDataToWavLenInterpolFix[Pattern[\[FormalX], Blank[]]], Max[0, MAPMT22EnergyDataToWavLenInterpol[\[FormalX]]]], Null], Null, CompoundExpression[SetDelayed[MPPCHPKEnergyDataToWavLenInterpolFix[Pattern[\[FormalX], Blank[]]], Max[0, MPPCHPKEnergyDataToWavLenInterpol[\[FormalX]]]], Null], Null, CompoundExpression[SetDelayed[SIPMFBKEnergyDataToWavLenInterpolFix[Pattern[\[FormalX], Blank[]]], Max[0, SIPMFBKEnergyDataToWavLenInterpol[\[FormalX]]]], Null], Null, Print[debugMakePlots[Plot[List[LAPPDTMEnergyDataToWavLenInterpol[\[FormalX]], MAPMT22EnergyDataToWavLenInterpol[\[FormalX]], MPPCHPKEnergyDataToWavLenInterpol[\[FormalX]], SIPMFBKEnergyDataToWavLenInterpol[\[FormalX]]], List[\[FormalX], \[Lambda]MinRef, \[Lambda]MaxRef], Rule[PlotLegends, "Expressions"]]]]]
 
-Length[data];
+(* ---- initialization cell 104, expression 1 ---- *)
+CompoundExpression[Times[CompoundExpression[Set[data, Transpose[Set[List[theLambda, LAPPDTMEnergyDataToWavNewTable, MAPMT22EnergyDataToWavNewTable, MPPCHPKEnergyDataToWavNewTable, SIPMFBKEnergyDataToWavNewTable], Transpose[Table[List[\[FormalX], LAPPDTMEnergyDataToWavLenInterpolFix[\[FormalX]], MAPMT22EnergyDataToWavLenInterpolFix[\[FormalX]], MPPCHPKEnergyDataToWavLenInterpolFix[\[FormalX]], SIPMFBKEnergyDataToWavLenInterpolFix[\[FormalX]]], List[\[FormalX], \[Lambda]MinRef, \[Lambda]MaxRef, 1]]]]]], Null], CompoundExpression[Set[resExport, Join[List[List["\[Lambda] (nm)", "LAPPDTM", "MAPMT22", "MPPCHPK", "SIPMFBK"]], Transpose[Join[List[theLambda], Transpose[Round[Part[data, Span[1, All], Span[2, All]], 0.00001`]]]]]], Null]]]
 
-Length[DeleteDuplicates@data];
+(* ---- initialization cell 105, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Set[LAPPDTMEnergyDataNew, LAPPDTMEnergyDataToWavNewTable], Null], Null, CompoundExpression[Set[MAPMT22EnergyDataNew, MAPMT22EnergyDataToWavNewTable], Null], Null, CompoundExpression[Set[MPPCHPKEnergyDataNew, MPPCHPKEnergyDataToWavNewTable], Null], Null, CompoundExpression[Set[SIPMFBKEnergyDataNew, SIPMFBKEnergyDataToWavNewTable], Null], Null, CompoundExpression[Set[LAPPDTMEnergyDataNew, Map[Function[List[\[Epsilon][Part[Slot[1], 1]], Part[Slot[1], 2]]], Transpose[List[theLambda, LAPPDTMEnergyDataToWavNewTable]]]], Null], Null, CompoundExpression[Set[MAPMT22EnergyDataNew, Map[Function[List[\[Epsilon][Part[Slot[1], 1]], Part[Slot[1], 2]]], Transpose[List[theLambda, MAPMT22EnergyDataToWavNewTable]]]], Null], Null, CompoundExpression[Set[MPPCHPKEnergyDataNew, Map[Function[List[\[Epsilon][Part[Slot[1], 1]], Part[Slot[1], 2]]], Transpose[List[theLambda, MPPCHPKEnergyDataToWavNewTable]]]], Null], Null, CompoundExpression[Set[SIPMFBKEnergyDataNew, Map[Function[List[\[Epsilon][Part[Slot[1], 1]], Part[Slot[1], 2]]], Transpose[List[theLambda, SIPMFBKEnergyDataToWavNewTable]]]], Null], Null, CompoundExpression[Print[ListPlot[List[LAPPDTMEnergyData, LAPPDTMEnergyDataNew]]], Null], Null, CompoundExpression[Print[ListPlot[List[MAPMT22EnergyData, MAPMT22EnergyDataNew]]], Null], Null, CompoundExpression[Print[ListPlot[List[MPPCHPKEnergyData, MPPCHPKEnergyDataNew]]], Null], Null, CompoundExpression[Print[ListPlot[List[SIPMFBKEnergyData, SIPMFBKEnergyDataNew]]], Null], Null, CompoundExpression[Set[LAPPDTMEnergyData, LAPPDTMEnergyDataNew], Null], Null, CompoundExpression[Set[MAPMT22EnergyData, MAPMT22EnergyDataNew], Null], Null, CompoundExpression[Set[MPPCHPKEnergyData, MPPCHPKEnergyDataNew], Null], Null, CompoundExpression[Set[SIPMFBKEnergyData, SIPMFBKEnergyDataNew], Null], Null, CompoundExpression[Protect[LAPPDTMEnergyData, MAPMT22EnergyData, MPPCHPKEnergyData, SIPMFBKEnergyData], Null]]
 
-(* ---- initialization cell 41 | de30cbdd-c899-d646-bcf3-7831c69efd19 ---- *)
-Quiet[xDataMinPlot=\[Lambda]ThisMinRef;
-xDataMaxPlot=\[Lambda]ThisMaxRef;
-xDataPlotRangeMin=xDataMinPlot-5;
-xDataPlotRangeMax=xDataMaxPlot+5;
-typicalHPKMPPCPDE=window[x,\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef]*doInterpolateFromGraphicsData[200,900,0,60,69.5,375.6,109.,414.6,data,False];
-debugMakePlots@ListPlot[data,PlotLabel->"\<raw points\>",AxesLabel->{"\<\>","\<\>"}];
-Print@debugMakePlots@Plot[typicalHPKMPPCPDE[x],{x,xDataPlotRangeMin,xDataPlotRangeMax},
-PlotRange->{{xDataPlotRangeMin,xDataPlotRangeMax},{0,100}},AxesLabel->labelEffVsNm];
-pdeMPPCHPKWavLen=Table[ {x,   Max[0,typicalHPKMPPCPDE[x]]},{x,\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef,5}];
-debugMakePlots@ListPlot[pdeMPPCHPKWavLen];
-MPPCHPKEnergyData=Map[{\[Epsilon][#[[1]]],#[[2]]/100}&,pdeMPPCHPKWavLen];
-debugMakePlots@ListPlot[MPPCHPKEnergyData];
-,{InterpolatingFunction::dmval}];
+(* ---- initialization cell 106, expression 1 ---- *)
+CompoundExpression[Null]
 
-(* ---- initialization cell 42 | c3a27517-9665-9640-b471-7b541a52dfae ---- *)
-tagDataPlot="\<LAPPD126\>";
+(* ---- initialization cell 107, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugDoVerbose["post-eval checks"], Null]]
 
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
+(* ---- initialization cell 108, expression 1 ---- *)
+CompoundExpression[CompoundExpression[Clear[tagDataPlot, thisDataPlotInset], Null]]
 
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
+(* ---- initialization cell 109, expression 1 ---- *)
+CompoundExpression[CompoundExpression[debugDoVerbose[Set[tagDataPlot, ""]], Null]]
 
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
+(* ---- initialization cell 110, expression 1 ---- *)
+CompoundExpression[Null]
 
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
+(* ---- initialization cell 111, expression 1 ---- *)
+CompoundExpression[CompoundExpression[bigBanner["InputDataForRICH - END"], Null]]
 
-(* ---- initialization cell 43 | 64e8d4be-0e1c-4c41-b0dd-9d7cbf7a4311 ---- *)
-border={{620,2749},{3536,2749},{3541,453},{615,451}};
-
-data={{2633,1273},{2604,1310},{2531,1390},{2492,1448},{2427,1557},{2401,1599},{2331,1690},{2315,1750},{2240,1872},{2216,1932},{2201,1966},{2130,2119},{2102,2169},{2057,2302},{2011,2421},{2037,2364},{1985,2473},{1914,2549},{1828,2557},{1735,2533},{1641,2528},{1545,2531},{1427,2518},{1037,2153},{1079,2169},{3533,662},{3497,672},{3450,683},{3398,698},{3344,722},{3252,755},{3161,823},{3047,896},{2966,961},{2854,1042},{2758,1135},{2664,1224},{2568,1354},{2466,1495},{2367,1646},{2276,1810},{2175,2010},{2083,2239},{1956,2520},{1883,2567},{1792,2546},{1690,2533},{1586,2528},{1485,2536},{1378,2505},{1347,2481},{1305,2481},{1279,2455},{1256,2403},{1237,2364},{1219,2335},{1198,2309},{1170,2268},{1154,2239},{1115,2200},{1102,2177}};
-
-debugDoVerbose[Length[data]];
-
-debugDoVerbose[Length[DeleteDuplicates@data]];
-
-data=Round[Sort[Sort[data,#1[[2]]<#2[[2]]&],#1[[1]]<#2[[1]]&],0.001];
-
-debugDoVerbose[data];
-
-TableForm[data];
-
-debugMakePlots@ListPlot[data,PlotLabel->"\<raw points\>",AxesLabel->{"\<\>","\<\>"}];
-
-debugMakePlots@Length[data];
-
-debugMakePlots@Length[DeleteDuplicates@data];
-
-(* ---- initialization cell 44 | 2c148dd1-3292-e347-a460-10ca5e9f1bdf ---- *)
-LAPPDTMCE=0.9;
-
-Quiet[xDataMinPlot=\[Lambda]ThisMinRef;
-xDataMaxPlot=\[Lambda]ThisMaxRef;
-xDataPlotRangeMin=xDataMinPlot-5;
-xDataPlotRangeMax=xDataMaxPlot+5;
-typicalLAPPDTMPDE=window[x,\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef]*doInterpolateFromGraphicsData[100,700,0,0.4,618,3539,452,2749,data,False];
-debugMakePlots@ListPlot[data,PlotLabel->"\<raw points\>",AxesLabel->{"\<\>","\<\>"}];
-Print@debugMakePlots@Plot[typicalLAPPDTMPDE[x],{x,xDataPlotRangeMin,xDataPlotRangeMax},
-PlotRange->{{xDataPlotRangeMin,xDataPlotRangeMax},{0,1}},AxesLabel->labelEffVsNm];
-(*MUST INSERT LAPPDTMCE: IN DEFINITION OF typicalLAPPDTMPDE DOES NOT WORK*)
-pdeLAPPDTMWavLen=Table[ {x,   Max[0,LAPPDTMCE*typicalLAPPDTMPDE[x]]},{x,\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef,5}];
-debugMakePlots@ListPlot[pdeLAPPDTMWavLen];
-LAPPDTMEnergyData=Map[{\[Epsilon][#[[1]]],#[[2]]}&,pdeLAPPDTMWavLen];
-debugMakePlots@ListPlot[LAPPDTMEnergyData];
-,{InterpolatingFunction::dmval}];
-
-(* ---- initialization cell 45 | 3701eb24-ab0b-0741-a39e-e5d78b88a0b3 ---- *)
-tagDataPlot="\<Mirror reflectivity RICH1 2022 sample\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 46 | 6937871f-7492-1e4b-af53-10a860fba001 ---- *)
-data={
-(*{024.141,044.687},{030.176,044.687},{035.876,045.357},*)
-{030.000,186.000},(*set by hand*)
-{031.000,187.000},(*set by hand*)
-{032.000,188.000},(*set by hand*)
-{033.000,189.000},(*set by hand*)
-{034.000,190.000},(*set by hand*)
-{035.000,191.000},(*set by hand*)
-{036.000,192.000},(*set by hand*)
-{038.559,193.894},{042.917,196.241},(*{046.270,198.588},*){051.970,212.335},{053.647,222.729},{055.659,238.153},{061.024,266.318},{062.029,270.677},{066.053,281.406},{069.071,287.441},{074.100,293.812},{078.794,297.500},{086.506,300.853},{093.547,303.536},{103.941,306.218},{113.665,306.889},{124.395,306.218},{135.124,305.883},{143.842,303.200},{155.912,302.530},{161.948,300.853},{173.683,299.512},{178.713,298.506},{190.113,295.824},{201.513,292.136},{211.236,289.453},{218.948,287.441},{226.660,282.077},{234.372,281.071},{242.084,278.053},{250.466,274.030},{258.178,270.006},{267.566,267.324},{273.937,266.318},{279.972,265.312},{288.019,262.965},{295.396,261.288},{305.790,257.600},{310.484,255.588},{316.184,253.912},{319.873,253.576},{325.573,251.229},{333.955,248.212},{339.990,245.529},{347.367,244.859},{352.732,242.176},{362.791,238.488},{375.197,232.453}
-};
-
-data=Sort[Sort[data,#1[[2]]<#2[[2]]&],#1[[1]]<#2[[1]]&];
-
-TableForm[data];
-
-debugMakePlots@ListPlot[data,PlotLabel->"\<raw points\>",AxesLabel->{"\<\>","\<\>"}];
-
-(* ---- initialization cell 47 | 562d7071-062a-284a-8641-c5c6e52012e1 ---- *)
-(*=============================================================================================================*)(*DO NOT TOUCH: ALL VARIABLES MANAGEMENT IS  CRITICAL*)
-(*=============================================================================================================*)
-xDataMinPlot=\[Lambda]ThisMinRef-1;
-xDataMaxPlot=\[Lambda]ThisMaxRef+1;
-Clear@averageMirrorReflectivityFunctionWavLen;
-
-(* ---- initialization cell 48 | 6c79b5de-3f84-2144-812d-b5c64c6e453c ---- *)
-averageMirrorReflectivityFunctionWavLen[x_]=window[x,\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef]*doInterpolateFromGraphicsData[180,880,0,1,24,420,44,315,data,False,{{180,0},{185,0},{190,0}}][x];
-
-(* ---- initialization cell 49 | c72280e2-0385-0b42-9021-6b3e8bc34650 ---- *)
-debugDoVerbose[averageMirrorReflectivityFunctionWavLen];
-
-(* ---- initialization cell 50 | ec0e9425-e17a-c642-90ee-eedcce170f0a ---- *)
-plotRefl=debugMakePlots@Plot[averageMirrorReflectivityFunctionWavLen[x],{x,xDataMinPlot,xDataMaxPlot},AxesLabel->{"\<\[Lambda] (nm)\>","\<reflectivity\>"},PlotRange->{0,1},PlotLabel->"\<mirrors\>"];
-
-(* ---- initialization cell 51 | 14d9221b-6b23-9342-94c4-ed8d00818551 ---- *)
-(*patch: change to Report.nb and goes back after // messes-up grouping? *)
-(*newStyleSheet["\<Report.nb\>"];*)
-
-
-
-
-
-exportGraphicsToPDF[plotRefl,"\<mirror-reflectivity\>","\<\>","\<\>"]
-
-
-
-(*newStyleSheet["\<myStyle.nb\>"];*)
-
-(* ---- initialization cell 52 | 4b9f6ace-e2a2-2d4d-bbcc-6495d1dbe497 ---- *)
-averageMirrorReflectivityFunctionEnergy[\[Epsilon]_]=averageMirrorReflectivityFunctionWavLen[x]/.x->\[Lambda][\[Epsilon]];
-
-Print@debugMakePlots@Plot[averageMirrorReflectivityFunctionEnergy[x],{x,\[Epsilon][xDataMinPlot],\[Epsilon][xDataMaxPlot]},AxesLabel->{"\<\[Lambda] (nm)\>","\<reflectivity\>"},PlotRange->{0,1}];
-
-(* ---- initialization cell 53 | 2a7d66bb-0409-874d-a71c-df43b10a4224 ---- *)
-debugMakePlots@\[Epsilon][xDataMinPlot];
-
-debugMakePlots@\[Epsilon][xDataMaxPlot];
-
-(* ---- initialization cell 54 | 3df8452c-a645-474b-82be-a42ab2dd0902 ---- *)
-tagDataPlot="\<AEROGEL radiator\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 55 | 5c69d37e-2f42-a14a-b66b-331e1d9fde85 ---- *)
-(*nRefrAerglDat={
-{0.18`,1.0310229783854632`},{0.2`,1.0308706786392787`},{0.22`,1.0307589532854349`},{0.24`,1.0306745170777567`},{0.26`,1.0306091260056796`},{0.28`,1.030557438274302`},{0.3`,1.0305158663268024`},{0.32`,1.03048192682945`},{0.34`,1.030453855775805`},{0.36`,1.0304303717552123`},{0.38`,1.0304105255135798`},{0.4`,1.0303936015933821`},{0.405`,1.0303897600770604`},{0.42`,1.030379052396211`},{0.44`,1.030366452990163`},{0.46`,1.0303554695166923`},{0.48`,1.0303458367084932`},{0.5`,1.0303373416318722`},{0.52`,1.0303298117574788`},{0.54`,1.03032310608971`},{0.56`,1.0303171084895593`},{0.58`,1.030311722591812`},{0.6`,1.0303068678955958`},{0.62`,1.030302476728433`},{0.64`,1.0302984918675266`},{0.66`,1.0302948646604657`},{0.68`,1.0302915535289543`},{0.7`,1.030288522768825`}
-};
-Map[{#[[1]],nf@#[[2]]}&,nRefrAerglDat]//TableForm*)
-
-(* ---- initialization cell 56 | f2457374-2f13-4fb5-a089-25fa2ac267cc ---- *)
-nRefrAergl[\[Lambda]_]:= Sqrt[1 +((  0.05639+0.005)*((\[Lambda]/1000))^(2))/(((\[Lambda]/1000))^(2)-0.0008322)];
-
-(* ---- initialization cell 57 | 845e4f61-8be1-8c44-99dc-6f3dc493a68a ---- *)
-nRefrAerglDat={
-{1.77114`,1.03054`},{1.79681`,1.03054`},{1.82324`,1.03055`},{1.85045`,1.03055`},{1.87848`,1.03056`},{1.90738`,1.03057`},{1.93719`,1.03057`},{1.96794`,1.03058`},{1.99968`,1.03059`},{2.03246`,1.0306`},{2.06633`,1.03061`},{2.10136`,1.03062`},{2.13759`,1.03063`},{2.17509`,1.03064`},{2.21393`,1.03065`},{2.25418`,1.03066`},{2.29593`,1.03067`},{2.33925`,1.03068`},{2.38423`,1.0307`},{2.43098`,1.03071`},{2.4796`,1.03073`},{2.5302`,1.03074`},{2.58292`,1.03076`},{2.63787`,1.03078`},{2.69522`,1.0308`},{2.75511`,1.03082`},{2.81773`,1.03084`},{2.88326`,1.03086`},{2.9519`,1.03089`},{3.0239`,1.03092`},{3.0995`,1.03095`},{3.17897`,1.03098`},{3.26263`,1.03102`},{3.35081`,1.03105`},{3.44389`,1.03109`},{3.54229`,1.03114`},{3.64647`,1.03119`},{3.75697`,1.03124`},{3.87437`,1.0313`},{3.99935`,1.03137`},{4.13267`,1.03144`},{4.27517`,1.03152`},{4.42786`,1.03161`},{4.59185`,1.03171`},{4.76846`,1.03182`},{4.9592`,1.03195`},{5.16583`,1.03209`},{5.39043`,1.03226`},{5.63545`,1.03245`},{5.90381`,1.03267`},{6.199`,1.03293`}
-};
-
-debugMakePlots[TableForm@Map[{#[[1]],nf@#[[2]]}&,nRefrAerglDat]];
-
-(* ---- initialization cell 58 | da4c71fb-ff18-614f-9b84-3918abcb4fd0 ---- *)
-debugMakePlots@Plot[{nRefrAergl[\[Lambda]]},{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},AxesLabel->{"\<\[Lambda] (nm)\>","\<refractive index\>"}];
-
-(* ---- initialization cell 59 | be0475af-fb99-d448-9ff2-12d17b655be2 ---- *)
-tagDataPlot="\<QUARTZ\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 60 | 585f519f-4306-2e47-b44e-f870da8ecc09 ---- *)
-(*=============================================================================================================*)
-(*Fused silica*)
-(*=============================================================================================================*)
-(*https://refractiveindex.info/?shelf=glass&book=fused_silica&page=Malitson*)
-(*n_absolute:false//wavelength_vacuum:false//temperature:20 \[Degree]C*)
-nRefrFQrtz[\[Lambda]_]:=Sqrt[1+0.6961663/(1-((0.0684043/(\[Lambda]/1000)))^(2))+0.4079426/(1-((0.1162414/(\[Lambda]/1000)))^(2))+0.8974794/(1-((9.896161/(\[Lambda]/1000)))^(2))];
-
-(* ---- initialization cell 61 | 64f49f3e-783b-6945-82b5-3d59d5f4ca27 ---- *)
-debugMakePlots@Plot[{nRefrFQrtz[\[Lambda]]},{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},PlotRange->{0.999,All}];
-
-(* ---- initialization cell 62 | b6a8de4d-82c0-8041-bc40-e4c58acdddf0 ---- *)
-tagDataPlot="\<Gas Radiators\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 63 | 9a2b7fed-3d22-4616-a377-587a5c0cdfa7 ---- *)
-(*=============================================================================================================*)
-(*ALL TO CHECK*)
-(*=============================================================================================================*)
-(*
-In its original and the most general form, the Sellmeier equation is given as... 
-where n is the refractive index, \[Lambda] is the WaveLength, and Bi and Ci are experimentally determined Sellmeier coefficients.
-These coefficients are usually quoted for \[Lambda] in micrometres.
-Note that this \[Lambda] is the vacuum wavelength, not that in the material itself which is \[Lambda]/n.
-*)
-(**)
-(**)
-(*superClearSet[theRealCf];
-superClearSet[theFullCf];*)
-Unprotect[theRealCf,theFullCf,cfFromSTPToReferenceCavern,referenceCavernTemp,referenceCavernPres];
-ClearAll[theRealCf,theFullCf,cfFromSTPToReferenceCavern,referenceCavernTemp,referenceCavernPres];
-(**)
-presSTP=1013.25;(*mbar*)
-tempSTP=273.15;(*K*)
-(**)
-referenceCavernPres=presSTP;(*assumed default/nominal for the cavern*)
-referenceCavernTemp=tempSTP+25.00;(*assumed default/nominal for the cavern*)
-(**)
-gasRefrIndexCorrectionFactorFunction[pres_,temp_,refPres_:referenceCavernPres,refTemp_:referenceCavernTemp]:=
-precisionify[(pres/refPres)/(temp/refTemp)];
-(**)
-cfFromSTPToReferenceCavern=gasRefrIndexCorrectionFactorFunction[referenceCavernPres,referenceCavernTemp,presSTP,tempSTP];(*default/nominal*)
-(**)
-(* when changing temperature/pression from the nominal referenceCavernTemp/referenceCavernPres *)
-(**)
-(*real Pres, generic variable*)(*here default to cavern, to be changed later when gas p/T are defined*)
-(*DO NOT PROTECT theRealGas ... can  be changed later*)
-theRealGasPresMbar=referenceCavernPres;
-(*real Temp, generic variable*)(*here default to cavern, to be changed later when gas p/T are defined*)
-(*DO NOT PROTECT theRealGas ... can  be changed later*)
-theRealGasTempKelv=referenceCavernTemp;
-(**)
-theRealCf:=gasRefrIndexCorrectionFactorFunction[theRealGasPresMbar,theRealGasTempKelv];(*here default to cavern*)
-theFullCf:=cfFromSTPToReferenceCavern*theRealCf;
-(**)
-printD@referenceCavernPres;
-printD@referenceCavernTemp;
-printD@theRealGasPresMbar;
-printD@theRealGasTempKelv;
-printD@theFullCf;
-debugDoVerbose["\< gasCorrFactFromSTPToReferenceCavern : \>",cfFromSTPToReferenceCavern];
-debugDoVerbose["\< gasCorrFactToRealFromCavern         : \>",theRealCf];
-debugDoVerbose["\< gasCorrFactFull                     : \>",theFullCf];
-(**)
-Protect[theRealCf,theFullCf,cfFromSTPToReferenceCavern,referenceCavernTemp,referenceCavernPres
-(*,theRealGasTempKelv,theRealGasPresMbar*)(*DO NOT PROTECT theRealGas ... can  be changed later*)];
-
-(* ---- initialization cell 64 | 2cb9beec-5e95-b94b-850d-ab60c7c3c0d7 ---- *)
-cfToReferenceCavernTest={
-gasRefrIndexCorrectionFactorFunction[referenceCavernPres+15,referenceCavernTemp+25],
-gasRefrIndexCorrectionFactorFunction[referenceCavernPres+00,referenceCavernTemp+25],
-gasRefrIndexCorrectionFactorFunction[referenceCavernPres-15,referenceCavernTemp+25],
-gasRefrIndexCorrectionFactorFunction[referenceCavernPres+15,referenceCavernTemp+25],
-gasRefrIndexCorrectionFactorFunction[referenceCavernPres+00,referenceCavernTemp+25],
-gasRefrIndexCorrectionFactorFunction[referenceCavernPres-15,referenceCavernTemp+25]
-};
-
-debugDoVerbose[(Max@cfToReferenceCavernTest-Min@cfToReferenceCavernTest)/Mean@cfToReferenceCavernTest];
-
-(* ---- initialization cell 65 | ab8d6788-ade5-f449-9beb-2ef8e3a8e56b ---- *)
-tagDataPlot="\<Helium\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 66 | 001f99f9-8b1a-334a-a0d8-a8829a538612 ---- *)
-(*=============================================================================================================*)
-(*Helium*)
-(*=============================================================================================================*)
-(*???*)
-(*=============================================================================================================*)
-(*https://refractiveindex.info/?shelf=main&book=He&page=Borzsonyi*)
-(*He*)
-ClearAll[nRefrHe0];
-(*theRealGasPresMbarHe= 1*theRealGasPresMbar;*)(*real Pres, specific gas variable*)
-(*theRealGasTempKelvHe= 1*theRealGasTempKelv;*)(*real Temp, specific gas variable*)
-nRefrHe0[\[Lambda]_]:=precisionify[1+((0.01470091)/((423.98)-(\[Lambda]/1000)^-2))*theFullCf];(*use =, not := if you change cfHe later!*)
-nf[nRefrHe0[\[Lambda]ThisMinRef],11,8];
-nf[nRefrHe0[\[Lambda]ThisMaxRef],11,8];
-debugMakePlots@Plot[nRefrHe0[\[Lambda]]-1,{\[Lambda],400,999},Ticks->Automatic];
-
-(* ---- initialization cell 67 | 0dc03570-760f-9743-9ad5-d27173f4bc29 ---- *)
-(*=============================================================================================================*)
-(*ANOTHER*)
-(*273 K (0 \[Degree]C),1000 mbar.*)
-(*FROM FORMULA FOR n**2-1*)
-(*=============================================================================================================*)
-ClearAll[nRefrHe];
-ClearAll[ff,gg,cfHe];
-cfHe=gasRefrIndexCorrectionFactorFunction[presSTP,tempSTP,1000,273];
-ff[\[Lambda]_]:=1+(1/2)ReleaseHold[(((4977.77` * (\[Lambda])^(2))/((10)^(8) ((\[Lambda])^(2)-((28.54` )/((10)^(6))))))+((1856.94` *(\[Lambda])^(2))/((10)^(8) ((\[Lambda])^(2)-((7.76` )/((10)^(3)))))))]*cfHe*theFullCf;
-gg[\[Lambda]_]:=ff[\[Lambda]/1000];
-
-debugDoVerbose[ff[300/1000]//NumberForm[#,16]&];
-debugDoVerbose[gg[300]//NumberForm[#,16]&];
-debugDoVerbose[ff[600/1000]//NumberForm[#,16]&];
-debugDoVerbose[gg[600]//NumberForm[#,16]&];
-debugDoVerbose[ff[800/1000]//NumberForm[#,16]&];
-debugDoVerbose[gg[800]//NumberForm[#,16]&];
-debugMakePlots@Plot[gg[\[Lambda]]-1,{\[Lambda],400,999},Ticks->Automatic];
-debugDoVerbose[nf[gg[\[Lambda]ThisMinRef],11,8]];
-debugDoVerbose[nf[gg[\[Lambda]ThisMaxRef],11,8]];
-
-(* ---- initialization cell 68 | fd3c74dd-43b2-3041-b751-16245a741483 ---- *)
-(*=============================================================================================================*)
-(*compare*)
-(*=============================================================================================================*)
-Table[(gg[\[Lambda]]-1)/(nRefrHe0[\[Lambda]]-1),{\[Lambda],400,999,50}];
-
-(* ---- initialization cell 69 | 2505e939-a406-284c-b03b-a139f80c011e ---- *)
-(*=============================================================================================================*)
-(*USE*)
-(*=============================================================================================================*)
-ClearAll[nRefrHe];
-nRefrHe[\[Lambda]_]:=precisionify[gg[\[Lambda]]];
-nf[nRefrHe[\[Lambda]ThisMinRef],11,8];
-nf[nRefrHe[\[Lambda]ThisMaxRef],11,8];
-(*printD@theRealGasPresMbarHe;
-printD@theRealGasTempKelvHe;
-printD@cfHe;*)
-debugMakePlots@Plot[nRefrHe[\[Lambda]]-1,{\[Lambda],400,999},Ticks->Automatic];
-
-(* ---- initialization cell 70 | ba14f502-640c-c740-a7f6-8f994f67a3c8 ---- *)
-tagDataPlot="\<Neon\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 71 | 75fc9a15-02e1-c449-a5ce-f0283a4b2ce2 ---- *)
-(*=============================================================================================================*)
-(*Neon*)
-(*=============================================================================================================*)(*refractive index at T=0 degrees Centigrade and p = 101325 Pa = 1013.25 mbar ==>> by def == STP *)
-(*=============================================================================================================*)
-(*https://refractiveindex.info/?shelf=main&book=Ne&page=Bideau-Mehu*)
-(*Ne*)
-(*theRealGasPresMbarNe= 1*theRealGasPresMbar;*)(*real Pres, specific gas variable*)
-(*theRealGasTempKelvNe= 1*theRealGasTempKelv;*)(*real Temp, specific gas variable*)
-(*cfNe=gasRefrIndexCorrectionFactorFunction[theRealGasPresMbarNe,theRealGasTempKelvNe];*)
-ClearAll[nRefrNe];
-nRefrNe[\[Lambda]_]:=precisionify[1+((0.00128145)/((184.661)-(\[Lambda]/1000)^-2)+(0.0220486)/((376.840)-(\[Lambda]/1000)^-2))*theFullCf];
-nf[nRefrNe[\[Lambda]ThisMinRef],11,8];
-nf[nRefrNe[\[Lambda]ThisMaxRef],11,8];
-(*printD@theRealGasPresMbarNe;
-printD@theRealGasTempKelvNe;
-printD@cfNe;*)
-debugMakePlots@Plot[nRefrNe[\[Lambda]]-1,{\[Lambda],140,546},Ticks->Automatic];
-
-(* ---- initialization cell 72 | bfdace50-30aa-3c42-96d4-39b02d0786e6 ---- *)
-tagDataPlot="\<AIR\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 73 | 25ca20e8-ab9a-486e-8f34-435db239fc65 ---- *)
-(*AIR*)
-
-(* ---- initialization cell 74 | fcd17a6c-a6ef-7941-9f52-e3e4a89dce6a ---- *)
-tagDataPlot="\< \!\(\*SubscriptBox[\(C\), \(2\)]\)\!\(\*SubscriptBox[\(F\), \(6\)]\) \>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 75 | 6f00b33c-0b61-454c-a52e-fc211b95b006 ---- *)
-(* 0 C, 1 atm ==>> by def == STP *)
-(*https://doi.org/10.1016/0168-9002(94)01006-4*)
-(*OK formula con \[Lambda] in nm!!!*)
-ClearAll[nRefrC2F06];
-nRefrC2F06[\[Lambda]_]:=precisionify[1+((0.18994*(10)^(-6))/(((65.47))^(-2)-((\[Lambda]))^(-2)))*theFullCf];
-debugMakePlots@Plot[nRefrC2F06[\[Lambda]],{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef}];
-
-(* ---- initialization cell 76 | 36b81799-3c67-4d49-9f49-55242008215c ---- *)
-tagDataPlot="\< \!\(\*SubscriptBox[\(CO\), \(2\)]\) \>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 77 | 998668e2-2a28-5540-bed1-a7d40e73111b ---- *)
-(*=============================================================================================================*)
-(*Carbon Dioxide*)
-(*=============================================================================================================*)
-(*https://refractiveindex.info/?shelf=main&book=CO2&page=Bideau-Mehu*)
-(*n_absolute:true//wavelength_vacuum:true//temperature:0\[Degree]C//pressure:101325Pa*)
-(*refractive index at T=0 degrees Centigrade and p = 101325 Pa = 1013.25 mbar ==>> by def == STP *)
-ClearAll[nRefrC1O02,nRefrC1O02All];
-WithCleanup[
-w={1,1,1,1,1};(*default start: all terms*)
-nRefrC1O02All[\[Lambda]_]:=precisionify[1+(
-w[[1]]*6.99100*(10)^(-2)/(166.175-((\[Lambda]/1000))^(-2))+w[[2]]*1.44720*(10)^(-3)/(79.609-((\[Lambda]/1000))^(-2))+
-(* ONLY USE THE FIRST TWO TERMS.... // OTHERWISE NEED TO GO TO NUMERICAL INTEGRATIONS *)
-w[[3]]*6.42941*(10)^(-5)/(56.3064-((\[Lambda]/1000))^(-2))+w[[4]]*5.21306*(10)^(-5)/(46.0196-((\[Lambda]/1000))^(-2))+w[[5]]*1.46847*(10)^(-6)/(0.0584738-((\[Lambda]/1000))^(-2))
-)*theFullCf];
-Simplify[FunctionDomain[nRefrC1O02All[\[Lambda]],\[Lambda]],\[Lambda]>0];
-Do[
-w={0,0,0,0,0};
-w[[k]]=1;
-debugDoVerbose["\<   \>",nf[nRefrC1O02All[\[Lambda]ThisMinRef],15,11],"\<   \>",nf[nRefrC1O02All[450],15,11],"\<   \>",nf[nRefrC1O02All[\[Lambda]ThisMaxRef],15,11]];
-debugDoVerbose[Simplify[FunctionDomain[nRefrC1O02All[\[Lambda]],\[Lambda]],\[Lambda]>0]];
-Print@debugMakePlots@Plot[nRefrC1O02All[\[Lambda]],{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},GridLines->Automatic,PlotRange->{0.998,1.002}];
-,{k,1,5}
-];
-w={1,1,0,0,0};(* ONLY USE THE FIRST TWO TERMS.... // OTHERWISE NEED TO GO TO NUMERICAL INTEGRATIONS *)
-nRefrC1O02[\[Lambda]_]=nRefrC1O02All[\[Lambda]];
-(*debugDoVerbose[nRefrC1O02All[\[Lambda]]];*)
-(*debugDoVerbose[nRefrC1O02[\[Lambda]]];*)
-,
-ClearAll[w]
-];
-nf[nRefrC1O02[\[Lambda]ThisMinRef],11,8];
-nf[nRefrC1O02[\[Lambda]ThisMaxRef],11,8];
-
-(* ---- initialization cell 78 | 0ec52bf6-e82c-ec4d-964f-635f2329e7db ---- *)
-tagDataPlot="\< \!\(\*SubscriptBox[\(C\), \(4\)]\)\!\(\*SubscriptBox[\(F\), \(10\)]\) \>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 79 | b1fe72cb-cacf-e34d-aad0-a36e0ef0ef94 ---- *)
-(*=============================================================================================================*)(*C4F10*)
-(*=============================================================================================================*)(* The refractive indices at T=0 degrees Centigrade and p = 101325 Pa = 1013.25 mbar are parameterized by: (LHCb detector paper); \[Lambda] in nm *)
-(*==>> by def == STP *)
-(*=============================================================================================================*)(*vacuum wavelength*)
-ClearAll[nRefrC4F10];
-nRefrC4F10[\[Lambda]_]:=precisionify[1+((0.25324*(10)^(-6))/(((73.7))^(-2)-((\[Lambda]))^(-2)))*theFullCf];
-nf[nRefrC4F10[\[Lambda]ThisMinRef],11,8];
-nf[nRefrC4F10[\[Lambda]ThisMaxRef],11,8];
-
-(* ---- initialization cell 80 | f0cb93ed-0661-9a4c-89a4-127ca411434a ---- *)
-tagDataPlot="\< \!\(\*SubscriptBox[\(CF\), \(4\)]\) \>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 81 | 66c24141-775f-3c4d-98be-86d02cdce52f ---- *)
-(*=============================================================================================================*)(*C1F04*)
-(*=============================================================================================================*)(* The refractive indices at T=0 degrees Centigrade and p = 101325 Pa = 1013.25 mbar are parameterized by: (LHCb detector paper); \[Lambda] in nm *)
-(*==>> by def == STP *)
-(*=============================================================================================================*)(*vacuum wavelength*)
-ClearAll[nRefrC1F04];
-nRefrC1F04[\[Lambda]_]:=precisionify[1+((0.12489*(10)^(-6))/(((61.8))^(-2)-((\[Lambda]))^(-2)))*theFullCf];
-nf[nRefrC1F04[\[Lambda]ThisMinRef],11,8];
-nf[nRefrC1F04[\[Lambda]ThisMaxRef],11,8];
-
-(* ---- initialization cell 82 | 8ad9b3ee-1c3b-8844-b92c-f879f3f2adc4 ---- *)
-tagDataPlot="\<Gas Radiators\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 83 | a411f178-9985-c248-8551-a5a3ad02f402 ---- *)
-debugDoVerbose["\< gasCorrFactFromSTPToReferenceCavern : \>",cfFromSTPToReferenceCavern];
-
-debugDoVerbose["\< gasCorrFactToRealFromCavern         : \>",theRealCf];
-
-debugDoVerbose["\< gasCorrFactFull                     : \>",theFullCf];
-
-(* ---- initialization cell 84 | a3da1b24-d374-514e-b035-7cedfc7e6fc0 ---- *)
-debugMakePlots@Plot[{nRefrC4F10[\[Lambda]],nRefrC1F04[\[Lambda]],nRefrC1O02[\[Lambda]]},{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},
-PlotRange->{0.999,All},PlotLegends->{Placed["\<Expressions\>",After]},Filling->None];
-
-(* ---- initialization cell 85 | 46a59f2c-9c1e-ef46-97c0-c4c0792e218d ---- *)
-debugMakePlots@Plot[{nRefrC4F10[\[Lambda]]},{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},
-PlotRange->{nRefrC4F10[\[Lambda]ThisMaxRef],nRefrC4F10[\[Lambda]ThisMinRef]},PlotLegends->{Placed["\<Expressions\>",After]},Filling->None];
-
-(* ---- initialization cell 86 | 8ce5c0eb-fd16-4044-b598-84b227109a55 ---- *)
-debugMakePlots@Plot[ArcCos[1/x],{x,nRefrC4F10[\[Lambda]ThisMinRef],nRefrC4F10[\[Lambda]ThisMaxRef]},GridLines->Automatic];
-(**)
-
-coeffDeltaThetaPerRefrIndex=(nRefrC4F10[\[Lambda]ThisMinRef]-nRefrC4F10[\[Lambda]ThisMaxRef])/(nRefrC4F10[\[Lambda]ThisMinRef]+nRefrC4F10[\[Lambda]ThisMaxRef]);
-
-debugDoVerbose@coeffDeltaThetaPerRefrIndex;
-
-(* ---- initialization cell 87 | bf92b202-ffd6-4528-b4a0-d186fb8f51f5 ---- *)
-debugMakePlots@Plot[{nRefrC1F04[\[Lambda]]},{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},PlotRange->{nRefrC1F04[\[Lambda]ThisMaxRef],nRefrC1F04[\[Lambda]ThisMinRef]},PlotLegends->{Placed["\<Expressions\>",After]},Filling->None];
-
-debugMakePlots@Plot[{nRefrC1F04[\[Lambda]]},{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},
-PlotRange->{nRefrC1F04[\[Lambda]ThisMaxRef],nRefrC1F04[\[Lambda]ThisMinRef]},PlotLegends->{Placed["\<Expressions\>",After]},Filling->None];
-
-debugMakePlots@Plot[ArcCos[1/x],{x,nRefrC1F04[\[Lambda]ThisMinRef],nRefrC1F04[\[Lambda]ThisMaxRef]},GridLines->Automatic];
-(**)
-
-coeffDeltaThetaPerRefrIndex=(nRefrC1F04[\[Lambda]ThisMinRef]-nRefrC1F04[\[Lambda]ThisMaxRef])/(nRefrC1F04[\[Lambda]ThisMinRef]+nRefrC1F04[\[Lambda]ThisMaxRef]);
-
-debugDoVerbose@coeffDeltaThetaPerRefrIndex;
-
-(* ---- initialization cell 88 | 33b8d1a8-0c4b-8d4c-ba69-adbf5a47a065 ---- *)
-tagDataPlot="\<Gas Radiators - velocities\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 89 | d42eeeb9-ebee-6248-a80d-d980f4e0d803 ---- *)
-(**)
-vpC4F10[\[Lambda]_]:=1/nRefrC4F10[\[Lambda]];
-vpC1F04[\[Lambda]_]:=1/nRefrC1F04[\[Lambda]];
-vpC1O02[\[Lambda]_]:=1/nRefrC1O02[\[Lambda]];
-vpFQrtz[\[Lambda]_]:=1/nRefrFQrtz[\[Lambda]];
-vpAergl[\[Lambda]_]:=1/nRefrAergl[\[Lambda]];
-vpC2F06[\[Lambda]_]:=1/nRefrC2F06[\[Lambda]];
-vpHe[\[Lambda]_]:=1/nRefrHe[\[Lambda]];
-vpNe[\[Lambda]_]:=1/nRefrNe[\[Lambda]];
-
-(* ---- initialization cell 90 | 9dde741e-4de7-8242-b879-b91201a908f7 ---- *)
-(**)
-vgC4F10[\[Lambda]_]:=Evaluate[1/(nRefrC4F10[\[Lambda]]-\[Lambda]*D[nRefrC4F10[\[Lambda]],\[Lambda]])](*Evaluate to avoid problems later with Plot || := -->> =*);
-vgC1F04[\[Lambda]_]:=Evaluate[1/(nRefrC1F04[\[Lambda]]-\[Lambda]*D[nRefrC1F04[\[Lambda]],\[Lambda]])](*Evaluate to avoid problems later with Plot || := -->> =*);
-vgC1O02[\[Lambda]_]:=Evaluate[1/(nRefrC1O02[\[Lambda]]-\[Lambda]*D[nRefrC1O02[\[Lambda]],\[Lambda]])](*Evaluate to avoid problems later with Plot || := -->> =*);
-vgFQrtz[\[Lambda]_]:=Evaluate[1/(nRefrFQrtz[\[Lambda]]-\[Lambda]*D[nRefrFQrtz[\[Lambda]],\[Lambda]])](*Evaluate to avoid problems later with Plot || := -->> =*);
-vgAergl[\[Lambda]_]:=Evaluate[1/(nRefrAergl[\[Lambda]]-\[Lambda]*D[nRefrAergl[\[Lambda]],\[Lambda]])](*Evaluate to avoid problems later with Plot || := -->> =*);
-vgC2F06[\[Lambda]_]:=Evaluate[1/(nRefrC2F06[\[Lambda]]-\[Lambda]*D[nRefrC2F06[\[Lambda]],\[Lambda]])](*Evaluate to avoid problems later with Plot || := -->> =*);
-vgHe[\[Lambda]_]:=Evaluate[1/(nRefrHe[\[Lambda]]-\[Lambda]*D[nRefrHe[\[Lambda]],\[Lambda]])](*Evaluate to avoid problems later with Plot || := -->> =*);
-vgNe[\[Lambda]_]:=Evaluate[1/(nRefrNe[\[Lambda]]-\[Lambda]*D[nRefrNe[\[Lambda]],\[Lambda]])](*Evaluate to avoid problems later with Plot || := -->> =*);
-
-(* ---- initialization cell 91 | 6a0c3a66-c836-f447-8e47-d6bf83593d4f ---- *)
-(**)
-debugMakePlots@Plot[{1000000*(vpC4F10[\[Lambda]]-vgC4F10[\[Lambda]])/(vpC4F10[\[Lambda]]+vgC4F10[\[Lambda]])/2},{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},PlotRange->All,PlotLegends->{Placed["\<Expressions\>",After]},Filling->None];
-debugMakePlots@Plot[{1000000*(vpFQrtz[\[Lambda]]-vgFQrtz[\[Lambda]])/(vpFQrtz[\[Lambda]]+vgFQrtz[\[Lambda]])/2},{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},PlotRange->All,PlotLegends->{Placed["\<Expressions\>",After]},Filling->None];
-
-(* ---- initialization cell 92 | 9e40a230-6845-5c4c-b843-1c64ec53bef8 ---- *)
-debugMakePlots@Plot[{vpC1O02[\[Lambda]],vpC4F10[\[Lambda]],vpC1F04[\[Lambda]],vgC1O02[\[Lambda]],vgC4F10[\[Lambda]],vgC1F04[\[Lambda]]},{\[Lambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef},PlotRange->{0.997,1},PlotLegends->{Placed["\<Expressions\>",After]},Filling->None];
-
-(**)
-
-(* ---- initialization cell 93 | 0a69e4bd-facb-1f4e-8076-33c958bde28b ---- *)
-tagDataPlot="\<Gas Radiators - yields\>";
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 94 | fe54fa85-f289-42c3-89fb-a4c55a2a372c ---- *)
-debugDoVerbose[theChrYieldConstant*NIntegrate[1-((1/nRefrC4F10[\[Lambda][ene]]))^(2),{ene,\[Epsilon]Min,\[Epsilon]Max}]*lengthRich1/1000];
-
-debugDoVerbose[theChrYieldConstant*theConstantWavLenFromToEnergy*NIntegrate[(1-((1/nRefrC4F10[\[CapitalLambda]]))^(2))/(\[CapitalLambda])^(2),{\[CapitalLambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef}]*lengthRich1/1000];
-
-(* ---- initialization cell 95 | 765aa0e9-e9e6-4481-806c-e8d8a779dd39 ---- *)
-debugDoVerbose[theChrYieldConstant*NIntegrate[1-((1/nRefrC1F04[\[Lambda][ene]]))^(2),{ene,\[Epsilon]Min,\[Epsilon]Max}]*lengthRich2/1000];
-
-debugDoVerbose[theChrYieldConstant*theConstantWavLenFromToEnergy*NIntegrate[(1-((1/nRefrC1F04[\[CapitalLambda]]))^(2))/(\[CapitalLambda])^(2),{\[CapitalLambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef}]*lengthRich2/1000];
-
-(* ---- initialization cell 96 | f14ace06-a4fd-4b29-8cfc-fee885d0ef8e ---- *)
-debugDoVerbose[theChrYieldConstant*NIntegrate[1-((1/nRefrC1O02[\[Lambda][ene]]))^(2),{ene,\[Epsilon]Min,\[Epsilon]Max}]*lengthRich2/1000];
-
-debugDoVerbose[theChrYieldConstant*theConstantWavLenFromToEnergy*NIntegrate[(1-((1/nRefrC1O02[\[CapitalLambda]]))^(2))/(\[CapitalLambda])^(2),{\[CapitalLambda],\[Lambda]ThisMinRef,\[Lambda]ThisMaxRef}]*lengthRich2/1000];
-
-(* ---- initialization cell 97 | ff8ef0d9-09c3-8a45-af74-bf00011fb3f9 ---- *)
-debugDoVerbose[tagDataPlot="\<PDE\>"];
-
-debugDoVerbose["\< tagDataPlot           = \>",tagDataPlot];
-
-debugDoVerbose["\< thisDataPlotInset     = \>",thisDataPlotInset];
-
-debugDoVerbose["\< thisGraphicsInsetText = \>",thisGraphicsInsetText];
-
-debugDoVerbose["\< thisGraphicsInset     = \>",thisGraphicsInset];
-
-(* ---- initialization cell 98 | fa0278c7-85c6-524d-a669-01a1dd98c844 ---- *)
-bigBanner["\<Redefining the original xyzEnergyData for cleanup and aligning among the different sensors\>"];
-
-(* ---- initialization cell 99 | 0422f249-bacc-3846-87e7-e1210d833900 ---- *)
-LAPPDTMEnergyDataSave=LAPPDTMEnergyData;
-
-MAPMT22EnergyDataSave=MAPMT22EnergyData;
-
-MPPCHPKEnergyDataSave=MPPCHPKEnergyData;
-
-SIPMFBKEnergyDataSave=SIPMFBKEnergyData;
-
-(* ---- initialization cell 100 | 2ff1638c-a8d9-3249-8b21-90ab16814807 ---- *)
-ListPlot[{
-LAPPDTMEnergyData,
-MAPMT22EnergyData,
-MPPCHPKEnergyData,
-SIPMFBKEnergyData
-}]
-
-(**)
-
-(* ---- initialization cell 101 | 76cd3d08-ffad-7b42-9bea-bdc0483468a3 ---- *)
-LAPPDTMEnergyData
-
-MAPMT22EnergyData
-
-MPPCHPKEnergyData
-
-SIPMFBKEnergyData
-
-(* ---- initialization cell 102 | 28af72b7-ccd1-c444-b273-dfd974aaaa32 ---- *)
-LAPPDTMEnergyDataToWavLen=Map[{\[Lambda][#[[1]]],#[[2]]}&,LAPPDTMEnergyData];
-
-MAPMT22EnergyDataToWavLen=Map[{\[Lambda][#[[1]]],#[[2]]}&,MAPMT22EnergyData];
-
-MPPCHPKEnergyDataToWavLen=Map[{\[Lambda][#[[1]]],#[[2]]}&,MPPCHPKEnergyData];
-
-SIPMFBKEnergyDataToWavLen=Map[{\[Lambda][#[[1]]],#[[2]]}&,SIPMFBKEnergyData]
-
-(**)
-
-(* ---- initialization cell 103 | e98338b0-a42f-8641-a7fa-23d4f679ce08 ---- *)
-LAPPDTMEnergyDataToWavLenInterpol=Interpolation[LAPPDTMEnergyDataToWavLen];
-
-MAPMT22EnergyDataToWavLenInterpol=Interpolation[MAPMT22EnergyDataToWavLen];
-
-MPPCHPKEnergyDataToWavLenInterpol=Interpolation[MPPCHPKEnergyDataToWavLen];
-
-SIPMFBKEnergyDataToWavLenInterpol=Interpolation[SIPMFBKEnergyDataToWavLen];
-(**)
-
-LAPPDTMEnergyDataToWavLenInterpolFix[\[FormalX]_]:=Max[0,LAPPDTMEnergyDataToWavLenInterpol[\[FormalX]]];
-
-MAPMT22EnergyDataToWavLenInterpolFix[\[FormalX]_]:=Max[0,MAPMT22EnergyDataToWavLenInterpol[\[FormalX]]];
-
-MPPCHPKEnergyDataToWavLenInterpolFix[\[FormalX]_]:=Max[0,MPPCHPKEnergyDataToWavLenInterpol[\[FormalX]]];
-
-SIPMFBKEnergyDataToWavLenInterpolFix[\[FormalX]_]:=Max[0,SIPMFBKEnergyDataToWavLenInterpol[\[FormalX]]];
-(**)
-
-Print@debugMakePlots@Plot[{
-LAPPDTMEnergyDataToWavLenInterpol[\[FormalX]],
-MAPMT22EnergyDataToWavLenInterpol[\[FormalX]],
-MPPCHPKEnergyDataToWavLenInterpol[\[FormalX]],
-SIPMFBKEnergyDataToWavLenInterpol[\[FormalX]]
-},{\[FormalX],\[Lambda]MinRef,\[Lambda]MaxRef},PlotLegends->"\<Expressions\>"]
-
-(* ---- initialization cell 104 | 3d84f926-8d3e-2046-8344-012404c30152 ---- *)
-(**)
-data=Transpose[{theLambda,
-LAPPDTMEnergyDataToWavNewTable,
-MAPMT22EnergyDataToWavNewTable,
-MPPCHPKEnergyDataToWavNewTable,
-SIPMFBKEnergyDataToWavNewTable
-}=Transpose@Table[{\[FormalX],
-LAPPDTMEnergyDataToWavLenInterpolFix[\[FormalX]],
-MAPMT22EnergyDataToWavLenInterpolFix[\[FormalX]],
-MPPCHPKEnergyDataToWavLenInterpolFix[\[FormalX]],
-SIPMFBKEnergyDataToWavLenInterpolFix[\[FormalX]]
-},{\[FormalX],\[Lambda]MinRef,\[Lambda]MaxRef,1}]
-];
-(**)
-resExport=Join[{{"\<\[Lambda] (nm)\>","\<LAPPDTM\>","\<MAPMT22\>","\<MPPCHPK\>","\<SIPMFBK\>"}},
-Transpose@Join[{theLambda},Transpose[Round[data[[;;,2;;]],0.00001]]]];
-(**)
-
-(* ---- initialization cell 105 | 099465a7-0db2-774e-b9aa-816efcbb6275 ---- *)
-LAPPDTMEnergyDataNew=LAPPDTMEnergyDataToWavNewTable;
-
-MAPMT22EnergyDataNew=MAPMT22EnergyDataToWavNewTable;
-
-MPPCHPKEnergyDataNew=MPPCHPKEnergyDataToWavNewTable;
-
-SIPMFBKEnergyDataNew=SIPMFBKEnergyDataToWavNewTable;
-
-(**)
-
-LAPPDTMEnergyDataNew=Map[{\[Epsilon][#[[1]]],#[[2]]}&,Transpose@{theLambda,LAPPDTMEnergyDataToWavNewTable}];
-
-MAPMT22EnergyDataNew=Map[{\[Epsilon][#[[1]]],#[[2]]}&,Transpose@{theLambda,MAPMT22EnergyDataToWavNewTable}];
-
-MPPCHPKEnergyDataNew=Map[{\[Epsilon][#[[1]]],#[[2]]}&,Transpose@{theLambda,MPPCHPKEnergyDataToWavNewTable}];
-
-SIPMFBKEnergyDataNew=Map[{\[Epsilon][#[[1]]],#[[2]]}&,Transpose@{theLambda,SIPMFBKEnergyDataToWavNewTable}];
-
-
-(**)
-
-Print@ListPlot[{LAPPDTMEnergyData,LAPPDTMEnergyDataNew}];
-
-Print@ListPlot[{MAPMT22EnergyData,MAPMT22EnergyDataNew}];
-
-Print@ListPlot[{MPPCHPKEnergyData,MPPCHPKEnergyDataNew}];
-
-Print@ListPlot[{SIPMFBKEnergyData,SIPMFBKEnergyDataNew}];
-(**)
-
-LAPPDTMEnergyData=LAPPDTMEnergyDataNew;
-
-MAPMT22EnergyData=MAPMT22EnergyDataNew;
-
-MPPCHPKEnergyData=MPPCHPKEnergyDataNew;
-
-SIPMFBKEnergyData=SIPMFBKEnergyDataNew;
-(**)
-
-Protect[LAPPDTMEnergyData,MAPMT22EnergyData,MPPCHPKEnergyData,SIPMFBKEnergyData];
-
-(* ---- initialization cell 106 | f974af6b-d56d-ba4d-b857-6571398cd4a7 ---- *)
-(* DEBUG *)
-(*Print@TableForm[Short@resExport,TableAlignments->Center];*)
-(*Print@Iconize[TableForm@resExport];*)
-
-(* ---- initialization cell 107 | 6c4bac9b-7a09-6e46-afe0-ea57a58d0908 ---- *)
-debugDoVerbose["\<post-eval checks\>"];
-
-(* ---- initialization cell 108 | 2d19b8b8-7d77-ab4e-af30-0c1f58bfb6d3 ---- *)
-Clear[tagDataPlot,thisDataPlotInset];
-
-(* ---- initialization cell 109 | 28b7623c-a62e-0a48-82a4-ac09c4971b19 ---- *)
-debugDoVerbose[tagDataPlot="\<\>"];
-
-(* ---- initialization cell 110 | 5fafec39-2c8e-5d4e-94ce-d6d727a4f016 ---- *)
-(* !@#$% ??? Do not bulk protect still undefined variables inside := *)
-
-(* ---- initialization cell 111 | e1b5a9be-532e-534d-8049-180e17a1bddb ---- *)
-bigBanner["\<InputDataForRICH - END\>"];
-
-(* ---- initialization cell 112 | bef617e6-719c-7340-941f-37f2edd5feaf ---- *)
-endEvalPrintOut[]
+(* ---- initialization cell 112, expression 1 ---- *)
+CompoundExpression[endEvalPrintOut[]]

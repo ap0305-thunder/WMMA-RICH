@@ -3,6 +3,11 @@
 Validation`$ValidationCases = <|
   "base" -> <|
     "CompareNotebookSideEffects" -> False,
+    "EquivalentSymbolContextPatterns" -> {"base`"},
+    "EquivalentSymbolContextSourcePaths" -> {{"src", "base.wl"}},
+    (* The legacy dependency diagnostic is attached to Global`base, while the
+       successful packaged load does not retain an equivalent stateful symbol. *)
+    "IgnoreSymbolRegularExpressions" -> {"^(base|base`base)$"},
     "Original" -> <|
       "Type" -> "Notebook",
       "Path" -> {"legacy-original", "base.nb"},
@@ -95,8 +100,13 @@ Validation`$ValidationCases = <|
        Global`; the regenerated source explicitly and correctly owns that
        same set in rich`. Discover the actual names after evaluation so local
        pattern/module symbols used inside definitions are normalized too. *)
-    "EquivalentSymbolContextPatterns" -> {"rich`"},
-    "EquivalentSymbolContextSourcePaths" -> {{"src", "RICH.wl"}},
+    (* Dependencies precede the current package on the legacy context path.
+       Give exported base names precedence where the two runtime vocabularies
+       overlap (notably debugPrint and debugPrintEnabledFlag). *)
+    "EquivalentSymbolContextPatterns" -> {"base`", "rich`"},
+    "EquivalentSymbolContextSourcePaths" -> {
+      {"src", "RICH.wl"}, {"src", "base.wl"}
+    },
     "IgnoreSymbolRegularExpressions" -> {
       "^(symbolsNew|symbolsSave|rich`symbolsNew|rich`symbolsSave)$"
     },
@@ -158,13 +168,14 @@ Validation`$ValidationOptions = <|
   "EquivalentSymbolContexts" -> <|
     "myNotebookInit`" -> {
       "applySettings", "availableSettings", "bannerLine", "bigBanner",
-      "cellsByStyle", "checkProtection", "clearLoadLog",
+      "cellsByStyle", "cellStylesEditorPalette", "cellStylesScannerPalette",
+      "checkProtection", "clearLoadLog", "deleteAllEmptyCellsInNotebook",
       "endEvalPrintOut", "ensureNotebookSaved", "exportGraphicsToPDF",
       "initialContexts", "listInitializationCells", "loadMyFile",
       "killStop", "loadNeeds", "loadSavedLog", "manageMyStyleNotebook",
       "markInputCellsAsInitialization", "midBanner", "miniBanner", "nb",
       "nbFileBaseName", "nbFileDirectory", "nbFileName", "nb$",
-      "notebookPathInfo", "printA", "printD", "printMsgCell",
+      "notebookPathInfo", "prettyPrintedCellStyleNumber", "printA", "printD", "printMsgCell",
       "removeSettings", "safeNotebookBaseName", "safeNotebookDirectory",
       "safeNotebookFileName", "saveAsPdfAllOutputCells",
       "saveAsPngAllOutputCells", "saveLoadLog", "saveNotebookTextCopy",

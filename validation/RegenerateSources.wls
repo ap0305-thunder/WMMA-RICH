@@ -323,7 +323,8 @@ packageUsageSymbolNames[text_String] := DeleteDuplicates @ StringCases[
    Dependency order is significant: the first context on $ContextPath owns an
    ambiguous bare name. *)
 dependencyContextOwners[destinationPath_String] := Module[
-  {fileName, srcDirectory, dependencyContexts, dependencyNames, owners = <||>},
+  {fileName, srcDirectory, dependencyContexts, dependencyNames,
+   dependencyFile, dependencyText, owners = <||>},
   fileName = FileNameTake[destinationPath];
   srcDirectory = DirectoryName[destinationPath];
   dependencyContexts = Switch[fileName,
@@ -341,7 +342,23 @@ dependencyContextOwners[destinationPath_String] := Module[
           FileNameJoin[{srcDirectory, "myNotebookInit.wl"}],
           context
         ],
-        directContextSymbolNames[context]
+        dependencyFile = Switch[context,
+          "base`", "base.wl",
+          "statDataAnal`", "statDataAnal.wl",
+          "rich`", "RICH.wl",
+          _, None
+        ];
+        dependencyText = If[StringQ[dependencyFile],
+          Quiet@Check[
+            Import[FileNameJoin[{srcDirectory, dependencyFile}], "Text"],
+            $Failed
+          ],
+          $Failed
+        ];
+        If[StringQ[dependencyText],
+          (context <> #) & /@ packageUsageSymbolNames[dependencyText],
+          {}
+        ]
       ];
       Scan[
         Function[fullName,
@@ -447,9 +464,9 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
     "myNotebookInit`loadMyFile[\"statDataAnal.wl\"]" ->
       "If[TrueQ[Global`$RICHProjectManagedLoad], 1, myNotebookInit`loadMyFile[\"statDataAnal.wl\", DirectoryName[$InputFileName]]]",
     "myNotebookInit`loadMyFile[\"physics-general.wl\"]" ->
-      "myNotebookInit`loadMyFile[\"physics-general.wl\", DirectoryName[$InputFileName]]",
+      "If[TrueQ[Global`$RICHProjectManagedLoad], 1, myNotebookInit`loadMyFile[\"physics-general.wl\", DirectoryName[$InputFileName]]]",
     "myNotebookInit`loadMyFile[\"inputDataForRICH.wl\"]" ->
-      "myNotebookInit`loadMyFile[\"inputDataForRICH.wl\", DirectoryName[$InputFileName]]"
+      "If[TrueQ[Global`$RICHProjectManagedLoad], 1, myNotebookInit`loadMyFile[\"inputDataForRICH.wl\", DirectoryName[$InputFileName]]]"
   }]
 ];
 

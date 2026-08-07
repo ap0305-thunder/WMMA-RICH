@@ -311,7 +311,10 @@ symbolRecordHeld[
   options = Options[symbol];
   messages = Select[
     Messages[symbol],
-    FreeQ[Unevaluated[#], MessageName[_, "shdw"]] &
+    FreeQ[
+      Unevaluated[#],
+      MessageName[_, Alternatives["shdw", "usage"]]
+    ] &
   ];
   codeData = {down, sub, up, nvalues, format, defaults, attributes, options, messages};
   Join[
@@ -393,7 +396,7 @@ captureSymbols[
   names = DeleteDuplicates@Flatten[Names[# <> "*"] & /@ contexts];
   names = Select[names, ! ignoredSymbolQ[#, ignorePatterns] &];
   records =
-    Quiet@Check[
+    Quiet[
       canonicalName = canonicalSymbolName[#, aliases];
       textAliases = If[
         AnyTrue[
@@ -410,8 +413,7 @@ captureSymbols[
         textAliases,
         MemberQ[diagnosticNames, #] ||
           MemberQ[diagnosticNames, Last@StringSplit[#, "`"]]
-      ],
-      $Failed
+      ]
     ] & /@ names;
   (* Merely mentioning an otherwise undefined symbol in a held front-end
      expression creates a name, but not behavioral kernel state. *)
