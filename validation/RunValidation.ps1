@@ -264,25 +264,67 @@ if (-not $InPlace) {
 $runResults = Join-Path $runRoot "validation\results\current"
 New-Item -ItemType Directory -Force -Path $runResults | Out-Null
 
-$generator = Join-Path $runRoot "validation\RegenerateSources.wls"
 $runner = Join-Path $runRoot "validation\RunNotebookCase.wls"
 $comparer = Join-Path $runRoot "validation\CompareBaselines.wls"
 $runFailures = @()
 $stagedFiles = @()
 
-# Recreate notebook-derived source files with Wolfram's own InputText converter.
+# Native Wolfram Save As files are the maintained source baseline. Validation
+# must never regenerate or rewrite them from the legacy notebooks.
 $generationLog = Join-Path $hostLogs "source-regeneration.log"
-$generationExit = Invoke-WolframFile `
-    -Executable $executable `
-    -Script $generator `
-    -ScriptArguments @($runRoot, ($Cases -join ",")) `
-    -LogPath $generationLog `
-    -LauncherLog $launcherLog `
-    -TimeoutSeconds $ProcessTimeoutSeconds
-if ($generationExit -ne 0) {
-    throw "Source regeneration failed. See validation\results\current\logs\source-regeneration.log"
+$nativeSourceNames = @(
+    "CellStyleDataRules.wl",
+    "base.wl",
+    "physics-general.wl",
+    "statDataAnal.wl",
+    "inputDataForRICH.wl",
+    "RICH.wl",
+    "calculator-reboot.wl",
+    "calculator-reboot-native.wl"
+)
+$missingNativeSources = @(
+    foreach ($sourceName in $nativeSourceNames) {
+        $sourcePath = Join-Path $runRoot ("src\" + $sourceName)
+        if (-not (Test-Path -LiteralPath $sourcePath)) {
+            $sourcePath
+        }
+    }
+)
+if ($missingNativeSources.Count -gt 0) {
+    throw "Missing native source files: $($missingNativeSources -join ', ')"
 }
-Write-LauncherLog -Path $launcherLog -Message "Notebook-derived WL sources regenerated successfully."
+
+$calculatorSource = Join-Path $runRoot "src\calculator-reboot.wl"
+$calculatorText = [System.IO.File]::ReadAllText($calculatorSource)
+$calculatorMarker = "CALCULATOR BODY"
+$calculatorMarkerCount = ([regex]::Matches(
+    $calculatorText,
+    [regex]::Escape($calculatorMarker)
+)).Count
+if ($calculatorMarkerCount -ne 1) {
+    throw "Expected exactly one CALCULATOR BODY marker in src\calculator-reboot.wl; found $calculatorMarkerCount."
+}
+
+$calculatorNativeSource = Join-Path $runRoot "src\calculator-reboot-native.wl"
+$calculatorSourceHash = (Get-FileHash `
+    -LiteralPath $calculatorSource `
+    -Algorithm SHA256
+).Hash
+$calculatorNativeHash = (Get-FileHash `
+    -LiteralPath $calculatorNativeSource `
+    -Algorithm SHA256
+).Hash
+if ($calculatorSourceHash -cne $calculatorNativeHash) {
+    throw "src\calculator-reboot.wl differs from its complete native Save As export."
+}
+
+@(
+    "Native Wolfram Save As sources preserved; no regeneration performed.",
+    "Verified source files: $($nativeSourceNames -join ', ')",
+    "Verified one CALCULATOR BODY marker in src\calculator-reboot.wl.",
+    "Verified calculator-reboot.wl matches calculator-reboot-native.wl."
+) | Set-Content -LiteralPath $generationLog -Encoding UTF8
+Write-LauncherLog -Path $launcherLog -Message "Native WL sources verified without modification."
 
 # base.nb expects CellStyleDataRules.m beside the original notebook.
 $baseDependencySource = Join-Path $runRoot "src\CellStyleDataRules.wl"

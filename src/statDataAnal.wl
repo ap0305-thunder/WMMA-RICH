@@ -1,122 +1,471 @@
 (* ::Package:: *)
 
-(* Regenerated from statDataAnal.nb using NotebookImport without a text conversion. *)
-(* Each source cell was imported under HoldComplete, serialized in context-preserving FullForm, and syntax-checked without evaluation. *)
+(* ::Text:: *)
+(*This package/notebook defines tools for statistical data analysis.*)
+
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 1, expression 1 ---- *)
-CompoundExpression[myNotebookInit`checkNewCreatedSymbols[]]
+checkNewCreatedSymbols[]
+
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 2, expression 1 ---- *)
-CompoundExpression[Null]
+(*$NewSymbol=Print["New symbol: ",#2,#1]&*)
+
 
 (* ::Title:: *)
-(* SETUP *)
+(*SETUP*)
+
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 3, expression 1 ---- *)
-CompoundExpression[CompoundExpression[Print["*==================================================================================================*"], Null], Null, CompoundExpression[Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"], Null], Null, CompoundExpression[Print["***--- statDataAnal ---***"], Null], Null, CompoundExpression[Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"], Null], Null, CompoundExpression[Print["*==================================================================================================*"], Null]]
+Print["*==================================================================================================*"];
+Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"];
+Print["***--- statDataAnal ---***"];
+Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"];
+Print["*==================================================================================================*"];
+
 
 (* ::Title:: *)
-(* statDataAnal *)
+(*statDataAnal*)
 
-(* ::Subtitle:: *)
-(* INITIALIZATION *)
 
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 4, expression 1 ---- *)
-CompoundExpression[If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile["CellStyleDataRules.wl", DirectoryName[$InputFileName]]]]
+(* ::Subtitle::Initialization:: *)
+(*INITIALIZATION*)
+
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 5, expression 1 ---- *)
-CompoundExpression[Times[myNotebookInit`showContextInfo[], BeginPackage["statDataAnal`", List["myNotebookInit`", "base`"]], Print[" loading statDataAnal "], CompoundExpression[Begin["`Private`"], Null], CompoundExpression[End[], Null]]]
+(*Once[*)
+If[
+  ! TrueQ[Global`$RICHProjectManagedLoad],
+  myNotebookInit`loadMyFile[
+    "CellStyleDataRules.wl",
+    DirectoryName[$InputFileName]
+  ]
+]
+(*,"Notebook"]*)
+
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 6, expression 1 ---- *)
-CompoundExpression[Null]
 
-(* ::Subtitle:: *)
-(* PROBABILITY AND STATISTICS FUNCTIONS *)
+showContextInfo[]
+(**)
+BeginPackage["statDataAnal`",{"myNotebookInit`","base`"}]
+(**)
+Print[" loading statDataAnal "]
+(**)
+absSpread::usage =
+  "absSpread[data] returns Max[data] - Min[data].";
+relSpread::usage =
+  "relSpread[data] returns the absolute spread divided by Median[data].";
+standardErrorOfSampleMedian::usage =
+  "standardErrorOfSampleMedian[data] estimates the sample median error.";
+sampleSkewness::usage =
+  "sampleSkewness[data] returns the bias-corrected sample skewness.";
+standardErrorOfSampleSkewness::usage =
+  "standardErrorOfSampleSkewness[data] estimates the sample skewness error.";
+sampleKurtosis::usage =
+  "sampleKurtosis[data] returns the sample kurtosis.";
+standardErrorOfSampleKurtosis::usage =
+  "standardErrorOfSampleKurtosis[data] estimates the sample kurtosis error.";
+errSquarSum::usage =
+  "errSquarSum[data] returns the square root of the sum of squares.";
+sumInQuadr::usage =
+  "sumInQuadr[values] returns the values added in quadrature.";
+descriptiveStatistics::usage =
+  "descriptiveStatistics[data] returns the package statistics summary.";
+descriptivestatistics::usage =
+  "descriptivestatistics[data] is the legacy spelling of descriptiveStatistics.";
+descriptiveStatisticsSimpleHisto::usage =
+  "descriptiveStatisticsSimpleHisto[data] builds the histogram statistics panel.";
+simpleHistogramWithStatistics::usage =
+  "simpleHistogramWithStatistics[data] builds a histogram and statistics grid.";
+displayHistoStats::usage =
+  "displayHistoStats[data, ...] displays detailed statistics and a histogram.";
+bootstrap::usage =
+  "bootstrap[data, count, function] estimates a statistic by resampling.";
+bigBannerHisto::usage =
+  "bigBannerHisto[message] prints the statistics banner.";
+statsDisplay::usage =
+  "statsDisplay[data, ...] is the legacy detailed statistics display.";
+errorProp::usage =
+  "errorProp[expression, variables] performs first-order error propagation.";
 
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 7, expression 1 ---- *)
-CompoundExpression[CompoundExpression[Clear[statDataAnal`absSpread, statDataAnal`relSpread], Null], Null, CompoundExpression[SetDelayed[statDataAnal`absSpread[Pattern[statDataAnal`z, Blank[]]], Plus[Max[statDataAnal`z], Times[-1, Min[statDataAnal`z]]]], Null], Null, CompoundExpression[SetDelayed[statDataAnal`relSpread[Pattern[statDataAnal`z, Blank[]]], Times[Plus[Max[statDataAnal`z], Times[-1, Min[statDataAnal`z]]], Power[Median[statDataAnal`z], -1]]], Null], Null, Null]
+thisDataHisto::usage =
+  "thisDataHisto contains the data used by the legacy dynamic statistics values.";
+hdr::usage =
+  "hdr contains the column headings used by descriptive statistics displays.";
+tds::usage =
+  "tds is the formatted statistics vector for thisDataHisto.";
+ltxt::usage =
+  "ltxt is the legacy formatted statistics label vector.";
+lgd::usage =
+  "lgd is the legacy statistics legend.";
+tdsFn::usage =
+  "tdsFn[data] returns the formatted statistics vector for data.";
+ltxtFn::usage =
+  "ltxtFn[data] returns formatted statistics labels for data.";
+lgdFn::usage =
+  "lgdFn[data] returns the statistics legend for data.";
 
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 8, expression 1 ---- *)
-CompoundExpression[Times[CompoundExpression[Clear[statDataAnal`standardErrorOfSampleMedian], Null], CompoundExpression[SetDelayed[statDataAnal`standardErrorOfSampleMedian[Pattern[statDataAnal`list, Blank[]]], Module[List[statDataAnal`num, statDataAnal`result], CompoundExpression[Set[statDataAnal`num, Length[statDataAnal`list]], If[Greater[statDataAnal`num, 0], Set[statDataAnal`result, Times[Sqrt[Times[Pi, Power[2, -1]]], Times[StandardDeviation[statDataAnal`list], Power[Sqrt[statDataAnal`num], -1]]]]], Return[N[statDataAnal`result]]]]], Null]]]
+Begin["`Private`"]; (* Begin Private Context *)
+(**)
 
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 9, expression 1 ---- *)
-CompoundExpression[Times[CompoundExpression[Clear[statDataAnal`sampleSkewness], Null], CompoundExpression[SetDelayed[statDataAnal`sampleSkewness[Pattern[statDataAnal`list, Blank[]]], Module[List[statDataAnal`num, statDataAnal`result], CompoundExpression[Set[statDataAnal`num, Length[statDataAnal`list]], Set[statDataAnal`result, Skewness[statDataAnal`list]], Return[N[statDataAnal`result]]]]], Null]]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 10, expression 1 ---- *)
-CompoundExpression[Times[CompoundExpression[Clear[statDataAnal`standardErrorOfSampleSkewness], Null], CompoundExpression[SetDelayed[statDataAnal`standardErrorOfSampleSkewness[Pattern[statDataAnal`list, Blank[]]], Module[List[statDataAnal`num, statDataAnal`result], CompoundExpression[Set[statDataAnal`num, Length[statDataAnal`list]], If[Greater[statDataAnal`num, 2], Set[statDataAnal`result, Sqrt[Times[Times[6, statDataAnal`num, Plus[statDataAnal`num, -1]], Power[Times[Plus[statDataAnal`num, -2], Plus[statDataAnal`num, 1], Plus[statDataAnal`num, 3]], -1]]]]], Return[N[statDataAnal`result]]]]], Null]]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 11, expression 1 ---- *)
-CompoundExpression[Times[CompoundExpression[Clear[statDataAnal`sampleKurtosis], Null], CompoundExpression[SetDelayed[statDataAnal`sampleKurtosis[Pattern[statDataAnal`list, Blank[]]], Module[List[statDataAnal`num, statDataAnal`result], CompoundExpression[Set[statDataAnal`num, Length[statDataAnal`list]], Set[statDataAnal`result, Kurtosis[statDataAnal`list]], Return[N[statDataAnal`result]]]]], Null]]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 12, expression 1 ---- *)
-CompoundExpression[Times[CompoundExpression[Clear[statDataAnal`standardErrorOfSampleKurtosis], Null], CompoundExpression[SetDelayed[statDataAnal`standardErrorOfSampleKurtosis[Pattern[statDataAnal`list, Blank[]]], Module[List[statDataAnal`num, statDataAnal`result], CompoundExpression[Set[statDataAnal`num, Length[statDataAnal`list]], If[Greater[statDataAnal`num, 3], Set[statDataAnal`result, Sqrt[Times[Times[24, statDataAnal`num, Power[Plus[statDataAnal`num, -1], 2]], Power[Times[Plus[statDataAnal`num, -3], Plus[statDataAnal`num, -2], Plus[statDataAnal`num, 3], Plus[statDataAnal`num, 5]], -1]]]]], Return[N[statDataAnal`result]]]]], Null]]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 13, expression 1 ---- *)
-CompoundExpression[CompoundExpression[ClearAll[statDataAnal`errSquarSum], Null], Null, CompoundExpression[SetDelayed[statDataAnal`errSquarSum[Pattern[statDataAnal`x, Blank[List]]], Sqrt[Total[Map[Function[Power[Slot[1], 2]], statDataAnal`x]]]], Null], Null, CompoundExpression[ClearAll[statDataAnal`errSquarSum], Null], Null, CompoundExpression[SetDelayed[statDataAnal`errSquarSum[Pattern[statDataAnal`x, Blank[List]]], Sqrt[Total[Map[Function[Power[Slot[1], 2]], statDataAnal`x]]]], Null], Null, CompoundExpression[ClearAll[statDataAnal`sumInQuadr], Null], Null, CompoundExpression[SetDelayed[statDataAnal`sumInQuadr[Pattern[statDataAnal`x, Blank[List]]], Sqrt[Total[Power[statDataAnal`x, 2]]]], Null], Null, CompoundExpression[SetDelayed[statDataAnal`sumInQuadr[Pattern[statDataAnal`x, BlankSequence[]]], Sqrt[Total[Power[List[statDataAnal`x], 2]]]], Null], Null, VerificationTest[List[statDataAnal`sumInQuadr[3], statDataAnal`sumInQuadr[3, 4], statDataAnal`sumInQuadr[List[3, 4]], statDataAnal`sumInQuadr[List[1, 2, 2]]], List[3, 5, 5, 3], Rule[TestID, "sumInQuadr-backward-compatible"]]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 14, expression 1 ---- *)
-CompoundExpression[Times[CompoundExpression[Unprotect[statDataAnal`descriptiveStatistics, statDataAnal`descriptivestatistics, statDataAnal`tds, statDataAnal`ltxt, statDataAnal`lgd, statDataAnal`descriptiveStatisticsSimpleHisto, statDataAnal`simpleHistogramWithStatistics, statDataAnal`tdsFn, statDataAnal`ltxtFn, statDataAnal`lgdFn], Null], CompoundExpression[ClearAll[statDataAnal`thisDataHisto, statDataAnal`descriptiveStatistics, statDataAnal`descriptivestatistics, statDataAnal`tds, statDataAnal`ltxt, statDataAnal`lgd, statDataAnal`descriptiveStatisticsSimpleHisto, statDataAnal`simpleHistogramWithStatistics, statDataAnal`tdsFn, statDataAnal`ltxtFn, statDataAnal`lgdFn], Null], CompoundExpression[Set[statDataAnal`thisDataHisto, RandomReal[List[0, 1], 1000]], Null], CompoundExpression[Set[statDataAnal`hdr, List["   #  ", "  Min ", "  Max ", " Mean ", "Median", "StdDev", "Skewn.", "Kurto."]], Null], CompoundExpression[SetDelayed[statDataAnal`descriptiveStatistics[Pattern[statDataAnal`data, Blank[]]], Module[List[statDataAnal`sss], CompoundExpression[Set[statDataAnal`sss, StandardDeviation[statDataAnal`data]], List[Length[statDataAnal`data], Min[statDataAnal`data], Max[statDataAnal`data], Mean[statDataAnal`data], Median[statDataAnal`data], statDataAnal`sss, If[Greater[statDataAnal`sss, 0], Skewness[statDataAnal`data], -1], If[Greater[statDataAnal`sss, 0], Kurtosis[statDataAnal`data], -1]]]]], Null], CompoundExpression[SetDelayed[statDataAnal`descriptivestatistics[Pattern[statDataAnal`data, Blank[]]], statDataAnal`descriptiveStatistics[statDataAnal`data]], Null], CompoundExpression[SetDelayed[statDataAnal`tds, Map[Function[ToString[PaddedForm[Slot[1], List[5, 3]]]], statDataAnal`descriptiveStatistics[statDataAnal`thisDataHisto]]], Null], CompoundExpression[SetDelayed[statDataAnal`ltxt, Map[Function[StringJoin[Part[statDataAnal`hdr, Slot[1]], ":", Part[statDataAnal`tds, Slot[1]]]], Range[Length[statDataAnal`hdr]]]], Null], CompoundExpression[SetDelayed[statDataAnal`lgd, Map[Function[Text[Style[Part[statDataAnal`ltxt, Slot[1]], Bold, Rule[FontFamily, "Courier"]], Scaled[List[0.9`, Plus[1, Times[-1, 0.04`, Slot[1]]]]], List[0, 0]]], Range[Length[statDataAnal`hdr]]]], Null], CompoundExpression[SetDelayed[statDataAnal`tdsFn[Pattern[statDataAnal`data, Blank[]]], Map[Function[ToString[PaddedForm[Slot[1], List[5, 3]]]], statDataAnal`descriptiveStatistics[statDataAnal`data]]], Null], CompoundExpression[SetDelayed[statDataAnal`ltxtFn[Pattern[statDataAnal`data, Blank[]]], Map[Function[StringJoin[Part[statDataAnal`hdr, Slot[1]], ":", Part[statDataAnal`tdsFn[statDataAnal`data], Slot[1]]]], Range[Length[statDataAnal`hdr]]]], Null], CompoundExpression[SetDelayed[statDataAnal`lgdFn[Pattern[statDataAnal`data, Blank[]]], Map[Function[Text[Style[Part[statDataAnal`ltxtFn[statDataAnal`data], Slot[1]], Bold, Rule[FontFamily, "Courier"]], Scaled[List[0.9`, Plus[1, Times[-1, 0.04`, Slot[1]]]]], List[0, 0]]], Range[Length[statDataAnal`hdr]]]], Null], CompoundExpression[SetDelayed[statDataAnal`descriptiveStatisticsSimpleHisto[Pattern[statDataAnal`data, Blank[]]], List[Panel[Grid[Transpose[List[List["Min", "Max", "Mean", "Median", "StdDev", "Skew", "Kurt"], Module[List[Set[statDataAnal`sss, StandardDeviation[statDataAnal`data]]], CompoundExpression[Set[statDataAnal`z, N[Flatten[statDataAnal`data]]], If[Or[Not[VectorQ[statDataAnal`z, NumericQ]], Equal[Length[statDataAnal`z], 0]], Return[$Failed]], List[Min[statDataAnal`z], Max[statDataAnal`z], Mean[statDataAnal`z], Median[statDataAnal`z], statDataAnal`sss, If[Greater[statDataAnal`sss, 0], Skewness[statDataAnal`z], -1], If[Greater[statDataAnal`sss, 0], Kurtosis[statDataAnal`z], -1]]]]]]]]]], Null], CompoundExpression[SetDelayed[statDataAnal`simpleHistogramWithStatistics[Pattern[statDataAnal`data, Blank[]]], GraphicsGrid[List[List[Histogram[statDataAnal`data, Rule[ImageSize, Medium]], statDataAnal`descriptiveStatisticsSimpleHisto[statDataAnal`data]]]]], Null], CompoundExpression[Protect[statDataAnal`descriptiveStatistics, statDataAnal`descriptivestatistics, statDataAnal`tds, statDataAnal`ltxt, statDataAnal`lgd, statDataAnal`descriptiveStatisticsSimpleHisto, statDataAnal`simpleHistogramWithStatistics, statDataAnal`tdsFn, statDataAnal`ltxtFn, statDataAnal`lgdFn], Null]]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 15, expression 1 ---- *)
-CompoundExpression[Times[CompoundExpression[Unprotect[statDataAnal`displayHistoStats], Null], CompoundExpression[ClearAll[statDataAnal`displayHistoStats], Null], CompoundExpression[Set[Options[statDataAnal`displayHistoStats], List[Rule["BootstrapSamples", 1000], Rule["RandomSeed", Automatic]]], Null], CompoundExpression[SetDelayed[statDataAnal`displayHistoStats[Pattern[statDataAnal`z0, Blank[]], Optional[Pattern[statDataAnal`bspec, Alternatives[Blank[Integer], Blank[List], Automatic]], 10], Optional[Pattern[statDataAnal`hspec, Blank[String]], "Probability"], Pattern[statDataAnal`optsDisplayHistoStats, OptionsPattern[List[statDataAnal`displayHistoStats, Histogram]]]], Module[List[statDataAnal`z, statDataAnal`num, statDataAnal`nBootstrap, statDataAnal`\[Mu], statDataAnal`\[Sigma], statDataAnal`med, statDataAnal`cm4, statDataAnal`ske, statDataAnal`kur, statDataAnal`medDev, Set[statDataAnal`sigmaMean, -1], Set[statDataAnal`sigmaSigm, -1], Set[statDataAnal`sigmaStdDev, -1], Set[statDataAnal`sigmaMedian, -1], Set[statDataAnal`sigmaSkewness, -1], Set[statDataAnal`sigmaKurtosis, -1], statDataAnal`plot$local], CompoundExpression[Set[statDataAnal`nBootstrap, OptionValue["BootstrapSamples"]], myNotebookInit`miniBanner[" Histogram statistics summary --- !!! Assume at least 5 data elements OR die !!! "], Set[statDataAnal`nBootstrap, 1000], Set[statDataAnal`z, N[Flatten[statDataAnal`z0]]], Set[statDataAnal`num, Length[statDataAnal`z]], If[LessEqual[statDataAnal`num, 4], CompoundExpression[Print[" !@#$% displayHistoStats : # of data = ", statDataAnal`num, "  ... too few data // Return "], Return[$Failed]]], Set[statDataAnal`\[Mu], Mean[statDataAnal`z]], Set[statDataAnal`\[Sigma], StandardDeviation[statDataAnal`z]], Set[statDataAnal`med, Median[statDataAnal`z]], Set[statDataAnal`medDev, MedianDeviation[statDataAnal`z]], Set[statDataAnal`cm4, CentralMoment[statDataAnal`z, 4]], Set[statDataAnal`sigmaMean, Times[statDataAnal`\[Sigma], Power[Sqrt[statDataAnal`num], -1]]], Set[statDataAnal`ske, statDataAnal`sampleSkewness[statDataAnal`z]], Set[statDataAnal`kur, statDataAnal`sampleKurtosis[statDataAnal`z]], If[LessEqual[statDataAnal`\[Sigma], 0], CompoundExpression[Print[" !@#$% displayHistoStats : non positive \[Sigma] = ", statDataAnal`\[Sigma], "  // Return "], Return[$Failed]]], Set[statDataAnal`sigmaSigm, Sqrt[Times[Times[1, Power[Times[4, statDataAnal`num, Power[statDataAnal`\[Sigma], 2]], -1]], Plus[statDataAnal`cm4, Times[-1, Times[Plus[statDataAnal`num, -3], Power[Plus[statDataAnal`num, -1], -1]], Power[statDataAnal`\[Sigma], 4]]]]]], Set[statDataAnal`sigmaMedian, statDataAnal`bootstrap[statDataAnal`z, statDataAnal`nBootstrap, Median]], Set[statDataAnal`sigmaStdDev, statDataAnal`bootstrap[statDataAnal`z, statDataAnal`nBootstrap, StandardDeviation]], Set[statDataAnal`sigmaSkewness, statDataAnal`bootstrap[statDataAnal`z, statDataAnal`nBootstrap, Skewness]], Set[statDataAnal`sigmaKurtosis, statDataAnal`bootstrap[statDataAnal`z, statDataAnal`nBootstrap, Kurtosis]], Print[" Number of data        = ", statDataAnal`num], Print[" Mean                  = ", base`nfpm5[statDataAnal`\[Mu]], " \[PlusMinus]", base`nfpm5[statDataAnal`sigmaMean]], Print[" StDv                  = ", base`nfpm5[statDataAnal`\[Sigma]], " \[PlusMinus]", base`nfpm5[statDataAnal`sigmaSigm]], If[Greater[statDataAnal`\[Sigma], 0], CompoundExpression[Print[" Min                   = ", base`nfpm5[Min[statDataAnal`z]]], Print[" Max                   = ", base`nfpm5[Max[statDataAnal`z]]], Print[" Range                 = ", base`nfpm5[Plus[Max[statDataAnal`z], Times[-1, Min[statDataAnal`z]]]]], Print[" MedianDeviation       = ", base`nfpm5[statDataAnal`medDev]], Print[" Median                = ", base`nfpm5[statDataAnal`med], " \[PlusMinus]", base`nfpm5[statDataAnal`standardErrorOfSampleMedian[statDataAnal`z]], " (gaussian hypothesis)"], Print["                 Bootstrap median std error     = ", base`nfpm5[statDataAnal`sigmaMedian]], Print[" StandardDeviation     = ", base`nfpm5[statDataAnal`\[Sigma]], " \[PlusMinus]", base`nfpm5[statDataAnal`sigmaSigm], " (propagated from exact for variance)"], Print["                 Bootstrap StandardDeviation std error     = ", base`nfpm5[statDataAnal`sigmaStdDev]], Print[" Skewness (naive)      = ", base`nfpm5[statDataAnal`ske], " \[PlusMinus]", base`nfpm5[statDataAnal`standardErrorOfSampleSkewness[statDataAnal`z]], " (gaussian hypothesis)"], Print["                 Bootstrap skewness std error   = ", base`nfpm5[statDataAnal`sigmaSkewness]], Print[" Kurtosis (naive)      = ", base`nfpm5[statDataAnal`kur], " \[PlusMinus]", base`nfpm5[statDataAnal`standardErrorOfSampleKurtosis[statDataAnal`z]], " (gaussian hypothesis)"], Print["                 Bootstrap kurtosis std error   = ", base`nfpm5[statDataAnal`sigmaKurtosis]], Set[statDataAnal`plot$local, Histogram[statDataAnal`z, statDataAnal`bspec, statDataAnal`hspec, Apply[Sequence, FilterRules[List[statDataAnal`optsDisplayHistoStats], Options[Histogram]]], Rule[Epilog, statDataAnal`lgdFn[statDataAnal`z]]]], Print[statDataAnal`plot$local], myNotebookInit`miniBanner["{num, \[Mu], \[Sigma], skew, kurt , sigmaMean, sigmaSigm, sigmaSkew, sigmaKurt, med, medDev}"], Return[List[statDataAnal`plot$local, List[statDataAnal`num, statDataAnal`\[Mu], statDataAnal`\[Sigma], statDataAnal`ske, statDataAnal`kur, statDataAnal`sigmaMean, statDataAnal`sigmaSigm, statDataAnal`standardErrorOfSampleSkewness[statDataAnal`z], statDataAnal`standardErrorOfSampleKurtosis[statDataAnal`z], statDataAnal`med, statDataAnal`medDev]]], Null]]]]], Null], CompoundExpression[Protect[statDataAnal`displayHistoStats], Null]]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 16, expression 1 ---- *)
-CompoundExpression[CompoundExpression[Set[statDataAnal`data, List[7.05`, 2.49`, 16.09`, 21.3`, 19.21`, 14.88`, 16.41`, 0.19`, 9.71`, 10.18`, 8.81`, 2.93`, 18.11`, 22.2`, 9.79`, 14.74`, 4.54`, 16.76`, 8.46`, 24.9`]], Null], Null, CompoundExpression[Print[TableForm[List[statDataAnal`hdr, statDataAnal`descriptivestatistics[statDataAnal`data]], Rule[TableAlignments, Center]]], Null], Null, CompoundExpression[ClearAll[statDataAnal`bootstrap], Null], Null, CompoundExpression[SetDelayed[statDataAnal`bootstrap[Pattern[statDataAnal`data, Blank[]], Pattern[statDataAnal`numSamples, Blank[]], Pattern[statDataAnal`func, BlankSequence[]]], Module[List[statDataAnal`ests, statDataAnal`qBootstrapResult], CompoundExpression[Set[statDataAnal`ests, Table[statDataAnal`func[RandomChoice[statDataAnal`data, Length[statDataAnal`data]]], List[statDataAnal`numSamples]]], Set[statDataAnal`qBootstrapResult, List[Mean[statDataAnal`ests], StandardDeviation[statDataAnal`ests]]], Return[statDataAnal`qBootstrapResult]]]], Null]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 17, expression 1 ---- *)
-CompoundExpression[Times[CompoundExpression[Set[statDataAnal`numSim, 1000], Null], CompoundExpression[Set[statDataAnal`numBoo, 100], Null], Mean[GammaDistribution[Subscript[statDataAnal`\[Alpha], 0], Subscript[statDataAnal`\[Beta], 0]]], CompoundExpression[Set[Subscript[statDataAnal`\[Alpha], 0], 2], Null], CompoundExpression[Set[Subscript[statDataAnal`\[Beta], 0], 30], Null], Plot[PDF[GammaDistribution[Subscript[statDataAnal`\[Alpha], 0], Subscript[statDataAnal`\[Beta], 0]], statDataAnal`x], List[statDataAnal`x, 0, Quantile[GammaDistribution[Subscript[statDataAnal`\[Alpha], 0], Subscript[statDataAnal`\[Beta], 0]], 0.9`]]], CompoundExpression[Set[statDataAnal`gdata, BlockRandom[CompoundExpression[SeedRandom[1], RandomVariate[GammaDistribution[Subscript[statDataAnal`\[Alpha], 0], Subscript[statDataAnal`\[Beta], 0]], statDataAnal`numSim]]]], Null], Histogram[statDataAnal`gdata], SetDelayed[statDataAnal`params, ReplaceAll[List[statDataAnal`\[Alpha], statDataAnal`\[Beta]], FindDistributionParameters[RandomChoice[statDataAnal`gdata, Length[statDataAnal`gdata]], GammaDistribution[statDataAnal`\[Alpha], statDataAnal`\[Beta]]]]], Set[statDataAnal`ests, Table[statDataAnal`params, List[statDataAnal`numBoo]]], Map[Histogram, Transpose[statDataAnal`ests]], MatrixForm[Correlation[statDataAnal`ests]]]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 18, expression 1 ---- *)
-CompoundExpression[CompoundExpression[SetDelayed[statDataAnal`bigBannerHisto[Optional[Pattern[statDataAnal`w, BlankSequence[]], ""]], Module[List[], CompoundExpression[Print["*==================================================================================================*"], Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"], Print["***\n", statDataAnal`w, "\n ***"], Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"], Print["*==================================================================================================*"], Null]]], Null]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 19, expression 1 ---- *)
-CompoundExpression[Times[CompoundExpression[Clear[statDataAnal`statsDisplay], Null], CompoundExpression[SetDelayed[statDataAnal`statsDisplay[Pattern[statDataAnal`z0, Blank[]], Optional[Pattern[statDataAnal`showOut, Blank[]], True], Optional[Pattern[statDataAnal`nBootstrap, Blank[]], 0], Optional[Pattern[statDataAnal`nBins, Blank[]], 100], Optional[Pattern[statDataAnal`title, Blank[]], ""]], Module[List[statDataAnal`num, statDataAnal`cm1, statDataAnal`cm2, statDataAnal`cm3, statDataAnal`cm4, statDataAnal`z, statDataAnal`sigmaMedian, statDataAnal`sigmaSkewness, statDataAnal`sigmaKurtosis, base`nf, statDataAnal`\[Mu], statDataAnal`\[Sigma], statDataAnal`sigmaMean, statDataAnal`sigmaSigma], CompoundExpression[SetDelayed[base`nf[Pattern[statDataAnal`z, Blank[]]], PaddedForm[N[statDataAnal`z], List[10, 6]]], Set[statDataAnal`num, Length[statDataAnal`z0]], If[LessEqual[statDataAnal`num, 3], CompoundExpression[Print[" ERROR : only ******* ", statDataAnal`num, " ******* data: too few for all statistics here"], Return[]]], Set[statDataAnal`z, N[statDataAnal`z0]], Set[statDataAnal`\[Mu], Set[statDataAnal`cm1, Mean[statDataAnal`z]]], Set[statDataAnal`\[Sigma], Set[statDataAnal`cm2, StandardDeviation[statDataAnal`z]]], Set[statDataAnal`cm3, CentralMoment[statDataAnal`z, 3]], Set[statDataAnal`cm4, CentralMoment[statDataAnal`z, 4]], Set[statDataAnal`sigmaMean, Times[statDataAnal`\[Sigma], Power[Sqrt[statDataAnal`num], -1]]], Set[statDataAnal`sigmaSigma, Sqrt[Times[Times[1, Power[Times[4, statDataAnal`num, Power[statDataAnal`\[Sigma], 2]], -1]], Plus[statDataAnal`cm4, Times[-1, Times[Plus[statDataAnal`num, -3], Power[Plus[statDataAnal`num, -1], -1]], Power[statDataAnal`\[Sigma], 4]]]]]], If[Greater[statDataAnal`nBootstrap, 0], CompoundExpression[Set[statDataAnal`sigmaMedian, statDataAnal`bootstrap[statDataAnal`z, statDataAnal`nBootstrap, Median]], Set[statDataAnal`sigmaSkewness, statDataAnal`bootstrap[statDataAnal`z, statDataAnal`nBootstrap, Skewness]], Set[statDataAnal`sigmaKurtosis, statDataAnal`bootstrap[statDataAnal`z, statDataAnal`nBootstrap, Kurtosis]]], CompoundExpression[Set[statDataAnal`sigmaMedian, -1], Set[statDataAnal`sigmaSkewness, -1], Set[statDataAnal`sigmaKurtosis, -1]]], If[Equal[statDataAnal`showOut, True], CompoundExpression[myNotebookInit`miniBanner[" Histogram statistics summary --- !!! Assume at least 5 data elements OR die !!! "], Print[" Stats :  # f data  =   ", statDataAnal`num], Print[" Stats :  Mean      = ", base`nf[statDataAnal`\[Mu]], " \[PlusMinus] ", base`nf[statDataAnal`sigmaMean]], Print[" Stats :  StdDev    = ", base`nf[statDataAnal`\[Sigma]], " \[PlusMinus] ", base`nf[statDataAnal`sigmaSigma]], Print[" Stats :  Var       = ", base`nf[Power[statDataAnal`\[Sigma], 2]], " \[PlusMinus] ", base`nf[Times[2, statDataAnal`\[Sigma], statDataAnal`sigmaSigma]]], Print[" Stats :  Min       = ", base`nf[Min[statDataAnal`z]]], Print[" Stats :  Max       = ", base`nf[Max[statDataAnal`z]]], Print[" Stats :  Range     = ", base`nf[Plus[Max[statDataAnal`z], Times[-1, Min[statDataAnal`z]]]]], Print[" Stats :  Sq. RMS   = ", base`nf[Times[Plus[Max[statDataAnal`z], Times[-1, Min[statDataAnal`z]]], Power[Sqrt[12], -1]]]], Print[" Stats :  median    = ", base`nf[Median[statDataAnal`z]], " \[PlusMinus]", base`nf[statDataAnal`standardErrorOfSampleMedian[statDataAnal`z]], " (gaussian hypothesis)"], If[Greater[statDataAnal`nBootstrap, 0], Print["                 Bootstrap median StdErr     =", base`nf[statDataAnal`sigmaMedian]]], Print[" Stats :  skewness (naive)      = ", base`nf[statDataAnal`sampleSkewness[statDataAnal`z]], " \[PlusMinus]", base`nf[statDataAnal`standardErrorOfSampleSkewness[statDataAnal`z]], " (gaussian hypothesis)"], If[Greater[statDataAnal`nBootstrap, 0], Print["                 Bootstrap skewness StdErr   =", base`nf[statDataAnal`sigmaSkewness]]], Print[" Stats :  kurtosis (naive)      = ", base`nf[statDataAnal`sampleKurtosis[statDataAnal`z]], " \[PlusMinus]", base`nf[statDataAnal`standardErrorOfSampleKurtosis[statDataAnal`z]], " (gaussian hypothesis)"], If[Greater[statDataAnal`nBootstrap, 0], Print["                 Bootstrap kurtosis StdErr   =", base`nf[statDataAnal`sigmaKurtosis]]]]], Show[Histogram[Flatten[statDataAnal`z], statDataAnal`nBins, Rule[PlotLabel, statDataAnal`title]]]]]], Null]]]
-
-(* ::Subsection:: *)
-(* error propagation formulas *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 20, expression 1 ---- *)
-CompoundExpression[Manipulate[CompoundExpression[Set[statDataAnal`varlist, ToExpression[statDataAnal`variables]], Set[statDataAnal`funct, ToExpression[statDataAnal`function]], base`errorFunction[statDataAnal`variables, statDataAnal`function]], List[statDataAnal`variables, "{M,m}"], List[statDataAnal`function, "g*(M-m)/(M+m)"], Rule[LabelStyle, List[Rule[FontSize, 17]]], Rule[AutoAction, False], RuleDelayed[Initialization, SetDelayed[base`errorFunction[Pattern[statDataAnal`v, Blank[]], Pattern[statDataAnal`theFunc, Blank[]]], CompoundExpression[Set[statDataAnal`varlist, ToExpression[statDataAnal`v]], Set[statDataAnal`funct, ToExpression[statDataAnal`theFunc]], Set[statDataAnal`varlength, Length[Variables[statDataAnal`varlist]]], Set[statDataAnal`theoretical, Sqrt[Total[Table[Power[Times[D[statDataAnal`funct, Part[statDataAnal`varlist, statDataAnal`n]], Subscript[statDataAnal`U, Part[statDataAnal`varlist, statDataAnal`n]]], 2], List[statDataAnal`n, 1, statDataAnal`varlength]]]]], Part[statDataAnal`theoretical, 1], statDataAnal`varlist, Set[statDataAnal`uncert, Table[Subscript[statDataAnal`U, Part[statDataAnal`varlist, statDataAnal`n]], List[statDataAnal`n, 1, statDataAnal`varlength]]], Set[statDataAnal`uncert, DeleteCases[statDataAnal`uncert, Apply[Alternatives, List[0]]]], Set[statDataAnal`theoretical, Simplify[statDataAnal`theoretical]], Column[List[Row[List[Grid[List[List["Variables", statDataAnal`varlist], List["Uncertainties", statDataAnal`uncert], List["Function", statDataAnal`function], List["Uncertainty Function", statDataAnal`theoretical]], Rule[Alignment, Left], Rule[Spacings, List[2, 1]], Rule[Frame, All], Rule[ItemStyle, List["Text", Rule[FontSize, 20]]], Rule[Background, List[List[LightGray, None]]]]]], Row[List[Grid[List[List["Brian Gennow  March/24/2015"]], Rule[Alignment, Left], Rule[Spacings, List[2, 1]], Rule[ItemStyle, "Text"], Rule[Background, List[List[None]]]]]]]]]]]]]
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 21, expression 1 ---- *)
-CompoundExpression[CompoundExpression[ClearAll[statDataAnal`errorProp], Null], Null, CompoundExpression[SetDelayed[statDataAnal`errorProp[Pattern[statDataAnal`func, Blank[]], Pattern[statDataAnal`vars, Blank[]]], Module[List[Set[statDataAnal`derivs, Table[0, List[Length[statDataAnal`vars]]]], statDataAnal`funcErrorForm, statDataAnal`funcEval, statDataAnal`funcErrorEval, statDataAnal`rplcVals, statDataAnal`rplcErrors], CompoundExpression[Table[Set[Part[statDataAnal`derivs, statDataAnal`ii], D[statDataAnal`func, Part[statDataAnal`vars, statDataAnal`ii, 1]]], List[statDataAnal`ii, 1, Length[statDataAnal`vars]]], Set[statDataAnal`funcErrorForm, Sqrt[Sum[Power[Times[Part[statDataAnal`derivs, statDataAnal`ii], Part[statDataAnal`vars, statDataAnal`ii, 3]], 2], List[statDataAnal`ii, Length[statDataAnal`vars]]]]], SetAttributes[statDataAnal`rplcVals, Listable], Set[statDataAnal`rplcVals, Table[RuleDelayed[Evaluate[Part[statDataAnal`vars, statDataAnal`ii, 1]], Evaluate[Part[statDataAnal`vars, statDataAnal`ii, 2]]], List[statDataAnal`ii, Length[statDataAnal`vars]]]], SetAttributes[statDataAnal`rplcErrors, Listable], Set[statDataAnal`rplcErrors, Table[RuleDelayed[Evaluate[Part[statDataAnal`vars, statDataAnal`ii, 3]], Evaluate[Part[statDataAnal`vars, statDataAnal`ii, 4]]], List[statDataAnal`ii, Length[statDataAnal`vars]]]], Set[statDataAnal`funcEval, ReplaceAll[statDataAnal`func, statDataAnal`rplcVals]], Set[statDataAnal`funcErrorEval, ReplaceAll[ReplaceAll[statDataAnal`funcErrorForm, statDataAnal`rplcVals], statDataAnal`rplcErrors]], Return[List[statDataAnal`funcErrorForm, statDataAnal`funcEval, statDataAnal`funcErrorEval]], Null]]], Null]]
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 22, expression 1 ---- *)
-CompoundExpression[Null]
 
-(* ::Subtitle:: *)
-(* END *)
 
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 23, expression 1 ---- *)
-CompoundExpression[EndPackage[]]
+
+(* ::Subtitle::Initialization:: *)
+(*PROBABILITY AND STATISTICS FUNCTIONS*)
+
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 24, expression 1 ---- *)
-CompoundExpression[myNotebookInit`checkNewCreatedSymbols[]]
+Clear[absSpread,relSpread];
+absSpread[z_]:=Max[z]-Min[z];
+relSpread[z_]:=(Max[z]-Min[z])/Median[z];
+(**)
+
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 25, expression 1 ---- *)
-CompoundExpression[CompoundExpression[myNotebookInit`endEvalPrintOut[], Null]]
+(* Only for normal distribution *)
+Clear[standardErrorOfSampleMedian];
+standardErrorOfSampleMedian[list_]:=Module[{num,result},
+num=Length[list];
+If[num>0,
+result=Sqrt[Pi/2]*(StandardDeviation[list]/Sqrt[num])
+];
+Return[N[result]]
+];
+
+
+(* ::Input::Initialization:: *)
+(*https://www.itl.nist.gov/div898/handbook/eda/section3/eda35b.htm*)
+Clear[sampleSkewness];
+sampleSkewness[list_]:=Module[{num,result},
+num=Length[list];
+result=Skewness[list];
+Return[N[result]]
+];
+(**)
+
+
+(* ::Input::Initialization:: *)
+(*https://www.itl.nist.gov/div898/handbook/eda/section3/eda35b.htm*)
+(* Only for normal distribution *)
+Clear[standardErrorOfSampleSkewness];
+standardErrorOfSampleSkewness[list_]:=Module[{num,result},
+num=Length[list];
+If[num>2,
+result=Sqrt[((6*num*(num-1))/((num-2)*(num+1)*(num+3)))]
+];
+Return[N[result]]
+];
+(**)
+
+
+(* ::Input::Initialization:: *)
+(*https://www.itl.nist.gov/div898/handbook/eda/section3/eda35b.htm*)
+Clear[sampleKurtosis];
+sampleKurtosis[list_]:=Module[{num,result},
+num=Length[list];
+result=Kurtosis[list];
+Return[N[result]]
+];
+(**)
+
+
+(* ::Input::Initialization:: *)
+(*https://www.itl.nist.gov/div898/handbook/eda/section3/eda35b.htm*)
+(* Only for normal distribution *)
+Clear[standardErrorOfSampleKurtosis];
+standardErrorOfSampleKurtosis[list_]:=Module[{num,result},
+num=Length[list];
+If[num>3,
+result=Sqrt[((24*num*(num-1)^2)/((num-3)*(num-2)*(num+3)*(num+5)))]
+];
+Return[N[result]]
+];
+(**)
+
+
+(* ::Input::Initialization:: *)
+ClearAll[errSquarSum];
+errSquarSum[x_List]:=Sqrt@Total[Map[#^2&,x]];
+ClearAll[sumInQuadr];
+sumInQuadr[x__]:=Sqrt[Total[Map[#^2&,x]]];
+
+
+(* ::Input::Initialization:: *)
+(**)
+(**************************************************************************************************)
+(* NEW Statistics Palette *)
+(**************************************************************************************************)
+Unprotect[descriptiveStatistics,descriptivestatistics,tds,ltxt,lgd,descriptiveStatisticsSimpleHisto,simpleHistogramWithStatistics,tdsFn,ltxtFn,lgdFn];
+ClearAll[thisDataHisto,descriptiveStatistics,descriptivestatistics,tds,ltxt,lgd,descriptiveStatisticsSimpleHisto,simpleHistogramWithStatistics,tdsFn,ltxtFn,lgdFn];
+
+thisDataHisto=RandomReal[{0,1},1000];  (*default test data,unchanged*)
+
+hdr={"   #  ","  Min ","  Max "," Mean ","Median","StdDev","Skewn.","Kurto."};
+
+(*\[HorizontalLine]\[HorizontalLine] new canonical function \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]*)
+descriptiveStatistics[data_]:=Module[{sss},sss=StandardDeviation[data];
+{Length[data],Min[data],Max[data],Mean[data],Median[data],sss,If[sss>0,Skewness[data],-1],If[sss>0,Kurtosis[data],-1]}];
+
+(*\[HorizontalLine]\[HorizontalLine] back-compat alias \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]*)
+descriptivestatistics[data_]:=descriptiveStatistics[data];
+
+(*unchanged from original\[LongDash]OwnValues,back-compat preserved*)
+tds:=ToString@PaddedForm[#,{5,3}]&/@descriptiveStatistics[thisDataHisto];
+ltxt:=StringJoin[hdr[[#]],":",tds[[#]]]&/@Range[Length[hdr]];
+lgd:=Text[Style[ltxt[[#]],Bold,FontFamily->"Courier"],Scaled[{0.9,1-0.04#}],{0,0}]&/@Range[Length[hdr]];
+
+(*new parametric versions\[LongDash]different names,no clash*)
+tdsFn[data_]:=ToString@PaddedForm[#,{5,3}]&/@descriptiveStatistics[data];
+ltxtFn[data_]:=StringJoin[hdr[[#]],":",tdsFn[data][[#]]]&/@Range[Length[hdr]];
+lgdFn[data_]:=Text[Style[ltxtFn[data][[#]],Bold,FontFamily->"Courier"],Scaled[{0.9,1-0.04#}],{0,0}]&/@Range[Length[hdr]];
+
+
+(*\[HorizontalLine]\[HorizontalLine] unchanged \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]*)
+descriptiveStatisticsSimpleHisto[data_]:={Panel@Grid@Transpose@{{"Min","Max","Mean","Median","StdDev","Skew","Kurt"},
+Module[{sss=StandardDeviation[data]},
+z=N@Flatten[data];
+If[!VectorQ[z,NumericQ]||Length[z]==0,Return[$Failed]];
+{Min[z],Max[z],Mean[z],Median[z],sss,If[sss>0,Skewness[z],-1],If[sss>0,Kurtosis[z],-1]}
+]
+}
+};
+
+simpleHistogramWithStatistics[data_]:=GraphicsGrid[{{Histogram[data,ImageSize->Medium],descriptiveStatisticsSimpleHisto@data}}];
+
+Protect[descriptiveStatistics,descriptivestatistics,tds,ltxt,lgd,descriptiveStatisticsSimpleHisto,simpleHistogramWithStatistics,tdsFn,ltxtFn,lgdFn];
+
+
+(* ::Input::Initialization:: *)
+(*==================================================================================================*)
+(* NEWER than statsdisplay *)
+(*==================================================================================================*)
+(**************************************************************************************************)
+(* displayHistoStats *)
+(**************************************************************************************************)
+(* Beware: default bspec and hspec do not work, forse boh.... *)
+Unprotect[displayHistoStats];
+ClearAll[displayHistoStats];
+Options[displayHistoStats]={"BootstrapSamples"->1000,"RandomSeed"->Automatic};
+displayHistoStats[z0_,
+bspec:(_Integer|_List|Automatic):10,hspec_String:"Probability",optsDisplayHistoStats:OptionsPattern[{displayHistoStats,Histogram}]
+]:=
+Module[{z,num,nBootstrap,\[Mu],\[Sigma],med,cm4,ske,kur,medDev,
+sigmaMean=-1,sigmaSigm=-1,sigmaStdDev=-1,sigmaMedian=-1,sigmaSkewness=-1,sigmaKurtosis=-1,plot$local},
+(**)
+nBootstrap=OptionValue["BootstrapSamples"];
+
+miniBanner[" Histogram statistics summary --- !!! Assume at least 5 data elements OR die !!! "];
+nBootstrap=1000;
+
+z=N@Flatten[z0];(* Make z float !!! *)
+num=Length[z];
+(**)
+If[num<=4,Print[" !@#$% displayHistoStats : # of data = ",num,"  ... too few data // Return "];Return[$Failed]];
+(**)
+\[Mu]=Mean[z];
+\[Sigma]=StandardDeviation[z];
+med=Median[z];
+medDev=MedianDeviation[z];
+cm4=CentralMoment[z,4];
+sigmaMean=\[Sigma]/Sqrt[num];
+ske=sampleSkewness[z];
+kur=sampleKurtosis[z];
+(**)
+If[\[Sigma]<=0,Print[" !@#$% displayHistoStats : non positive \[Sigma] = ",\[Sigma],"  // Return "];Return[$Failed]];
+(**)
+(* this is derived from the exact for variance with propagation // for ANY distribution *)
+sigmaSigm=Sqrt[(1/(4*num*\[Sigma]^2))*(cm4-((num-3)/(num-1))*\[Sigma]^4)];
+sigmaMedian=bootstrap[z,nBootstrap,Median];
+sigmaStdDev=bootstrap[z,nBootstrap,StandardDeviation];
+sigmaSkewness=bootstrap[z,nBootstrap,Skewness];
+sigmaKurtosis=bootstrap[z,nBootstrap,Kurtosis];
+(**)
+Print[" Number of data        = ",num];
+Print[" Mean                  = ",nfpm5[\[Mu]]," \[PlusMinus]",nfpm5[sigmaMean]];
+Print[" StDv                  = ",nfpm5[\[Sigma]]," \[PlusMinus]",nfpm5[sigmaSigm]];
+If[\[Sigma]>0 ,
+Print[" Min                   = ",nfpm5[Min[z]]];
+Print[" Max                   = ",nfpm5[Max[z]]];
+Print[" Range                 = ",nfpm5[Max[z]-Min[z]]];
+Print[" MedianDeviation       = ",nfpm5[medDev]];
+Print[" Median                = ",nfpm5[med]," \[PlusMinus]",nfpm5[standardErrorOfSampleMedian[z]]," (gaussian hypothesis)"];
+Print["                 Bootstrap median std error     = ",nfpm5[sigmaMedian]];
+Print[" StandardDeviation     = ",nfpm5[\[Sigma]]," \[PlusMinus]",nfpm5[sigmaSigm]," (propagated from exact for variance)"];
+Print["                 Bootstrap StandardDeviation std error     = ",nfpm5[sigmaStdDev]];
+Print[" Skewness (naive)      = ",nfpm5[ske]," \[PlusMinus]",nfpm5[standardErrorOfSampleSkewness[z]]," (gaussian hypothesis)"];
+Print["                 Bootstrap skewness std error   = ",nfpm5[sigmaSkewness]];
+Print[" Kurtosis (naive)      = ",nfpm5[kur]," \[PlusMinus]",nfpm5[standardErrorOfSampleKurtosis[z]]," (gaussian hypothesis)"];
+Print["                 Bootstrap kurtosis std error   = ",nfpm5[sigmaKurtosis]];
+(**)
+plot$local=Histogram[z,bspec,hspec,
+Sequence@@FilterRules[{optsDisplayHistoStats},Options[Histogram]],
+Epilog->lgdFn[z]];
+Print[plot$local];
+miniBanner["{num, \[Mu], \[Sigma], skew, kurt , sigmaMean, sigmaSigm, sigmaSkew, sigmaKurt, med, medDev}"];
+          Return[{plot$local,
+{num,\[Mu],\[Sigma],ske,kur,  sigmaMean,  sigmaSigm  ,standardErrorOfSampleSkewness[z], standardErrorOfSampleKurtosis[z],med,medDev}
+}];
+]
+];
+Protect[displayHistoStats];
+(**)
+
+
+(* ::Input::Initialization:: *)
+data={7.05,2.49,16.09,21.3,19.21,14.88,16.41,0.19,9.71,10.18,8.81,2.93,18.11,22.2,9.79,14.74,4.54,16.76,8.46,24.9};
+Print[TableForm[{hdr,descriptivestatistics[data]},TableAlignments->Center]];
+(**)
+ClearAll[bootstrap];
+bootstrap[data_,numSamples_,func__]:=Module[{ests,qBootstrapResult},
+ests=Table[func[RandomChoice[data,Length[data]]],{numSamples}];
+(*Print[Histogram[ests]];*)
+qBootstrapResult={Mean[ests],StandardDeviation[ests]};
+Return[qBootstrapResult]
+];
+
+
+(* ::Input::Initialization:: *)
+(* APPLICATION *)
+(* BOOTSTRAP fit parameters *)
+numSim=1000;
+numBoo=100;
+(*Subscript[\[Alpha], 0]=.;Subscript[\[Beta], 0]=.;*)
+Mean[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]]]
+Subscript[\[Alpha], 0]=2;
+Subscript[\[Beta], 0]=30;
+Plot[PDF[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]],x],{x,0,Quantile[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]],0.9]}]
+gdata=BlockRandom[SeedRandom[1];RandomVariate[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]],numSim]];
+Histogram[gdata]
+(*FindDistributionParameters[gdata,GammaDistribution[\[Alpha],\[Beta]]];*)
+(*FindDistributionParameters[RandomChoice[gdata,Length[gdata]],GammaDistribution[\[Alpha],\[Beta]]];*)
+params:={\[Alpha],\[Beta]}/.FindDistributionParameters[RandomChoice[gdata,Length[gdata]],GammaDistribution[\[Alpha],\[Beta]]]
+ests=Table[params,{numBoo}]
+Map[Histogram,Transpose[ests]]
+Correlation[ests]//MatrixForm
+
+
+
+(* ::Input::Initialization:: *)
+bigBannerHisto[w__:""]:=Module[{},
+(*Print[" \n\n\n "];*)
+Print["*==================================================================================================*"];
+Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"];
+       Print["***\n",w,"\n ***"];
+Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"];
+       Print["*==================================================================================================*"];
+];
+
+
+(* ::Input::Initialization:: *)
+(*==================================================================================================*)
+(*OLD*)
+(*==================================================================================================*)
+Clear@statsDisplay;
+statsDisplay[z0_,showOut_:True,nBootstrap_:0,nBins_:100,title_:""]:=Module[
+{num,cm1,cm2,cm3,cm4,z,sigmaMedian,sigmaSkewness,sigmaKurtosis,nf,\[Mu],\[Sigma],sigmaMean,sigmaSigma},
+nf[z_]:=PaddedForm[N[z], {10,6}];
+num=Length[z0];
+If[num<=3,
+Print[" ERROR : only ******* ",num," ******* data: too few for all statistics here"];Return[]
+];
+z = N[z0];(* Make z Real !!! *)
+\[Mu]=cm1=Mean[z];
+\[Sigma]=cm2=StandardDeviation[z];
+cm3=CentralMoment[z,3];
+cm4=CentralMoment[z,4];
+sigmaMean=\[Sigma]/\[Sqrt]num;
+sigmaSigma=\[Sqrt]((1/(4*num*\[Sigma]^2))*(cm4-((num-3)/(num-1))\[Sigma]^4 ));
+If[nBootstrap>0,
+sigmaMedian=bootstrap[z,nBootstrap,Median];
+sigmaSkewness=bootstrap[z,nBootstrap,Skewness];
+sigmaKurtosis=bootstrap[z,nBootstrap,Kurtosis]
+,
+sigmaMedian=-1;
+sigmaSkewness=-1;
+sigmaKurtosis=-1
+];
+If[showOut==True
+,
+miniBanner[" Histogram statistics summary --- !!! Assume at least 5 data elements OR die !!! "];
+Print[" Stats :  # f data  =   ",num];
+Print[" Stats :  Mean      = ",nf[\[Mu]]," \[PlusMinus] ",nf[sigmaMean]];
+Print[" Stats :  StdDev    = ",nf[\[Sigma]]," \[PlusMinus] ",nf[sigmaSigma]];
+Print[" Stats :  Var       = ",nf[\[Sigma]^2]," \[PlusMinus] ",nf[2*\[Sigma]*sigmaSigma]];
+Print[" Stats :  Min       = ",nf[Min[z]]];
+Print[" Stats :  Max       = ",nf[Max[z]]];
+Print[" Stats :  Range     = ",nf[Max[z]-Min[z]]];
+Print[" Stats :  Sq. RMS   = ",nf[(Max[z]-Min[z])/Sqrt[12]]];
+Print[" Stats :  median    = ",nf[Median[z]]," \[PlusMinus]",nf[standardErrorOfSampleMedian[z]]," (gaussian hypothesis)"];
+If[nBootstrap>0,Print["                 Bootstrap median StdErr     =",nf[sigmaMedian]]];
+Print[" Stats :  skewness (naive)      = ",nf[sampleSkewness[z]]," \[PlusMinus]",nf[standardErrorOfSampleSkewness[z]]," (gaussian hypothesis)"];If[nBootstrap>0,Print["                 Bootstrap skewness StdErr   =",nf[sigmaSkewness]]];Print[" Stats :  kurtosis (naive)      = ",nf[sampleKurtosis[z]]," \[PlusMinus]",nf[standardErrorOfSampleKurtosis[z]]," (gaussian hypothesis)"];If[nBootstrap>0,Print["                 Bootstrap kurtosis StdErr   =",nf[sigmaKurtosis]]]
+];
+Show[Histogram[Flatten[z],nBins,PlotLabel->title]]
+];
+
+
+(* ::Subsection::Initialization:: *)
+(*error propagation formulas*)
+
+
+(* ::Input::Initialization:: *)
+Manipulate[varlist=ToExpression[variables];
+funct=ToExpression[function];
+errorFunction[variables,function],{variables,"{M,m}"},{function,"g*(M-m)/(M+m)"},LabelStyle->{FontSize->17},AutoAction->False,Initialization:>(errorFunction[v_,theFunc_]:=(varlist=ToExpression[v];
+funct=ToExpression[theFunc];
+varlength=Length[Variables[varlist]];
+theoretical=Sqrt[(Total[Table[(D[funct,Part[varlist,n]]*Subscript[U,Part[varlist,n]])^2,{n,1,varlength}]])];
+Part[theoretical,1];
+varlist;
+uncert=Table[Subscript[U,Part[varlist,n]],{n,1,varlength}];
+uncert=DeleteCases[uncert,Alternatives@@{0}];
+theoretical=Simplify[theoretical];
+Column[{Row[{Grid[{{"Variables",varlist},{"Uncertainties",uncert},{"Function",function},{"Uncertainty Function",theoretical}},Alignment->Left,Spacings->{2,1},Frame->All,ItemStyle->{"Text",FontSize->20},Background->{{LightGray,None}}]}],Row[{Grid[{{"Brian Gennow  March/24/2015"}},Alignment->Left,Spacings->{2,1},ItemStyle->"Text",Background->{{None}}]}]}]))]
+
+
+(* ::Input::Initialization:: *)
+ClearAll[errorProp];
+errorProp[func_,vars_]:=Module[{derivs=Table[0,{Length[vars]}],funcErrorForm,funcEval,funcErrorEval,rplcVals,rplcErrors},
+(*For[
+ii=1,ii<=Length[vars],ii++,derivs[[ii]]=D[func,vars[[ii,1]]];
+];*)
+Table[
+derivs[[ii]]=D[func,vars[[ii,1]]],{ii,1,Length[vars]}
+];
+funcErrorForm=Sqrt[Sum[(derivs[[ii]]*vars[[ii,3]])^2,{ii,Length[vars]}]];
+SetAttributes[rplcVals,Listable];
+rplcVals=Table[Evaluate[vars[[ii,1]]]:>Evaluate[vars[[ii,2]]],{ii,Length[vars]}];
+SetAttributes[rplcErrors,Listable];
+rplcErrors=Table[Evaluate[vars[[ii,3]]]:>Evaluate[vars[[ii,4]]],{ii,Length[vars]}];
+funcEval=func/. rplcVals;
+funcErrorEval=funcErrorForm/. rplcVals/. rplcErrors;
+Return[{funcErrorForm,funcEval,funcErrorEval}];];
+
+
+(* ::Input::Initialization:: *)
+(*Module[{dx,dy,x,y},
+ClearAll[test];
+test=Exp[Sqrt[1/y]-x/y];
+errorProp[test,{{x,0.3,dx,0.005},{y,0.9,dy,0.1}}]
+]*)
+
+
+(* ::Subtitle::Initialization:: *)
+(*END*)
+
+
+(* ::Input::Initialization:: *)
+End[]; (* End Private Context *)
+
+EndPackage[]
+
+
+(* ::Input::Initialization:: *)
+checkNewCreatedSymbols[]
+
+
+(* ::Input::Initialization:: *)
+endEvalPrintOut[];

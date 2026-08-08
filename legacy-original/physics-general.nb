@@ -12,8 +12,6 @@ Cell[CellGroupData[{
 Cell["INIT", \
 "Subtitle",ExpressionUUID->"0a8a200b-8059-ab4c-b424-b29c0b5b1070"],
 
-Cell[CellGroupData[{
-
 Cell[BoxData[{
  RowBox[{
   RowBox[{
@@ -42,6 +40,28 @@ VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*\>\"", "]"}], ";"}], "\[IndentingNewLine]",
  CellLabel->
   "5/8/26 15:46:53 \
 In[100]:=",ExpressionUUID->"b5a09d69-98d5-b74a-8d6c-005f69aeb4c0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+   RowBox[{"If", "[", 
+    RowBox[{"$Notebooks", ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+      "Get", "[", "\"\<C:\\\\Users\\\\Ale\\\\My \
+Drive\\\\allRICHWMMA\\\\myNotebookInit.wl\>\"", "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+      "Get", "[", "\"\<C:\\\\Users\\\\Ale\\\\My \
+Drive\\\\allRICHWMMA\\\\myStyle.m\>\"", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+      "Get", "[", "\"\<C:\\\\Users\\\\Ale\\\\My \
+Drive\\\\allRICHWMMA\\\\myDockedCells.wl\>\"", "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}], ";"}], "*)"}]], "Input",
+ InitializationCell->
+  True,ExpressionUUID->"43224e49-92df-9e41-9df3-43135e58a887"],
 
 Cell[CellGroupData[{
 
@@ -647,9 +667,10 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"{", 
        RowBox[{"thetaCherenkov", ",", "thetaC", ",", "thetaChr"}], "}"}], ",",
-       "Listable"}], "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+       "Listable"}], "]"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
    RowBox[{"(*", 
-    RowBox[{"NEW", " ", "GENERAL"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"NEW", " ", "GENERAL"}], "*)"}], "\n", 
    RowBox[{
     RowBox[{
      RowBox[{"thetaCherenkov", "[", 
@@ -687,8 +708,8 @@ Cell[BoxData[
         RowBox[{"n", ">=", "1"}], "&&", 
         RowBox[{"0", "<=", "\[Beta]", "<=", "1"}], "&&", 
         RowBox[{
-         RowBox[{"n", "*", "\[Beta]"}], ">", "1"}]}]}], "]"}]}], ";"}], 
-   "\[IndentingNewLine]", "\n", 
+         RowBox[{"n", "*", "\[Beta]"}], ">", "1"}]}]}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"OLD", " ", "ALIASES"}], " ", "-", " ", 
@@ -1035,8 +1056,8 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"2", " ", "Pi", " ", 
         RowBox[{
-         RowBox[{"c", "/", " ", "n"}], " ", "/", " ", "omega"}], " ", "\[IndentingNewLine]", \
-" ", "omega"}], " ", "=", 
+         RowBox[{"c", "/", " ", "n"}], " ", "/", " ", "omega"}], " ", "\[IndentingNewLine]",
+         " ", "omega"}], " ", "=", 
        RowBox[{
         RowBox[{"2", " ", "Pi", " ", 
          RowBox[{

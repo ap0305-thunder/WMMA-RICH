@@ -100,9 +100,14 @@ Validation`$ValidationCases = <|
        Global`; the regenerated source explicitly and correctly owns that
        same set in rich`. Discover the actual names after evaluation so local
        pattern/module symbols used inside definitions are normalized too. *)
-    (* Dependencies precede the current package on the legacy context path.
-       Give exported base names precedence where the two runtime vocabularies
-       overlap (notably debugPrint and debugPrintEnabledFlag). *)
+    (* Native Save As source preserves dependency calls while explicitly
+       qualifying the few RICH-owned names that collide with dependencies.
+       Record those ownership decisions before dynamic canonicalization. *)
+    "EquivalentSymbolContexts" -> <|
+      "rich`" -> {"debugPrint", "debugPrintEnabledFlag"},
+      "base`" -> {"nf", "nf1", "nf2", "nf3", "nfPad", "nfpm2", "window"},
+      "statDataAnal`" -> {"descriptivestatistics", "displayHistoStats"}
+    |>,
     "EquivalentSymbolContextPatterns" -> {"base`", "rich`"},
     "EquivalentSymbolContextSourcePaths" -> {
       {"src", "RICH.wl"}, {"src", "base.wl"}

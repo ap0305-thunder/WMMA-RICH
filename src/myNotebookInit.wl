@@ -23,7 +23,41 @@ deleteAllEmptyCellsInNotebook::usage = "deleteAllEmptyCellsInNotebook deletes no
 ensureNotebookSaved::usage = "ensureNotebookSaved[] returns the expanded full path of the current saved notebook. If no notebook front end is available, the notebook is unsaved, or its file does not exist, it emits a message and returns $Failed.";
 killStop::usage = "killStop prints a stop banner and the current MSG/Message cells, then requests EvaluatorAbort through the front end. It is a delayed symbol and is not a reliable headless kernel control-flow mechanism.";
 listInitializationCells::usage = "listInitializationCells[] returns InputForm Strings for Input or Code cells marked as initialization cells in the evaluation notebook.";
-loadMyFile::usage = "loadMyFile[file, dir:Automatic] loads dir/file exclusively when dir is an explicit directory String. With Automatic it tries Directory[]/file and then the evaluation notebook directory/file. It evaluates the resolved file with Get and returns its full path on success. Messages emitted by Get remain visible but do not by themselves cause failure. A missing file, aborted Get, or Get result of $Failed prints diagnostics, optionally opens a warning dialog, and returns $Failed; definitions created before a failure are not rolled back.";
+loadMyFile::usage = StringJoin[
+  "loadMyFile[file, dir:Automatic] loads dir/file exclusively when dir is an ",
+  "explicit directory String. With Automatic it tries Directory[]/file and then ",
+  "the evaluation notebook directory/file. It evaluates the resolved file with ",
+  "Get and returns its full path on success. Messages emitted by Get remain ",
+  "visible but do not by themselves cause failure. A missing file, aborted Get, ",
+  "or Get result of $Failed emits a detailed loadMyFile message, prints ",
+  "diagnostics, and returns $Failed; definitions created before a failure are ",
+  "not rolled back."
+];
+
+loadMyFile::nofile = StringJoin[
+  "Cannot find requested file `1`. ",
+  "Directory mode: `2`; ",
+  "current directory: `3`; ",
+  "reference directory: `4`; ",
+  "current-directory candidate: `5`; ",
+  "reference candidate: `6`. ",
+  "No file was loaded; initialization may be incomplete."
+];
+
+loadMyFile::getfail = StringJoin[
+  "Get returned $Failed while loading `1` (requested as `2`). ",
+  "Current directory: `3`; ",
+  "reference directory: `4`. ",
+  "The loaded file may have emitted earlier messages. ",
+  "Initialization may be incomplete."
+];
+
+loadMyFile::getabort = StringJoin[
+  "Loading `1` (requested as `2`) was aborted. ",
+  "Current directory: `3`; ",
+  "reference directory: `4`. ",
+  "Initialization may be incomplete."
+];
 loadNeeds::usage = "loadNeeds[context, file:Automatic] records an explicit package request and calls the unmodified System`Needs. With Automatic it uses Needs[context]; with a file String it uses Needs[context, file]. Ordinary messages remain visible. An aborted call or result of $Failed/$Aborted returns $Failed.";
 markInputCellsAsInitialization::usage = "markInputCellsAsInitialization[tf:True] sets InitializationCell -> tf on every Input-style cell in the evaluation notebook and returns the number of affected cells; tf must be True or False.";
 midBanner::usage = "midBanner[msg:\"\", char:\"-\", width:98] prints one banner line above and below an optional message and returns msg.";
@@ -582,7 +616,7 @@ timeBanner[msg_: "", char_: "-", width_: 98] :=
 (* ============================================================
    loadMyFile  \[LongDash] simplified: no message interception
    ============================================================ *)
-ClearAll[loadMyFile];
+Clear[loadMyFile];
 loadMyFile[file_String, dir : (_String | Automatic) : Automatic] := Module[
   {explicitDirQ, nbDir, cwd, local, ref, chosen, t0, t1, before, after,
    getResult, aborted = False},
@@ -620,17 +654,20 @@ loadMyFile[file_String, dir : (_String | Automatic) : Automatic] := Module[
   ];
 
   If[chosen === $Failed,
+    Message[
+      loadMyFile::nofile,
+      file,
+      If[explicitDirQ, "explicit (authoritative)", "Automatic"],
+      cwd,
+      nbDir,
+      local,
+      ref
+    ];
     Print["  WARNING: REQUIRED FILE NOT FOUND"];
     Print["  requested: ", file];
     Print["  The kernel was not quit; the session may be only partially initialized."];
     Print["[loadMyFile] END"];
     Print["============================================================"];
-    If[TrueQ[$Notebooks],
-      MessageDialog[
-        "loadMyFile warning\n\nRequired file not found:\n" <> file <>
-        "\n\nThe kernel was not quit. The session may be only partially initialized."
-      ]
-    ];
     Return[$Failed]
   ];
 
@@ -645,18 +682,35 @@ loadMyFile[file_String, dir : (_String | Automatic) : Automatic] := Module[
     $Aborted
   ];
 
-  If[aborted || getResult === $Aborted || getResult === $Failed,
-    Print["  WARNING: Get[] FAILED OR WAS ABORTED"];
+  If[aborted || getResult === $Aborted,
+    Message[
+      loadMyFile::getabort,
+      chosen,
+      file,
+      cwd,
+      nbDir
+    ];
+    Print["  WARNING: Get[] WAS ABORTED"];
     Print["  chosen: ", chosen];
     Print["  The kernel was not quit; the session may be only partially initialized."];
     Print["[loadMyFile] END"];
     Print["============================================================"];
-    If[TrueQ[$Notebooks],
-      MessageDialog[
-        "loadMyFile warning\n\nLoading failed or was aborted:\n" <> chosen <>
-        "\n\nThe kernel was not quit. The session may be only partially initialized."
-      ]
+    Return[$Failed]
+  ];
+
+  If[getResult === $Failed,
+    Message[
+      loadMyFile::getfail,
+      chosen,
+      file,
+      cwd,
+      nbDir
     ];
+    Print["  WARNING: Get[] RETURNED $Failed"];
+    Print["  chosen: ", chosen];
+    Print["  The kernel was not quit; the session may be only partially initialized."];
+    Print["[loadMyFile] END"];
+    Print["============================================================"];
     Return[$Failed]
   ];
 
