@@ -1,7 +1,0 @@
-Source regeneration failed. See validation\results\current\logs\source-regeneration.log
-At C:\Users\Ale\OneDrive - unige.it\Documenti\WolframMMAProjectRICH-Git-new\validation\RunValidation.ps1:283 char:5
-+     throw "Source regeneration failed. See validation\results\current ...
-+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : OperationStopped: (Source regenera...egeneration.log:String) [], RuntimeException
-    + FullyQualifiedErrorId : Source regeneration failed. See validation\results\current\logs\source-regeneration.log
- 
