@@ -1,7 +1,7 @@
 (* ::Package::"Tags"-><|"NoVariables" -> <|"Module" -> <|Enabled -> False|>|>|>:: *)
 
 BeginPackage["myNotebookInit`"];
-versionTAG = "v.09-05-2026";
+versionTAG = "v.08-08-2026";
 
 (* ===== Public API (lowercase-first) ===== *)
 

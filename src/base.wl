@@ -167,7 +167,7 @@ window::usage="window";
 
 Begin["`Private`"] 
 (* Begin Private Context *) 
-versionTAG="v.07-05-2026"
+versionTAG="v.08-08-2026"
 (*ResourceFunction["NotebookOutlineMenu"][EvaluationNotebook[],"Table Of Contents",{"Title","Subtitle","Subsubtitle"}]*)
 (* End Private Context *)
 

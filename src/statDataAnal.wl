@@ -107,6 +107,7 @@ lgdFn::usage =
   "lgdFn[data] returns the statistics legend for data.";
 
 Begin["`Private`"]; (* Begin Private Context *)
+versionTAG="v.08-08-2026";
 (**)
 
 

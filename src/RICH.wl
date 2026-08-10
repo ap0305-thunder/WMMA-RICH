@@ -295,7 +295,7 @@ BeginPackage[
 Print[" loading rich "]
 (**)
 Begin["`Private`"](* Begin Private Context *) 
-versionTAG="v.16-01-2025"
+versionTAG="v.08-08-2026"
 End[] (* End Private Context *)
 (**)
 checkNewCreatedSymbols[]

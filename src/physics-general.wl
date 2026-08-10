@@ -74,6 +74,10 @@ BeginPackage[
   {"myNotebookInit`", "base`"}
 ];
 
+Begin["`Private`"];
+versionTAG="v.08-08-2026";
+End[];
+
 (* ::Input::Initialization:: *)
 Unprotect[bet,beta,betaCherenkovThreshold,betaInfinity,betaPart,betaParticleFromMassAndMomentum,betaPartThr,betThr,chrnkvAngle,deltaMassSquare,energy,epsilonQuantum,gam,gamma,gammaCherenkovThreshold,gammaPart,gammaParticleFromMassAndMomentum,gamThr,m1,m2,m3,m4,m5,mass,masses,momentum,momentumCherenkovThreshold,momentumFromMassAndBeta,momentumFromMassAndGamma,momentumPart,momentumThr,momThr,numPrecision,numRelPho,precisionify,tC,tCAllPart,theHighPrecision,thePartMasses,theParts,thetaC,thetaChr,thetaChrTheMax,thisNumRelChr,thisThetaChr,toMass,tpl];
 
