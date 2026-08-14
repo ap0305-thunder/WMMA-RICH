@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Subsection::Initialization:: *)
-(*(*(* SPLIT OPTICS for RICH=2 *)*)*)
+(*(*(*(*(*(*(* SPLIT OPTICS for RICH=2 *)*)*)*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -41,23 +41,23 @@ miniBanner["\n",
 (* SIZE TRNSVRS DIM *)
 (*=========================================================================*)
 (*sizeTrnsvrsPriMir=0;*)
-sizeTrnsvrsPriMirL=265;
-sizeTrnsvrsPriMirH=700;
+sizeTrnsvrsPriMirL=265.;
+sizeTrnsvrsPriMirH=700.;
 (**)
-sizeTrnsvrsSecMirL=500;
-sizeTrnsvrsSecMirH=400;
+sizeTrnsvrsSecMirL=500.;
+sizeTrnsvrsSecMirH=400.;
 (**)
 (*sizeTrnsvrsTerMir=500;*)
 (**)
-sizeTrnsvrsScreenL=520;
-sizeTrnsvrsScreenH=670;
-sizeTrnsvrsScreenT=430;
+sizeTrnsvrsScreenL=520.;
+sizeTrnsvrsScreenH=670.;
+sizeTrnsvrsScreenT=430.;
 (**)
 (*=========================================================================*)
 (* SIZE THIRD DIM // MANY RELATIVIZED *)
 (*=========================================================================*)
 (**)
-sizeThrdDimPriMir0=2000;(* according to aperture this is half-size by def. *)
+sizeThrdDimPriMir0=2000.;(* according to aperture this is half-size by def. *)
 sizeThrdDimPriMirL:=sizeThrdDimPriMir0;(* apertPriMirL: this is half-size by def. *)
 sizeThrdDimPriMirH:=sizeThrdDimPriMir0;(* apertPriMirH: this is half-size by def. *)
 (**)
@@ -67,7 +67,7 @@ sizeThrdDimSecMirH:=sizeThrdDimSecMir0;
 (**)
 sizeThrdDimTerMir:=sizeThrdDimSecMir0;
 (**)
-sizeThrdDimScreen0=1600;
+sizeThrdDimScreen0=1600.;
 sizeThrdDimScreenL:=sizeThrdDimScreen0;
 sizeThrdDimScreenH:=sizeThrdDimScreen0;
 sizeThrdDimScreenT:=sizeThrdDimScreen0;
@@ -75,17 +75,17 @@ sizeThrdDimScreenT:=sizeThrdDimScreen0;
 (*=========================================================================*)
 (* TILT *)
 (*=========================================================================*)
-tiltPriMirLDegree=-1;
+tiltPriMirLDegree=-1.;
 tiltPriMirL:=tiltPriMirLDegree Degree; (* to radian *)
-tiltPriMirHDegree=-15.5;
+tiltPriMirHDegree=-15.;
 tiltPriMirH=tiltPriMirHDegree Degree;
 (**)
-tiltSecMirLDegree=30;
+tiltSecMirLDegree=30.;
 tiltSecMirL:=tiltSecMirLDegree Degree;(* to radian *)
-tiltSecMirHDegree=18;
+tiltSecMirHDegree=18.;
 tiltSecMirH:=tiltSecMirHDegree Degree;(* to radian *)
 (**)
-tiltTerMirDegree=385;
+tiltTerMirDegree=385.;
 tiltTerMir:=tiltTerMirDegree Degree; (* to radian *)
 (**)
 tiltScreenL=60. Degree;
@@ -98,38 +98,38 @@ tiltScreenT:=tiltScreenTDegree Degree;
 (* ABSCISSA AND ORDINATE *)
 (*=========================================================================*)
 (**)
-zPriMirL=11609;
-xPriMirL=0;
-zPriMirH=11559;
-xPriMirH=0;
-zSecMirL=9730;
-xSecMirL=300;
-zSecMirH=9750;
-xSecMirH=1770;
+zPriMirL=11609.;
+xPriMirL=0.;
+zPriMirH=11559.;
+xPriMirH=0.;
+zSecMirL=9730.;
+xSecMirL=300.;
+zSecMirH=9750.;
+xSecMirH=1770.;
 (**)
-zScreenL=11340;
-xScreenL=3100;
-zScreenH=10820;
-xScreenH=3610;
+zScreenL=11340.;
+xScreenL=3100.;
+zScreenH=10820.;
+xScreenH=3610.;
 (**)
-centerPriMirL={0,0};(*needed to define as a 2D pair*)
-centerPriMirH={0,0};(*needed to define as a 2D pair*)
-centerPriMirLRefl={0,0};(*needed to define as a 2D pair*)
-centerPriMirHRefl={0,0};(*needed to define as a 2D pair*)
+centerPriMirL={0.,0.};(*needed to define as a 2D pair*)
+centerPriMirH={0.,0.};(*needed to define as a 2D pair*)
+centerPriMirLRefl={0.,0.};(*needed to define as a 2D pair*)
+centerPriMirHRefl={0.,0.};(*needed to define as a 2D pair*)
 (**)
-edgeParaFSNear={0,0};
-edgeParaFSAway={0,0};
-edgeParaFSNearRefl={0,0};
-edgeParaFSAwayRefl={0,0};
-thetaMinPriMirL=0.0;
+edgeParaFSNear={0.,0.};
+edgeParaFSAway={0.,0.};
+edgeParaFSNearRefl={0.,0.};
+edgeParaFSAwayRefl={0.,0.};
+thetaMinPriMirL=0.;
 (**)
 (*=========================================================================*)
 (*RADII*)
 (*=========================================================================*)
-radiusSecMir=0.0;
+radiusSecMir=0.;
 radiusSecMirL:=radiusSecMir;
 radiusSecMirH:=radiusSecMir;
-radiusRefToday=8600;
+radiusRefToday=8600.;
 (*deltaRadiusL=0;BETTER TO AVOID...*)
 (*deltaRadiusH=0;BETTER TO AVOID...*)
 radiusPriMirL:=radiusRefToday*N[Sqrt[1.5]];
@@ -141,8 +141,8 @@ radiusPriMirH:=radiusRefToday;
 delta2PriMirHTrnsvrs=0.(*100.*);
 delta2PriMirHThrdDim=10.(*50.*);
 sizeTrnsvrsPriMirH2:=(*300*)sizeTrnsvrsPriMirH;
-delta1PriMirHTrnsvrs:=2*sizeTrnsvrsPriMirH2/3;
-delta1PriMirHThrdDim:=2*sizeThrdDimPriMirH/3;
+delta1PriMirHTrnsvrs:=2.*sizeTrnsvrsPriMirH2/3;
+delta1PriMirHThrdDim:=2.*sizeThrdDimPriMirH/3;
 (**)
 (*=========================================================================*)
 (*SHIFT THE PDA*)(* ??? WRONG IMPLEMENTATION: TO FIX*)
@@ -152,8 +152,8 @@ delta1PriMirHThrdDim:=2*sizeThrdDimPriMirH/3;
 (* shiftThePDAL[d_]:={zScreenL=N[zScreenL+d*Cos[tiltScreenL]],xScreenL=N[xScreenL+d*Sin[tiltScreenL]]};*)(* rubbish!!! to fix to manage PDA perpendicular shifts *)
 (* shiftThePDAH[d_]:={zScreenH=N[zScreenH+d*Cos[tiltScreenH]],xScreenH=N[xScreenH+d*Sin[tiltScreenH]]};*)(* rubbish!!! to fix to manage PDA perpendicular shifts *)
 (**)
-theShiftOfThePDAL=0.0(*-20*);(*WRONG IMPLEMENTATION: TO FIX*)
-theShiftOfThePDAH=0.0(*-1*);(*WRONG IMPLEMENTATION: TO FIX*)
+theShiftOfThePDAL=0.(*-20*);(*WRONG IMPLEMENTATION: TO FIX*)
+theShiftOfThePDAH=0.(*-1*);(*WRONG IMPLEMENTATION: TO FIX*)
 shiftThePDAL[d_]={N[zScreenL+d*Cos[tiltScreenL]],N[xScreenL+d*Sin[tiltScreenL]]};
 shiftThePDAH[d_]={N[zScreenH+d*Cos[tiltScreenH]],N[xScreenH+d*Sin[tiltScreenH]]};
 (**)
@@ -169,10 +169,10 @@ shiftThePDAH[d_]={N[zScreenH+d*Cos[tiltScreenH]],N[xScreenH+d*Sin[tiltScreenH]]}
 (*=========================================================================*)
 (*=========================================================================*)
 (**)
-{zc0L,xc0L,yc0L}:={-radiusPriMirL(*-deltaRadiusL*),0,0};(* The base surface vertex passes by the origin; then it is moved by Move *)
-{a1,b1,c1}={1,1,1};
+{zc0L,xc0L,yc0L}:={-radiusPriMirL(*-deltaRadiusL*),0.,0.};(* The base surface vertex passes by the origin; then it is moved by Move *)
+{a1,b1,c1}={1.,1.,1.};
 Print[Plot3D[ellipse3D[a1,b1,c1,radiusPriMirL,rt,r3,zc0L,xc0L,yc0L],
-{rt,-bigBox/10,+bigBox/10},{r3,-bigBox/10,+bigBox/10},
+{rt,-bigBox/10.,+bigBox/10.},{r3,-bigBox/10.,+bigBox/10.},
 AspectRatio->Automatic,Axes->True,AxesLabel->Automatic]
 ];
 (**)
@@ -181,41 +181,41 @@ AspectRatio->Automatic,Axes->True,AxesLabel->Automatic]
 (*BE CAREFUL NOT TO HAVE DUPLICATE POINTS IN THE APERTURE!!!*)
 (*OPTICA joins the first and last point of the aperture*)
 apertPriMirL:={
-{0,-sizeThrdDimPriMirL},
+{0.,-sizeThrdDimPriMirL},
 {+sizeTrnsvrsPriMirL,-sizeThrdDimPriMirL},
 {+sizeTrnsvrsPriMirL,+sizeThrdDimPriMirL},
-{0,+sizeThrdDimPriMirL}
+{0.,+sizeThrdDimPriMirL}
 };
 If[Length@apertPriMirL!=Length@DeleteDuplicates@apertPriMirL,miniBanner["STOP"];killStop];
 If[debugThisOptics==True
 ,
-apertPriMirL:=1*sizeTrnsvrsPriMirL
+apertPriMirL:=1.*sizeTrnsvrsPriMirL
 ];
 priMirrorL:=Move[
 CustomMirror[Function[Evaluate[ellipse3D[a1,b1,c1,radiusPriMirL,#1,#2,zc0L,xc0L,yc0L]]],
 apertPriMirL,
 "PRI-MIR-L",
 SurfaceRayIntersections->Symbol,
-LabelPositions->{{0,0,0}}],
+LabelPositions->{{0.,0.,0.}}],
 {{zPriMirLVar,zPriMirL},
 {xPriMirLVar,xPriMirL}},
 {tiltPriMirLVar,tiltPriMirL/Degree}];
 (**)
 (*=========================================================================*)
 (**)
-{zc0H,xc0H,yc0H}:={-radiusPriMirH(*-deltaRadiusH*),0,0};(* The base surface vertex passes by the origin; then it is moved by Move *)
-{a2,b2,c2}={1,1,1};
+{zc0H,xc0H,yc0H}:={-radiusPriMirH(*-deltaRadiusH*),0.,0.};(* The base surface vertex passes by the origin; then it is moved by Move *)
+{a2,b2,c2}={1.,1.,1.};
 Print[Plot3D[ellipse3D[a2,b2,c2,radiusPriMirH,rt,r3,zc0H,xc0H,yc0H],
-{rt,-bigBox/10,+bigBox/10},{r3,-bigBox/10,+bigBox/10},AspectRatio->Automatic,Axes->True,AxesLabel->Automatic]];
+{rt,-bigBox/10.,+bigBox/10.},{r3,-bigBox/10.,+bigBox/10.},AspectRatio->Automatic,Axes->True,AxesLabel->Automatic]];
 (**)
 (*BE CAREFUL NOT TO HAVE DUPLICATE POINTS IN THE APERTURE!!!*)
 (*OPTICA joins the first and last point of the aperture*)
 If[fullBackMirror==True,
 apertPriMirH:={
-{0,-sizeThrdDimPriMirH},
+{0.,-sizeThrdDimPriMirH},
 {+sizeTrnsvrsPriMirH,-sizeThrdDimPriMirH},
 {+sizeTrnsvrsPriMirH,+sizeThrdDimPriMirH},
-{0,+sizeThrdDimPriMirH}
+{0.,+sizeThrdDimPriMirH}
 },
 (*xPriMirH=0*)
 apertPriMirH:={
@@ -234,14 +234,14 @@ apertPriMirH:={
 If[Length@apertPriMirH!=Length@DeleteDuplicates@apertPriMirH,miniBanner["STOP"];killStop];
 If[debugThisOptics==True
 ,
-apertPriMirH:=1*sizeTrnsvrsPriMirH
+apertPriMirH:=1.*sizeTrnsvrsPriMirH
 ];
 priMirrorH:=Move[
 CustomMirror[Function[Evaluate[ellipse3D[a2,b2,c2,radiusPriMirH,#1,#2,zc0H,xc0H,yc0H]]],
 apertPriMirH,
 "PRI-MIR-H",
 SurfaceRayIntersections->Symbol,
-LabelPositions->{{0,0,0}}],
+LabelPositions->{{0.,0.,0.}}],
 {{zPriMirHVar,zPriMirH},
 {xPriMirHVar,xPriMirH}},
 {tiltPriMirHVar,tiltPriMirH/Degree}
@@ -281,7 +281,7 @@ FrontSurface->True],
 (**)
 (*=========================================================================*)
 terMirror:=Move[
-SphericalMirror[{radiusTerMirVar,0},
+SphericalMirror[{radiusTerMirVar,0.},
 {sizeTrnsvrsTerMir,sizeThrdDimTerMir},
 "TER-MIR",
 FlatSubstrate->False,
@@ -295,7 +295,7 @@ apertScreenL:={sizeTrnsvrsScreenL, sizeThrdDimScreenL};
 thePDAL:=Move[
 Screen[apertScreenL,
 "PDA-L",
-Transmittance->0,
+Transmittance->0.,
 GraphicDesign->Wire
 ],{
 {zScreenLVar,zScreenL(*=shiftThePDAL[theShiftOfThePDAL][[1]]*)},(* rubbish!!! to fix to manage PDA perpendicular shifts *)
@@ -308,7 +308,7 @@ apertScreenH:={sizeTrnsvrsScreenH, sizeThrdDimScreenH};
 thePDAH:=Move[
 Screen[apertScreenH,
 "PDA-H",
-Transmittance->0,
+Transmittance->0.,
 GraphicDesign->Wire
 ],{
 {zScreenHVar,zScreenH(*=shiftThePDAH[theShiftOfThePDAH][[1]]*)},(* rubbish!!! to fix to manage PDA perpendicular shifts *)
@@ -320,7 +320,7 @@ GraphicDesign->Wire
 thePDAT:=Move[
 Screen[{sizeTrnsvrsScreenT,sizeThrdDimScreenT},
 "PDA-T",
-Transmittance->0,
+Transmittance->0.,
 GraphicDesign->Wire
 ],
 {{zScreenTVar,zScreenT},
@@ -416,7 +416,7 @@ xSecMirLCen=ecnfL[[1]][[2]][[2]];
 zSecMirLMax=ecnfL[[1]][[3]][[1]];
 xSecMirLMax=ecnfL[[1]][[3]][[2]];
 (**)
-calcFS[centerPriMirL[[1]],centerPriMirL[[2]],radiusPriMirL,Abs[\[Pi]-tiltPriMirL Degree]];
+calcFS[centerPriMirL[[1]],centerPriMirL[[2]],radiusPriMirL,Abs[\[Pi]-tiltPriMirL]];
 (**)
 dirVectToReflectOnSecMirL=dirVect[zSecMirLMin-zSecMirLMax,xSecMirLMin-xSecMirLMax];
 (**)
@@ -448,7 +448,7 @@ xSecMirHCen=ecnfH[[1]][[2]][[2]];
 zSecMirHMax=ecnfH[[1]][[3]][[1]];
 xSecMirHMax=ecnfH[[1]][[3]][[2]];
 (**)
-calcFS[centerPriMirH[[1]],centerPriMirH[[2]],radiusPriMirH,Abs[\[Pi]-tiltPriMirH Degree]];
+calcFS[centerPriMirH[[1]],centerPriMirH[[2]],radiusPriMirH,Abs[\[Pi]-tiltPriMirH]];
 (**)
 dirVectToReflectOnSecMirH=dirVect[zSecMirHMin-zSecMirHMax,xSecMirHMin-xSecMirHMax];
 (**)
