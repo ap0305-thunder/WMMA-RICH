@@ -5,11 +5,13 @@ Begin["Validation`SourceGeneration`Private`"];
 
 ClearAll[
   flushOutput, exitWithCode, fail, commandLineArguments, truncateAtMarker,
+  topLevelTitleItemQ, takeFirstTitleSections, takeTitleSections,
   cellStyle, explicitInitializationCellQ, explicitlyNonEvaluatableQ,
   initializationCodeCells, sourceHeaderCellQ, sourceStructureCells,
   sourceHeaderText, sourceHeaderBlock, inputCellBlock,
   contextCommands, advanceImportContext,
   heldExpressionsForCell, heldExpressionsForCells, heldExpressionText,
+  compoundExpressionLineToSemicolons, compoundExpressionsToSemicolonText,
   directContextSymbolNames, usageSymbolNames, packageUsageSymbolNames,
   dependencyContextOwners, reassignDependencyContexts,
   repairGeneratedSourceText,
@@ -64,6 +66,72 @@ truncateAtMarker[expr_, marker_String] := Module[{found = False, result},
   ];
   If[TrueQ[found], result,
     Failure["CutoffMarkerNotFound", <|"Marker" -> marker|>]
+  ]
+];
+
+topLevelTitleItemQ[Cell[_, "Title", ___]] := True;
+topLevelTitleItemQ[
+  Cell[CellGroupData[{Cell[_, "Title", ___], ___}, ___], ___]
+] := True;
+topLevelTitleItemQ[_] := False;
+
+takeFirstTitleSections[expr_, count_Integer?Positive] := Module[
+  {found = False, result},
+  result = expr /. Notebook[cells_List, opts___] :> Module[
+    {titlePositions, finish},
+    titlePositions = Flatten @ Position[topLevelTitleItemQ /@ cells, True, {1}];
+    If[Length[titlePositions] < count,
+      Notebook[cells, opts],
+      found = True;
+      finish = If[
+        Length[titlePositions] > count,
+        titlePositions[[count + 1]] - 1,
+        Length[cells]
+      ];
+      Notebook[Take[cells, {First[titlePositions], finish}], opts]
+    ]
+  ];
+  If[TrueQ[found], result,
+    Failure[
+      "TitleSectionCutoffNotFound",
+      <|"RequestedTitleCount" -> count|>
+    ]
+  ]
+];
+
+takeTitleSections[expr_, requestedSections_List] := Module[
+  {found = False, result},
+  result = expr /. Notebook[cells_List, opts___] :> Module[
+    {titlePositions, sectionCount, validSections, ranges},
+    titlePositions = Flatten @ Position[topLevelTitleItemQ /@ cells, True, {1}];
+    sectionCount = Length[titlePositions];
+    validSections = DeleteDuplicates @ Select[
+      requestedSections,
+      IntegerQ[#] && 1 <= # <= sectionCount &
+    ];
+    If[validSections =!= requestedSections,
+      Notebook[cells, opts],
+      found = True;
+      ranges = Function[section,
+        With[{
+          start = titlePositions[[section]],
+          finish = If[
+            section < sectionCount,
+            titlePositions[[section + 1]] - 1,
+            Length[cells]
+          ]
+        },
+          Take[cells, {start, finish}]
+        ]
+      ] /@ validSections;
+      Notebook[Flatten[ranges, 1], opts]
+    ]
+  ];
+  If[TrueQ[found], result,
+    Failure[
+      "RequestedTitleSectionsNotFound",
+      <|"RequestedTitleSections" -> requestedSections|>
+    ]
   ]
 ];
 
@@ -337,6 +405,99 @@ heldExpressionText[held_HoldComplete, scratchPrefix_String] := Module[
   ]
 ];
 
+(* optics.wl is maintained as readable source. Convert FullForm
+   CompoundExpression[a,b,...] to the equivalent (a; b; ...), including
+   nested instances, without reformatting or evaluating any other head.
+   Strings and their escapes are copied verbatim. *)
+compoundExpressionLineToSemicolons[line_String] := Module[
+  {characters = Characters[line], length, token = "CompoundExpression[",
+   tokenLength, parse, parsed},
+  length = StringLength[line];
+  tokenLength = StringLength[token];
+
+  parse[start_Integer, stopAtClosingBracket_] := Module[
+    {index = start, squareDepth = 0, curlyDepth = 0, roundDepth = 0,
+     character, nested, tag = Unique["compoundExpressionPieces$"], harvested,
+     emit},
+    emit[piece_String] := Sow[piece, tag];
+    harvested = Reap[
+      While[index <= length,
+        character = characters[[index]];
+
+        If[character === "\"",
+          emit[character]; index++;
+          While[index <= length,
+            character = characters[[index]];
+            emit[character]; index++;
+            If[character === "\\" && index <= length,
+              emit[characters[[index]]]; index++; Continue[]
+            ];
+            If[character === "\"", Break[]]
+          ];
+          Continue[]
+        ];
+
+        If[
+          index + tokenLength - 1 <= length &&
+            StringJoin[characters[[index ;; index + tokenLength - 1]]] === token,
+          nested = parse[index + tokenLength, True];
+          If[nested === $Failed, Return[$Failed]];
+          emit["(" <> nested[[1]] <> ")"];
+          index = nested[[2]];
+          Continue[]
+        ];
+
+        If[
+          TrueQ[stopAtClosingBracket] && character === "]" &&
+            squareDepth === 0 && curlyDepth === 0 && roundDepth === 0,
+          index++;
+          Break[]
+        ];
+
+        If[
+          TrueQ[stopAtClosingBracket] && character === "," &&
+            squareDepth === 0 && curlyDepth === 0 && roundDepth === 0,
+          emit["; "],
+          emit[character];
+          Switch[character,
+            "[", squareDepth++,
+            "]", squareDepth--,
+            "{", curlyDepth++,
+            "}", curlyDepth--,
+            "(", roundDepth++,
+            ")", roundDepth--,
+            _, Null
+          ]
+        ];
+        index++
+      ],
+      tag
+    ];
+    If[
+      TrueQ[stopAtClosingBracket] && index > length + 1,
+      $Failed,
+      {StringJoin[If[harvested[[2]] === {}, {}, First[harvested[[2]]]]], index}
+    ]
+  ];
+
+  parsed = parse[1, False];
+  If[parsed === $Failed, $Failed, parsed[[1]]]
+];
+
+compoundExpressionsToSemicolonText[text_String] := Module[
+  {lines, converted},
+  lines = StringSplit[text, "\n", All];
+  converted = Map[
+    If[
+      StringStartsQ[#, "CompoundExpression["],
+      compoundExpressionLineToSemicolons[#],
+      #
+    ] &,
+    lines
+  ];
+  If[MemberQ[converted, $Failed], $Failed, StringRiffle[converted, "\n"]]
+];
+
 (* Return only symbols directly in context, excluding symbols in nested
    contexts such as base`Private`. Earlier generated files have already been
    syntax-read by the time a dependent package is repaired, so their explicit
@@ -474,14 +635,29 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
       reassignDependencyContexts[text, destinationPath]
     ], {
     "FileNameJoin[List[NotebookDirectory[], \"myStyle.nb\"]]" ->
-      "If[StringQ[Global`$RICHProjectStyleDefinitions], Global`$RICHProjectStyleDefinitions, \"myStyle.nb\"]",
+      "If[StringQ[Global`$RICHProjectStyleDefinitions], Global`$RICHProjectStyleDefinitions, FileNameJoin[List[ParentDirectory[NotebookDirectory[]], \"myStyle.nb\"]]]",
+    "FileNameJoin[{NotebookDirectory[],\"myStyle.nb\"}]" ->
+      "If[StringQ[Global`$RICHProjectStyleDefinitions],Global`$RICHProjectStyleDefinitions,FileNameJoin[{ParentDirectory[NotebookDirectory[]],\"myStyle.nb\"}]]",
     "Rule[StyleDefinitions, \"myStyle.nb\"]" ->
-      "Rule[StyleDefinitions, If[StringQ[Global`$RICHProjectStyleDefinitions], Global`$RICHProjectStyleDefinitions, \"myStyle.nb\"]]",
+      "Rule[StyleDefinitions, If[StringQ[Global`$RICHProjectStyleDefinitions], Global`$RICHProjectStyleDefinitions, FileNameJoin[List[ParentDirectory[NotebookDirectory[]], \"myStyle.nb\"]]]]",
+    "StyleDefinitions->\"myStyle.nb\"" ->
+      "StyleDefinitions->If[StringQ[Global`$RICHProjectStyleDefinitions],Global`$RICHProjectStyleDefinitions,FileNameJoin[{ParentDirectory[NotebookDirectory[]],\"myStyle.nb\"}]]",
+    "WindowTitle->StringJoin[\" ------- \",nbFileName]" ->
+      "WindowTitle->StringJoin[\" ------- \",myNotebookInit`safeNotebookBaseName[]]",
     "myNotebookInit`loadMyFile[\"CellStyleDataRules.m\"]" ->
       "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\", DirectoryName[$InputFileName]]]",
     "myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\"]" ->
       "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\", DirectoryName[$InputFileName]]]"
   }];
+  If[fileName === "CellStyleDataRules.wl",
+    repairedText = StringReplace[
+      repairedText,
+      RegularExpression[
+        "SetOptions\\[EvaluationNotebook\\[\\],AutoGeneratedPackage->Automatic,StyleDefinitions->Notebook\\[\\{[\\s\\S]*?\\}\\]\\]\\s*;"
+      ] ->
+        "SetOptions[EvaluationNotebook[],AutoGeneratedPackage->None,StyleDefinitions->If[StringQ[Global`$RICHProjectStyleDefinitions],Global`$RICHProjectStyleDefinitions,FileNameJoin[{ParentDirectory[NotebookDirectory[]],\"myStyle.nb\"}]]];"
+    ];
+  ];
   If[fileName === "calculator-reboot.wl",
     Return @ StringReplace[repairedText, {
       "loadMyFile[\"myDockedCells.wl\"]" ->
@@ -495,10 +671,56 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
       "myNotebookInit`loadMyFile[\"RICH.wl\", NotebookDirectory[]]" ->
         "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\", DirectoryName[$InputFileName]]]",
       "myNotebookInit`loadMyFile[\"RICH.wl\",NotebookDirectory[]]" ->
-        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\",DirectoryName[$InputFileName]]]"
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\",DirectoryName[$InputFileName]]]",
+      "myNotebookInit`saveVersionedCopy[myNotebookInit`versionTAG,NotebookDirectory[]]" ->
+        "myNotebookInit`saveVersionedCopy[myNotebookInit`versionTAG]",
+      "Export all Output cells to PNG (notebook dir)" ->
+        "Export all Output cells to PNG (configured output)",
+      "Export all Output cells to PDF (notebook dir)" ->
+        "Export all Output cells to PDF (configured output)",
+      "$dirBackup=\"C:\\\\Users\\\\Ale\\\\My Drive\\\\Mathematica\";" ->
+        "$dirBackup:=Global`RICHPathSetting[\"BackupDirectory\"];",
+      "$dirSWRoot=\"D:\\\\Users\\\\Ale\\\\Mathematica\";" ->
+        "$dirSWRoot:=Global`$RICHProjectRoot;",
+      "$dirSW=\"\";" ->
+        "$dirSW:=Global`RICHProjectPath[\"src\"];",
+      "$dirOut=\"C:\\\\TEMP\\\\\";" ->
+        "$dirOut:=Global`RICHPathSetting[\"OutputDirectory\"];"
+    }]
+  ];
+  If[fileName === "optics.wl",
+    Return @ StringReplace[repairedText, {
+      "FileNameJoin[List[Global`dir, \"myNotebookInit.wl\"]]" ->
+        "If[StringQ[Global`$RICHProjectRoot], Global`RICHProjectPath[\"src\", \"myNotebookInit.wl\"], FileNameJoin[List[Global`dir, \"myNotebookInit.wl\"]]]",
+      "Get[Global`pkg]" ->
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, Get[Global`pkg]]",
+      "myNotebookInit`loadMyFile[\"myDockedCells.wl\"]" ->
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"myDockedCells.wl\", DirectoryName[$InputFileName]]]",
+      "myNotebookInit`loadMyFile[\"RICH.m\", NotebookDirectory[]]" ->
+        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\", DirectoryName[$InputFileName]]]",
+      "Set[Global`$dirBackup, \"C:\\\\Users\\\\Ale\\\\My Drive\\\\Mathematica\"]" ->
+        "SetDelayed[Global`$dirBackup, Global`RICHPathSetting[\"BackupDirectory\"]]",
+      "Set[Global`$dirSWRoot, \"D:\\\\Users\\\\Ale\\\\Mathematica\"]" ->
+        "SetDelayed[Global`$dirSWRoot, Global`$RICHProjectRoot]",
+      "Set[Global`$dirSW, \"\"]" ->
+        "SetDelayed[Global`$dirSW, Global`RICHProjectPath[\"src\"]]",
+      "Set[Global`$dirSave, StringJoin[NotebookDirectory[], \"\\\\___save\"]]" ->
+        "SetDelayed[Global`$dirSave, Global`RICHPathSetting[\"BackupDirectory\"]]",
+      "Set[Global`$dirOut, \"C:\\\\TEMP\\\\\"]" ->
+        "SetDelayed[Global`$dirOut, Global`RICHPathSetting[\"OutputDirectory\"]]",
+      "Export all Output cells to PNG (notebook dir)" ->
+        "Export all Output cells to PNG (configured output)",
+      "Export all Output cells to PDF (notebook dir)" ->
+        "Export all Output cells to PDF (configured output)"
     }]
   ];
   If[fileName =!= "RICH.wl", Return[repairedText]];
+  repairedText = StringReplace[
+    repairedText,
+    RegularExpression[
+      "Export\\[\"C:\\\\\\\\TEMP\\\\\\\\\"<>([^,\\r\\n]+),"
+    ] -> "Export[Global`RICHOutputPath[$1],"
+  ];
   oldEnergy =
     "myNotebookInit`bigBanner[Times[\" integral yield function \\!\\(\\*StyleBox[\", rich`per, \",Background->RGBColor[1, 1, 0]]\\)\\!\\(\\*StyleBox[\", \",Background->RGBColor[1, 1, 0]]\\)\\!\\(\\*StyleBox[\", rich`meter, \",Background->RGBColor[1, 1, 0]]\\) all effects included (via ene calculation) \"]]";
   newEnergy =
@@ -513,7 +735,9 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
     "statDataAnal.m" -> "statDataAnal.wl",
     "physics-general.m" -> "physics-general.wl",
     "inputDataForRICH.m" -> "inputDataForRICH.wl",
-    "rich`killStop" -> "myNotebookInit`killStop"
+    "rich`killStop" -> "myNotebookInit`killStop",
+    "Print[\" loading rich \"]" ->
+      "Print[\" loading rich \"]\nIf[!StringQ[rich`title],rich`title=\" \"];"
   }];
   StringReplace[repairedText, {
     "myNotebookInit`loadMyFile[\"base.wl\"]" ->
@@ -574,10 +798,15 @@ regenerateOne[
   expression = NotebookGet[sourceNotebook];
   NotebookClose[sourceNotebook, Interactive -> False];
 
-  If[StringQ[cutoff],
-    expression = truncateAtMarker[expression, cutoff];
-    If[FailureQ[expression], Return[expression]]
+  expression = Which[
+    StringQ[cutoff], truncateAtMarker[expression, cutoff],
+    AssociationQ[cutoff] && ListQ[Lookup[cutoff, "TitleSections", None]],
+      takeTitleSections[expression, Lookup[cutoff, "TitleSections"]],
+    AssociationQ[cutoff] && IntegerQ[Lookup[cutoff, "FirstTitleSections", None]],
+      takeFirstTitleSections[expression, Lookup[cutoff, "FirstTitleSections"]],
+    True, expression
   ];
+  If[FailureQ[expression], Return[expression]];
 
   structureCells = sourceStructureCells[expression];
   cells = Select[structureCells, ! sourceHeaderCellQ[#] &];
@@ -659,6 +888,15 @@ regenerateOne[
     header <> StringRiffle[blocks, "\n\n"],
     destinationPath
   ];
+  If[FileNameTake[destinationPath] === "optics.wl",
+    generatedText = compoundExpressionsToSemicolonText[generatedText];
+    If[generatedText === $Failed,
+      Return[Failure[
+        "ReadableCompoundExpressionFormattingFailed",
+        <|"Path" -> destinationPath|>
+      ]]
+    ]
+  ];
   Export[destinationPath, generatedText, "Text"];
 
   parsedExpressionCount = generatedFileExpressionCount[destinationPath];
@@ -701,17 +939,21 @@ main[] := Module[
     <|"Key" -> "statDataAnal", "Source" -> {"legacy-original", "statDataAnal.nb"}, "Destination" -> {"src", "statDataAnal.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "inputDataForRICH", "Source" -> {"legacy-original", "inputDataForRICH.nb"}, "Destination" -> {"src", "inputDataForRICH.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "RICH-source", "Source" -> {"legacy-original", "RICH.nb"}, "Destination" -> {"src", "RICH.wl"}, "Cutoff" -> None|>,
-    <|"Key" -> "calculator-reboot", "Source" -> {"legacy-original", "calculator-reboot.nb"}, "Destination" -> {"src", "calculator-reboot.wl"}, "Cutoff" -> "CALCULATOR BODY"|>
+    <|"Key" -> "calculator-reboot", "Source" -> {"legacy-original", "calculator-reboot.nb"}, "Destination" -> {"src", "calculator-reboot.wl"}, "Cutoff" -> "CALCULATOR BODY"|>,
+    <|"Key" -> "optics", "Source" -> {"legacy-original", "optics.nb"}, "Destination" -> {"src", "optics.wl"}, "Cutoff" -> <|"TitleSections" -> {2}|>|>
   };
 
   needsAllSources = requestedCases === {} || AnyTrue[requestedCases, # =!= "base" &];
-  selectedMappings = If[
+  selectedMappings = Which[
+    requestedCases === {"optics"},
+      Select[mappings, Lookup[#, "Key"] === "optics" &],
     needsAllSources,
-    mappings,
-    Select[
       mappings,
-      MemberQ[{"base", "CellStyleDataRules-source"}, Lookup[#, "Key"]] &
-    ]
+    True,
+      Select[
+        mappings,
+        MemberQ[{"base", "CellStyleDataRules-source"}, Lookup[#, "Key"]] &
+      ]
   ];
 
   results = regenerateOne[

@@ -8,10 +8,11 @@ versionTAG = "v.08-08-2026";
 
 
 prettyPrintedCellStyleNumber::usage = "prettyPrintedCellStyleNumber prints counts for common cell styles and the total number of cells in the current notebook; it requires a notebook front end.";
-cellStylesEditorPalette::usage = "cellStylesEditorPalette creates and returns the interactive Cell Style Editor palette for the current input notebook.";
-cellStylesScannerPalette::usage = "cellStylesScannerPalette creates and returns the interactive Cell Style Scanner palette for the current input notebook.";
-manageMyStyleNotebook::usage = "manageMyStyleNotebook[] checks for myStyle.nb in the user's front-end StyleSheets directory and, if absent, copies it there from NotebookDirectory[]. It prints the outcome and requires a saved notebook front end.";
+cellStylesEditorPalette::usage = "cellStylesEditorPalette creates and returns the interactive Cell Style Editor palette for the current input notebook. Temporary preview backgrounds are restored when the preview is cleared or the palette closes.";
+cellStylesScannerPalette::usage = "cellStylesScannerPalette creates and returns the interactive Cell Style Scanner palette for the current input notebook. It scans by style or exact Boolean cell property and restores its temporary highlight when the scan changes or the palette closes.";
+manageMyStyleNotebook::usage = "manageMyStyleNotebook[] checks for myStyle.nb in the user's front-end StyleSheets directory and, if absent, copies the canonical stylesheet there from the project root. It prints the outcome and requires a saved notebook front end.";
 checkProtection::usage = "checkProtection[symbol] returns an Association describing the held symbol's name, context, and Protected state. checkProtection[{symbols...}] operates elementwise. Invalid input produces a message and returns $Failed.";
+clearAllProtected::usage = "clearAllProtected[symbol] unprotects and ClearAll-clears one non-System symbol, returning Null. A list of symbols is handled elementwise. It holds its argument and refuses System symbols; invalid input returns $Failed.";
 setProtection::usage = "setProtection[symbol, state] protects or unprotects a held non-System symbol when state is True or False and returns an Association describing the change. A list of symbols is handled elementwise; invalid input or a System` symbol returns $Failed.";
 applySettings::usage = "applySettings[name] or applySettings[{names...}] applies named notebook/front-end setting blocks from availableSettings[] and returns True after scanning the requests. Unknown names are printed and skipped.";
 availableSettings::usage = "availableSettings[] returns the list of names accepted by applySettings and removeSettings.";
@@ -59,6 +60,7 @@ loadMyFile::getabort = StringJoin[
   "Initialization may be incomplete."
 ];
 loadNeeds::usage = "loadNeeds[context, file:Automatic] records an explicit package request and calls the unmodified System`Needs. With Automatic it uses Needs[context]; with a file String it uses Needs[context, file]. Ordinary messages remain visible. An aborted call or result of $Failed/$Aborted returns $Failed.";
+recordExternalLoad::usage = "recordExternalLoad[type, target] records one load performed by trusted external loader code without calling Get or Needs. Both arguments must be strings; success returns Null.";
 markInputCellsAsInitialization::usage = "markInputCellsAsInitialization[tf:True] sets InitializationCell -> tf on every Input-style cell in the evaluation notebook and returns the number of affected cells; tf must be True or False.";
 midBanner::usage = "midBanner[msg:\"\", char:\"-\", width:98] prints one banner line above and below an optional message and returns msg.";
 miniBanner::usage = "miniBanner[msg:\"\", char:\"=\", width:98] prints one banner line above and below an optional starred message and returns msg.";
@@ -67,29 +69,35 @@ nbFileBaseName::usage = "nbFileBaseName is a delayed compatibility alias for saf
 nbFileDirectory::usage = "nbFileDirectory is a delayed compatibility alias for safeNotebookDirectory[].";
 nbFileName::usage = "nbFileName is a delayed compatibility alias for safeNotebookFileName[].";
 notebookPathInfo::usage = "notebookPathInfo[] returns an Association with keys \"FileName\", \"Directory\", and \"BaseName\" for the evaluation notebook, using the safe notebook-path fallbacks.";
+reportNotebookPaths::usage = "reportNotebookPaths[] prints the evaluation notebook object, filename, directory, and base name, and returns those values as an Association. An unsaved notebook is reported with Missing values; without a notebook front end it returns $Failed.";
+reportCellStyleInventory::usage = "reportCellStyleInventory[] prints a dynamically generated count of every cell style in the evaluation notebook and the total cell count. It returns an Association containing \"Counts\" and \"TotalCells\"; without a notebook front end it returns $Failed.";
+reportMessageCellList::usage = "reportMessageCellList[] prints an indexed list of all Message- and MSG-style CellObject expressions in the evaluation notebook and returns the CellObject list. Without a notebook front end it returns $Failed.";
 printA::usage = "printA[symbol] holds symbol, prints its unqualified name and evaluated value, and returns Null.";
 printD::usage = "printD[expr] is a HoldAll alias for showIt[expr]; it evaluates expr once, prints the held expression and value, and returns the value.";
 removeSettings::usage = "removeSettings[name] or removeSettings[{names...}] applies the registered remove action for each named setting block and returns True after scanning the requests. Some settings, such as setDirectoryToNotebook, have no undo action.";
 safeNotebookBaseName::usage = "safeNotebookBaseName[] returns FileBaseName of the evaluation notebook when its filename is a String, otherwise \"UnsavedNotebook\".";
 safeNotebookDirectory::usage = "safeNotebookDirectory[] returns DirectoryName of the evaluation notebook when its filename is a String, otherwise $HomeDirectory.";
 safeNotebookFileName::usage = "safeNotebookFileName[] quietly returns NotebookFileName[EvaluationNotebook[]]; for an unsaved or unavailable notebook the front end's failure result is returned.";
-saveAsPdfAllOutputCells::usage = "saveAsPdfAllOutputCells[dir:Automatic, imageSize:Scaled[.8]] exports every Output cell in the evaluation notebook to sequentially named PDF files and returns their full paths. Automatic uses NotebookDirectory[] with fallbacks.";
-saveAsPngAllOutputCells::usage = "saveAsPngAllOutputCells[dir:Automatic, imageSize:Scaled[.8]] exports every Output cell in the evaluation notebook to sequentially named PNG files and returns their full paths. Automatic uses NotebookDirectory[] with fallbacks.";
+saveAsPdfAllOutputCells::usage = "saveAsPdfAllOutputCells[dir:Automatic, imageSize:Scaled[.8]] exports every Output cell in the evaluation notebook to sequentially named PDF files and returns their full paths. Automatic uses the configured RICH output/notebook-cells directory.";
+saveAsPngAllOutputCells::usage = "saveAsPngAllOutputCells[dir:Automatic, imageSize:Scaled[.8]] exports every Output cell in the evaluation notebook to sequentially named PNG files and returns their full paths. Automatic uses the configured RICH output/notebook-cells directory.";
 saveNotebookTextCopy::usage = "saveNotebookTextCopy[suffix:\"-output\", ext:\"txt\"] exports NotebookGet[EvaluationNotebook[]] as Text beside the saved notebook and returns the output path, or $Failed when the notebook is not saved.";
-saveVersionedCopy::usage = "saveVersionedCopy[tag:\"\", whereDir:Automatic] saves one validated EvaluationNotebook[] to its original path, copies that saved .nb file to a timestamped destination, and exports Text from NotebookGet of the same NotebookObject. Automatic writes under $HomeDirectory/TEMP. It never uses InputNotebook[] or renames the active notebook. Success returns <|\"Notebook\" -> nbPath, \"Text\" -> textPath|>; failure returns $Failed.";
+saveVersionedCopy::usage = "saveVersionedCopy[tag:\"\", whereDir:Automatic] saves one validated EvaluationNotebook[] to its original path, copies that saved .nb file to a timestamped destination, and exports Text from NotebookGet of the same NotebookObject. Automatic uses the configured RICH backup directory. It never uses InputNotebook[] or renames the active notebook. Success returns <|\"Notebook\" -> nbPath, \"Text\" -> textPath|>; failure returns $Failed.";
 selectInitializationCells::usage = "selectInitializationCells[] visits each initialization cell with NotebookLocate and SelectCell, then returns the corresponding CellObject list. Because selections are made sequentially, the last visited cell is the final front-end selection.";
 showContextInfo::usage = "showContextInfo[] prints current context diagnostics and returns an Association containing $Context, $ContextPath, lowercase loaded packages, recently created lowercase contexts, and loaded lowercase packages absent from $ContextPath.";
 showDiagnostics::usage = "showDiagnostics[mode:\"full\"] prints notebook/session diagnostics and returns True. Supported modes are \"minimal\", \"session\", \"cells\", \"frontend\", and \"full\"; an invalid mode emits a message and returns $Failed.";
 showIt::usage = "showIt[expr] has attribute HoldAll, evaluates expr once, prints the held expression with its value, and returns that value.";
 smallBanner::usage = "smallBanner[msg:\"\", char:\"-\", width:98] prints msg when it is nonempty; otherwise it prints a line made from char and width. It returns msg.";
 superClearSet::usage = "superClearSet[symbol, short:True, value:\"n/a\", pad:21, numDigits:3, resetMonitoring:False] holds symbol, clears its definitions, assigns value, and installs Experimental`ValueFunction monitoring. With resetMonitoring -> True it removes monitoring only. This is destructive and accepts one symbol at a time.";
+startHeartbeat::usage = "startHeartbeat[seconds:60, label:\"calculation\"] starts a lightweight preemptive task that prints the local timestamp and elapsed time every specified number of seconds. Starting a new heartbeat replaces any existing heartbeat.";
+stopHeartbeat::usage = "stopHeartbeat[] removes the active heartbeat task, prints its final elapsed time, and returns Null. It is safe to call when no heartbeat is active.";
 timeBanner::usage = "timeBanner[msg:\"\", char:\"-\", width:98] prints a timestamped banner and returns <|\"Message\" -> msg, \"Timestamp\" -> string|>.";
 timeStamp::usage = "timeStamp is a delayed symbol that returns the current local date and time as a compact String of the form -DYYMMDDTHHMMSS.";
+withHeartbeat::usage = "withHeartbeat[expr, seconds:60, label:\"calculation\"] evaluates expr while printing a timestamp and elapsed time at the requested interval, and always removes the heartbeat task when evaluation finishes or is aborted. It holds expr unevaluated until monitoring has started.";
 versionTAG::usage = "versionTAG is the package version String reported when myNotebookInit loads.";
 initialContexts::usage = "initialContexts is the de-duplicated list of contexts observed when myNotebookInit initializes; showContextInfo[] uses it as its baseline.";
-exportGraphicsToPDF::usage = "exportGraphicsToPDF[graphics, what:\"what\", type:\"type\", tag:\"tag\", dateTimeYesNo:True, baseOutputDir:Automatic] exports graphics as a PDF whose filename is assembled from what, type, tag, and an optional timestamp. Automatic writes under $HomeDirectory/TEMP and the Export result is returned.";
+exportGraphicsToPDF::usage = "exportGraphicsToPDF[graphics, what:\"what\", type:\"type\", tag:\"tag\", dateTimeYesNo:True, baseOutputDir:Automatic] exports graphics as a PDF whose filename is assembled from what, type, tag, and an optional timestamp. Automatic uses the configured RICH output directory and the Export result is returned.";
 endEvalPrintOut::usage = "endEvalPrintOut[] prints an end-of-evaluation banner, timestamp, MSG/Message cells, context information, newly created Global` symbol names, and the external-load summary; it returns the result of summarizeLoads[].";
-summarizeLoads::usage = "summarizeLoads[] prints totals recorded explicitly by loadMyFile and loadNeeds and returns the log as a Dataset. When the log is empty it prints a notice and returns Null.";
+summarizeLoads::usage = "summarizeLoads[] prints totals recorded explicitly by loadMyFile, loadNeeds, and trusted external loaders using recordExternalLoad, and returns the log as a Dataset. When the log is empty it prints a notice and returns Null.";
 loadSavedLog::usage = "loadSavedLog[path:Automatic] imports a saved load log into the package tracker and prints the number of entries. Automatic uses load_log.wdx in safeNotebookDirectory[]; a missing file returns $Failed, while success returns Null.";
 clearLoadLog::usage = "clearLoadLog[] empties the package's external-load log, prints confirmation, and returns Null.";
 saveLoadLog::usage = "saveLoadLog[path:Automatic] exports the package's external-load log and prints the resolved path. Automatic uses load_log.wdx in safeNotebookDirectory[]; the current implementation returns Null after a successful print.";
@@ -167,6 +175,23 @@ logLoad[type_String, target_String] := AppendTo[$LoadLog,
 
 logLoad[_,_]:=Null;
 
+ClearAll[recordExternalLoad];
+recordExternalLoad::arg = "Expected two String arguments; received `1` and `2`.";
+recordExternalLoad[type_String, target_String] := (
+  logLoad[type, target];
+  Null
+);
+recordExternalLoad[type_, target_] := (
+  Message[recordExternalLoad::arg, HoldForm[type], HoldForm[target]];
+  $Failed
+);
+
+(* No external tracker exists before this package is loaded, so register the
+   bootstrap Get from inside the package once its log and public API exist. *)
+If[StringQ[$InputFileName] && StringLength[$InputFileName] > 0,
+  recordExternalLoad["Get", ExpandFileName[$InputFileName]]
+];
+
 ClearAll[loadNeeds];
 loadNeeds[context_String, file : (_String | Automatic) : Automatic] := Module[
   {result, aborted = False},
@@ -223,7 +248,7 @@ ds   (*Dataset renders nicely in the notebook output*)
 (*\[HorizontalLine]\[HorizontalLine] Reset \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]*)
 clearLoadLog[]:=($LoadLog={};Print["Log cleared."]);
 (*\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550\:2550*)
-Print["Explicit Load Tracker ready. Functions: loadMyFile[], loadNeeds[], summarizeLoads[], ","saveLoadLog[], loadSavedLog[], clearLoadLog[]"];
+Print["Explicit Load Tracker ready. Functions: loadMyFile[], loadNeeds[], recordExternalLoad[], summarizeLoads[], ","saveLoadLog[], loadSavedLog[], clearLoadLog[]"];
 (*clearLoadLog[]*)
 (* $LoadLog *)
 (* Dataset[$LoadLog]*)
@@ -231,11 +256,16 @@ Print["Explicit Load Tracker ready. Functions: loadMyFile[], loadNeeds[], summar
 
 ClearAll[endEvalPrintOut];
 
-endEvalPrintOut[]:=Module[{},
+endEvalPrintOut[]:=Module[{messageCells},
+messageCells = If[
+  TrueQ[$Notebooks],
+  Quiet @ Check[Cells[CellStyle -> {"MSG", "Message"}], {}],
+  {}
+];
 bigBanner[" endEvalPrintOut "];
 Print[" timeStamp            ===>>>   ",timeStamp];
 smallBanner[];
-Print[" Cells[MSG,Message}]      ===>>> \n",Cells[CellStyle->{"MSG","Message"}]];
+Print[" Cells[MSG,Message}]      ===>>> \n", messageCells];
 smallBanner[];
 Print[" $Context                 ===>>>  ",$Context ];
 smallBanner[];
@@ -246,6 +276,33 @@ smallBanner[];
 summarizeLoads[]
 ];
 
+
+
+ClearAll[configuredProjectDirectory];
+configuredProjectDirectory[key_String, fallbackLeaf_String] := Module[
+  {configured, projectRoot, directory},
+  configured = If[NameQ["Global`RICHPathSetting"],
+    Quiet @ Check[Global`RICHPathSetting[key], $Failed],
+    $Failed
+  ];
+  projectRoot = If[
+    StringQ[Global`$RICHProjectRoot],
+    Global`$RICHProjectRoot,
+    $Failed
+  ];
+  directory = Which[
+    StringQ[configured] && configured =!= "", configured,
+    StringQ[projectRoot], FileNameJoin[{projectRoot, fallbackLeaf}],
+    True, FileNameJoin[{$HomeDirectory, "WolframMMAProjectRICH", fallbackLeaf}]
+  ];
+  If[! DirectoryQ[directory],
+    Quiet @ Check[
+      CreateDirectory[directory, CreateIntermediateDirectories -> True],
+      Return[$Failed]
+    ]
+  ];
+  directory
+];
 
 
 ClearAll[exportGraphicsToPDF];
@@ -260,7 +317,7 @@ exportGraphicsToPDF[
 
   (* resolve output directory *)
   outDir = Replace[baseOutputDir,
-    Automatic :> FileNameJoin[{$HomeDirectory, "TEMP"}]];
+    Automatic :> configuredProjectDirectory["OutputDirectory", "output"]];
   If[! DirectoryQ[outDir],
     CreateDirectory[outDir, CreateIntermediateDirectories -> True]];
 
@@ -291,7 +348,11 @@ Clear[manageMyStyleNotebook];
 manageMyStyleNotebook[] := Module[{target, source},
   target = FileNameJoin[{$UserBaseDirectory, "SystemFiles", "FrontEnd",
      "StyleSheets", "myStyle.nb"}];
-  source = FileNameJoin[{NotebookDirectory[], "myStyle.nb"}];
+  source = If[
+    StringQ[Global`$RICHProjectStyleDefinitions],
+    Global`$RICHProjectStyleDefinitions,
+    FileNameJoin[{ParentDirectory[NotebookDirectory[]], "myStyle.nb"}]
+  ];
   If[FileExistsQ[target],
     Print["OK -- myStyle.nb already in StyleSheets: ", target]
     ,
@@ -299,7 +360,7 @@ manageMyStyleNotebook[] := Module[{target, source},
       CopyFile[source, target]; Print["COPIED -- myStyle.nb from: ", 
         source]; Print["      --> to:   ", target]
       ,
-      Print["ERROR -- myStyle.nb not found in NotebookDirectory either: ",
+      Print["ERROR -- canonical myStyle.nb not found in the project root: ",
          source]
     ]
   ]
@@ -411,6 +472,31 @@ setProtection[s_Symbol, state : (True | False)] := Module[
 ];
 (* 3 \[LongDash] non-symbol fallback *)
 setProtection[x_, _] := (Message[setProtection::sym, HoldForm[x]]; $Failed);
+
+
+(* ============================================================
+   clearAllProtected (legacy optics compatibility)
+   ============================================================ *)
+
+ClearAll[clearAllProtected];
+clearAllProtected::sym = "Argument `1` is not a symbol.";
+clearAllProtected::system = "Refusing to clear System` symbol `1`.";
+SetAttributes[clearAllProtected, {HoldAll, Listable}];
+
+clearAllProtected[s_Symbol] := Module[{context = Context[Unevaluated[s]]},
+  If[context === "System`",
+    Message[clearAllProtected::system, HoldForm[s]];
+    Return[$Failed]
+  ];
+  Unprotect[s];
+  ClearAll[s];
+  Null
+];
+
+clearAllProtected[other_] := (
+  Message[clearAllProtected::sym, HoldForm[other]];
+  $Failed
+);
 
 
 (* ============================================================
@@ -560,6 +646,93 @@ ensureNotebookSaved[] := Module[{nbk, path},
 ClearAll[timeStamp];
 timeStamp := DateString[DateList[],
   {"-D", "YearShort", "", "Month", "", "Day", "", "T", "Hour", "", "Minute", "", "Second"}];
+
+
+(* ============================================================
+   Preemptive heartbeat for long calculations
+   ============================================================ *)
+
+ClearAll[
+  startHeartbeat, stopHeartbeat, withHeartbeat,
+  removeHeartbeatTask, $heartbeatTask, $heartbeatStartedAt, $heartbeatLabel
+];
+
+$heartbeatTask = None;
+$heartbeatStartedAt = None;
+$heartbeatLabel = "calculation";
+
+startHeartbeat::badinterval =
+  "Heartbeat interval `1` must be a positive number of seconds.";
+
+removeHeartbeatTask[] := Module[{},
+  If[MatchQ[$heartbeatTask, _TaskObject],
+    Quiet @ Check[TaskRemove[$heartbeatTask], Null]
+  ];
+  $heartbeatTask = None;
+  Null
+];
+
+startHeartbeat[seconds_: 60, label_: "calculation"] := Module[
+  {interval = Quiet @ Check[N[seconds], $Failed]},
+  If[interval === $Failed || ! NumericQ[interval] || ! TrueQ[interval > 0],
+    Message[startHeartbeat::badinterval, seconds];
+    Return[$Failed]
+  ];
+
+  removeHeartbeatTask[];
+  $heartbeatStartedAt = AbsoluteTime[];
+  $heartbeatLabel = If[StringQ[label], label, ToString[label, InputForm]];
+
+  $heartbeatTask = SessionSubmit[
+    ScheduledTask[
+      Print[
+        "[heartbeat ",
+        DateString[{"Year", "-", "Month", "-", "Day", " ",
+                    "Hour", ":", "Minute", ":", "Second"}],
+        "] ", $heartbeatLabel,
+        " | elapsed ", Round[N[AbsoluteTime[] - $heartbeatStartedAt]], " s"
+      ],
+      interval
+    ],
+    Method -> Automatic
+  ];
+
+  Print[
+    "Heartbeat started for ", $heartbeatLabel,
+    " every ", interval, " s at ",
+    DateString[{"Year", "-", "Month", "-", "Day", " ",
+                "Hour", ":", "Minute", ":", "Second"}]
+  ];
+  $heartbeatTask
+];
+
+stopHeartbeat[] := Module[
+  {activeQ = MatchQ[$heartbeatTask, _TaskObject], elapsed},
+  elapsed = If[NumberQ[$heartbeatStartedAt],
+    Round[N[AbsoluteTime[] - $heartbeatStartedAt]],
+    0
+  ];
+  removeHeartbeatTask[];
+  If[activeQ,
+    Print[
+      "Heartbeat stopped for ", $heartbeatLabel,
+      " after ", elapsed, " s at ",
+      DateString[{"Year", "-", "Month", "-", "Day", " ",
+                  "Hour", ":", "Minute", ":", "Second"}]
+    ]
+  ];
+  Null
+];
+
+SetAttributes[withHeartbeat, HoldFirst];
+withHeartbeat[expr_, seconds_: 60, label_: "calculation"] := Module[
+  {started = False},
+  Internal`WithLocalSettings[
+    started = startHeartbeat[seconds, label] =!= $Failed,
+    If[started, expr, $Failed],
+    If[started, stopHeartbeat[]]
+  ]
+];
 
 
 (* ============================================================
@@ -780,9 +953,9 @@ $settingActions = <|
   |>,
   
   "title" -> <|
-    "apply" :> With[{n = nb[], fn = safeNotebookFileName[]},
-      If[StringQ[fn],
-        SetOptions[n, WindowTitle -> StringJoin[" ------- ", fn]]
+    "apply" :> With[{n = nb[], name = safeNotebookBaseName[]},
+      If[StringQ[name],
+        SetOptions[n, WindowTitle -> StringJoin[" ------- ", name]]
       ]
     ],
     "remove" :> With[{n = nb[]},
@@ -956,6 +1129,108 @@ notebookPathInfo[] := <|
 
 
 (* ============================================================
+   Focused notebook reports
+   ============================================================ *)
+
+ClearAll[
+  currentDiagnosticNotebook, reportNotebookPaths,
+  reportCellStyleInventory, reportMessageCellList
+];
+
+reportNotebookPaths::nofe =
+  "No evaluation notebook is available; this report requires a notebook front end.";
+reportCellStyleInventory::nofe =
+  "No evaluation notebook is available; this report requires a notebook front end.";
+reportMessageCellList::nofe =
+  "No evaluation notebook is available; this report requires a notebook front end.";
+
+currentDiagnosticNotebook[] := Module[{nbk},
+  If[! TrueQ[$Notebooks], Return[$Failed]];
+  nbk = Quiet @ Check[EvaluationNotebook[], $Failed];
+  If[MatchQ[nbk, _NotebookObject], nbk, $Failed]
+];
+
+reportNotebookPaths[] := Module[{nbk, fileName, info},
+  nbk = currentDiagnosticNotebook[];
+  If[nbk === $Failed,
+    Message[reportNotebookPaths::nofe];
+    Return[$Failed]
+  ];
+
+  fileName = Quiet @ Check[NotebookFileName[nbk], $Failed];
+  info = <|
+    "Notebook" -> nbk,
+    "FileName" -> If[StringQ[fileName], fileName, Missing["UnsavedNotebook"]],
+    "Directory" -> If[StringQ[fileName], DirectoryName[fileName], Missing["UnsavedNotebook"]],
+    "BaseName" -> If[StringQ[fileName], FileBaseName[fileName], Missing["UnsavedNotebook"]]
+  |>;
+
+  Print["Notebook paths:"];
+  KeyValueMap[Print[Row[{"  ", #1, ": ", #2}]] &, info];
+  info
+];
+
+reportCellStyleInventory[] := Module[{nbk, cells, rawStyles, styles, counts, report},
+  nbk = currentDiagnosticNotebook[];
+  If[nbk === $Failed,
+    Message[reportCellStyleInventory::nofe];
+    Return[$Failed]
+  ];
+
+  cells = Quiet @ Check[Cells[nbk], $Failed];
+  If[cells === $Failed,
+    Message[reportCellStyleInventory::nofe];
+    Return[$Failed]
+  ];
+  rawStyles = Quiet @ Check[CurrentValue[#, CellStyle] & /@ cells, {}];
+  styles = Replace[
+    rawStyles,
+    {
+      style_String :> style,
+      style_ :> ToString[Unevaluated[style], InputForm]
+    },
+    {1}
+  ];
+  counts = KeySort @ Counts[styles];
+  report = <|"Counts" -> counts, "TotalCells" -> Length[cells]|>;
+
+  Print["Cell-style inventory (", Length[cells], " cells):"];
+  If[
+    counts === <||>,
+    Print["  (no cells)"],
+    KeyValueMap[Print[Row[{"  ", #1, ": ", #2}]] &, counts]
+  ];
+  Print[Row[{"  Total: ", Length[cells]}]];
+  report
+];
+
+reportMessageCellList[] := Module[{nbk, messageCells},
+  nbk = currentDiagnosticNotebook[];
+  If[nbk === $Failed,
+    Message[reportMessageCellList::nofe];
+    Return[$Failed]
+  ];
+
+  messageCells = Quiet @ Check[
+    Cells[nbk, CellStyle -> {"Message", "MSG"}],
+    $Failed
+  ];
+  If[messageCells === $Failed,
+    Message[reportMessageCellList::nofe];
+    Return[$Failed]
+  ];
+
+  Print["Message/MSG cells: ", Length[messageCells]];
+  If[
+    messageCells === {},
+    Print["  (none)"],
+    MapIndexed[Print[Row[{"  ", First[#2], ": ", #1}]] &, messageCells]
+  ];
+  messageCells
+];
+
+
+(* ============================================================
    Cell tools
    ============================================================ *)
 
@@ -1084,7 +1359,7 @@ saveVersionedCopy[
   nbBase$ = FileBaseName[nbPath$];
 
   outDir$ = ExpandFileName @ Replace[whereDir,
-    Automatic :> FileNameJoin[{$HomeDirectory, "TEMP"}]];
+    Automatic :> configuredProjectDirectory["BackupDirectory", "backups"]];
   If[! DirectoryQ[outDir$],
     ok = Quiet @ Check[
       CreateDirectory[outDir$, CreateIntermediateDirectories -> True];
@@ -1282,8 +1557,10 @@ ClearAll[
 
 safeExportDir[dir_] := Module[{d = dir},
   If[d === Automatic,
-    d = Quiet @ NotebookDirectory[];
-    If[! StringQ[d] || d === $Failed, d = Directory[]]
+    d = FileNameJoin[{
+      configuredProjectDirectory["OutputDirectory", "output"],
+      "notebook-cells"
+    }]
   ];
   If[! StringQ[d] || d === $Failed, d = $HomeDirectory];
   If[! DirectoryQ[d], CreateDirectory[d, CreateIntermediateDirectories -> True]];
@@ -1343,14 +1620,38 @@ saveAsPdfAllOutputCells[dir_: Automatic, imageSize_: Scaled[.8]] := Module[
 ];
 
 
-ClearAll[cellStylesEditorPalette];
+ClearAll[
+  cellStylesEditorPalette, cellStylesScannerPalette,
+  explicitCellBackground, restoreCellBackgrounds, cellOptionValueQ
+];
+
+explicitCellBackground[cell_CellObject] := Module[{rules},
+  rules = Quiet @ Check[Options[cell, Background], {}];
+  Replace[rules, {
+    {___, Background -> value_, ___} :> value,
+    _ :> Inherited
+  }]
+];
+
+restoreCellBackgrounds[cells_List, backgrounds_List] := Module[{count},
+  count = Min[Length[cells], Length[backgrounds]];
+  Do[
+    Quiet @ Check[SetOptions[cells[[i]], Background -> backgrounds[[i]]], Null],
+    {i, count}
+  ];
+  Null
+];
+
+cellOptionValueQ[cell_CellObject, option_, desired : (True | False)] :=
+  TrueQ[Quiet @ Check[CurrentValue[cell, option], $Failed] === desired];
 
 cellStylesEditorPalette :=
   CreatePalette[
     DynamicModule[
       {
         nb = InputNotebook[], styles = {}, style = "Input",
-        targetCells = {}, previewing = False, previewBackups = {},
+        targetCells = {}, previewing = False,
+        previewCells = {}, previewBackups = {},
         minimized = False, selectionMode = "By Style",
         bgColor = Lighter[Yellow, 0.6],
         fmtOptions = {
@@ -1369,7 +1670,19 @@ cellStylesEditorPalette :=
             {
               "Target: ",
               SetterBar[
-                Dynamic[selectionMode],
+                Dynamic[
+                  selectionMode,
+                  Function[newMode,
+                    If[previewing,
+                      restoreCellBackgrounds[previewCells, previewBackups]
+                    ];
+                    selectionMode = newMode;
+                    targetCells = {};
+                    previewing = False;
+                    previewCells = {};
+                    previewBackups = {};
+                  ]
+                ],
                 {"By Style", "Mouse Selection"}
               ]
             },
@@ -1400,13 +1713,9 @@ cellStylesEditorPalette :=
                         Style["\[Times]", White, FontSize -> 10, Bold],
                         (
                           If[previewing,
-                            With[{cells = If[selectionMode === "By Style", targetCells, {}]},
-                              MapThread[
-                                Quiet[SetOptions[#1, Background -> #2]] &,
-                                {cells, previewBackups}
-                              ]
-                            ];
+                            restoreCellBackgrounds[previewCells, previewBackups];
                             previewing = False;
+                            previewCells = {};
                             previewBackups = {};
                           ];
                           NotebookClose[EvaluationNotebook[]]
@@ -1430,7 +1739,19 @@ cellStylesEditorPalette :=
                       {
                         "Style: ",
                         PopupMenu[
-                          Dynamic[style],
+                          Dynamic[
+                            style,
+                            Function[newStyle,
+                              If[previewing,
+                                restoreCellBackgrounds[previewCells, previewBackups]
+                              ];
+                              style = newStyle;
+                              targetCells = {};
+                              previewing = False;
+                              previewCells = {};
+                              previewBackups = {};
+                            ]
+                          ],
                           Thread[styles -> styles],
                           FieldSize -> 16,
                           Enabled -> Dynamic[selectionMode === "By Style"]
@@ -1445,6 +1766,9 @@ cellStylesEditorPalette :=
                       Button[
                         "Refresh Styles",
                         Module[{cells, rawStyles},
+                          If[previewing,
+                            restoreCellBackgrounds[previewCells, previewBackups]
+                          ];
                           nb = InputNotebook[];
                           cells = Cells[nb];
                           rawStyles = Quiet[CurrentValue[cells, CellStyle]];
@@ -1453,6 +1777,7 @@ cellStylesEditorPalette :=
                           If[!MemberQ[styles, style], style = First[styles]];
                           targetCells = {};
                           previewing = False;
+                          previewCells = {};
                           previewBackups = {};
                         ],
                         ImageSize -> 120
@@ -1465,13 +1790,11 @@ cellStylesEditorPalette :=
                             nb = InputNotebook[];
 
                             If[previewing,
-                              MapThread[
-                                Quiet[SetOptions[#1, Background -> #2]] &,
-                                {targetCells, previewBackups}
-                              ];
+                              restoreCellBackgrounds[previewCells, previewBackups];
                             ];
 
                             previewing = False;
+                            previewCells = {};
 
                             targetCells =
                               Select[
@@ -1521,26 +1844,17 @@ cellStylesEditorPalette :=
 
                       If[
                         !previewing && cells =!= {},
-                        previewBackups =
-                          Map[
-                            Function[c,
-                              With[{b = Quiet[CurrentValue[c, Background]]},
-                                If[b === None, Inherited, b]
-                              ]
-                            ],
-                            cells
-                          ];
+                        previewCells = cells;
+                        previewBackups = explicitCellBackground /@ previewCells;
                         Do[
-                          Quiet[SetOptions[cells[[i]], Background -> Lighter[Cyan, 0.55]]],
-                          {i, Length[cells]}
+                          Quiet[SetOptions[previewCells[[i]], Background -> Lighter[Cyan, 0.55]]],
+                          {i, Length[previewCells]}
                         ];
                         previewing = True,
 
                         If[previewing,
-                          MapThread[
-                            Quiet[SetOptions[#1, Background -> #2]] &,
-                            {cells, previewBackups}
-                          ];
+                          restoreCellBackgrounds[previewCells, previewBackups];
+                          previewCells = {};
                           previewBackups = {};
                           previewing = False
                         ]
@@ -1564,11 +1878,9 @@ cellStylesEditorPalette :=
                               ];
 
                             If[previewing,
-                              MapThread[
-                                Quiet[SetOptions[#1, Background -> #2]] &,
-                                {cells, previewBackups}
-                              ];
+                              restoreCellBackgrounds[previewCells, previewBackups];
                               previewing = False;
+                              previewCells = {};
                               previewBackups = {};
                             ];
 
@@ -1594,11 +1906,9 @@ cellStylesEditorPalette :=
                               ];
 
                             If[previewing,
-                              MapThread[
-                                Quiet[SetOptions[#1, Background -> #2]] &,
-                                {cells, previewBackups}
-                              ];
+                              restoreCellBackgrounds[previewCells, previewBackups];
                               previewing = False;
+                              previewCells = {};
                               previewBackups = {};
                             ];
 
@@ -1622,11 +1932,9 @@ cellStylesEditorPalette :=
                                   ];
 
                                 If[previewing,
-                                  MapThread[
-                                    Quiet[SetOptions[#1, Background -> #2]] &,
-                                    {cells, previewBackups}
-                                  ];
+                                  restoreCellBackgrounds[previewCells, previewBackups];
                                   previewing = False;
+                                  previewCells = {};
                                   previewBackups = {};
                                 ];
 
@@ -1811,21 +2119,11 @@ cellStylesEditorPalette :=
                       Button[
                         Style["\[Times]", White, FontSize -> 10, Bold],
                         (
-                          Module[{cells},
-                            cells =
-                              If[selectionMode === "Mouse Selection",
-                                SelectedCells[InputNotebook[]],
-                                targetCells
-                              ];
-
-                            If[previewing,
-                              MapThread[
-                                Quiet[SetOptions[#1, Background -> #2]] &,
-                                {cells, previewBackups}
-                              ];
-                              previewing = False;
-                              previewBackups = {};
-                            ];
+                          If[previewing,
+                            restoreCellBackgrounds[previewCells, previewBackups];
+                            previewing = False;
+                            previewCells = {};
+                            previewBackups = {};
                           ];
                           NotebookClose[EvaluationNotebook[]]
                         ),
@@ -1855,6 +2153,12 @@ cellStylesEditorPalette :=
           styles = Sort @ DeleteDuplicates @ Cases[Flatten @ {rawStyles}, _String];
           If[styles === {}, styles = {"Input"}];
           If[!MemberQ[styles, style], style = First[styles]]
+        ]
+      ),
+
+      Deinitialization :> (
+        If[previewing,
+          restoreCellBackgrounds[previewCells, previewBackups]
         ]
       )
     ],
@@ -1943,6 +2247,15 @@ cellStylesScannerPalette :=
                   Button[
                     "Refresh Styles",
                     Module[{cells, rawStyles},
+                      If[highlightedCell =!= None,
+                        Quiet[SetOptions[highlightedCell, Background -> oldBackground]]
+                      ];
+                      highlightedCell = None;
+                      oldBackground = Inherited;
+                      matches = {};
+                      index = 0;
+                      propMatches = {};
+                      propIndex = 0;
                       nb = InputNotebook[];
                       cells = Cells[nb];
                       rawStyles = Quiet[CurrentValue[cells, CellStyle]];
@@ -1958,7 +2271,21 @@ cellStylesScannerPalette :=
                       {
                         "Style: ",
                         PopupMenu[
-                          Dynamic[style],
+                          Dynamic[
+                            style,
+                            Function[newStyle,
+                              If[highlightedCell =!= None,
+                                Quiet[SetOptions[highlightedCell, Background -> oldBackground]]
+                              ];
+                              highlightedCell = None;
+                              oldBackground = Inherited;
+                              matches = {};
+                              index = 0;
+                              propMatches = {};
+                              propIndex = 0;
+                              style = newStyle;
+                            ]
+                          ],
                           Thread[styles -> styles],
                           FieldSize -> 16
                         ]
@@ -1987,8 +2314,7 @@ cellStylesScannerPalette :=
                           If[matches === {},
                             MessageDialog["No cells found with style \"" <> style <> "\"."],
                             SelectionMove[matches[[index]], All, Cell];
-                            oldBackground = Quiet[CurrentValue[matches[[index]], Background]];
-                            If[oldBackground === None, oldBackground = Inherited];
+                            oldBackground = explicitCellBackground[matches[[index]]];
                             Quiet[SetOptions[matches[[index]], Background -> Lighter[Yellow, 0.7]]];
                             highlightedCell = matches[[index]];
                           ];
@@ -2000,7 +2326,7 @@ cellStylesScannerPalette :=
                         "Count",
                         MessageDialog[
                           "Found " <>
-                            ToString[Length[Cells[InputNotebook[], CellStyle -> style]]] <>
+                            ToString[Length[Cells[nb, CellStyle -> style]]] <>
                             " cell(s) with style \"" <> style <> "\"."
                         ],
                         ImageSize -> 100
@@ -2018,7 +2344,25 @@ cellStylesScannerPalette :=
                           Row[
                             {
                               "Property: ",
-                              PopupMenu[Dynamic[prop], propList, FieldSize -> 16]
+                              PopupMenu[
+                                Dynamic[
+                                  prop,
+                                  Function[newProp,
+                                    If[highlightedCell =!= None,
+                                      Quiet[SetOptions[highlightedCell, Background -> oldBackground]]
+                                    ];
+                                    highlightedCell = None;
+                                    oldBackground = Inherited;
+                                    matches = {};
+                                    index = 0;
+                                    propMatches = {};
+                                    propIndex = 0;
+                                    prop = newProp;
+                                  ]
+                                ],
+                                propList,
+                                FieldSize -> 16
+                              ]
                             },
                             Alignment -> Center
                           ]
@@ -2033,7 +2377,7 @@ cellStylesScannerPalette :=
                                 {optName, desired} = propOptionMap[prop];
                                 propMatches = Select[
                                   Cells[nb],
-                                  TrueQ[CurrentValue[#, optName]] === desired &
+                                  cellOptionValueQ[#, optName, desired] &
                                 ];
                                 matches = {};
                                 index = 0;
@@ -2048,8 +2392,7 @@ cellStylesScannerPalette :=
                                 If[propMatches === {},
                                   MessageDialog["No cells found with property \"" <> prop <> "\"."],
                                   SelectionMove[propMatches[[propIndex]], All, Cell];
-                                  oldBackground = Quiet[CurrentValue[propMatches[[propIndex]], Background]];
-                                  If[oldBackground === None, oldBackground = Inherited];
+                                  oldBackground = explicitCellBackground[propMatches[[propIndex]]];
                                   Quiet[SetOptions[propMatches[[propIndex]], Background -> Lighter[Orange, 0.7]]];
                                   highlightedCell = propMatches[[propIndex]];
                                 ];
@@ -2066,8 +2409,8 @@ cellStylesScannerPalette :=
                                     ToString[
                                       Length[
                                         Select[
-                                          Cells[InputNotebook[]],
-                                          TrueQ[CurrentValue[#, optName]] === desired &
+                                          Cells[nb],
+                                          cellOptionValueQ[#, optName, desired] &
                                         ]
                                       ]
                                     ] <>
@@ -2098,8 +2441,7 @@ cellStylesScannerPalette :=
                           ];
                           propIndex = If[propIndex <= 1, Length[propMatches], propIndex - 1];
                           SelectionMove[propMatches[[propIndex]], All, Cell];
-                          oldBackground = Quiet[CurrentValue[propMatches[[propIndex]], Background]];
-                          If[oldBackground === None, oldBackground = Inherited];
+                          oldBackground = explicitCellBackground[propMatches[[propIndex]]];
                           Quiet[SetOptions[propMatches[[propIndex]], Background -> Lighter[Orange, 0.7]]];
                           highlightedCell = propMatches[[propIndex]],
 
@@ -2109,8 +2451,7 @@ cellStylesScannerPalette :=
                             ];
                             index = If[index <= 1, Length[matches], index - 1];
                             SelectionMove[matches[[index]], All, Cell];
-                            oldBackground = Quiet[CurrentValue[matches[[index]], Background]];
-                            If[oldBackground === None, oldBackground = Inherited];
+                            oldBackground = explicitCellBackground[matches[[index]]];
                             Quiet[SetOptions[matches[[index]], Background -> Lighter[Yellow, 0.7]]];
                             highlightedCell = matches[[index]]
                           ]
@@ -2126,8 +2467,7 @@ cellStylesScannerPalette :=
                           ];
                           propIndex = If[propIndex >= Length[propMatches], 1, propIndex + 1];
                           SelectionMove[propMatches[[propIndex]], All, Cell];
-                          oldBackground = Quiet[CurrentValue[propMatches[[propIndex]], Background]];
-                          If[oldBackground === None, oldBackground = Inherited];
+                          oldBackground = explicitCellBackground[propMatches[[propIndex]]];
                           Quiet[SetOptions[propMatches[[propIndex]], Background -> Lighter[Orange, 0.7]]];
                           highlightedCell = propMatches[[propIndex]],
 
@@ -2137,8 +2477,7 @@ cellStylesScannerPalette :=
                             ];
                             index = If[index >= Length[matches], 1, index + 1];
                             SelectionMove[matches[[index]], All, Cell];
-                            oldBackground = Quiet[CurrentValue[matches[[index]], Background]];
-                            If[oldBackground === None, oldBackground = Inherited];
+                            oldBackground = explicitCellBackground[matches[[index]]];
                             Quiet[SetOptions[matches[[index]], Background -> Lighter[Yellow, 0.7]]];
                             highlightedCell = matches[[index]]
                           ]
@@ -2232,6 +2571,12 @@ cellStylesScannerPalette :=
           styles = Sort @ DeleteDuplicates @ Cases[Flatten @ {rawStyles}, _String];
           If[styles === {}, styles = {"Message"}];
           If[!MemberQ[styles, style], style = First[styles]];
+        ]
+      ),
+
+      Deinitialization :> (
+        If[highlightedCell =!= None,
+          Quiet[SetOptions[highlightedCell, Background -> oldBackground]]
         ]
       )
     ],

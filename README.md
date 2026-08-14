@@ -2,14 +2,16 @@
 
 - `notebooks/`: working visual notebooks loading `src/LoadProject.wl`
 - `src/`: textual Wolfram Language sources
+- `output/`: generated plots, tables and exported notebook cells
+- `backups/`: versioned notebook and text copies
 - `tests/`: smoke-test scaffold
 - `validation/`: clean-kernel original/restructured behavioural comparison
 - `legacy-original/`: every supplied file, unchanged
 - `docs/RESTRUCTURING_REPORT.md`: scope, limitations and validation procedure
 
-The project stylesheet is resolved portably: `myStyle.nb` in the project root
-is preferred; if it is absent, the Front End searches its standard stylesheet
-locations for `myStyle.nb`.
+The sole working copy of the project stylesheet is `myStyle.nb` in the project
+root. Working notebooks and generated sources resolve that canonical copy;
+the unchanged archival copy remains under `legacy-original/`.
 
 When a generated `src/*.wl` file is opened in the Wolfram package editor, its
 original initialization-cell boundaries and structural notebook headers are
@@ -18,6 +20,50 @@ evaluation with `Get`.
 
 The working `calculator-reboot.nb` includes the complete `---... CALCULATOR BODY`
 top-level group and excludes everything after it.
+
+The working `optics.nb` and `calculator-reboot.nb` use the same universal
+`---... SETUP` initialization cell. The cell reads `"RICHProjectCase"` from
+the notebook's `TaggingRules`, resolves `src/LoadProject.wl` relative to the
+saved notebook, and calls `RICHNotebookBootstrap[case]`. The project case is
+therefore notebook metadata rather than a second notebook-specific loader
+cell. `src/optics.wl` remains the sole executable copy of the extracted optics
+initialization; content beginning at `OPTICAL SYSTEM DESIGN` remains
+interactive in `optics.nb`.
+
+`RICHNotebookBootstrap` loads `myNotebookInit.wl` once, applies the common
+notebook/window/style settings, loads the selected dependency chain, applies
+the plotting defaults shared by the legacy optics and calculator setup blocks,
+and initializes the backward-compatible run timestamp symbols. It does not
+install global `Get`/`Needs` hooks or restore machine-specific paths from the
+legacy calculator setup.
+
+`LoadRICHFiles` explicitly records every component path in the
+`myNotebookInit` load tracker through `recordExternalLoad`; this includes the
+initial `myNotebookInit.wl` bootstrap load. `summarizeLoads[]` therefore reports
+project-loader activity without redefining the protected system `Get` or
+`Needs` functions.
+
+To reinstall or verify the shared cell after editing a notebook, run:
+
+```powershell
+wolfram.exe -script validation\InstallUniversalBootstrap.wls
+wolfram.exe -script validation\CheckUniversalBootstrap.wls
+```
+
+## Portable project paths
+
+`src/LoadProject.wl` initializes portable defaults using the project root:
+
+- generated results: `output/`
+- versioned notebook copies: `backups/`
+- disposable intermediate files: `$TemporaryDirectory/WolframMMAProjectRICH`
+
+Use `configureRICHPaths[]` from an interactive notebook to choose different
+directories. Choices are saved per user as JSON below `$UserBaseDirectory` and
+do not modify the portable project defaults. `RICHOutputPath[...]`,
+`RICHBackupPath[...]`, and `RICHTemporaryPath[...]` construct platform-safe
+paths and create required directories. The historical `$dirOut`, `$dirBackup`,
+`$dirSWRoot`, and `$dirSW` symbols remain as compatibility aliases.
 
 ## Run the behavioural validation
 

@@ -136,7 +136,7 @@ pkg=FileNameJoin[{dir,"myNotebookInit.wl"}];
 If[!FileExistsQ[pkg],MessageDialog["Missing myNotebookInit.wl at:\n"<>pkg];Return[$Failed];];
 Get[pkg];
 Print@Column[{
-Button["Save a versioned copy",myNotebookInit`saveVersionedCopy[myNotebookInit`versionTAG,NotebookDirectory[]],Method->"Queued"],Button["Save a txt copy",With[{out=myNotebookInit`saveNotebookTextCopy[]},If[StringQ[out],Print["Saved: ",out]]],Method->"Queued"],Button["List init code (prints)",Print/@myNotebookInit`listInitializationCells[],Method->"Queued"],Button["Highlight init cells",myNotebookInit`selectInitializationCells[],Method->"Queued"],Button["Mark ALL Input cells as initialization",myNotebookInit`markInputCellsAsInitialization[True],Method->"Queued"],Button["Clear initialization on Input cells",myNotebookInit`markInputCellsAsInitialization[False],Method->"Queued"],Button["Delete all empty cells",myNotebookInit`deleteAllEmptyCellsInNotebook,Method->"Queued"],Button["Export all Output cells to PNG (notebook dir)",myNotebookInit`saveAsPngAllOutputCells[],Method->"Queued"],Button["Export all Output cells to PDF (notebook dir)",myNotebookInit`saveAsPdfAllOutputCells[],Method->"Queued"],Button["Show diagnostics",myNotebookInit`showDiagnostics[],Method->"Queued"],
+Button["Save a versioned copy",myNotebookInit`saveVersionedCopy[myNotebookInit`versionTAG],Method->"Queued"],Button["Save a txt copy",With[{out=myNotebookInit`saveNotebookTextCopy[]},If[StringQ[out],Print["Saved: ",out]]],Method->"Queued"],Button["List init code (prints)",Print/@myNotebookInit`listInitializationCells[],Method->"Queued"],Button["Highlight init cells",myNotebookInit`selectInitializationCells[],Method->"Queued"],Button["Mark ALL Input cells as initialization",myNotebookInit`markInputCellsAsInitialization[True],Method->"Queued"],Button["Clear initialization on Input cells",myNotebookInit`markInputCellsAsInitialization[False],Method->"Queued"],Button["Delete all empty cells",myNotebookInit`deleteAllEmptyCellsInNotebook,Method->"Queued"],Button["Export all Output cells to PNG (configured output)",myNotebookInit`saveAsPngAllOutputCells[],Method->"Queued"],Button["Export all Output cells to PDF (configured output)",myNotebookInit`saveAsPdfAllOutputCells[],Method->"Queued"],Button["Show diagnostics",myNotebookInit`showDiagnostics[],Method->"Queued"],
 Button["Show error message cells",Print[Cells[CellStyle->{"MSG","Message"}]],Method->"Preemptive"]
 }]
 ];
@@ -155,14 +155,8 @@ loadMyFile["myDockedCells.wl"]
 
 
 (* ::Input::Initialization:: *)
-checkProtection[{$dirBackup,$dirSWRoot,$dirSW,$dirOut}];
-setProtection[{$dirBackup,$dirSWRoot,$dirSW,$dirOut},False]
-ClearAll[$dirBackup,$dirSWRoot,$dirSW,$dirOut]
-$dirBackup="C:\\Users\\Ale\\My Drive\\Mathematica";
-$dirSWRoot="D:\\Users\\Ale\\Mathematica";
-$dirSW="";
-$dirOut="C:\\TEMP\\";
-setProtection[{$dirBackup,$dirSWRoot,$dirSW,$dirOut},True];
+(* Portable project paths and the legacy $dir... compatibility aliases are
+   initialized by LoadProject.wl. *)
 
 
 (* ::Subsubtitle::Initialization::Closed:: *)
@@ -190,8 +184,8 @@ SetOptions[EvaluationNotebook[],Background->LightGreen];
 SetOptions[EvaluationNotebook[],Magnification->3/4];
 SetOptions[EvaluationNotebook[],WindowMargins->{{0,Automatic},{Automatic,0}}];
 SetOptions[EvaluationNotebook[],WindowSize->{Scaled[3/4],Scaled[1.0]}];
-SetOptions[EvaluationNotebook[],WindowTitle->StringJoin[" ------- ",nbFileName]];
-SetOptions[EvaluationNotebook[],StyleDefinitions->FileNameJoin[{NotebookDirectory[],"myStyle.nb"}]];
+SetOptions[EvaluationNotebook[],WindowTitle->StringJoin[" ------- ",myNotebookInit`safeNotebookBaseName[]]];
+SetOptions[EvaluationNotebook[],StyleDefinitions->If[StringQ[Global`$RICHProjectStyleDefinitions],Global`$RICHProjectStyleDefinitions,FileNameJoin[{ParentDirectory[NotebookDirectory[]],"myStyle.nb"}]]];
 
 
 (* ::Subsubtitle::Initialization::Closed:: *)

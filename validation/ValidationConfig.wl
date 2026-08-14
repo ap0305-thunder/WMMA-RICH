@@ -174,13 +174,15 @@ Validation`$ValidationOptions = <|
     "myNotebookInit`" -> {
       "applySettings", "availableSettings", "bannerLine", "bigBanner",
       "cellsByStyle", "cellStylesEditorPalette", "cellStylesScannerPalette",
-      "checkProtection", "clearLoadLog", "deleteAllEmptyCellsInNotebook",
+      "checkProtection", "clearAllProtected", "clearLoadLog",
+      "deleteAllEmptyCellsInNotebook",
       "endEvalPrintOut", "ensureNotebookSaved", "exportGraphicsToPDF",
       "initialContexts", "listInitializationCells", "loadMyFile",
       "killStop", "loadNeeds", "loadSavedLog", "manageMyStyleNotebook",
       "markInputCellsAsInitialization", "midBanner", "miniBanner", "nb",
       "nbFileBaseName", "nbFileDirectory", "nbFileName", "nb$",
       "notebookPathInfo", "prettyPrintedCellStyleNumber", "printA", "printD", "printMsgCell",
+      "recordExternalLoad",
       "removeSettings", "safeNotebookBaseName", "safeNotebookDirectory",
       "safeNotebookFileName", "saveAsPdfAllOutputCells",
       "saveAsPngAllOutputCells", "saveLoadLog", "saveNotebookTextCopy",
@@ -200,6 +202,16 @@ Validation`$ValidationOptions = <|
     "^Global`\\$.*",
     "^Validation`.*",
     "killStop",
+
+    (* Intentional interactive extension for calculator-reboot: these public
+       helpers and their private task state have no legacy-notebook analogue. *)
+    "^(startHeartbeat|stopHeartbeat|withHeartbeat|myNotebookInit`(startHeartbeat|stopHeartbeat|withHeartbeat))$",
+    "^myNotebookInit`Private`(\\$heartbeat.*|removeHeartbeatTask)$",
+
+    (* Intentional front-end palette repairs: temporary cell backgrounds are
+       now tracked independently and restored on palette deinitialization. *)
+    "^(cellStylesEditorPalette|cellStylesScannerPalette|myNotebookInit`(cellStylesEditorPalette|cellStylesScannerPalette))$",
+    "^myNotebookInit`Private`(explicitCellBackground|restoreCellBackgrounds|cellOptionValueQ)$",
 
     (* Runtime bookkeeping depends on timestamps, load order, and the exact
        validation notebook. It is diagnostic state, not project behaviour. *)

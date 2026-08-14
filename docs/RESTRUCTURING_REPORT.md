@@ -4,9 +4,27 @@
 
 - Preserved the supplied archive verbatim in `legacy-original/`.
 - Created working notebooks in `notebooks/` and textual source files in `src/`.
-- Removed extracted initialization Input/Code cells from the main working notebooks and inserted a loader cell. In `calculator-reboot.nb`, the original initialization cells remain visible but are disabled, while the loader supplies the extracted definitions.
+- Removed extracted initialization Input/Code cells from the supporting working notebooks and inserted loader cells. `calculator-reboot.nb` retains its calculator-specific initialization after the replaced leading setup. `optics.nb` has no duplicate initialization code.
 - Retained style notebooks beside working notebooks because the styles use relative filenames.
 - Kept `calculator-reboot.nb` only through the complete `---... CALCULATOR BODY` group; later top-level groups were excluded.
+- Replaced the leading setup in both `optics.nb` and `calculator-reboot.nb` with one structurally identical universal bootstrap cell. Each notebook stores only its case name in `TaggingRules`; `RICHNotebookBootstrap` owns shared settings and dependency loading.
+- Preserved `optics.nb` from `OPTICAL SYSTEM DESIGN` onward for interactive work. The former `---... OPTICS` initialization remains extracted in `src/optics.wl` and is loaded by the universal case bootstrap.
+
+## Universal bootstrap review
+
+The legacy setup comparison found 22 initialization code cells in optics and
+24 in calculator-reboot, with only 6 exact cell bodies in common. The merged
+bootstrap retains portable loader discovery, common notebook and plotting
+defaults, explicit load tracking, shared dependencies, and run timestamps.
+Hard-coded user paths, duplicated package loads, automatic installation of a
+stylesheet into the user profile, undefined legacy setup calls, and the
+calculator-only overrides of protected `Get` and `Needs` were deliberately not
+carried forward.
+
+The optics-only `clearAllProtected` helper was still referenced by interactive
+optics cells after its old setup block was removed. It now lives in
+`myNotebookInit.wl`, preserves listable held-symbol behavior, and refuses to
+clear symbols in `System``.
 
 ## Important limitations
 
@@ -23,6 +41,7 @@
 | `inputDataForRICH.nb` | 112 | 0 | `src/inputDataForRICH.wl` |
 | `RICH.nb` | 62 | 0 | `src/RICH.wl` |
 | `calculator-reboot.nb` | 38 | 1 | `src/calculator-reboot.wl` |
+| `optics.nb` (`---... OPTICS` Title section only) | 59 | 0 | `src/optics.wl` |
 | `CellStyleDataRules.nb` | 9 | 0 | `src/CellStyleDataRules.wl` |
 
 ## Behavioural validation

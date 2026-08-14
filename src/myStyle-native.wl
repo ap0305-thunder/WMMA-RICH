@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::InheritFromParent:: *)
-(*StyleData[StyleDefinitions -> "myStyle.nb"]*)
+(*StyleData[StyleDefinitions -> "Default.nb"]*)
 
 
 (* ::InheritFromParent:: *)
