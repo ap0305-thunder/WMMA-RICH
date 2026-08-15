@@ -74,7 +74,13 @@ If[Quiet @ Check[RICHBootstrap[], $Failed] =!= True,
 If[! MemberQ[$Packages, "myNotebookInit`"],
   fail["RICHBootstrap[] did not load myNotebookInit`."]
 ];
-If[Quiet @ Check[LoadRICHFiles[{"myStyle-native.wl"}], $Failed] =!= True,
+(* Exercise explicit tracking with an inert fixture. Native Save As baselines
+   are archival validation inputs and must never be evaluated. *)
+If[
+  Quiet @ Check[
+    LoadRICHFiles[{FileNameJoin[{"validation", "load-tracker-fixture.wls"}]}],
+    $Failed
+  ] =!= True,
   fail["LoadRICHFiles could not load the tracker test component."]
 ];
 trackerRows = Quiet @ Check[
@@ -85,7 +91,7 @@ trackerTargets = Lookup[trackerRows, "Target", {}];
 trackerCounts = Counts[FileNameTake /@ Select[trackerTargets, StringQ]];
 If[
   Lookup[trackerCounts, "myNotebookInit.wl", 0] =!= 1 ||
-    Lookup[trackerCounts, "myStyle-native.wl", 0] =!= 1,
+    Lookup[trackerCounts, "load-tracker-fixture.wls", 0] =!= 1,
   fail[
     "LoadRICHFiles did not explicitly record both bootstrap and component loads."
   ]

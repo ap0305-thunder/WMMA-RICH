@@ -1,5 +1,6 @@
-(* Regenerate notebook-derived .wl sources using held Wolfram expressions.
-   Arguments: PROJECT_ROOT and optional comma-separated case names. *)
+(* LEGACY/DISABLED: direct notebook-expression serialization is no longer an
+   allowed source-generation path. Runtime .wl files must start from Wolfram
+   Save As output kept under validation/native-sources. *)
 
 Begin["Validation`SourceGeneration`Private`"];
 
@@ -926,12 +927,20 @@ main[] := Module[
   If[Length[arguments] < 1,
     fail["Expected PROJECT_ROOT and optional comma-separated cases"]
   ];
+  fail[
+    "Direct notebook reserialization is disabled. Start from a Wolfram " <>
+      "Save As .wl file under validation\\native-sources and use a " <>
+      "text-only derivation step.",
+    3
+  ];
   projectRoot = ExpandFileName[First[arguments]];
   requestedCases = If[Length[arguments] >= 2,
     DeleteCases[StringSplit[Last[arguments], ","], ""],
     {}
   ];
 
+  (* optics.wl is deliberately absent: it is derived textually from the
+     Wolfram Save As source by BuildOpticsFromNative.ps1. *)
   mappings = {
     <|"Key" -> "CellStyleDataRules-source", "Source" -> {"legacy-original", "CellStyleDataRules.nb"}, "Destination" -> {"src", "CellStyleDataRules.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "base", "Source" -> {"legacy-original", "base.nb"}, "Destination" -> {"src", "base.wl"}, "Cutoff" -> None|>,
@@ -939,14 +948,11 @@ main[] := Module[
     <|"Key" -> "statDataAnal", "Source" -> {"legacy-original", "statDataAnal.nb"}, "Destination" -> {"src", "statDataAnal.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "inputDataForRICH", "Source" -> {"legacy-original", "inputDataForRICH.nb"}, "Destination" -> {"src", "inputDataForRICH.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "RICH-source", "Source" -> {"legacy-original", "RICH.nb"}, "Destination" -> {"src", "RICH.wl"}, "Cutoff" -> None|>,
-    <|"Key" -> "calculator-reboot", "Source" -> {"legacy-original", "calculator-reboot.nb"}, "Destination" -> {"src", "calculator-reboot.wl"}, "Cutoff" -> "CALCULATOR BODY"|>,
-    <|"Key" -> "optics", "Source" -> {"legacy-original", "optics.nb"}, "Destination" -> {"src", "optics.wl"}, "Cutoff" -> <|"TitleSections" -> {2}|>|>
+    <|"Key" -> "calculator-reboot", "Source" -> {"legacy-original", "calculator-reboot.nb"}, "Destination" -> {"src", "calculator-reboot.wl"}, "Cutoff" -> "CALCULATOR BODY"|>
   };
 
   needsAllSources = requestedCases === {} || AnyTrue[requestedCases, # =!= "base" &];
   selectedMappings = Which[
-    requestedCases === {"optics"},
-      Select[mappings, Lookup[#, "Key"] === "optics" &],
     needsAllSources,
       mappings,
     True,

@@ -17,11 +17,8 @@ checkNewCreatedSymbols[]
 
 
 (* ::Input::Initialization:: *)
-Print["*==================================================================================================*"];
-Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"];
-Print["***--- statDataAnal ---***"];
-Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"];
-Print["*==================================================================================================*"];
+packageBanner["LOADING statDataAnal"];
+
 
 
 (* ::Title:: *)
@@ -29,7 +26,7 @@ Print["*========================================================================
 
 
 (* ::Subtitle::Initialization:: *)
-(*INITIALIZATION*)
+(*(*(*INITIALIZATION*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -45,7 +42,6 @@ If[
 
 
 (* ::Input::Initialization:: *)
-
 showContextInfo[]
 (**)
 BeginPackage["statDataAnal`",{"myNotebookInit`","base`"}]
@@ -116,7 +112,7 @@ versionTAG="v.08-08-2026";
 
 
 (* ::Subtitle::Initialization:: *)
-(*PROBABILITY AND STATISTICS FUNCTIONS*)
+(*(*(*PROBABILITY AND STATISTICS FUNCTIONS*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -409,7 +405,7 @@ Show[Histogram[Flatten[z],nBins,PlotLabel->title]]
 
 
 (* ::Subsection::Initialization:: *)
-(*error propagation formulas*)
+(*(*(*error propagation formulas*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -455,7 +451,7 @@ errorProp[test,{{x,0.3,dx,0.005},{y,0.9,dy,0.1}}]
 
 
 (* ::Subtitle::Initialization:: *)
-(*END*)
+(*(*(*END*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -465,8 +461,12 @@ EndPackage[]
 
 
 (* ::Input::Initialization:: *)
-checkNewCreatedSymbols[]
+
 
 
 (* ::Input::Initialization:: *)
 endEvalPrintOut[];
+
+
+packageBanner["END statDataAnal"];
+

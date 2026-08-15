@@ -4,19 +4,16 @@
 (*This package/notebook defines general physics tools.*)
 
 
-(* ::Subtitle::Closed:: *)
+(* ::Subtitle:: *)
 (*INIT*)
 
 
 (* ::Input::Initialization:: *)
-Print["*==================================================================================================*"];
-Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"];
-Print["***--- physics-general ---***"];
-Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"];
-Print["*==================================================================================================*"];
+packageBanner["LOADING physics-general"];
+bigBanner["--->>> might need some specific symbols defined elsewhere!"];
 
 
-(* ::Input::Initialization::Closed:: *)
+(* ::Input::Initialization:: *)
 (*If[$Notebooks,
 Get["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\myNotebookInit.wl"];
 Get["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\myStyle.m"];
@@ -24,7 +21,7 @@ Get["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\myDockedCells.wl"]
 ];*)
 
 
-(* ::Input::Initialization::Closed:: *)
+(* ::Input::Initialization:: *)
 If[$Notebooks,
 (**)
 (* HERE TO ALLOW CHANGE SPECIFIC OPTIONS BELOW *)
@@ -59,13 +56,8 @@ If[
 
 
 (* ::Input::Initialization:: *)
-Print["*==================================================================================================*"];
-Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"];
-Print["***--- physics-general ---***"];
-Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"];
-Print["*==================================================================================================*"];
-Print["LOADING physics-general"];
-Print["--->>> might need some specific symbols defined elsewhere!"];
+
+
 
 
 (* ::Input::Initialization:: *)
@@ -77,6 +69,8 @@ BeginPackage[
 Begin["`Private`"];
 versionTAG="v.08-08-2026";
 End[];
+
+
 
 (* ::Input::Initialization:: *)
 Unprotect[bet,beta,betaCherenkovThreshold,betaInfinity,betaPart,betaParticleFromMassAndMomentum,betaPartThr,betThr,chrnkvAngle,deltaMassSquare,energy,epsilonQuantum,gam,gamma,gammaCherenkovThreshold,gammaPart,gammaParticleFromMassAndMomentum,gamThr,m1,m2,m3,m4,m5,mass,masses,momentum,momentumCherenkovThreshold,momentumFromMassAndBeta,momentumFromMassAndGamma,momentumPart,momentumThr,momThr,numPrecision,numRelPho,precisionify,tC,tCAllPart,theHighPrecision,thePartMasses,theParts,thetaC,thetaChr,thetaChrTheMax,thisNumRelChr,thisThetaChr,toMass,tpl];
@@ -95,8 +89,8 @@ epsilonQuantum=1000*10^-theHighPrecision;
 
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*MECHANICS*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*MECHANICS*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -136,7 +130,7 @@ Print[Precision[betaInfinity]];
 (**)
 
 
-(* ::Subtitle::Closed:: *)
+(* ::Subtitle:: *)
 (*RICH*)
 
 
@@ -255,7 +249,6 @@ tpl[mass_,mom_,\[Lambda]_]:=1000*thetaC[betaPart[mass,mom],theRefrIndex[\[Lambda
 
 
 (* ::Input::Initialization:: *)
-
 (*OLD OK*)
 (*chrnkvAngle[m_,p_,\[Lambda]_]:=Module[{z},z=1/(betaPart[m,p]*theRefrIndex[\[Lambda]]);
 z=Map[Min[#,+1]&,z];
@@ -274,7 +267,7 @@ z=Min[#,1]&/@Flatten[{z}];
 Chop[ArcCos[z]]];*)
 
 
-(* ::Subsubtitle::Closed:: *)
+(* ::Subsubtitle:: *)
 (*TO DO*)
 
 
@@ -301,7 +294,7 @@ Print@Plot[chrnkvAngle[0.140,150,\[Lambda][s]],{s,3,4}];
 *)
 
 
-(* ::Subtitle::Closed:: *)
+(* ::Subtitle:: *)
 (*END*)
 
 
@@ -318,3 +311,7 @@ EndPackage[];
 
 (* ::Input::Initialization:: *)
 endEvalPrintOut[];
+
+
+packageBanner["END physics-general"];
+

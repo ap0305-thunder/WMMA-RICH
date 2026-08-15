@@ -1,23 +1,23 @@
 (* ::Package::"Tags"-><|"NoVariables" -> <|"Module" -> <|Enabled -> False|>|>, "PrefixPlus" -> <|Enabled -> False|>|>:: *)
 
 (* ::Text::Initialization:: *)
-(*This package/notebook defines several tools of Mathematica/Wolfram which I find useful and/or use later.*)
-
-
-(* ::Title::Initialization::Closed:: *)
-(*SETUP*)
-
-
-(* ::Subtitle::Initialization::Closed:: *)
-(*SETUP*)
-
-
-(* ::Subsubtitle::Initialization:: *)
-(*Additional general settings for any (complex) notebook*)
+(*(*This package/notebook defines several tools of Mathematica/Wolfram which I find useful and/or use later.*)*)
 
 
 (* ::Title::Initialization:: *)
-(*BASE*)
+(*(*SETUP*)*)
+
+
+(* ::Subtitle::Initialization:: *)
+(*(*SETUP*)*)
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*Additional general settings for any (complex) notebook*)*)
+
+
+(* ::Title::Initialization:: *)
+(*(*BASE*)*)
 
 
 (* ::Subtitle:: *)
@@ -25,22 +25,16 @@
 
 
 (* ::Input::Initialization:: *)
+packageBanner["LOADING base"];
 
 
 
-Print["*==================================================================================================*"];
-Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"];
-Print["***--- base ---***"];
-Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"];
-Print["*==================================================================================================*"];
 
 BeginPackage["base`",{"myNotebookInit`"}] (**)
 base::nodep = "Required dependency `1` is not available. Load or install it before loading base`.";
-Print["*==================================================================================================*"  ];
-Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"  ];
-Print["***---                  LOADING base                                                                  ---***"  ];
-Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"  ];
-Print["*==================================================================================================*"  ];
+
+
+
 
 (*---Explicit dependency check:myNotebookInit`---*)
 
@@ -164,7 +158,6 @@ window::usage="window";
 
 
 (* ::Input::Initialization:: *)
-
 Begin["`Private`"] 
 (* Begin Private Context *) 
 versionTAG="v.08-08-2026"
@@ -172,12 +165,12 @@ versionTAG="v.08-08-2026"
 (* End Private Context *)
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*START*)
+(* ::Subtitle::Initialization:: *)
+(*(*START*)*)
 
 
-(* ::Section::Initialization::Closed:: *)
-(*INIT*)
+(* ::Section::Initialization:: *)
+(*(*INIT*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -210,8 +203,8 @@ Print@toc;
 *)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*MESSAGES*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*MESSAGES*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -221,8 +214,8 @@ I strongly suggest that all new users turn off the Suggestions Bar to avoid unex
 massive memory usage([1], [2]), peculiar evaluation leaks ([1], [2]), broken assignments, disappearing definitions, and crashes([1], [2])."];*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*SYSTEM Setup*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*SYSTEM Setup*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -298,8 +291,8 @@ ReinstallJava[JVMArguments\[Rule]"-Xmx32768m"];
 *)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*MATHEMATICA setup*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*MATHEMATICA setup*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -330,8 +323,8 @@ DynamicModule[{m=1},Panel[Slider[Dynamic[m,SetOptions[EvaluationNotebook[],Magni
 *)
 
 
-(* ::Subsection::Initialization::Closed:: *)
-(*general tools for variables management*)
+(* ::Subsection::Initialization:: *)
+(*(*general tools for variables management*)*)
 
 
 (* ::Input::Initialization::"Tags"-><|"NoVariables" -> <|"Module" -> <||>|>|>:: *)
@@ -353,8 +346,8 @@ Protect[variableize];
 (*vars=variableize[head,"","R1"]*)
 
 
-(* ::Subsection::Initialization::Closed:: *)
-(*error propagation formulas*)
+(* ::Subsection::Initialization:: *)
+(*(*error propagation formulas*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -379,11 +372,11 @@ Column[{Row[{Grid[{{"Variables",varlist},{"Uncertainties",uncert},{"Function",fu
 
 
 (* ::Subtitle::Initialization:: *)
-(*GENERAL*)
+(*(*GENERAL*)*)
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*DEBUG*)
+(*(*DEBUG*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -392,8 +385,8 @@ debugPrint[input__,debug$debugPrint_:debugPrintEnabledFlag]:=Module[{},If[debug$
 debugPrint[32,True]
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*WOLFRAM MATHEMATICA workings*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*WOLFRAM MATHEMATICA workings*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -479,12 +472,11 @@ tickFormat[xmin_, xmax_, digits_, divisions_:10] :=
     ] /@ FindDivisions[{xmin, xmax}, divisions];
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*pretty print*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*pretty print*)*)
 
 
 (* ::Input::Initialization:: *)
-
 ClearAll[printa,printa1];
 SetAttributes[{printa,printa1},HoldFirst];
 printa1[var_]:=Module[{},Print["  >>>  ",SymbolName[Unevaluated[var]]];Print["  >>>  ",Evaluate[var]]];
@@ -514,8 +506,8 @@ prn[ape,nut,mouse];
 ];
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*RE-WRITE EXPRESSIONS*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*RE-WRITE EXPRESSIONS*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -543,28 +535,28 @@ Extract[out,{1,2},Defer]/.Cases[Flatten[{old,new},{2}],{o_,n_}:>(o:>n)]
 FullSimplify[K,TransformationFunctions->{(#/. t/(t+f)->p&),Automatic}]*)
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*useful tools*)
+(* ::Subtitle::Initialization:: *)
+(*(*useful tools*)*)
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*styles*)
+(*(*styles*)*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*RunScheduledTask*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*RunScheduledTask*)*)
 
 
 (* ::Input::Initialization:: *)
 (*RunScheduledTask[EmitSound[Sound[SoundNote[]]];NotebookSave[EvaluationNotebook[]],600];*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*MergeAppendNotebooks*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*MergeAppendNotebooks*)*)
 
 
 (* ::Text::Initialization:: *)
-(*TO CHECK*)
+(*(*TO CHECK*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -590,8 +582,8 @@ FullSimplify[K,TransformationFunctions->{(#/. t/(t+f)->p&),Automatic}]*)
 (*closeOtherNotebooks[]*)
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*MATHEMATICAL FUNCTIONS*)
+(* ::Subtitle::Initialization:: *)
+(*(*MATHEMATICAL FUNCTIONS*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -628,17 +620,17 @@ window[s_,x1_,x2_]:=UnitBox[s/(x2-x1)-(x1+x2)/2/(x2-x1)]
 valPlusMinus[theX_,theDx_]:={theX,theX-theDx,theX+theDx};
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*numbers formatting*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*numbers formatting*)*)
 
 
-(* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>::Closed:: *)
+(* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>:: *)
 roundDigits[z_,d_:0.001]:=MapAt[Round[#,d]&,z,Position[NumericQ[#]&/@z,True]];
 (* Attributes=Listable BREAKS the function; but it is listable even without *)
 (*SetAttributes[roundDigits,Listable];*)
 
 
-(* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>::Closed:: *)
+(* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>:: *)
 numFormat[x_,n_:10,theExp_:10]:=NumberForm[x,{n,3},
 ExponentFunction->(If[-theExp<#<+theExp,Null,#]&),NumberSigns->(If[x!=0,{"-","+"},{"",""}])];
 SetAttributes[numFormat,Listable];
@@ -673,7 +665,7 @@ SetAttributes[{nf,nfpm},Listable];
 Protect[nf,nfpm];
 
 
-(* ::Input::Initialization::Closed:: *)
+(* ::Input::Initialization:: *)
 Unprotect[nfl,nfpml];
 ClearAll[nfl,nfpml];
 nfpml[x_,sp_:8,dg_:3,theExp_:3]:=If[NumericQ[x]==True,
@@ -689,7 +681,7 @@ Protect[nfl,nfpml];
 
 
 
-(* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>::Closed:: *)
+(* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>:: *)
 numFormatPad[x_,n_:10,theExp_:10]:=PaddedForm[x,{n,3},
 ExponentFunction->(If[-theExp<#<+theExp,Null,#]&),NumberSigns->(If[x!=0,{"-","+"},{" "," "}])];
 nfPad[x_,sp_:8,dg_:3,theExp_:3]:=PaddedForm[x,{sp,dg},
@@ -736,8 +728,8 @@ SetAttributes[{nfpm0,nfpm1,nfpm2,nfpm3,nfpm4,nfpm5,nfpm6,nfpml0,nfpml1,nfpml2,nf
 Protect[nf0,nf1,nf2,nf3,nf4,nf5,nf6,nfpm0,nfpm1,nfpm2,nfpm3,nfpm4,nfpm5,nfpm6,nfl0,nfl1,nfl2,nfl3,nfpml0,nfpml1,nfpml2,nfpml3];
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*vector/matrix/tensor operations*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*vector/matrix/tensor operations*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -846,8 +838,8 @@ Sort[list,NonNegative@Total[(w d MapThread[Order,{##}])]&]
 ];
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*text*)
+(* ::Subtitle::Initialization:: *)
+(*(*text*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -865,8 +857,8 @@ Return[name]
 normalizeString[w_]:=cleanText[Capitalize[ToLowerCase[cleanText[w," "]],"AllWords"],""];
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*MISCELLANEA // TO BE SORTED*)
+(* ::Subtitle::Initialization:: *)
+(*(*MISCELLANEA // TO BE SORTED*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -886,8 +878,8 @@ RefLink[Purple,paclet:ref/Purple]
 ];
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*BaseNew - latest additions TO DOUBLE CHECK*)
+(* ::Subtitle::Initialization:: *)
+(*(*BaseNew - latest additions TO DOUBLE CHECK*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -933,16 +925,12 @@ Names[RegularExpression["System`....."]]
 (*EMPTY SO FAR*)
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*END PACKAGE*)
+(* ::Subtitle::Initialization:: *)
+(*(*END PACKAGE*)*)
 
 
 (* ::Input::Initialization:: *)
-Print["*==================================================================================================*"];
-Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"];
-Print["***---                  END base                                                                       ---***"];
-Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"];
-Print["*==================================================================================================*"];
+
 
 
 (* ::Input::Initialization:: *)
@@ -960,3 +948,6 @@ If[$Notebooks,Cells[CellStyle->{"MSG","Message"}]];
 
 checkNewCreatedSymbols[]
 showContextInfo[]
+
+
+packageBanner["END base"];

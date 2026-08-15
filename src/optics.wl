@@ -1,336 +1,2363 @@
 (* ::Package:: *)
 
-(* Regenerated from optics.nb using NotebookImport without a text conversion. *)
-(* Each source cell was imported under HoldComplete, serialized in context-preserving FullForm, and syntax-checked without evaluation. *)
+(* Derived textually from validation/native-sources/optics-native.wl,
+   produced by Wolfram Save As. Only the OPTICS Title section is selected;
+   Wolfram expressions are neither parsed nor reserialized. Five explicit
+   logical-disjunction heads from the notebook are rewritten as ||. *)
 
-(* ::Title:: *)
-(* ---... OPTICS *)
+
+
+(* ::Title::Initialization:: *)
+(*(*---... OPTICS*)*)
+
+
+(* ::Subtitle::Initialization:: *)
+(*(*INIT BASE*)*)
+
+
+(* ::Input::Initialization:: *)
+(*!@#$%I CANT GET THE PACKAGE TO WORK DUE TO SHADOWING WITH OPTICA EM:TO FIX!!!*)
+(*BeginPackage["rich`optica`",{"Global`","rich`","base`","base`StatDataAnal`"}];*)
+bigBanner[" loading optica "];
+
+(*f::usage="text", \[Ellipsis]*)
+
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*EllipseFit*)*)
+
+
+(* ::Input::Initialization:: *)
+Options[EllipseFit]={TimeConstraint->1,WorkingPrecision:>MachinePrecision};
+
+SyntaxInformation[EllipseFit]={"ArgumentsPattern"->{_,_,OptionsPattern[]}};
+
+EllipseFit[data_?(MatrixQ[#,NumericQ]&),{x0_Symbol,y0_Symbol},opts:OptionsPattern[]]/;And[CheckArguments[EllipseFit[data,{x0,y0},opts],2],Context[x0]=!="System`",Context[y0]=!="System`",(2===Part[Dimensions@data,2]),(0===Max@Abs@Im@Flatten@data),(3<Length@Union@data)]:=Module[{machinePrec,exactData,x,y,d1,d2,s1,s2,m,mInverse,t,ev,discriminates,a,b,c,d,e,f},
+If[Precision@data===MachinePrecision,
+{exactData,machinePrec}={False,True};
+{x,y}=Transpose[Developer`ToPackedArray@N@data];
+d1=Developer`ToPackedArray@{x^2,x y,y^2};
+d2=Developer`ToPackedArray@{x,y,ConstantArray[1.0,Length@x]},
+(* else *)
+{exactData,machinePrec}={Precision[data]===\[Infinity],False};
+{x,y}=Transpose@data;
+d1={x^2,x y,y^2};
+d2={x,y,ConstantArray[1,Length@x]}
+];
+s1=d1 . Transpose[d1];
+{s2,m}={d1 . #,d2 . #}&[Transpose[d2]];
+mInverse=Quiet[Check[Inverse[m],$Failed,{Inverse::sing,Inverse::luc}],{Inverse::sing,Inverse::luc}];
+If[mInverse===$Failed,ResourceFunction["ResourceFunctionMessage"][EllipseFit::sing];$Failed,
+(* else *)
+t=-mInverse . Transpose[s2];
+Which[
+(* Test 1 *)machinePrec,
+ev=Eigenvectors[{{0,0,0.5},{0,-1.0,0},{0.5,0,0}} . (s1+s2 . t)],
+(* Test 2 *)exactData && \[Infinity]===OptionValue@WorkingPrecision,
+ev=Eigenvectors[{{0,0,1/2},{0,-1,0},{1/2,0,0}} . (s1+s2 . t)],
+(* Test 3 *)True,
+TimeConstrained[ev=Eigenvectors[{{0,0,1/2},{0,-1,0},{1/2,0,0}} . (s1+s2 . t)],OptionValue@TimeConstraint,
+ev=Quiet[Eigenvectors[N[{{0,0,1/2},{0,-1,0},{1/2,0,0}} . (s1+s2 . t),OptionValue@WorkingPrecision]],N::meprec];
+ev=N[ev,OptionValue@WorkingPrecision]
+]
+];
+discriminates=Function[{a,b,c},b^2-4 a c]@@@ev;
+If[FreeQ[discriminates,_?Negative],ResourceFunction["ResourceFunctionMessage"][EllipseFit::none];$Failed,
+(* else *)
+{a,b,c}=First[Pick[ev,Quiet[Negative@discriminates,N::meprec]]];
+{a,b,c}={a,b,c}/.(_?(#==0.0&)->0);(* Change values like 0.0``200 to Integer 0. *)
+{d,e,f}=Quiet[t . {a,b,c},N::meprec]/.(_?(#==0.0&)->0);(* Change values like 0.0``200 to Integer 0. *);
+f+d*x0+a*x0^2+e*y0+b*x0*y0+c*y0^2==0
+]
+]
+];
+
+invalidMatrix[data_]:=With[{flattened=Flatten@data},{0}=!=Union@Im[flattened]||False===And@@NumericQ/@flattened];
+
+invalidData[data_]:=False===MatrixQ[data]||2=!=Last@Dimensions@data||invalidMatrix@data;
+
+notSymbolPair[e_]:=If[List=!=Head@e||2=!=Length@e,
+True,
+(* else *)
+With[{x=First@e,y=Last@e},
+If[Symbol=!=Head@x||Symbol=!=Head@y,
+True,
+(* else *)
+"System`"===Context[x]||"System`"===Context[y]
+]]];
+
+EllipseFit[data:{{_,_}..},{_,_},___?(OptionQ[{#}&])]/;MatrixQ[data]&&(Length@Union@data<4)&&ResourceFunction["ResourceFunctionMessage"][EllipseFit::err1]:="This side never evaluates.";
+
+EllipseFit[data_,{_,_},___?(OptionQ[{#}&])]/;invalidData[data]&&ResourceFunction["ResourceFunctionMessage"][EllipseFit::err2]:="This side never evaluates.";
+
+EllipseFit[_,_?notSymbolPair,___?(OptionQ[{#}&])]/;ResourceFunction["ResourceFunctionMessage"][EllipseFit::err3]:="This side never evaluates.";
+
+EllipseFit[_?(MatrixQ[#,NumericQ]&),{_,_},arg__]/;(False===OptionQ[{arg}])&&ResourceFunction["ResourceFunctionMessage"][EllipseFit::err4]:="This side never evaluates.";
+
+EllipseFit::err1="EllipseFit was given an invalid list of data because the data contained fewer then four disticnt {x,y} coordinates.";
+
+EllipseFit::err2="EllipseFit was given an invalid list of data. The data must have the form {{x1,y1},{x2,y2},...{xn,yn}} where each xi and yi are real numeric values.";
+
+EllipseFit::err3="EllipseFit was give an invalid expression as a second argument. The second argument must have the form {x,y} where x and y are Symbols not in the System context.";
+
+EllipseFit::err4="EllipseFit was used where one or more argument after the second argument was not an option. EllipseFit is not defined in this case.";
+
+EllipseFit::sing="EllipseFit was unable to find a solution due to the need to invert a singular or nearly singular matrix.";
+
+EllipseFit::none="EllipseFit was unable to find an ellipse to approximate the data.";
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*GENERAL DEFINITIONS FOR THIS NOTEBOOK*)*)
+
+
+(* ::Input::Initialization:: *)
+(*TO FINISH*)
+
+(*checkNewCreatedSymbolsWithOpt[how_:"short"] := (
+  names1 = Names["Global`*"];
+  If[how \[NotEqual] "short",
+    Print["\n ALL SYMBOLS ", Complement[names1, names0]]
+  ];
+  If[how \[NotEqual] "noTemporary",
+namesListPos=ResourceFunction["SelectPositions"][names1,ContainsAny[Attributes[#],{Temporary}]&];
+names2=Delete[names1,namesListPos];
+
+    Print["\n ALL SYMBOLS ", Complement[names2, names0]]
+  ];
+
+
+
+  Print["\n NEW SYMBOLS SINCE LAST CALL of checkNewCreatedSymbols \n ",     Complement[names1, namesSave], "\n"];
+
+  namesSave = names1;
+
+
+)*)
+
+
+(* ::Section::Initialization:: *)
+(*(*MISCELLANEA DEFINITIONS*)*)
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*GENERAL OPTIONS FOR THIS NOTEBOOK*)*)
+
+
+(* ::Section::Initialization:: *)
+(*(*MISCELLANEA OPTIONS*)*)
+
+
+(* ::Subtitle::Initialization:: *)
+(*(*OPTICA setup*)*)
+
+
+(* ::Input::Initialization:: *)
+(**)
+(* TAPULLO : still needed? *)
+(* $OpticaSystemProtection *)
+Unprotect[$OpticaSystemProtection];
+(**)
+openOpticaEMDocumentation:=
+KernelExecute[
+NotebookOpen[
+FileNameJoin[{
+$AddOnsDirectory(*$UserBaseDirectory*),"Autoload","OpticaDocumentation","Documentation","English","Tutorials","OpticaDocumentationOverview.nb"
+}]
+]
+];
+(*openOpticaEMDocumentation*)
+(**)
+printD@$VersionNumber;
+Switch[$VersionNumber,
+12.3,
+bigBanner[" MATHEMATICA VERSION 12.3: OK for OpticaSE ! "];
+bigBanner[" ACTIVATING OpticaSE "];
+Off[General::stop];
+Off[$RecursionLimit::reclim2];
+Off[Complement::heads];
+Off[Join::incpt];
+Once[Needs["OpticaSE`OpticaSE`"],"KernelSession"];
+On[Join::incpt];
+On[Complement::heads];
+On[$RecursionLimit::reclim2];
+On[General::stop];
+Print[$OpticaHome];
+Print[$OpticaVersion];
+Print[$OpticaBuildDate];
+Print[TableForm[Names["$Optica*"]]];
+Print@Column@$ContextPath;
+printD@Column@Contexts["*Optica*"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaSE`OpticaSE`"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaTools`"];
+Print@Column@$ContextPath,
+
+
+14.1,
+bigBanner[" MATHEMATICA VERSION 14.1: OK for OpticaEM ! "];
+bigBanner[" ACTIVATING OpticaEM "];
+Once[Needs["OpticaEM`OpticaEM`"],"KernelSession"];
+Print[$OpticaHome];
+Print[$OpticaVersion];
+Print[$OpticaBuildDate];
+Print[TableForm[Names["$Optica*"]]];
+Print@Column@$ContextPath;
+printD@Column@Contexts["*Optica*"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaEM`OpticaEM`"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaTools`"];
+Print@Column@$ContextPath,
+
+
+14.2,
+bigBanner[" MATHEMATICA VERSION 14.2: OK for OpticaEM ! "];
+bigBanner[" ACTIVATING OpticaEM "];
+Once[Needs["OpticaEM`OpticaEM`"],"KernelSession"];
+Print[$OpticaHome];
+Print[$OpticaVersion];
+Print[$OpticaBuildDate];
+Print[TableForm[Names["$Optica*"]]];
+Print@Column@$ContextPath;
+printD@Column@Contexts["*Optica*"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaEM`OpticaEM`"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaTools`"];
+Print@Column@$ContextPath,
+
+
+14.3,
+bigBanner[" MATHEMATICA VERSION 14.3: OK for OpticaEM ! "];
+bigBanner[" ACTIVATING OpticaEM "];
+Once[Needs["OpticaEM`OpticaEM`"],"KernelSession"];
+Print[$OpticaHome];
+Print[$OpticaVersion];
+Print[$OpticaBuildDate];
+Print[TableForm[Names["$Optica*"]]];
+Print@Column@$ContextPath;
+printD@Column@Contexts["*Optica*"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaEM`OpticaEM`"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaTools`"];
+Print@Column@$ContextPath,
+
+
+15.0,
+bigBanner[" MATHEMATICA VERSION 15.0: to check for OpticaEM ! "];
+bigBanner[" ACTIVATING OpticaEM "];
+Once[Needs["OpticaEM`OpticaEM`"],"KernelSession"];
+Print[$OpticaHome];
+Print[$OpticaVersion];
+Print[$OpticaBuildDate];
+Print[TableForm[Names["$Optica*"]]];
+Print@Column@$ContextPath;
+printD@Column@Contexts["*Optica*"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaEM`OpticaEM`"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaTools`"];
+Print@Column@$ContextPath,
+
+
+_,
+bigBanner[" WRONG MATHEMATICA VERSION ??? "];
+bigBanner[" NOT ACTIVATING OPTICA - NORMAL MATHEMATICA STUFF OK "]
+(*killStop*)
+];
+
+
+(* ::Section::Initialization:: *)
+(*(*Optica HELP*)*)
+
+
+(* ::Subsection::Initialization:: *)
+(*(*open OpticaEM main help page*)*)
+
+
+(* ::Input::Initialization:: *)
+openOpticaEMDocumentation:=KernelExecute[NotebookOpen[
+FileNameJoin[{StringDrop[$OpticaHome,-8],"OpticaDocumentation","Documentation","English","Tutorials","OpticaDocumentationOverview.nb"}]
+]
+];
+?openOpticaEMDocumentation
+
+
+(* ::Subsection::Initialization:: *)
+(*(*detailed Optica HELP*)*)
+
+
+(* ::Input::Initialization:: *)
+TableForm[{{ComponentFunctions,ShortHandFunctions}},TableAlignments->Center]
+
+
+TableForm[{{SourceFunctions,OpticaFunctions},{EMFunctions,BuildingBlockFunctions}},TableAlignments->Center]
+
+
+
+(*NearFieldFunctions
+FarFieldFunctions
+*)
+
+
+
+
+(* ::Subtitle::Initialization:: *)
+(*(*MISCELLANEOUS RICH FUNCTIONS - OPTICS/ANA/SIM*)*)
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*general*)*)
+
+
+(* ::Input::Initialization:: *)
+(*(*--------------------------------------------------------------------------------*)
+(* !@#$% IF Module:= IT DOES NOT WORK !!! *)
+myFocalSurfaceAnalyze[points3DOnTheFS_,points2DOnTheFS_,pointsTiltOnTheFS_,tilt_]:=Module[{
+sizeFSTrnsvrs,sizeFSThrdDim,
+areaFS,numSensors,
+resThetaProj,resTheta,
+theDirScreenInCentralPlane,pointsTiltProjOnTheFS,
+uuu,vvv,
+trnsvrsMagnification,thrdDimMagnification,
+zPDACenter,xPDACenter,
+finalRaysDir
+},
+(* !@#$% changed for a split PD: pass all data and only do calculations here *)
+If [Length@points3DOnTheFS \[LessEqual]0 || Length@points2DOnTheFS\[LessEqual] 0,bigBanner[" ERROR ON myFocalSurfaceAnalyze - Returning "];Return[]];
+(* improve: tilt screen can be determined by points3DOnTheFS *)
+zPDACenter=Median[Transpose[points3DOnTheFS][[1]]];
+xPDACenter=Median[Transpose[points3DOnTheFS][[2]]];
+Histogram[Transpose[points2DOnTheFS][[1]],100,AspectRatio\[Rule]1/2];
+Histogram[Transpose[points2DOnTheFS][[2]],100,AspectRatio\[Rule]1/2];
+sizeFSTrnsvrs=Max[Transpose[points2DOnTheFS][[1]]]-Min[Transpose[points2DOnTheFS][[1]]];
+sizeFSThrdDim=Max[Transpose[points2DOnTheFS][[2]]]-Min[Transpose[points2DOnTheFS][[2]]];
+areaFS=sizeFSTrnsvrs*sizeFSThrdDim/1000000;
+numSensors=sizeFSTrnsvrs*sizeFSThrdDim/sensorPitch^2;
+(**)
+resThetaProj={};resTheta={};
+theDirScreenInCentralPlane={Cos[tilt*Degree],Sin[tilt*Degree],0};
+finalRaysDir=Mean[ArcTan[Transpose[pointsTiltOnTheFS][[2]]/Transpose[pointsTiltOnTheFS][[1]]]]/Degree;
+If[Length[pointsTiltOnTheFS]>0,
+AppendTo[resTheta,1000*ArcCos[pointsTiltOnTheFS.theDirScreenInCentralPlane]],
+Print["zero length pointsTiltOnTheFS  "]
+];
+If[Length[pointsTiltOnTheFS]>0,pointsTiltProjOnTheFS=Transpose[{Transpose[pointsTiltOnTheFS][[1]],Transpose[pointsTiltOnTheFS][[2]],ConstantArray[0,Length[pointsTiltOnTheFS]]}];
+uuu=Map[Normalize,pointsTiltProjOnTheFS];
+vvv=Table[Cross[theDirScreenInCentralPlane,uuu[[k]]],{k,1,Length[uuu]}];
+AppendTo[resThetaProj,1000*ArcSin[Transpose[vvv][[3]]]],
+Print["zero length pointsTiltOnTheFS"]
+];
+trnsvrsMagnification=sizeFSTrnsvrs/(2*halfOpenAngleMRad);
+thrdDimMagnification=sizeFSThrdDim/(2*halfOpenAngleMRad);
+resThetaProj=Flatten[resThetaProj];
+resTheta=Flatten[resTheta];
+Print[Histogram[resThetaProj,ChartElementFunction\[Rule]"FadingRectangle",ChartStyle\[Rule]Orange,PlotLabel\[Rule]"resThetaProj (mrad)",AspectRatio\[Rule]1/2,Frame->True]];
+Print[Histogram[resTheta,ChartElementFunction\[Rule]"FadingRectangle",ChartStyle\[Rule]Orange,PlotLabel\[Rule]"resTheta (mrad)",AspectRatio\[Rule]1/2,Frame->True]];
+Print["   zPDACenter                                                       ",nf1[zPDACenter]];
+Print["   xPDACenter                                                       ",nf1[xPDACenter]];
+Print["   finalRaysDir in plane z-x (degrees)                              ",nf1[finalRaysDir]];
+Print["   Mean resThetaProj         (mrad)                                 ",nf1[Mean[resThetaProj]]];
+Print["   Median resThetaProj       (mrad)                                 ",nf1[Median[resThetaProj]]];
+Print["   Mean resTheta             (mrad)                                 ",nf1[Mean[resTheta]]];
+Print["   Median resTheta           (mrad)                                 ",nf1[Median[resTheta]]];
+Print["   Estimated size PD-plane local z-Trnsvrs coordinate (mm)          ",nf1[sizeFSTrnsvrs]];
+Print["   Estimated size PD-plane ThrdDim (mm)                            ",nf1[sizeFSThrdDim]];
+Print["   Estimated area of the PD-plane (m**2)                            ",nf1[areaFS]];
+Print["   Estimated number of sensors (one half detector)                  ",nf1[numSensors]];
+Print["   Assumed Nominal Sensor Pitch                                     ",nf1[sensorPitch]];
+Print["   Transverse Magnification (mm/mrad) - meaningful for single trace ",nf3[trnsvrsMagnification]];
+Print["   ThrdDim Magnification   (mm/mrad) - meaningful for single trace ",nf3[thrdDimMagnification]];
+Print["   Average Magnification    (mm/mrad) - meaningful for single trace ",nf3[average[trnsvrsMagnification,thrdDimMagnification]]]
+];*)
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*ANALITICAL GEOMETRY*)*)
+
+
+(* ::Input::Initialization:: *)
+(*=========================================================================*)
+(* swap coordinates for the FS view *)
+(*=========================================================================*)
+(**)
+?swap(* already defined *)
+ClearAll[swapTheXYCoords];
+swapTheXYCoords[v_]:=Module[{},If[Length[v]!=2,Return[Print["ERROR swapTheXYCoords "]],Return[  (1.0)*     {v[[2]],v[[1]]}]]];
+Attributes[swapTheXYCoords]
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+dist[z1_,x1_,z2_,x2_]:=Sqrt[(z1-z2)^2+(x1-x2)^2];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+AngCoeff[z1_,x1_,z2_,x2_]:=(x2-x1)/(z2-z1);
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+dirVect[z1_,x1_,z2_,x2_]:={(z2-z1),(x2-x1)}/dist[z1,x1,z2,x2];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+dirVectOrth[z1_,x1_,z2_,x2_]:={-(x2-x1),(z2-z1)}/dist[z1,x1,z2,x2];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+average[t1_,t2_]:=(t1+t2)/2;
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+midPoint[z1_,x1_,z2_,x2_]:={average[z1,z2],average[x1,x2]};
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+reflect0[z0_,y0_,axis_,za_,ya_]:=Module[{uvp,t,s,zp,yp,w,zap,yap,sol},
+uvp={-axis[[2]],axis[[1]]};
+zp=z0+t*uvp[[1]];
+yp=y0+t*uvp[[2]];
+zap=za+s*axis[[1]];
+yap=ya+s*axis[[2]];
+sol=Solve[{zp==zap,yp==yap},{s,t}];
+w={zp,yp}/.sol[[1]];
+reflectedPoint=2*w-{z0,y0};
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+reflect[x0_,y0_,dirAxis_,xAxis_,yAxis_]:=Module[{uvp,t,s,xp,yp,w,xap,yap,sol,reflectedPoint},
+uvp={-dirAxis[[2]],dirAxis[[1]]};
+xp=x0+t*uvp[[1]];
+yp=y0+t*uvp[[2]];
+xap=xAxis+s*dirAxis[[1]];
+yap=yAxis+s*dirAxis[[2]];
+sol=Solve[{xp==xap,yp==yap},{s,t}];
+w={xp,yp}/.sol[[1]];
+reflectedPoint=2*w-{x0,y0};
+Return[reflectedPoint]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+(*garbage*)
+(*reflect3D[point_,planeAxis_]:=Module[{k,pp,tSol,pointIntersect},
+pp=point+t*planeAxis;
+k=-Dot[secMirNorm3D,{zSecMirLMin,xSecMirLMin,0}];
+tSol=-k-Dot[point,planeAxis];
+pointIntersect=pp/.t\[Rule]tSol;
+point+2*(pointIntersect-point)
+];*)
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+angles[p_,q_,d_,radius_]:=Module[{alpha},
+alpha=N[ArcCos[resX[p,q,d,radius][[2]]],wp]//Chop;
+beta=N[sumAB[p,q,d]-alpha,wp]//Chop;
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+circumference[z0_,y0_,radius_,z_,y_]:=(z-z0)^2+(y-y0)^2-radius^2;
+
+
+(* ::Input::Initialization:: *)
+tiltAroundVertexMatrix[\[Alpha]_]={{Cos[\[Alpha]],-Sin[\[Alpha]]},{Sin[\[Alpha]],Cos[\[Alpha]]}};
+
+
+doCalcSphereCenter[zc0_,xc0_,zMir_,xMir_,tiltMir_]:=Module[{centerMirrorTemp,vrtxTemp,centerMir},
+centerMirrorTemp={zc0+zMir,xc0+xMir};
+vrtxTemp={zMir,xMir};
+centerMir=vrtxTemp+tiltAroundVertexMatrix[tiltMir] . (centerMirrorTemp-vrtxTemp);
+Return[centerMir]
+];
+
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*SPECIFIC GEOMETRY OF RICH (NEED REFRESHING)*)*)
+
+
+(* ::Input::Initialization:: *)
+(*=========================================================================*)
+(**)
+(*=========================================================================*)
+Clear[doCalcPlaneSidewiseCoords];
+doCalcPlaneSidewiseCoords[z_,x_,\[Alpha]_,l_,d_:0]:=
+Module[{zxCoords},
+Print["\n >>>>>>>>>>>>>>>>>>>>> plane coordinates sidewise calc and report // BEGIN "];
+zxCoords=(*tiltTheViewRotTra3DZ0@*)Map[{z,x}+#*{Sin[\[Alpha]],-Cos[\[Alpha]]}&,{-l/2,+l/2}];
+(*Print@zxCoords;*)
+If[zxCoords[[1]][[1]]> zxCoords[[2]][[1]],zxCoords={zxCoords[[2]],zxCoords[[1]]};Print["points swapped to get p4z < p3z "],Print[" p4z < p3z"] ];
+Print[" plane edges (P4)  : "," *** along z (beam) = ",nf3@N@zxCoords[[1]][[1]]," *** transverseCoordinate / radial from beam = ",nf3@N@zxCoords[[1]][[2]]];Print[" plane center  C   : "," *** along z (beam) = ",nf3@N@z,          " *** transverseCoordinate / radial from beam = ",nf3@N@x];Print[" plane edges (P3)  : "," *** along z (beam) = ",nf3@N@zxCoords[[2]][[1]]," *** transverseCoordinate / radial from beam = ",nf3@N@zxCoords[[2]][[2]]];
+Print[" plane tilt (with respect to the beam-line :=: positive z-axis) DEGREES: ",nf1[\[Alpha]/Degree//N]," RADIANS: ",nf1[\[Alpha]//N]];
+Print[" plane Transverse size       : ",nf1[l]," ----- plane ThrdDim size :     ",nf1[d]];
+Print[" <<<<<<<<<<<<<<<<<<<<< plane coordinates sidewise calc and report // END \n"];
+Return[N@{{zxCoords[[1]],1.0*{z,x},zxCoords[[2]]},{-d/2,+d/2}}]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+calcSphericalPrimaryMirror[size_,tilt_,radius_,thetaMinPriMir_,p2z$local_]:=Module[{p,q,sol,halfAnglePriMir,sagittaPriMir,antiSagittaPriMir,
+crossPriMir,
+(*centerPriMir,centerPriMir3D,vrtxPriMir,zVrtxPriMir,xVrtxPriMir,*)
+zPriMirMinVar,
+xPriMirMinVar,
+zPriMirMaxVar,
+xPriMirMaxVar,
+lhcbTiltAngle
+},
+printD@size;
+printD@tilt;
+printD@radius;
+printD@thetaMinPriMir;
+printD@p2z$local;
+zPriMirMinVar=Cos[thetaMinPriMir]*p;
+xPriMirMinVar=Sin[thetaMinPriMir]*p;
+zPriMirMaxVar=p2z$local;
+xPriMirMaxVar=q;
+sol=N@Solve[{
+dist[zPriMirMinVar,xPriMirMinVar,zPriMirMaxVar,xPriMirMaxVar]==size,-1/AngCoeff[zPriMirMinVar,xPriMirMinVar,zPriMirMaxVar,xPriMirMaxVar]==Tan[tilt]},
+{p,q}];
+zPriMirMin=zPriMirMinVar/.sol[[1]];
+xPriMirMin=xPriMirMinVar/.sol[[1]];
+zPriMirMax=zPriMirMaxVar/.sol[[1]];
+xPriMirMax=xPriMirMaxVar/.sol[[1]];
+zPriMir=(zPriMirMin+zPriMirMax)/2;
+xPriMir=(xPriMirMin+xPriMirMax)/2;
+(*Determine the axis of the SM*)
+dirVectPriMir={zPriMirMax-zPriMirMin,xPriMirMax-xPriMirMin}/dist[zPriMirMin,xPriMirMin,zPriMirMax,xPriMirMax];
+dirVectPriMirAxis={xPriMirMax-xPriMirMin,-(zPriMirMax-zPriMirMin)}/dist[zPriMirMin,xPriMirMin,zPriMirMax,xPriMirMax];
+halfAnglePriMir=ArcSin[dist[zPriMirMin,xPriMirMin,zPriMirMax,xPriMirMax]/2/radius];
+sagittaPriMir=radius*(1-Cos[halfAnglePriMir]);
+antiSagittaPriMir=radius*(Cos[halfAnglePriMir]);
+crossPriMir={zPriMir,xPriMir};
+centerPriMir=crossPriMir-antiSagittaPriMir*dirVectPriMirAxis;
+centerPriMir3D=Flatten[{centerPriMir,0}];
+vrtxPriMir=crossPriMir+sagittaPriMir*dirVectPriMirAxis;
+zVrtxPriMir=vrtxPriMir[[1]];
+xVrtxPriMir=vrtxPriMir[[2]];
+lhcbTiltAngle=ArcSin[centerPriMir[[2]]/radius];
+Print[" SPHERICAL MIRROR ================================================================================================ "];
+Print[" Spherical mirror ROC : ",radius];
+Print[" P1 *** {z} Spherical mirror min : ",nf1[zPriMirMin]," ----- {transverseCoordinate} Spherical mirror min : ",nf1[xPriMirMin]];
+Print[" {z} Spherical mirror Vrtx: ",nf1[zVrtxPriMir]," ----- {transverseCoordinate} Spherical mirror Vrtx: ",nf1[xVrtxPriMir]];
+Print[" P2 *** {z} Spherical mirror max : ",nf1[zPriMirMax]," ----- {transverseCoordinate} Spherical mirror max : ",nf1[xPriMirMax]];
+Print[" Tilt Spherical mirror (with respect to the beam-line :=: negative z-axis) DEGREES: ",nf1[180-tiltPriMir/Degree//N]," RADIANS: ",nf1[180Degree-tiltPriMir//N]];
+Print[" Tilt Spherical mirror (LHCb convention) DEGREES: ",nf1[lhcbTiltAngle/Degree]," RADIANS: ",nf1[lhcbTiltAngle]];
+Print[" COC Spherical mirror                   {z,transverseCoordinate} : ",nf1[centerPriMir]];
+Print[" Vrtx Spherical mirror                  {z,transverseCoordinate} : ",nf1[vrtxPriMir]];Print[" Center of the Sagitta Spherical mirror {z,transverseCoordinate} : ",nf1[crossPriMir]];
+Print[" Spherical mirror width : ",nf1[sizeTrnsvrsPriMir]," ------ Spherical mirror ThrdDim : ",nf1[sizeThrdDimPriMir]];
+(*printD@zPriMirMinVar;
+printD@xPriMirMinVar;
+printD@zPriMirMaxVar;
+printD@xPriMirMaxVar;
+printD[sol];
+printD@zPriMirMin;
+printD@xPriMirMin;
+printD@zPriMirMax;
+printD@xPriMirMax;
+printD@zPriMir;
+printD@xPriMir;
+printD@dirVectPriMir;
+printD@dirVectPriMirAxis;
+printD@halfAnglePriMir;
+printD@sagittaPriMir;
+printD@antiSagittaPriMir;
+printD@crossPriMir;
+printD@centerPriMir;
+printD@centerPriMir3D;
+printD@vrtxPriMir;
+printD@zVrtxPriMir;
+printD@xVrtxPriMir;
+printD@lhcbTiltAngle;*)
+Return[]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+(* e` un tapullamento... da fare per ogni specchio piano...... *)
+(*--------------------------------------------------------------------------------*)
+calcFlatSecMirFromLowerAngle[size_,tilt_,thetaMinSecMir_,p4z$local_]:=Module[{p,q,sol,
+zSecMirMinVar,xSecMirMinVar,zSecMirMaxVar,xSecMirMaxVar,
+zSecMirMin,xSecMirMin,zSecMirMax,xSecMirMax,zSecMir,xSecMir,
+thetaMinSecMir2
+},
+bigBanner[" BEWARE: IT IS OLD !!! ??? it works.... compare with: doCalcPlaneSidewiseCoords"];
+bigBanner[" DO NOT USE FOR SPLIT OPTICS WHERE YOU DO NOT NEED TO PUT THE H- FLAT MIRROR AS LOW AS POSSIBLE "];
+zSecMirMinVar=p4z$local;
+xSecMirMinVar=q;
+zSecMirMaxVar=Cos[thetaMinSecMir]*p;
+xSecMirMaxVar=Sin[thetaMinSecMir]*p;
+sol=N@Solve[{
+dist[zSecMirMinVar,xSecMirMinVar,zSecMirMaxVar,xSecMirMaxVar]==size
+,
+1/AngCoeff[zSecMirMinVar,xSecMirMinVar,zSecMirMaxVar,xSecMirMaxVar]==-Tan[tilt]
+},{p,q}
+];
+zSecMirMin=zSecMirMinVar/.sol[[2]];
+xSecMirMin=xSecMirMinVar/.sol[[2]];
+zSecMirMax=zSecMirMaxVar/.sol[[2]];
+xSecMirMax=xSecMirMaxVar/.sol[[2]];
+zSecMir=(zSecMirMin+zSecMirMax)/2/.sol[[2]];
+xSecMir=(xSecMirMin+xSecMirMax)/2/.sol[[2]];
+secMirNorm3D=Normalize[{-(xSecMirMax-xSecMirMin),+(zSecMirMax-zSecMirMin),0}];
+thetaMinSecMir2=ArcTan[xSecMirMax/zSecMirMax];
+miniBanner[" Flat mirror "];
+Print[" Flat mirror ROC : ",radiusSecMir];
+Print[" P4 *** {z} Flat mirror min     : ",nf1[zSecMirMin]," ----- {transverseCoordinate} Flat mirror min     : ",nf1[xSecMirMin]];
+Print["        {z} Flat mirror center  : ",nf1[zSecMir],       " ----- {transverseCoordinate} Flat mirror center  : ",nf1[xSecMir]];
+Print[" P3 *** {z} Flat mirror max     : ",nf1[zSecMirMax]," ----- {transverseCoordinate} Flat mirror max     : ",nf1[xSecMirMax]];
+Print[" thetaMinSecMir (imposed): ",thetaMinSecMir," thetaMinSecMir (calculated) DEGREES: ",thetaMinSecMir2/Degree," ===>>> RADIANS: ",thetaMinSecMir2];
+Print[" Tilt Flat mirror (with respect to the beam-line :=: positive z-axis) DEGREES: ",nf1[tiltSecMir/Degree//N]," RADIANS: ",nf1[tiltSecMir//N]];
+Print[" Flat mirror width :     ",nf1[sizeTrnsvrsSecMir]," ----- Flat mirror ThrdDim :     ",nf1[sizeThrdDimSecMir]];
+Return[{zSecMir,xSecMir,zSecMirMin,xSecMirMin,zSecMirMax,xSecMirMax}]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+calcFS[zCc_,xCc_,radius_,tilt_]:=Module[{alpha,beta,gamma},
+diffXCcIp=xCc;
+diffZCcIp=-zCc;
+CHToIPToCcAngle=ArcTan[diffXCcIp/diffZCcIp];
+betaVrtx=CHToIPToCcAngle-tilt;
+gamma[alpha_]:=ArcSin[(Sqrt[diffZCcIp^2+diffXCcIp^2]/radius)*Sin[alpha+CHToIPToCcAngle]];
+nu[alpha_]:=ArcSin[2*Sin[gamma[alpha]]]-gamma[alpha];
+beta[alpha_]:=alpha+CHToIPToCcAngle-gamma[alpha];
+tau[alpha_]:=nu[alpha]+beta[alpha]-CHToIPToCcAngle;
+edgeParaFSNear[[1]]=(radius/2)*Cos[tau[0]]+zCc;
+edgeParaFSNear[[2]]=(radius/2)*Sin[tau[0]]+xCc;
+edgeParaFSAway[[1]]=(radius/2)*Cos[tau[trnsvrsAcc]]+zCc;
+edgeParaFSAway[[2]]=(radius/2)*Sin[tau[trnsvrsAcc]]+xCc;
+Print[" CHToIPToCcAngle   ",nf1[CHToIPToCcAngle],"   --- betaVrtx   ",nf1[betaVrtx]];
+miniBanner[" \n PD-PLANE ========================================================================= "];
+Print[" P8 *** {z} PD-PLANE center  : ",nf1[zScreen]," ----- {transverseCoordinate} PD-PLANE center  : ",nf1[xScreen]];
+(*Print[" Tilt PD-PLANE (with respect to the beam-line :=: negative z-axis) DEGREES : ",nf1[tiltScreen/Degree//N]," RADIANS: ",nf1[tiltScreen//N]];*)
+Print[" PD-PLANE width :     ",nf1[sizeTrnsvrsScreen]," ----- PD-PLANE ThrdDim :     ",nf1[sizeThrdDimScreen]]
+];
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*Quartic solution to back - tracing*)*)
+
+
+(* ::Input::Initialization:: *)
+wp=50;
+sumAB[p_,q_,d_]=ArcCos[(p^2+q^2-d^2)/(2 p q)];
+eq1=Sin[\[Alpha]](radius/p-Cos[\[Beta]])-Sin[\[Beta]](radius/q-Cos[\[Alpha]])/.\[Beta]->sumAB[p,q,d]-\[Alpha]//TrigExpand//FullSimplify;
+eq1=Sin[\[Alpha]](radius/p-Cos[\[Beta]])-Sin[\[Beta]](radius/q-Cos[\[Alpha]])/.\[Beta]->sumAB[p,q,d]-\[Alpha]//TrigExpand;
+eq2=Sin[\[Alpha]]^2+Cos[\[Alpha]]^2-1;
+eq2bis=eq2/.{Cos[\[Alpha]]->X,Sin[\[Alpha]]->Y};
+eq1bis=eq1/.{Sin[\[Alpha]]^2->1-X^2,Cos[\[Alpha]]->X,Sin[\[Alpha]]->Y};
+solY=Solve[eq1bis==0,{Y},WorkingPrecision->wp][[1]];
+eq2tris=eq2bis/.solY;
+
+solX=Solve[eq2tris==0,X,WorkingPrecision->wp];
+resX[p_,q_,d_,radius_]=N[X/.solX,wp];
+resY[p_,q_,d_,radius_]=N[Y/.solY/.solX,wp];
+
+
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*SIMULATION/ANALYSIS/TRACING*)*)
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+trackGen[num_,minAcc_,maxYAcc_,maxXAcc_]:=Module[{\[Theta],\[Phi],zeta,radius,theta0X,theta0Y},
+zSphe[radius_,\[Theta]_,\[Phi]_]=radius*Cos[\[Theta]];
+xSphe[radius_,\[Theta]_,\[Phi]_]=radius*Sin[\[Theta]]*Cos[\[Phi]];
+ySphe[radius_,\[Theta]_,\[Phi]_]=radius*Sin[\[Theta]]*Sin[\[Phi]];
+xRect[zeta_,thetaX_,thetaY_]=zeta*Tan[thetaX];
+yRect[zeta_,thetaX_,thetaY_]=zeta*Tan[thetaY];
+thetaX={};
+thetaY={};
+phi=RandomReal[{0,+\[Pi]},num];
+theta=RandomReal[{minAcc,Sqrt[maxYAcc^2+maxXAcc^2]},num];
+(*Print[Histogram[phi]];
+Print[Histogram[theta]];*)theta0X=ArcTan[xSphe[1,theta,phi]/zSphe[1,theta,phi]];
+theta0Y=ArcTan[ySphe[1,theta,phi]/zSphe[1,theta,phi]];
+Do[If[Abs[theta0Y[[k]]]>maxYAcc||Abs[theta0X[[k]]]>maxXAcc,Null,AppendTo[thetaX,theta0X[[k]]];AppendTo[thetaY,theta0Y[[k]]];],{k,1,num}];
+angle=Transpose[{thetaX,thetaY}];
+Length[angle];
+Print[Graphics[Point[angle],GridLines->Automatic,Axes->True]];];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+localTrackUnitVectors[trackDir_]:=Module[{w,theTrackDir},
+theTrackDir=Normalize[trackDir];
+localPerpUnitVector=Normalize[Cross[theTrackDir,{0,0,1}]];
+(*The following w must be the same expression as above!!!*)
+(*w=Normalize[Cross[Normalize[{theTrackDir[[1]],theTrackDir[[2]],0}],{0,0,1}]];*)
+(*Print[Norm[w-localPerpUnitVector]];*)
+localThirdUnitVector=Normalize[Cross[localPerpUnitVector,theTrackDir]];
+Return[{localPerpUnitVector,localThirdUnitVector}]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+execBackTracing[re_,rd_,rc_,rv_]:=Module[{p,q,d,gamma1,gamma2,gammap,gammaq,unitPerp,unitCE,unit3,rvRec,err,trackPhotonPlaneUnitVector,trackUnitVector,projXLocal,projYLocal},
+p=Norm[rd-rc];
+q=Norm[re-rc];
+d=Norm[rd-re];
+angles[p,q,d,radiusPriMir];
+gamma1=ArcTan[Sin[alpha]/(radiusPriMir/q-Cos[alpha])];
+gamma2=ArcTan[Sin[beta]/(radiusPriMir/p-Cos[beta])];
+gammaq=ArcCos[(radiusPriMir^2+Norm[rv-re]^2-q^2)/(2*radiusPriMir*Norm[rv-re])];
+gammap=ArcCos[(radiusPriMir^2+Norm[rv-rd]^2-p^2)/(2*radiusPriMir*Norm[rv-rd])];
+unitPerp=Normalize[Cross[re-rc,rd-rc]];
+unitCE=Normalize[re-rc];
+unit3=Normalize[Cross[unitPerp,unitCE]];
+rvRec=unitCE*radiusPriMir*Cos[alpha]+unit3*radiusPriMir*Sin[alpha]+rc;
+err=Norm[rv-rvRec];
+(*Print["Err:    ",err];*)trackPhotonPlaneUnitVector=Normalize[Cross[trackDir,rvRec-re]];
+{localPerpUnitVector,localThirdUnitVector}=localTrackUnitVectors[trackDir];
+projXLocal=Dot[trackPhotonPlaneUnitVector,localPerpUnitVector];
+projYLocal=Dot[trackPhotonPlaneUnitVector,localThirdUnitVector];
+AppendTo[resChThe,VectorAngle[rvRec-re,trackDir]];
+AppendTo[resChPhi,ArcTan[projXLocal,projYLocal]];
+(*OLD CASINO BUGS*)(*trackUnitVector=Normalize[Cross[Normalize[{trackDir[[1]],trackDir[[2]],0}],{0,0,1}]];
+Print[trackPhotonPlaneUnitVector];
+Print[trackUnitVector];
+Print[" A :",trackUnitVector];
+Print[" B :",N[Cross[trackDir,{0,0,1}],30]];
+projYPrime=Dot[trackPhotonPlaneUnitVector,{0,0,1}];
+projXPrime=Dot[trackPhotonPlaneUnitVector,trackUnitVector];
+trackDir2=trackDir;
+trackPhotonPlaneUnitVector2=trackPhotonPlaneUnitVector;
+trackUnitVector2=trackUnitVector;
+trackUnitVector2BIS=Normalize[Cross[trackDir,{0,0,1}]];
+third=-Normalize[Cross[trackDir,trackUnitVector2BIS]];
+projXPrime2=Dot[trackPhotonPlaneUnitVector,trackUnitVector];
+projXPrime2BIS=Dot[trackPhotonPlaneUnitVector,trackUnitVector2BIS];
+projYPrime2=Dot[trackPhotonPlaneUnitVector,{0,0,1}];
+projYPrime2BIS=Dot[trackPhotonPlaneUnitVector,third];*)
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+ClearAll[myFocalSurfaceAnalyze];
+myFocalSurfaceAnalyze[points3DOnTheFS_,points2DOnTheFS_,pointsTiltOnTheFS_,tilt_(* RADIANS *),sensorPitch_:1]:=Module[{
+sizeFSTrnsvrs,sizeFSThrdDim,areaFS,numSensors,resThetaProj,resTheta,
+(*theDirScreenInCentralPlane,*)
+pointsTiltProjOnTheFS,vvv,uuu,
+trnsvrsMagnification,thrdDimMagnification,zPDACenter,xPDACenter,finalRaysDir
+},
+(*!@#$% changed for a split PD:pass all data and only do calculations here*)If[Length@points3DOnTheFS<=0||Length@points2DOnTheFS<=0,bigBanner[" ERROR ON myFocalSurfaceAnalyze - Returning "];Return[]];
+(*improve:tilt screen can be determined by points3DOnTheFS*)
+zPDACenter=Median[Transpose[points3DOnTheFS][[1]]];
+xPDACenter=Median[Transpose[points3DOnTheFS][[2]]];
+Histogram[Transpose[points2DOnTheFS][[1]],100,AspectRatio->1/2];
+Histogram[Transpose[points2DOnTheFS][[2]],100,AspectRatio->1/2];
+sizeFSTrnsvrs=Max[Transpose[points2DOnTheFS][[1]]]-Min[Transpose[points2DOnTheFS][[1]]];
+sizeFSThrdDim=Max[Transpose[points2DOnTheFS][[2]]]-Min[Transpose[points2DOnTheFS][[2]]];
+areaFS=sizeFSTrnsvrs*sizeFSThrdDim/1000000;
+numSensors=sizeFSTrnsvrs*sizeFSThrdDim/sensorPitch^2;
+(**)
+resThetaProj={};resTheta={};
+(*theDirScreenInCentralPlane={Cos[tilt],Sin[tilt],0};*)
+finalRaysDir=Mean[ArcTan[Transpose[pointsTiltOnTheFS][[2]]/Transpose[pointsTiltOnTheFS][[1]]]]/Degree;
+If[Length[pointsTiltOnTheFS]>0,
+AppendTo[resTheta,1000*ArcCos[pointsTiltOnTheFS . {Cos[tilt],Sin[tilt],0}]];
+pointsTiltProjOnTheFS=Transpose[{Transpose[pointsTiltOnTheFS][[1]],Transpose[pointsTiltOnTheFS][[2]],ConstantArray[0,Length[pointsTiltOnTheFS]]}];
+uuu=Map[Normalize,pointsTiltProjOnTheFS];
+vvv=Table[Cross[{Cos[tilt],Sin[tilt],0},uuu[[k]]],{k,1,Length[uuu]}];
+AppendTo[resThetaProj,1000*ArcSin[Transpose[vvv][[3]]]],Print["zero length pointsTiltOnTheFS"];
+Remove[uuu]
+,
+Print["zero length pointsTiltOnTheFS  "]
+];
+(**)
+trnsvrsMagnification=sizeFSTrnsvrs/(2*halfOpenAngleMRad);
+thrdDimMagnification=sizeFSThrdDim/(2*halfOpenAngleMRad);
+resThetaProj=Flatten[resThetaProj];
+resTheta=Flatten[resTheta];
+Print[Histogram[resThetaProj,ChartElementFunction->"FadingRectangle",ChartStyle->Orange,PlotLabel->"resThetaProj (mrad)",AspectRatio->1/2,Frame->True]];
+Print[Histogram[resTheta,ChartElementFunction->"FadingRectangle",ChartStyle->Orange,PlotLabel->"resTheta (mrad)",AspectRatio->1/2,Frame->True]];
+Print["   zPDACenter                                                       ",nf1[zPDACenter]];
+Print["   xPDACenter                                                       ",nf1[xPDACenter]];
+Print["   finalRaysDir in plane z-x (degrees)                              ",nf1[finalRaysDir]];
+Print["   Mean resThetaProj         (mrad)                                 ",nf1[Mean[resThetaProj]]];
+Print["   Median resThetaProj       (mrad)                                 ",nf1[Median[resThetaProj]]];
+Print["   Mean resTheta             (mrad)                                 ",nf1[Mean[resTheta]]];
+Print["   Median resTheta           (mrad)                                 ",nf1[Median[resTheta]]];
+Print["   Estimated size PD-plane local z-Trnsvrs coordinate (mm)          ",nf1[sizeFSTrnsvrs]];
+Print["   Estimated size PD-plane ThrdDim (mm)                             ",nf1[sizeFSThrdDim]];
+Print["   Estimated area of the PD-plane (m**2)                            ",nf1[areaFS]];
+Print["   Estimated number of sensors (one half detector)                  ",nf1[numSensors]];
+Print["   Assumed Nominal Sensor Pitch                                     ",nf1[sensorPitch]];
+Print["   Transverse Magnification (mm/mrad) - meaningful for one single particle ray-tracing ",nf3[trnsvrsMagnification]];
+Print["   ThrdDim Magnification    (mm/mrad) - meaningful for one single particle ray-tracing ",nf3[thrdDimMagnification]];
+Print["   Average Magnification    (mm/mrad) - meaningful for one single particle ray-tracing ",nf3[average[trnsvrsMagnification,thrdDimMagnification]]];
+miniBanner["For full PDA magnfication use (maxPos-asyRngRadius)/trackAngle"];
+Print[{"zPDACenter","xPDACenter","sizeFSTrnsvrs","sizeFSThrdDim","Median[resThetaProj]","Median[resTheta]"}];
+Return[{zPDACenter,xPDACenter,sizeFSTrnsvrs,sizeFSThrdDim,Median[resThetaProj],Median[resTheta]}];
+];
+
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+cherenkovPhotonsRandomGenerate[nTot_,partMass_,partMomentum_,thetaY_,thetaX_,chromatic_:0,phiMin_:0,phiMax_:2\[Pi],zeta_:0]:=Module[
+{t,x0,y0,z0,d,photonEnergies,rWaveLength,rChZet,rChThe,rChPhi,rStart,photonDir,trackDir,idCntBlwThrMax,idCntBlwThr,localPerpUnitVector,localThirdUnitVector},
+(*================================================================================================*)
+(*                                                                                                         *)
+(* Generate the TRUE photons                                                                               *)
+(*                                                                                                         *)
+(*================================================================================================*)
+(*--------------------------------------------------------------------------------*)
+(* zeta *)
+(* !@#$% to setup carefully different options *)
+Print[" >>>>>>>>>>>> Photon random generation "];
+Print[" zBoxMin = ",zBoxMin];
+Print[" zeta    = ",zeta];
+Print[" zBoxMax = ",zBoxMax];
+If[(zeta>=0)&&(zeta>zBoxMin)
+,
+Print[" \n Doing random zeta"];
+rChZet=RandomReal[{zBoxMin,zeta},nTot]
+,
+Print[" \n Skipping random zeta"];
+rChZet=Array[zeta&,nTot]
+];
+rStart=Transpose[{rChZet,rChZet*Tan[thetaY],rChZet*Tan[thetaX]}];
+trackDir=Normalize[{1,Tan[thetaY],Tan[thetaX]}];
+{localPerpUnitVector,localThirdUnitVector}=localTrackUnitVectors[trackDir];
+debugPrint[" z_c = ",Round@rChZet];
+zetaMax=zeta;
+zetaMin=zBoxMin;
+Print[" zetaMin = ",nf@zetaMin];
+Print[" zetaMax = ",nf@zetaMax];
+Print[" <<<<<<< END random zeta "];
+(*--------------------------------------------------------------------------------*)
+(* theta *)
+If[chromatic==1
+,
+Print[" \n Doing chromaticity"];
+photonEnergies=generatePhotonEnergy[nTot];(* !@#$% TAPULLO ??? *)
+rWaveLength=\[Lambda][photonEnergies];
+rChThe=chrnkvAngle[partMass,partMomentum,rWaveLength];
+,
+Print[" \n Skipping chromaticity"];
+photonEnergies=Array[\[Epsilon][theWavLen]&,nTot];
+rWaveLength=Array[theWavLen&,nTot];
+rChThe=Array[chrnkvAngle[partMass,partMomentum,theWavLen]&,nTot]
+];
+debugPrint["  \[Lambda]  = ",Round@rWaveLength];
+debugPrint[" \[Theta]_c = ",nf[rChThe,7,4]];
+Print[" <<<<<<< END chromaticity "];
+(*--------------------------------------------------------------------------------*)
+(* phi *)
+If[phiMin<phiMax
+,
+Print[" \n Doing random phi"];
+rChPhi=RandomReal[{phiMin,phiMax},nTot]
+,
+Print[" \n Skipping random phi"];
+d=(phiMax-phiMin)/nTot;
+rChPhi=Table[k+d/2,{k,0,nTot-1}]
+];
+debugPrint[" \[Phi]_c = ",nf[rChPhi,7,4]];
+Print[" <<<<<<< END random phi "];
+photonDir={};
+idCntBlwThr=0;
+idCntBlwThrMax=5;
+Do[
+If[rChThe[[j]]==0
+,
+idCntBlwThr=idCntBlwThr+1;
+exception[idCntBlwThr,idCntBlwThrMax," \[Theta]_C = 0 "]
+];
+AppendTo[photonDir,Cos[rChThe][[j]]*trackDir+Sin[rChThe][[j]]*(Cos[rChPhi][[j]]*localPerpUnitVector+Sin[rChPhi][[j]]*localThirdUnitVector)]
+,{j,1,nTot}
+];
+(*debugPrint[" tilt = ",TableForm@nf@photonDir];*)
+(*myTrack:=Move[SingleRay[],{zBoxMin,zBoxMin*Tan[thetaY],zBoxMin*Tan[thetaX]},trackDir];*)
+(* !@#$% BEWARE: Optica wants waveln in microns *)
+(* Save true values for later *)
+exportTrueChPhi=rChPhi;
+exportTrueChThe=rChThe;
+exportTrueChZet=rChZet;
+Return[CustomRays[{{RayStart,rStart},{RayTilt,photonDir},{WaveLength,N[rWaveLength/1000]}}]]
+];
+
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+doExecBackTracingSimul[method_,poisson_,pixel_,chromaticity_,theZeta_]:=Module[{backTracingSimulResults,resTThrdDim,resTTrnsvrs,resNTot,resNDet},
+(*================================================================================================*)
+(*                                                                                                          *)
+bigBanner[" MAIN LOOP for backtracing - START "];
+(*                                                                                                          *)
+(*================================================================================================*)
+resNTot={};resNDet={};resTThrdDim={};resTTrnsvrs={};
+(*--------------------------------------------------------------------------------*)
+(* START LOOP for creating tracks *)
+(*--------------------------------------------------------------------------------*)
+(*
+nTrnsvrs=2;
+nThrdDim=2;
+Do[
+tTrnsvrs=minAcc+(trnsvrsAcc-minAcc)*jTrnsvrs/(nTrnsvrs-1);
+tThrdDim=(thrdDimAcc-minAcc)*jThrdDim/(nThrdDim-1);
+tTrnsvrs=minThetaTrsvrsTrack+(trnsvrsAcc)*jTrnsvrs/(nTrnsvrs-1);
+tThrdDim=(thrdDimAcc)*jThrdDim/(nThrdDim-1);
+AppendTo[resTThrdDim,tThrdDim];
+AppendTo[resTTrnsvrs,tTrnsvrs];
+,{jThrdDim,0,nThrdDim-1}
+,{jTrnsvrs,0,nTrnsvrs-2}
+];
+*)
+(*--------------------------------------------------------------------------------*)
+(* END LOOP for creating tracks *)
+(*--------------------------------------------------------------------------------*)
+(*--------------------------------------------------------------------------------*)
+(* single test track *)
+(*--------------------------------------------------------------------------------*)
+(**)
+bigBanner[" Start SIMULATE ONE TRACK "];
+(**)
+Print[" New Track at ****** ","tThrdDim   ",tThrdDim,"   --- tTrnsvrs   ",tTrnsvrs];
+(*--------------------------------------------------------------------------------*)
+(* back-tracking *)
+(*--------------------------------------------------------------------------------*)
+backTracingSimul[method,poisson,numGenPho,tTrnsvrs,tThrdDim,pixel,chromaticity,theZeta];
+backTracingSimulResults=Transpose[{resTThrdDim,resTTrnsvrs,resNTot,resNDet}];
+bigBanner[" End SIMULATE ONE TRACK "];
+Print[" Summary results for loop with:"];
+Print[" pixel        : ",pixel];
+Print[" chromaticity : ",chromaticity];
+Print[" theZeta      : ",theZeta];
+(*
+Transpose[{resTThrdDim,resTTrnsvrs,trackLength}]//TableForm;
+ListPlot3D[Transpose[{resTThrdDim,resTTrnsvrs,trackLength}],Mesh\[Rule]8,InterpolationOrder\[Rule]0,ColorFunction\[Rule]"SouthwestColors"];
+Print[nf1[res]];
+*)
+Return[backTracingSimulResults]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+backTracingSimul[method_,poisson_,numGenPho_,thetaY_,thetaX_,pixel_,chromatic_,theZeta_]:=Module[{
+opticalSystemLHCbRICHTheTrack,
+nTot,nDet,tTracedSystem,rPD,rv,rStartTrack,rMidTra,rStrTra,rEndTra,myTrack,thetaHalfRange,tracedPointsFS,
+rStrPho,rEndPriMirPho,tracedTrack,tracedTruePhotons,tracedPointsFS2D,tracedPointsFSDigitized},
+(*================================================================================================*)
+(*                                                                                                         *)
+(* Generate the TRUE photons                                                                               *)
+(*                                                                                                         *)
+(*================================================================================================*)
+(* global ! *)
+resChThe={};
+resChPhi={};
+resChZet={};
+trackLength={};
+resNTot={};
+resNDet={};
+bestFitTrack={};
+(*--------------------------------------------------------------------------------*)
+(* Determine the geometry of the track as if it were a photon *)
+(*--------------------------------------------------------------------------------*)
+bigBanner[ " Create the TRACK geometry "];
+trackDir=Normalize[{1,Tan[thetaY],Tan[thetaX]}];
+(* The track starts from *)
+If[theZeta==0,
+rStartTrack={0,0,0}
+,
+If[theZeta>0,
+rStartTrack={theZeta,theZeta*Tan[thetaY],theZeta*Tan[thetaX]}
+,
+rStartTrack={zBoxMin,zBoxMin*Tan[thetaY],zBoxMin*Tan[thetaX]}
+];
+];
+myTrack:=Move[SingleRay[],rStartTrack,trackDir];
+opticalSystemLHCbRICHTheTrack={myTrack,myOptics,myBoundary};
+tracedTrack=AnalyzeSystem[opticalSystemLHCbRICHTheTrack,DefaultStyle->{AbsoluteThickness[5],AbsolutePointSize[5]}];
+rStrTra=Flatten[ReadRays[tracedTrack,RayStart,onThePriMirror]];
+rEndTra=Flatten[ReadRays[tracedTrack,RayEnd,onThePriMirror]];
+AppendTo[trackLength,Norm[rEndTra-rStrTra]];
+rMidTra=Map[Mean,Transpose[{rStrTra,rEndTra}]];
+If[debugPrintEnabledFlag==True,
+Print[" myTrack     = ",myTrack];
+Print[" rStartTrack = ",rStartTrack," must be rStrTra==rStartTrack "];
+Print[" rStrTra     = ",rStrTra," must be rStrTra==rStartTrack "];
+Print[" rMidTra     = ",rMidTra];
+Print[" rEndTra     = ",rEndTra];
+Print[" <<<<<<< END generate one track "]
+];
+(*--------------------------------------------------------------------------------*)
+(* Generate the true Cherenkov photons *)
+(*--------------------------------------------------------------------------------*)
+bigBanner[ " Generate the TRUE photons "];
+Print["   poisson =   ",poisson," (1 = poissonized)          AVERAGE numGenPho =   ",numGenPho];
+bigBanner[" Start generate the TRUE photons "];
+If[poisson==1
+,
+(* Poissonize the numGenPho *)
+nTot=RandomVariate[PoissonDistribution[numGenPho]];
+Print[" Generate nTot = ",nTot,"        Poisson true photons - from Poissonization of numGenPho "];
+If[nTot>0
+,
+myTrueCherenkovPhotons=cherenkovPhotonsRandomGenerate[nTot,partMass,partMomentum,thetaY,thetaX,chromatic,0,2\[Pi],rEndTra[[1]]]
+,
+Print[" ZERO number of generated photons - STOP "];
+killStop
+]
+,
+(* Do not Poissonize the numGenPho *)
+nTot=numGenPho;
+Print[" Generate nTot = ",nTot,"        exact true photons (no Poissonization) "];
+myTrueCherenkovPhotons=cherenkovPhotonsRandomGenerate[nTot,partMass,partMomentum,thetaY,thetaX,chromatic,0,2\[Pi],rEndTra[[1]]]
+];
+debugPrint[" myTrueCherenkovPhotons as generated = ",TableForm@myTrueCherenkovPhotons];
+
+(*--------------------------------------------------------------------------------*)
+(* Trace the true Cherenkov photons *)
+(*--------------------------------------------------------------------------------*)
+opticalSystemLHCbRICHTruePhotons={myTrueCherenkovPhotons,myOptics,myBoundary};
+tracedTruePhotons=AnalyzeSystem[opticalSystemLHCbRICHTruePhotons
+(*,ColorView -> Red*)
+];
+tracedPointsFS=ReadRays[tracedTruePhotons,RayEnd,onTheFS];
+rStrPho=ReadRays[tracedTruePhotons,RayStart,onThePriMirror];
+rEndPriMirPho=ReadRays[tracedTruePhotons,RayEnd,onThePriMirror];
+Print[Graphics3D[Point[Join[rEndPriMirPho,rEndPriMirPho]]]];
+rv=ReadRays[tracedTruePhotons,RayEnd,onThePriMirror];
+
+(*--------------------------------------------------------------------------------*)
+(* Pixelization on the FS of the true Cherenkov photons *)
+(*--------------------------------------------------------------------------------*)
+tracedPointsFS2D=ReadRays[tracedTruePhotons,SurfaceCoordinates,onTheFS];
+If[pixel>0
+,
+rPD=tracedPointsFSDigitized=pixelize[tracedPointsFS2D,pixel];
+Print[" \n Doing pixelization"]
+,
+rPD=tracedPointsFS;
+Print[" \n Skipping pixelization"]
+];
+(*--------------------------------------------------------------------------------*)
+(* OLD: single spherical mirror: deprecated *)
+(*--------------------------------------------------------------------------------*)
+(*If[method\[Equal]"singleSphericalMirrorExactBackTracing"
+,
+Print[" Doing the only-one-spherical-mirror exact back-trace "];
+(*OLD:exact for one spherical mirror only*)
+If[theZeta\[Equal]-1
+,
+(*!@#$% you cant call again execBackTracing HERE!!!*)
+Do[execBackTracing[tracedPointsEP[[j]],reflect3D[rPD[[j]],Normalize[secMirNorm3D]],centerPriMir3D,rv[[j]]],{j,1,Length[rPD]}];
+Print["NOT Doing emission point error: assume true emission point "]
+,
+Do[execBackTracing[rStartTrack,reflect3D[rPD[[j]],Normalize[secMirNorm3D]],centerPriMir3D,rv[[j]]],{j,1,Length[rPD]}]]
+];
+*)
+(*--------------------------------------------------------------------------------*)
+(* NEW: totally general but quite slow... reconstruct true photons via forward tracking *)
+(*--------------------------------------------------------------------------------*)
+If[method=="generalBackTrace"
+,
+(*Print[" Doing the general back-trace "];*)
+(*Print[" thetaX     ",thetaX];*)
+(*Print[" thetaY     ",thetaY];*)
+(*Print[" rStartTrack       = ",rStartTrack];*)
+(*Print[" First@rStartTrack = ",First@rStartTrack];*)
+Do[
+(* !@#$% fix rStartTrack !*)
+doExecGeneralForwardTrace[First@rStartTrack,thetaY,thetaX,rPD[[j]]]
+,{j,1,Length[rPD]}
+]
+];
+nDet=Length[tracedPointsFS];
+Print[" number of generated photons           : ",nTot];
+Print[" number of detected photons on the PDA : ",nDet];
+If[nTot!=nDet,bigBanner[" WARNING: nTot\[NotEqual]nDet "]];
+AppendTo[resNTot,nTot];
+AppendTo[resNDet,nDet];
+bigBanner[" "];
+bigBanner[" END single track analysis - SUMMARY RESULTS "];
+(*--------------------------------------------------------------------------------*)
+(* Results *)
+(*--------------------------------------------------------------------------------*)
+thetaHalfRange=0.020;
+Print[Histogram[resChPhi]];
+Print[Histogram[resChPhi,{-\[Pi],+\[Pi],0.1},
+AxesLabel->{" \!\(\*SubscriptBox[\(\[Phi]\), \(c\)]\) (rad) ",""},
+Axes->{True,False}]
+];
+Print[Histogram[resChThe]];
+Print[Histogram[resChThe,{halfOpenAngle -thetaHalfRange,halfOpenAngle +thetaHalfRange,0.001},
+AxesLabel->{" \!\(\*SubscriptBox[\(\[Theta]\), \(c\)]\) (rad) ",""},
+Axes->{True,False}]
+];
+Print[ListPlot[Transpose[{resChPhi,resChThe}],
+AxesLabel->{" \!\(\*SubscriptBox[\(\[Phi]\), \(c\)]\) (rad) "," \!\(\*SubscriptBox[\(\[Theta]\), \(c\)]\) (rad) "},
+Axes->{True,True},
+AxesOrigin->{0,halfOpenAngle},
+PlotRange->{{-\[Pi],+\[Pi]},{halfOpenAngle -thetaHalfRange,halfOpenAngle +thetaHalfRange}},
+GridLines->Automatic]
+];
+Print[Histogram3D[Transpose[{resChPhi,resChThe}]]];
+Print[Histogram[resChZet]];
+Print[Histogram[resChThe,{zBoxMin,zBoxMax,10},
+AxesLabel->{" z (mm) ",""},
+Axes->{True,False}]
+];
+Print[ListPlot[Transpose[{resChZet,resChPhi}],
+AxesLabel->{" z (mm) "," \!\(\*SubscriptBox[\(\[Phi]\), \(c\)]\) (rad) "},
+Axes->{True,True},
+AxesOrigin->{zBoxCen,0},
+PlotRange->{{zBoxMin,zBoxMax},{-\[Pi],+\[Pi]}},
+Filling->Axis,
+FillingStyle->{Thickness[0.005]},
+GridLines->Automatic]
+];
+Print[ListPlot[Transpose[{resChZet,resChThe}],
+AxesLabel->{" z (mm) "," \!\(\*SubscriptBox[\(\[Theta]\), \(c\)]\) (rad) "},
+Axes->{True,True},
+AxesOrigin->{zBoxCen,halfOpenAngle},
+PlotRange->{{zBoxMin,zBoxMax},{halfOpenAngle -thetaHalfRange,halfOpenAngle +thetaHalfRange}},
+Filling->Axis,
+FillingStyle->{Thickness[0.005]},
+GridLines->Automatic]
+];
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+doExecGeneralForwardTrace[zetaStartTrack_,thetaY_,thetaX_,target3D_]:=Module[{newPhi,newThe,newZet},
+(*================================================================================================*)
+(*                                                                                                         *)
+(* Do backtrace via multipe forwardtraces                                                                  *)
+(*                                                                                                         *)
+(*================================================================================================*)
+bestFitTestForwardTraceCherenkovPhotonThr=0.5; (* mm ! *)
+bestFitPhoton={};
+bigBanner[" Start general back-trace for one given photon emitted by a given track "];
+Print[" zetaMin = ",zetaMin];
+Print[" zetaMax = ",zetaMax];
+(*--------------------------------------------------------------------------------*)
+(* Scan independently theta and phi: slower but SAFER *)
+(*--------------------------------------------------------------------------------*)
+newThe=halfOpenAngle/1000;
+newPhi=0;
+newZet=(zetaMax+zetaMin)/2;
+Print[" Starting phi for photon (rad) : ",nf1[reduceAngle[newPhi]]," +/- ",dPhi0];
+Print[" Starting the for photon (rad) : ",nf1[newThe],                              " +/- ",dThe0];
+Print[" Starting zet for photon (mm)  : ",nf1[newZet],                              " +/- ",dZet0];
+
+bestFitTestForwardTraceCherenkovPhoton=1000000000; (* huge fake starting error *)
+
+Print[" --- newPhi = ",nf1[newPhi]," --- newThe = ",nf1[newThe]," --- newZet = ",nf1[newZet]];
+   (* Scan for phi, at the reference theta *)
+If[bestFitTestForwardTraceCherenkovPhoton>bestFitTestForwardTraceCherenkovPhotonThr,
+{newPhi,newThe,newZet}=forwardTrace[zetaStartTrack,thetaY,thetaX,   newPhi,newThe,newZet,   nPhi1,0,0,   dPhi1,0,0,   target3D]
+,Print[" Target goal reached: stop iterating .... "];
+];
+Print[" --- newPhi = ",nf1[newPhi]," --- newThe = ",nf1[newThe]," --- newZet = ",nf1[newZet]];
+   (* At newPhi, scan along theta *)
+If[bestFitTestForwardTraceCherenkovPhoton>bestFitTestForwardTraceCherenkovPhotonThr,
+{newPhi,newThe,newZet}=forwardTrace[zetaStartTrack,thetaY,thetaX,   newPhi,newThe,newZet,   0,nThe1,0,   0,dThe1,0,   target3D]
+,Print[" Target goal reached: stop iterating .... "];
+];
+Print[" --- newPhi = ",nf1[newPhi]," --- newThe = ",nf1[newThe]," --- newZet = ",nf1[newZet]];
+   (* At newThe, rescan for phi *)
+If[bestFitTestForwardTraceCherenkovPhoton>bestFitTestForwardTraceCherenkovPhotonThr,
+{newPhi,newThe,newZet}=forwardTrace[zetaStartTrack,thetaY,thetaX,   newPhi,newThe,newZet,   nPhi2,0,0,   dPhi2,0,0,   target3D]
+,Print[" Target goal reached: stop iterating .... "];
+];
+Print[" --- newPhi = ",nf1[newPhi]," --- newThe = ",nf1[newThe]," --- newZet = ",nf1[newZet]];
+
+   (* At newPhi, scan along theta *)
+If[bestFitTestForwardTraceCherenkovPhoton>bestFitTestForwardTraceCherenkovPhotonThr,
+{newPhi,newThe,newZet}=forwardTrace[zetaStartTrack,thetaY,thetaX,   newPhi,newThe,newZet,   0,nThe2,0,   0,dThe2,0,   target3D]
+,Print[" Target goal reached: stop iterating .... "];
+];
+Print[" --- newPhi = ",nf1[newPhi]," --- newThe = ",nf1[newThe]," --- newZet = ",nf1[newZet]];
+   (* At newThe and newPhi, scan for z *)
+If[bestFitTestForwardTraceCherenkovPhoton>bestFitTestForwardTraceCherenkovPhotonThr,
+{newPhi,newThe,newZet}=forwardTrace[zetaStartTrack,thetaY,thetaX,   newPhi,newThe,newZet,   0,0,nZet1,   0,0,dZet1,   target3D]
+,Print[" Target goal reached: stop iterating .... "];
+];
+Print[" --- newPhi = ",nf1[newPhi]," --- newThe = ",nf1[newThe]," --- newZet = ",nf1[newZet]];
+   (* At newThe and newPhi, scan for z *)
+If[bestFitTestForwardTraceCherenkovPhoton>bestFitTestForwardTraceCherenkovPhotonThr,
+{newPhi,newThe,newZet}=forwardTrace[zetaStartTrack,thetaY,thetaX,   newPhi,newThe,newZet,   0,0,nZet2,   0,0,dZet2,   target3D]
+,Print[" Target goal reached: stop iterating .... "];
+];
+Print[" --- newPhi = ",nf1[newPhi]," --- newThe = ",nf1[newThe]," --- newZet = ",nf1[newZet]];
+
+(* Hypercube scan  *)
+If[bestFitTestForwardTraceCherenkovPhoton>bestFitTestForwardTraceCherenkovPhotonThr,
+{newPhi,newThe,newZet}=forwardTrace[zetaStartTrack,thetaY,thetaX,   newPhi,newThe,newZet,   nPhi3,nThe3,nZet3,   dPhi3,dThe3,dZet3,   target3D]
+,Print[" Target goal reached: stop iterating .... "];
+];
+
+
+Print[" --- newPhi = ",nf1[newPhi]," --- newThe = ",nf1[newThe]," --- newZet = ",nf1[newZet]];
+If[bestFitTestForwardTraceCherenkovPhoton>bestFitTestForwardTraceCherenkovPhotonThr,
+Print[" WARNING: bestFitTestForwardTraceCherenkovPhoton too LARGE ",bestFitTestForwardTraceCherenkovPhoton]
+];
+
+bigBanner[" ===>>> results for one single photon reconstruction "];
+
+Print[" Estimated phi for photon (rad) : ",nf1[reduceAngle[newPhi]]," +/- ",dPhi2];
+Print[" Estimated the for photon (rad) : ",nf1[newThe]," +/- ",dThe2];
+Print[" Estimated zet for photon (mm)  : ",nf1[newZet]," +/- ",dZet2];
+
+AppendTo[resChPhi,reduceAngle[newPhi]];
+AppendTo[resChThe,newThe];
+AppendTo[resChZet,newZet];
+AppendTo[bestFitTrack,bestFitPhoton];
+
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+forwardTrace[zetaStartTrack_,alphaY_,alphaX_,phi0_,the0_,zet0_,nPhi_,nThe_,nZet_,dPhi_,dThe_,dZet_,rPD_]:=Module[
+{gridPhiTheZet,rTilt,rEmis,r0,trackDir,rForwardTraced,errorTestForwardTraceCherenkovPhoton,jbest,zetaPhotonEmission,localPerpUnitVector,localThirdUnitVector,numGridPoints,myTrack,myTestCherenkovPhotons,opticalSystemLHCbRICHTestPhotons,tracedTestPhotons,phiSol,theSol,zetSol},
+(*================================================================================================*)
+(*                                                                                                          *)
+(* Do forwardtrace // !@#$% I should also scan in z!                                                       *)
+(*                                                                                                          *)
+(*================================================================================================*)
+Print[" Target point on the FS: rPD = ",rPD];
+(*================================================================================================*)
+(* Canonical order: {phi,the,zet} *)
+(*================================================================================================*)
+gridPhiTheZet=
+Flatten[N[Table[
+{phi0+iPhi*dPhi,the0+iThe*dThe,zet0+iZet*dZet},
+{iPhi,-nPhi,+nPhi},
+{iThe,-nThe,+nThe},
+{iZet,-nZet,+nZet}
+]]
+,2];
+Print[" numGridPoints = ",numGridPoints=(2nPhi+1)*(2nThe+1)*(2nZet+1)];
+debugPrint[" gridPhiTheZet = ",nicePrint[TableForm@gridPhiTheZet,10,5]];
+
+(*--------------------------------------------------------------------------------*)
+(* Geometry of the track - recalculate *)
+(*--------------------------------------------------------------------------------*)
+trackDir=Normalize[{1,Tan[alphaY],Tan[alphaX]}];
+debugPrint[" trackDir = ",trackDir];
+{localPerpUnitVector,localThirdUnitVector}=localTrackUnitVectors[trackDir];
+debugPrint[" localPerpUnitVector = ",localPerpUnitVector];
+debugPrint[" localThirdUnitVector = ",localThirdUnitVector];
+myTrack:=Move[SingleRay[],{zetaStartTrack,zetaStartTrack*Tan[alphaY],zetaStartTrack*Tan[alphaX]},trackDir];
+debugPrint[" myTrack = ",myTrack];
+bigBanner[" Generate test photons "];
+(*--------------------------------------------------------------------------------*)
+(* Generate test photons *)
+(*--------------------------------------------------------------------------------*)
+rEmis={};
+rTilt={};
+Do[
+zetaPhotonEmission=gridPhiTheZet[[j]][[3]];
+AppendTo[rEmis,{zetaPhotonEmission,zetaPhotonEmission*Tan[alphaY],zetaPhotonEmission*Tan[alphaX]}];
+AppendTo[rTilt,
+Cos[gridPhiTheZet[[j]][[2]]]*trackDir+Sin[gridPhiTheZet[[j]][[2]]]*(Cos[gridPhiTheZet[[j]][[1]]]*localPerpUnitVector+Sin[gridPhiTheZet[[j]][[1]]]*localThirdUnitVector)]
+,{j,1,Length[gridPhiTheZet]}
+];
+debugPrint[" zetaPhotonEmission ",zetaPhotonEmission];
+debugPrint[" rEmis ",rEmis];
+debugPrint[" rTilt ",rTilt];
+myTestCherenkovPhotons=CustomRays[{{RayStart,rEmis},{RayTilt,rTilt}}];
+debugPrint[" myTestCherenkovPhotons = ",myTestCherenkovPhotons];
+(*--------------------------------------------------------------------------------*)
+(* Trace this set of test photons *)
+(*--------------------------------------------------------------------------------*)
+opticalSystemLHCbRICHTestPhotons= {myTestCherenkovPhotons,myOptics,myBoundary};
+tracedTestPhotons=AnalyzeSystem[opticalSystemLHCbRICHTestPhotons];
+rForwardTraced=ReadRays[tracedTestPhotons,RayEnd,onTheFS];
+debugPrint[" rForwardTraced ",rForwardTraced];
+(*--------------------------------------------------------------------------------*)
+(* Calculate some raw goodness *)
+(*--------------------------------------------------------------------------------*)
+errorTestForwardTraceCherenkovPhoton=Norm[rPD-#]&/@rForwardTraced;
+(*debugPrint[" rForwardTraced ",rForwardTraced];*)
+debugPrint[" errorTestForwardTraceCherenkovPhoton ",nf@errorTestForwardTraceCherenkovPhoton];
+bestFitTestForwardTraceCherenkovPhoton=Min[errorTestForwardTraceCherenkovPhoton];
+jbest=First[Flatten[Position[errorTestForwardTraceCherenkovPhoton,bestFitTestForwardTraceCherenkovPhoton],1]];
+(* !@#$% makes sense only if 1-dim *)
+If[jbest==1||jbest==Length[gridPhiTheZet],Print[" Warning, minimum at the limit ..... makes sense only if 1-dim ",
+"   nThe = ",nThe,
+"   nPhi = ",nPhi,
+"   nZet = ",nZet
+]];
+phiSol=gridPhiTheZet[[jbest]][[1]];
+theSol=gridPhiTheZet[[jbest]][[2]];
+zetSol=gridPhiTheZet[[jbest]][[3]];
+Print[" bestFitTestForwardTraceCherenkovPhoton = ",bestFitTestForwardTraceCherenkovPhoton];
+AppendTo[bestFitPhoton,bestFitTestForwardTraceCherenkovPhoton];
+If[debugPrintEnabledFlag==True,
+Print[" --- >>> "];
+Print[" jbest ",jbest," Lenght of grid ",Length[gridPhiTheZet]];
+Print[" bestFitTestForwardTraceCherenkovPhoton = ",bestFitTestForwardTraceCherenkovPhoton];
+Print[gridPhiTheZet[[jbest]]];
+];
+Print[" phiSol   =  ",nf1[phiSol]," dPhi     = ",dPhi];
+Print[" theSol   =  ",nf1[theSol]," dThe     = ",dThe];
+Print[" zetSol   =  ",nf1[zetSol]," dZet     = ",dZet];
+Return[{phiSol,theSol,zetSol}]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+simul[numIter_,numPhoAlongTrack_]:=Module[{u,v,tracedPointsDir,tracedPoints},
+Do[Print[" iter ",nf0[k]];
+(*Print[" iter ",nf0[k]," thetaX ",nf1[thetaX[[k]]]," thetaY ",nf1[thetaY[[k]]]," twist ",nf1[twist[[k]]]];*)mySource={CherenkovPhotonsXYUniformAlongTrack[halfOpenAngle,numPhoAlongTrack,1,thetaY[[k]],thetaX[[k]]]};
+opticalSystemLHCbRICH={mySource,myOptics,myBoundary};
+(*tTracedSystem=TurboPlot[opticalSystemLHCbRICH,SequentialTrace\[Rule]True];*)
+tTracedSystem=TurboTrace[opticalSystemLHCbRICH,SequentialTrace->True];
+tracedPoints=ReadTurboRays[tTracedSystem,SurfaceCoordinates,onTheFS];
+tracedPointsDir=ReadTurboRays[tTracedSystem,RayTilt,onTheFS];
+If[Length[tracedPointsDir]>0,AppendTo[resTheta,ArcCos[tracedPointsDir . dirScreen]/Degree],Print["zero length tracedPointsDir - iter: ",nf0[k]];];
+(*OLD SLOW tracedPointsDir=ReadTurboRays[tTracedSystem,{RayTilt[[1]],RayTilt[[2]],0},onTheFS];*)If[Length[tracedPointsDir]>0,tracedPointsDir=Transpose[{Transpose[tracedPointsDir][[1]],Transpose[tracedPointsDir][[2]],ConstantArray[0,Length[tracedPointsDir]]}];
+u=Map[Normalize,tracedPointsDir];
+v=Table[Cross[dirScreen,u[[k]]],{k,1,Length[u]}];
+AppendTo[resThetaProj,ArcSin[Transpose[v][[3]]]/Degree],Print["zero length tracedPointsDir"];];
+numPho=Length[tracedPoints];
+If[Length[tracedPoints]>1,sizeSpotTrnsvrs=Max[Transpose[tracedPoints][[1]]]-Min[Transpose[tracedPoints][[1]]];
+sizeSpotThrdDim=Max[Transpose[tracedPoints][[2]]]-Min[Transpose[tracedPoints][[2]]];
+sizeSpotTrnsvrsRMS=StandardDeviation[Transpose[tracedPoints][[1]]];
+sizeSpotThrdDimRMS=StandardDeviation[Transpose[tracedPoints][[2]]];
+maxDist=Sqrt[sizeSpotTrnsvrs^2+sizeSpotThrdDim^2];
+maxDistRMS=Sqrt[sizeSpotTrnsvrsRMS^2+sizeSpotThrdDimRMS^2];
+maxTrnsvrs=Max[maxTrnsvrs,Transpose[tracedPoints][[1]]];
+minTrnsvrs=Min[minTrnsvrs,Transpose[tracedPoints][[1]]];
+maxThrdDim=Max[maxThrdDim,Transpose[tracedPoints][[2]]];
+minThrdDim=Min[minThrdDim,Transpose[tracedPoints][[2]]],sizeSpotTrnsvrs=0;
+sizeSpotThrdDim=0;
+sizeSpotTrnsvrsRMS=0;
+sizeSpotThrdDimRMS=0;
+maxDist=0;
+maxDistRMS=0;
+maxTrnsvrs=0;
+minTrnsvrs=0;
+maxThrdDim=0;
+minThrdDim=0;
+Print["zero length tracedPoints"]];
+AppendTo[resSizeSpotTrnsvrs,sizeSpotTrnsvrsRMS];
+AppendTo[resSizeSpotThrdDim,sizeSpotThrdDimRMS];
+AppendTo[resNumPho,numPho];
+AppendTo[resMaxDist,maxDist];
+AppendTo[resMaxDistRMS,maxDistRMS],{k,1,numIter}]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+doSimul[numIters_]:=Module[{},Print[myOptics//ColumnForm];
+(*(*Choose thetaX and thetaY,use the below*)thetaY=Table[minAcc+k*(maxThetaTrnsvrs-minAcc)/numIters,{k,0,numIters}];
+thetaX=Table[minAcc+k*(maxThetaThrdDim-minAcc)/numIters,{k,0,numIters}];
+twist=Array[0 Degree&,Min[Length[thetaX],Length[thetaY]]];*)(*Random tracks,use the below*)trackGen[numIters,minAcc,maxYAcc,maxXAcc];
+twist=RandomReal[{0,360},Min[Length[thetaX],Length[thetaY]]];
+Print["Length[thetaX]: ",Length[thetaX]," thetaX ",thetaX];
+Print["Length[thetaY]: ",Length[thetaY]," thetaY ",thetaY];
+Print["Length[twist]:  ",Length[twist]," twist ",twist];
+dirScreen={Cos[tiltScreen],Sin[tiltScreen],0};
+resThetaProj={};resNumPho={};resMaxDist={};resMaxDistRMS={};resTheta={};resSizeSpotTrnsvrs={};resSizeSpotThrdDim={};
+maxTrnsvrs=-100000;maxThrdDim=-100000;minTrnsvrs=+100000;minThrdDim=+100000;
+simul[Min[Length[thetaX],Length[thetaY]],numPhoAlongTrack];
+Print[myOptics//ColumnForm];
+Print[" resNumPho :     ",Median[Flatten[resNumPho]]//N," +/- ",StandardDeviation[Flatten[resNumPho]]/Sqrt[Length[resNumPho]-1]//N];
+Print[" eff       :     ",eff=Median[Flatten[resNumPho]]/numPhoAlongTrack//N];
+Print[" resThetaProj :  ",Median[Flatten[resThetaProj]]," +/- ",StandardDeviation[Flatten[resThetaProj]]/Sqrt[Length[resThetaProj]-1]];
+Print[" resTheta     :  ",Median[Flatten[resTheta]]," +/- ",StandardDeviation[Flatten[resTheta]]/Sqrt[Length[resTheta]-1]];
+Print[" resMaxDist :    ",Median[Flatten[resMaxDist]]," +/- ",StandardDeviation[Flatten[resMaxDist]]/Sqrt[Length[resMaxDist]-1]];
+Print[" resMaxDistRMS : ",Median[Flatten[resMaxDistRMS]]," +/- ",StandardDeviation[Flatten[resMaxDistRMS]]/Sqrt[Length[resMaxDistRMS]-1]];
+Print[" minTrnsvrs : ",minTrnsvrs,"----- maxTrnsvrs : ",maxTrnsvrs,"----- Trnsvrs Size : ",maxTrnsvrs-minTrnsvrs];
+Print[" minThrdDim : ",minThrdDim,"----- maxThrdDim : ",maxThrdDim,"----- ThrdDim Size : ",maxThrdDim-minThrdDim];
+Print[" resSizeSpotTrnsvrs : ",Median[resSizeSpotTrnsvrs]," +/- ",StandardDeviation[Flatten[resSizeSpotTrnsvrs]]/Sqrt[Length[resSizeSpotTrnsvrs]-1]];
+Print[" resSizeSpotThrdDim : ",Median[resSizeSpotThrdDim]," +/- ",StandardDeviation[Flatten[resSizeSpotThrdDim]]/Sqrt[Length[resSizeSpotThrdDim]-1]];
+Histogram[Flatten[resNumPho],40];
+Histogram[Flatten[resThetaProj],40];
+Histogram[Flatten[resTheta],40];
+Histogram[Flatten[resMaxDist],40];
+Histogram[Flatten[resMaxDistRMS],40];
+Histogram[Flatten[resSizeSpotTrnsvrs],40];
+Histogram[Flatten[resSizeSpotThrdDim],40];
+deltaTiltScreen=Median[Flatten[resThetaProj]];
+Print["systemResults    ",systemResults//ColumnForm]];
+
+
+
+(* ::Subsubtitle::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
+(*(*Light sources for OPTICA*)*)
+
+
+(* ::Input::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
+(**************************************************************************************************)
+lightGrid[gridSize_,gridPoints_,thetaY_,thetaX_]:=Module[{t,x0,y0,z0,zeta},
+zeta=zFrstEmission;
+x0=zeta*Tan[thetaX];y0=zeta*Tan[thetaY];z0=zeta;
+MoveDirected[DistortionGrid[gridSize,gridPoints],{1.*z0,1.*y0,1.*x0},{0.8*z0,0.8*y0,0.8*x0}]];
+
+
+(* ::Input::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
+(**************************************************************************************************)
+(* BOX *)
+(**************************************************************************************************)
+z0Step:=zBoxMin//N;
+z1Step:=zBoxMin+(zBoxMax-zBoxMin)*1/4//N;
+z2Step:=zBoxMin+(zBoxMax-zBoxMin)*2/4//N;
+z3Step:=zBoxMin+(zBoxMax-zBoxMin)*3/4//N;
+z4Step:=zBoxMax//N;
+zBoxCen:=(zBoxMin+zBoxMax)/2;
+
+
+(* ::Input::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
+(**************************************************************************************************)
+(*EMIT AT FIXED 'quarters' of track length*)
+(**************************************************************************************************)
+CherenkovPhotonsXY:={
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,+thrdDimAcc,z0Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,0,z0Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,-thrdDimAcc,z0Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,+thrdDimAcc,z0Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,0,z0Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,-thrdDimAcc,z0Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,minAcc,+thrdDimAcc,z0Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,minAcc,0,z0Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,minAcc,-thrdDimAcc,z0Step,numPhoInAzimuth],
+(*chrPhoXYAtZ[halfOpenAngle,0,+minAcc,z0Step,numPhoInAzimuth],*)
+(*chrPhoXYAtZ[halfOpenAngle,0,-minAcc,z0Step,numPhoInAzimuth],*)
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,+thrdDimAcc,z1Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,0,z1Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,-thrdDimAcc,z1Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,+thrdDimAcc,z1Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,0,z1Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,-thrdDimAcc,z1Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,minAcc,+thrdDimAcc,z1Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,minAcc,0,z1Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,minAcc,-thrdDimAcc,z1Step,numPhoInAzimuth],
+(*chrPhoXYAtZ[halfOpenAngle,0,+minAcc,z1Step,numPhoInAzimuth],*)
+(*chrPhoXYAtZ[halfOpenAngle,0,-minAcc,z1Step,numPhoInAzimuth],*)
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,+thrdDimAcc,z2Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,0,z2Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,-thrdDimAcc,z2Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,+thrdDimAcc,z2Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,0,z2Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,-thrdDimAcc,z2Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,minAcc,+thrdDimAcc,z2Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,minAcc,0,z2Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,minAcc,-thrdDimAcc,z2Step,numPhoInAzimuth],
+(*chrPhoXYAtZ[halfOpenAngle,0,+minAcc,z2Step,numPhoInAzimuth],*)
+(*chrPhoXYAtZ[halfOpenAngle,0,-minAcc,z2Step,numPhoInAzimuth],*)
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,+thrdDimAcc,z3Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,0,z3Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,trnsvrsAcc,-thrdDimAcc,z3Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,+thrdDimAcc,z3Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,0,z3Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,(minAcc+trnsvrsAcc)/2,-thrdDimAcc,z3Step,numPhoInAzimuth],chrPhoXYAtZ[halfOpenAngle,minAcc,+thrdDimAcc,z3Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,minAcc,0,z3Step,numPhoInAzimuth],
+chrPhoXYAtZ[halfOpenAngle,minAcc,-thrdDimAcc,z3Step,numPhoInAzimuth]
+(*chrPhoXYAtZ[halfOpenAngle,0,+minAcc,z3Step,numPhoInAzimuth],*)
+(*chrPhoXYAtZ[halfOpenAngle,0,-minAcc,z3Step,numPhoInAzimuth]*)
+};
+
+
+(* ::Input::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
+(**************************************************************************************************)
+rayFan[size_,thetaY_,thetaX_,zeta_,numRays_]:=Module[{t,x0,y0,z0},x0=zeta*Tan[thetaX];y0=zeta*Tan[thetaY];z0=zeta;
+trackDir=Normalize[{z0,y0,x0}];
+MoveDirected[GridOfRays[{size,size},NumberOfRays->numRays,RayLineRGB->Red],{1.*z0,1.*y0,1.*x0},{0.8*z0,0.8*y0,0.8*x0}]
+];
+
+
+
+(* ::Input::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
+(**************************************************************************************************)
+CherenkovPhotonsXYUniformAlongTrack[halfOpenAngle_,numPhoAlongTrack_,numPhoInAzimuth_,thetaY_,thetaX_,startSrc_:0,endSrc_:1,twist_:0]:=Module[{deltaZ},
+deltaZ=(zLastEmission-zFrstEmission)/numPhoAlongTrack;
+Table[chrPhoXYAtZ[halfOpenAngle,thetaY,thetaX,zFrstEmission+(k-1)*deltaZ,numPhoInAzimuth,startSrc,endSrc,twist],{k,1,numPhoAlongTrack}]
+];
+
+
+
+(* ::Input::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
+(**************************************************************************************************)
+ClearAll[chrPhoXYAtZ];
+chrPhoXYAtZ[thetaCher_,thetaX_,thetaY_,zeta_,numRays_,startSrc_:0,endSrc_:1,twist_:0,wl_:defaultWavLen,id_:1234567890]:=Module[{t,x0,y0,z0},
+x0=zeta*Tan[thetaX];
+y0=zeta*Tan[thetaY];
+z0=zeta;
+(*debugPrint[" {z0,y0,x0} =   ",z0,"   ",y0,"   ",x0];*)
+trackDir=Normalize[{z0,y0,x0}];
+MoveDirected[
+ConeOfRays[
+2*thetaCher,
+NumberOfRays->numRays,
+RayLineRGB->Red,
+SourceOffset->startSrc,
+SourceFraction->(endSrc-startSrc),
+WaveLength->wl,
+SourceID->id
+]
+,{z0,y0,x0},{0.5*z0,0.5*y0,0.5*x0},TwistAngle->twist,SideOfObject->Before
+]
+];
+
+
+(* ::Input::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
+(**************************************************************************************************)
+ClearAll[CherenkovPhotonsXYTrack];
+CherenkovPhotonsXYTrack[halfOpenAngle_,numPhoAlongTrack_,numPhoInAzimuth_,thetaY_,thetaX_,startSrc_:0,endSrc_:1,twist_:0,wl_:defaultWavLen,id0_:1234567890]:=Module[{deltaZ,rEnt,rOFS,rStr,rMid,rEnd,w,y,zStart,theLastZ,id},
+(* Photons are emitted inside the full box. Some photon is emitted after the optics: no way because I would need to put surfaces here! *)
+If[(startSrc<0||startSrc>1)||(endSrc<0||endSrc>1)||(startSrc>endSrc),
+Print[" ERROR in CherenkovPhotonsXYTrack - parameters "];
+killStop
+];
+If[id0==0,
+id=encodeTrackId[Round[1000*thetaY],Round[1000*thetaX]],
+id=id0
+];
+y=getTrackGeometry[thetaY,thetaX];
+(*debugPrint[" get track geometry output ",y];*)
+If[Length@Flatten@y<1,Print[" ERROR in CherenkovPhotonsXYTrack - geometry - RETURN "];Return[]];
+zStart=zFrstEmission;
+rStr=y[[1]];
+rEnt:={zStart,zStart*Tan[thetaY],zStart*Tan[thetaX]};
+rEnd=y[[2]];
+rOFS=y[[3]];
+rMid:=(rEnt+rEnd)/2;
+AppendTo[trackAngles,{thetaY,thetaX}];
+AppendTo[trackImprintOnTheFS,rOFS];
+AppendTo[trackPathLength,Norm[rEnt-rEnd]];
+AppendTo[trackMidPath,rMid];
+AppendTo[allREnd,rEnd];
+(* w: a little margin to emit just before the end which is on the mirror...*)
+w=(rEnd[[1]]-zStart)/1000;
+theLastZ=zStart+(k-1) deltaZ/. k->numPhoAlongTrack;
+If[numPhoAlongTrack>1,
+deltaZ=(rEnd[[1]]-w-zStart)/(numPhoAlongTrack-1)
+];
+If[numPhoAlongTrack==1,
+deltaZ=(rEnd[[1]]-w-zStart)/2;
+zStart=zFrstEmission+deltaZ
+];
+(*If[debugPrintEnabledFlag==True,
+Print[" r Str     = ",rStr];
+Print[" r Ent     = ",rEnt];
+Print[" r Mid     = ",rMid];
+Print[" r End     = ",rEnd];
+Print[" r OFS     = ",rOFS]
+];*)
+Table[
+chrPhoXYAtZ[halfOpenAngle,thetaX,thetaY,
+zStart+(k-1)*deltaZ,
+numPhoInAzimuth,startSrc,endSrc,twist,wl+k/1000,id](*Add a tiny 0.1 wl to every successive emission point to mark emission point in the results*)
+,{k,1,numPhoAlongTrack}
+]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+(* Determine the geometry of the track from the PV at rStartTrack=={0,0,0} as if it were a photon *)
+(*--------------------------------------------------------------------------------*)
+ClearAll[getTrackGeometry];
+getTrackGeometry[theta0Y_,theta0X_,localDebugPrintFlag_:False,opticalsystem_:myOptics]:=Module[
+{rStartTrack,thetaX,thetaY,rStrTra,rEndTra,rOnTheFS,rOnTheFS2D,numHits,opticalSystemLHCbRICHTheTrack},
+(**)
+getTrackGeometry::noPointOnFS= "WARNING on track geometry - no point on the FS (might be ok)";
+(**)
+Once[bigBanner[" WARNING : ONLY for high-momentum track this ring center is correct "],PersistenceTime->3600];
+Once[miniBanner[ " getTrackGeometry - a straigth track as a photon to determine the ring center on the FS "],PersistenceTime->3600];
+Once[miniBanner[ " !@#$% selection to be improved; also check for correctness when resonate or not "],PersistenceTime->3600];
+(**)
+thetaY=1.0*theta0Y;(*must be real!*)
+thetaX=1.0*theta0X;(*must be real!*)
+trackDir=Normalize[{1,Tan[thetaY],Tan[thetaX]}];
+(* The track starts from : rStartTrack *)
+rStartTrack={0.,0.,0.};
+myTrack:=Move[SingleRay[],rStartTrack,trackDir];
+AppendTo[allTracks,myTrack];
+opticalSystemLHCbRICHTheTrack:={myTrack,opticalsystem,myBoundary};
+(* TurboPlot found strange results: normal, it fails because of scout rays;
+use PropagateSystem with careful seq/non-seq; it will be fast as it is one photon only *)
+tracedTrack:=PropagateSystem[opticalSystemLHCbRICHTheTrack,SequentialTrace->True,DefaultStyle->{AbsoluteThickness[5],AbsolutePointSize[5]}];
+(**)
+allHits=Flatten[ReadRays[tracedTrack]];
+If[localDebugPrintFlag==True,
+Print[" straight track from : ",rStartTrack];
+Print[" thetaX = ",thetaX];
+Print[" thetaY = ",thetaY];
+Print[" Number of calculated virtual hits from the track ",numHits=Length@allHits];
+rayDump[tracedTrack];
+Print@AnalyzeSystem[tracedTrack]
+];
+(**)
+rStrTra=Flatten[ReadRays[tracedTrack,RayStart,{IntersectionNumber->1,GenerationNumber->1}]];
+If[Length@rStrTra<1,Print[" ERROR on track geometry - no start point "];Return[]];
+If[(* use only \[Equal], not === to avoid difference integer/float (OR something better) *)
+checkEqualRealNumbers[Norm[rStartTrack-rStrTra],0,1000],
+debugPrint[" OK on track geometry: rStartTrack == rStrTra ",localDebugPrintFlag],
+Print[" ERROR on track geometry : rStartTrack =!= rStrTra "];
+Return[]
+];
+(**)
+rEndTra=Flatten[ReadRays[tracedTrack,RayEnd,{IntersectionNumber->1,GenerationNumber->1}]];
+rOnTheFS=(*Flatten[ReadRays[tracedTrack,SurfaceCoordinates,onTheFS]]*)Last@ReadRays[tracedTrack,RayEnd];
+rOnTheFS2D=Last@ReadRays[tracedTrack,SurfaceCoordinates];
+If[Length@rOnTheFS<1,Message[getTrackGeometry::noPointOnFS]];
+If[localDebugPrintFlag==True,
+Print[" myTrack                     = ",myTrack];
+Print[" rStartTrack                 = ",rStartTrack," must be rStrTra==rStartTrack "];
+Print[" rStrTra                     = ",rStrTra," must be rStrTra==rStartTrack "];
+Print[" rEndTra (first segment)     = ",rEndTra];
+Print[" rOnTheFS (FS point)         = ",rOnTheFS];
+Print[" rOnTheFS2D (FS point)       = ",rOnTheFS2D]
+];
+Return[{rStrTra,rEndTra,rOnTheFS,rOnTheFS2D}]
+];
+
+
+(* ::Input::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
+Unprotect[offsetTrackId,scaleTrackId];
+Clear[encodeTrackId,decodeTrackId];
+offsetTrackId=1000000000;
+scaleTrackId=1000;
+Protect[offsetTrackId,scaleTrackId];
+(**************************************************************************************************)
+decodeTrackId[w_,offset_:offsetTrackId,scale_:scaleTrackId]:=Module[{z,t1,t2,t3},
+z=w-offset;(*Print[z];*)
+t1=Quotient[z,scale*scale];(*Print[t1];*)
+t2=Quotient[Mod[z,scale*scale],scale];(*Print[t2];*)
+t3=Mod[Mod[z,scale*scale],scale];(*Print[t3];*)
+Return[{t1,t2,t3}]
+];
+(**************************************************************************************************)
+encodeTrackId[t1_Integer,t2_Integer,t3_Integer:0,offset_:offsetTrackId,scale_:scaleTrackId]:=Module[{z},
+miniBanner["so far only positive input: beware when using angles"];
+If[t1<0||t1>scale,Print[" ERROR - encodeTrackId : t1 ",t1];Return[1234567890]];
+If[t2<0||t2>scale,Print[" ERROR - encodeTrackId : t2 ",t2];Return[1234567890]];
+If[t3<0||t3>scale,Print[" ERROR - encodeTrackId : t3 ",t3];Return[1234567890]];
+z=offset+t1+scale*t2+scale*scale*t3;
+debugPrint[" TrackId encoded into : ",z];
+Return[z]
+];
+encodeTrackId[100,57,7];
+decodeTrackId[%];
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*pixels*)*)
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+digitize[x_,y_,pixelSize_,offset_]:=Module[{center},
+xd=pixelSize*Floor[x/pixelSize]+pixelSize/2//N;
+yd=pixelSize*Floor[y/pixelSize]+pixelSize/2//N];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------*)
+pixelize[tracedPointsFS_,pixelSize_]:=Module[{x,y,res,tracedPointsFSDigitized,centerScreen},
+tracedPointsFSDigitized={};
+res={};
+unitVectorScreen={Cos[tiltScreen],Sin[tiltScreen],0};
+eX={-Sin[tiltScreen],+Cos[tiltScreen],0};
+eY={0,0,1};
+centerScreen={zScreen,xScreen,0};
+x=Transpose[tracedPointsFS][[1]];
+y=Transpose[tracedPointsFS][[2]];
+digitize[x,y,pixelSize,0];
+Do[AppendTo[tracedPointsFSDigitized,centerScreen+xd[[j]]*eX+yd[[j]]*eY],{j,1,Length[tracedPointsFS]}];
+(*plt1=Graphics3D[Style[Point[tracedPointsFSDigitized],Green]];
+plt2=Graphics3D[Style[Point[tracedPointsFS],Red]];
+Show[plt1,plt2];
+Histogram[xd];
+Histogram[xd-x];
+Histogram[yd];
+Histogram[yd-y];
+Transpose[{xd,yd}];
+Dot[unitVectorScreen,centerScreen];
+Print[Max[Map[Norm,tracedPointsFSDigitized-tracedPointsFS]]*Sqrt[2]];
+Do[AppendTo[res,Norm[tracedPointsFSDigitized[[j]]-tracedPointsFS[[j]]]*Sqrt[2]],{j,1,Length[tracedPointsFS]}];
+Print[Histogram[res]];*)
+Return[tracedPointsFSDigitized]
+];
+
+
+(* ::Subtitle::Initialization:: *)
+(*(*OPTICS DEFINITIONS - many historical as of 2024 - but don't delete as some may be called by others*)*)
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*general*)*)
+
+
+(* ::Input::Initialization:: *)
+execDoCalc:=Module[{},
+miniBanner[" INIT execDoCalc "];
+Print[" RICH is : ",iRICH];
+
+centerPriMirRefl={0,0};
+edgeParaFSNear={0,0};
+edgeParaFSAway={0,0};
+edgeParaFSNearRefl={0,0};
+edgeParaFSAwayRefl={0,0};
+Print[" *LEGENDA ========================================================================================== "];
+Print[" transverseCoordinate == perpendicular to beam-line, towards the PD-PLANE, that is : "];
+Print["                         y, for vertical RICH // vertical "];
+Print["                         x, for horizontal RICH // horizontal "];
+Print[" thrdDim == perpendicular to beam-line and perpendicular to transverseCoordinate, that is :"];
+Print["                         x, for vertical RICH "];
+Print["                         y, for horizontal RICH "];
+(*--------------------------------------------------------------------------------------------------------*)
+(*to calcluate spherical mirro from known points*)
+(*calcSphericalPrimaryMirrorOld[sizeTrnsvrsPriMir,tiltPriMir,radiusPriMir];*)
+(*calcSphericalPrimaryMirror[sizeTrnsvrsPriMir,tiltPriMir,radiusPriMir,thetaMinPriMir,p2z];*)
+(*--------------------------------------------------------------------------------------------------------*)
+ecnf0=
+{zSecMir,xSecMir,zSecMirMin,xSecMirMin,zSecMirMax,xSecMirMax}=calcFlatSecMirFromLowerAngle[sizeTrnsvrsSecMir,tiltSecMir,theThetaMinSecMir,p4z];
+(*ecnf0=calcFlatSecMirFromLowerAngle[sizeTrnsvrsSecMir,tiltSecMir,theThetaMinSecMir,p4z];*)
+Print["{zSecMir,xSecMir,zSecMirMin,xSecMirMin,zSecMirMax,xSecMirMax}",{zSecMir,xSecMir,zSecMirMin,xSecMirMin,zSecMirMax,xSecMirMax}];
+
+zSecMirCen=ecnf0[[1]];
+xSecMirCen=ecnf0[[2]];
+zSecMirMin=ecnf0[[3]];
+xSecMirMin=ecnf0[[4]];
+zSecMirMax=ecnf0[[5]];
+xSecMirMax=ecnf0[[6]];
+
+
+(*--------------------------------------------------------------------------------------------------------*)
+calcFS[centerPriMir[[1]],centerPriMir[[2]],radiusPriMir,Abs[\[Pi]-tiltPriMir]];
+(*--------------------------------------------------------------------------------------------------------*)
+reflect0[centerPriMir[[1]],centerPriMir[[2]],dirVect[zSecMirMin-zSecMirMax,xSecMirMin-xSecMirMax],zSecMir,xSecMir];
+centerPriMirRefl[[1]]=reflectedPoint[[1]];
+centerPriMirRefl[[2]]=reflectedPoint[[2]];
+reflect0[edgeParaFSNear[[1]],edgeParaFSNear[[2]],dirVect[zSecMirMin-zSecMirMax,xSecMirMin-xSecMirMax],zSecMir,xSecMir];
+edgeParaFSNearRefl[[1]]=reflectedPoint[[1]];
+edgeParaFSNearRefl[[2]]=reflectedPoint[[2]];
+reflect0[edgeParaFSAway[[1]],edgeParaFSAway[[2]],dirVect[zSecMirMin-zSecMirMax,xSecMirMin-xSecMirMax],zSecMir,xSecMir];
+edgeParaFSAwayRefl[[1]]=reflectedPoint[[1]];
+edgeParaFSAwayRefl[[2]]=reflectedPoint[[2]];
+(*--------------------------------------------------------------------------------------------------------*)
+miniBanner[" END execDoCalc "];
+Return[]
+];
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*calc - calc the p points*)*)
+
+
+(* ::Section::Initialization:: *)
+(*(*Geometry of Rich1 according to DW survey*)*)
+
+
+(* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>:: *)
+calc2009RealRich1Geometry:=Module[{tt,ll,z,radius,sol},
+miniBanner[" INIT calc2009RealRich1Geometry "];
+radius=2710;
+radiusPriMir=radius;
+zc=average[-672.8,-671.8];
+yc=average[+841.2,+840.8];
+cc={zc,yc};
+(**)
+
+p1y=0;
+sol=Solve[circumference[zc,yc,radius,z,p1y]==0,z];
+p1z=z/.sol[[2]];
+p1={p1z,p1y};
+p2y=600;
+sol=Solve[circumference[zc,yc,radius,z,p2y]==0,z];
+p2z=z/.sol[[2]];
+p2={p2z,p2y};
+theTiltPriMir=180+ArcTan[-1/AngCoeff[p1z,p1y,p2z,p2y]]/Degree;
+p3z=average[+1333.7,+1335.4];
+p3y=average[+0349.0,+0351.3];
+p3={p3z,p3y};
+ll=800;
+tt=average[0.2502,0.2506];
+p4z=p3z+ll*Cos[\[Pi]/2+tt];
+p4y=p3y+ll*Sin[\[Pi]/2+tt];
+theTiltSecMir=ArcTan[-1/AngCoeff[p4z,p4y,p3z,p3y]]/Degree;
+theThetaMinSecMir=ArcTan[p3y/p3z];
+p8z=average[1491.125,1491.075];
+p8y=average[1182.325,1182.75];
+p8={p8z,p8y};
+theTiltScreen=average[average[ArcSin[.8866],ArcSin[.8867]],average[ArcCos[.4624],ArcCos[.4623]]]/Degree;
+miniBanner[" END calc2009RealRich1Geometry "];
+Return[]
+]
+
+
+(* ::Section::Initialization:: *)
+(*(*Geometry of Rich1 according to LHCb - 2004 - 121*)*)
+
+
+(* ::Input::Initialization:: *)
+calc2009Rich1Geometry:=Module[{z,radius,sol},
+miniBanner[" INIT calc2009Rich1Geometry "];
+radius=2700;
+radiusPriMir=radius;
+zc=-684.4;
+yc=+837.9;
+cc={zc,yc};
+(**)
+
+p1y=0;
+sol=Solve[circumference[zc,yc,radius,z,p1y]==0,z];
+p1z=z/.sol[[2]];
+p1={p1z,p1y};
+p2y=600;
+sol=Solve[circumference[zc,yc,radius,z,p2y]==0,z];
+p2z=z/.sol[[2]];
+p2={p2z,p2y};
+theTiltPriMir=180+ArcTan[-1/AngCoeff[p1z,p1y,p2z,p2y]]/Degree;
+p3z=1310.0;
+p3y=350.0;
+p3={p3z,p3y};
+p4y=1100.0;
+p4z=1118.5;
+p4={p4z,p4y};
+theTiltSecMir=ArcTan[-1/AngCoeff[p4z,p4y,p3z,p3y]]/Degree;
+theThetaMinSecMir=ArcTan[p3y/p3z];
+p7z=1231.7;
+p7y=1317.7;
+p7={p7z,p7y};
+p8z=1482.3;
+p8y=1187.4;
+p8={p8z,p8y};
+p9z=1733.8;
+p9y=1056.7;
+p9={p9z,p9y};
+theTiltScreen=ArcTan[-1/AngCoeff[p7z,p7y,p9z,p9y]]/Degree;
+miniBanner[" END calc2009Rich1Geometry "];
+Return[]
+]
+
+
+(* ::Section::Initialization:: *)
+(*(*Geometry of Rich2 according to LHCb - 2002 - 009*)*)
+
+
+(* ::Input::Initialization:: *)
+calc2009Rich2Geometry:=Module[{z,y,radius,sol},
+miniBanner[" INIT calc2009Rich2Geometry "];
+radius=8600;
+radiusPriMir=radius;
+zc=3291.0;
+yc=3270.0;
+cc={zc,yc};
+(**)
+
+p1y=0;
+sol=Solve[circumference[zc,yc,radius,z,p1y]==0,z];
+p1z=z/.sol[[2]];
+p1={p1z,p1y};
+p2z=11705;
+sol=Solve[circumference[zc,yc,radius,p2z,y]==0,y];
+p2y=y/.sol[[1]];
+p2={p2z,p2y};
+theTiltPriMir=180+ArcTan[-1/AngCoeff[p1z,p1y,p2z,p2y]]/Degree;
+(*p3z=(2848-1234)*Tan[.185]+9578;*)
+p3z=9880;
+p3y=1234.0;
+p3={p3z,p3y};
+p4y=2848.0;
+p4z=9578.0;
+p4={p4z,p4y};
+theTiltSecMir=ArcTan[-1/AngCoeff[p4z,p4y,p3z,p3y]]/Degree;
+theThetaMinSecMir=ArcTan[p3y/p3z];
+p8z=10761.0;
+p8y=3892.0;
+p8={p8z,p8y};
+p7=p8+{Cos[\[Pi]/2-1.065],-Sin[\[Pi]/2-1.065]}*682/2;
+p9=p8-{Cos[\[Pi]/2-1.065],-Sin[\[Pi]/2-1.065]}*682/2;
+p7z=p7[[1]];
+p7y=p7[[2]];
+p9z=p9[[1]];
+p9y=p9[[2]];
+theTiltScreen=1.065/Degree;
+miniBanner[" END calc2009Rich2Geometry "];
+Return[]
+]
+
 
 (* ::Subtitle:: *)
-(* INIT BASE *)
+(*OLD layouts*)
 
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 1, expression 1 ---- *)
-((Global`bigBanner[" loading optica "];  Null))
 
 (* ::Subsubtitle:: *)
-(* EllipseFit *)
+(*OLD layouts still needed for LS2/2022*)
+
+
+(* ::Section::Initialization:: *)
+(*protected code*)
+
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 2, expression 1 ---- *)
-((Set[Options[Global`EllipseFit], List[Rule[TimeConstraint, 1], RuleDelayed[WorkingPrecision, MachinePrecision]]];  Null);  Null;  (Set[SyntaxInformation[Global`EllipseFit], List[Rule["ArgumentsPattern", List[Blank[], Blank[], OptionsPattern[]]]]];  Null);  Null;  (SetDelayed[Condition[Global`EllipseFit[PatternTest[Pattern[Global`data, Blank[]], Function[MatrixQ[Slot[1], NumericQ]]], List[Pattern[Global`x0, Blank[Symbol]], Pattern[Global`y0, Blank[Symbol]]], Pattern[Global`opts, OptionsPattern[]]], And[CheckArguments[Global`EllipseFit[Global`data, List[Global`x0, Global`y0], Global`opts], 2], UnsameQ[Context[Global`x0], "System`"], UnsameQ[Context[Global`y0], "System`"], SameQ[2, Part[Dimensions[Global`data], 2]], SameQ[0, Max[Abs[Im[Flatten[Global`data]]]]], Less[3, Length[Union[Global`data]]]]], Module[List[Global`machinePrec, Global`exactData, Global`x, Global`y, Global`d1, Global`d2, Global`s1, Global`s2, Global`m, Global`mInverse, Global`t, Global`ev, Global`discriminates, Global`a, Global`b, Global`c, Global`d, Global`e, Global`f], (If[SameQ[Precision[Global`data], MachinePrecision], (Set[List[Global`exactData, Global`machinePrec], List[False, True]];  Set[List[Global`x, Global`y], Transpose[Developer`ToPackedArray[N[Global`data]]]];  Set[Global`d1, Developer`ToPackedArray[List[Power[Global`x, 2], Times[Global`x, Global`y], Power[Global`y, 2]]]];  Set[Global`d2, Developer`ToPackedArray[List[Global`x, Global`y, ConstantArray[1.`, Length[Global`x]]]]]), (Set[List[Global`exactData, Global`machinePrec], List[SameQ[Precision[Global`data], Infinity], False]];  Set[List[Global`x, Global`y], Transpose[Global`data]];  Set[Global`d1, List[Power[Global`x, 2], Times[Global`x, Global`y], Power[Global`y, 2]]];  Set[Global`d2, List[Global`x, Global`y, ConstantArray[1, Length[Global`x]]]])];  Set[Global`s1, Dot[Global`d1, Transpose[Global`d1]]];  Set[List[Global`s2, Global`m], Function[List[Dot[Global`d1, Slot[1]], Dot[Global`d2, Slot[1]]]][Transpose[Global`d2]]];  Set[Global`mInverse, Quiet[Check[Inverse[Global`m], $Failed, List[MessageName[Inverse, "sing"], MessageName[Inverse, "luc"]]], List[MessageName[Inverse, "sing"], MessageName[Inverse, "luc"]]]];  If[SameQ[Global`mInverse, $Failed], (ResourceFunction["ResourceFunctionMessage"][MessageName[Global`EllipseFit, "sing"]];  $Failed), (Set[Global`t, Times[-1, Dot[Global`mInverse, Transpose[Global`s2]]]];  Which[Global`machinePrec, Set[Global`ev, Eigenvectors[Dot[List[List[0, 0, 0.5`], List[0, -1.`, 0], List[0.5`, 0, 0]], Plus[Global`s1, Dot[Global`s2, Global`t]]]]], And[Global`exactData, SameQ[Infinity, OptionValue[WorkingPrecision]]], Set[Global`ev, Eigenvectors[Dot[List[List[0, 0, Times[1, Power[2, -1]]], List[0, -1, 0], List[Times[1, Power[2, -1]], 0, 0]], Plus[Global`s1, Dot[Global`s2, Global`t]]]]], True, TimeConstrained[Set[Global`ev, Eigenvectors[Dot[List[List[0, 0, Times[1, Power[2, -1]]], List[0, -1, 0], List[Times[1, Power[2, -1]], 0, 0]], Plus[Global`s1, Dot[Global`s2, Global`t]]]]], OptionValue[TimeConstraint], (Set[Global`ev, Quiet[Eigenvectors[N[Dot[List[List[0, 0, Times[1, Power[2, -1]]], List[0, -1, 0], List[Times[1, Power[2, -1]], 0, 0]], Plus[Global`s1, Dot[Global`s2, Global`t]]], OptionValue[WorkingPrecision]]], MessageName[N, "meprec"]]];  Set[Global`ev, N[Global`ev, OptionValue[WorkingPrecision]]])]];  Set[Global`discriminates, MapApply[Function[List[Global`a, Global`b, Global`c], Plus[Power[Global`b, 2], Times[-1, 4, Global`a, Global`c]]], Global`ev]];  If[FreeQ[Global`discriminates, PatternTest[Blank[], Negative]], (ResourceFunction["ResourceFunctionMessage"][MessageName[Global`EllipseFit, "none"]];  $Failed), ((Set[List[Global`a, Global`b, Global`c], First[Pick[Global`ev, Quiet[Negative[Global`discriminates], MessageName[N, "meprec"]]]]];  Set[List[Global`a, Global`b, Global`c], ReplaceAll[List[Global`a, Global`b, Global`c], Rule[PatternTest[Blank[], Function[Equal[Slot[1], 0.`]]], 0]]];  Set[List[Global`d, Global`e, Global`f], ReplaceAll[Quiet[Dot[Global`t, List[Global`a, Global`b, Global`c]], MessageName[N, "meprec"]], Rule[PatternTest[Blank[], Function[Equal[Slot[1], 0.`]]], 0]]];  Null);  Equal[Plus[Global`f, Times[Global`d, Global`x0], Times[Global`a, Power[Global`x0, 2]], Times[Global`e, Global`y0], Times[Global`b, Global`x0, Global`y0], Times[Global`c, Power[Global`y0, 2]]], 0])])])]];  Null);  Null;  (SetDelayed[Global`invalidMatrix[Pattern[Global`data, Blank[]]], With[List[Set[Global`flattened, Flatten[Global`data]]], Or[UnsameQ[List[0], Union[Im[Global`flattened]]], SameQ[False, Apply[And, Map[NumericQ, Global`flattened]]]]]];  Null);  Null;  (SetDelayed[Global`invalidData[Pattern[Global`data, Blank[]]], Or[SameQ[False, MatrixQ[Global`data]], UnsameQ[2, Last[Dimensions[Global`data]]], Global`invalidMatrix[Global`data]]];  Null);  Null;  (SetDelayed[Global`notSymbolPair[Pattern[Global`e, Blank[]]], If[Or[UnsameQ[List, Head[Global`e]], UnsameQ[2, Length[Global`e]]], True, With[List[Set[Global`x, First[Global`e]], Set[Global`y, Last[Global`e]]], If[Or[UnsameQ[Symbol, Head[Global`x]], UnsameQ[Symbol, Head[Global`y]]], True, Or[SameQ["System`", Context[Global`x]], SameQ["System`", Context[Global`y]]]]]]];  Null);  Null;  (SetDelayed[Condition[Global`EllipseFit[Pattern[Global`data, List[Repeated[List[Blank[], Blank[]]]]], List[Blank[], Blank[]], PatternTest[BlankNullSequence[], OptionQ[Function[List[Slot[1]]]]]], And[MatrixQ[Global`data], Less[Length[Union[Global`data]], 4], ResourceFunction["ResourceFunctionMessage"][MessageName[Global`EllipseFit, "err1"]]]], "This side never evaluates."];  Null);  Null;  (SetDelayed[Condition[Global`EllipseFit[Pattern[Global`data, Blank[]], List[Blank[], Blank[]], PatternTest[BlankNullSequence[], OptionQ[Function[List[Slot[1]]]]]], And[Global`invalidData[Global`data], ResourceFunction["ResourceFunctionMessage"][MessageName[Global`EllipseFit, "err2"]]]], "This side never evaluates."];  Null);  Null;  (SetDelayed[Condition[Global`EllipseFit[Blank[], PatternTest[Blank[], Global`notSymbolPair], PatternTest[BlankNullSequence[], OptionQ[Function[List[Slot[1]]]]]], ResourceFunction["ResourceFunctionMessage"][MessageName[Global`EllipseFit, "err3"]]], "This side never evaluates."];  Null);  Null;  (SetDelayed[Condition[Global`EllipseFit[PatternTest[Blank[], Function[MatrixQ[Slot[1], NumericQ]]], List[Blank[], Blank[]], Pattern[Global`arg, BlankSequence[]]], And[SameQ[False, OptionQ[List[Global`arg]]], ResourceFunction["ResourceFunctionMessage"][MessageName[Global`EllipseFit, "err4"]]]], "This side never evaluates."];  Null);  Null;  (Set[MessageName[Global`EllipseFit, "err1"], "EllipseFit was given an invalid list of data because the data contained fewer then four disticnt {x,y} coordinates."];  Null);  Null;  (Set[MessageName[Global`EllipseFit, "err2"], "EllipseFit was given an invalid list of data. The data must have the form {{x1,y1},{x2,y2},...{xn,yn}} where each xi and yi are real numeric values."];  Null);  Null;  (Set[MessageName[Global`EllipseFit, "err3"], "EllipseFit was give an invalid expression as a second argument. The second argument must have the form {x,y} where x and y are Symbols not in the System context."];  Null);  Null;  (Set[MessageName[Global`EllipseFit, "err4"], "EllipseFit was used where one or more argument after the second argument was not an option. EllipseFit is not defined in this case."];  Null);  Null;  (Set[MessageName[Global`EllipseFit, "sing"], "EllipseFit was unable to find a solution due to the need to invert a singular or nearly singular matrix."];  Null);  Null;  (Set[MessageName[Global`EllipseFit, "none"], "EllipseFit was unable to find an ellipse to approximate the data."];  Null))
+(**************************************************************************************************)
+(* DEFAULT PARAMETES - POSSIBLY TO BE REDEFINED LATER *)
+(* All input angles in radians. Note that Optica requires input tilt data in Degrees:CONVERT! *)
+(**************************************************************************************************)
 
-(* ::Subsubtitle:: *)
-(* GENERAL DEFINITIONS FOR THIS NOTEBOOK *)
+setBoundaryParametersOLD:=Module[{},
+miniBanner[" INIT setBoundaryParametersOLD "];
+Print[" RICH is : ",iRICH];
+(**)
+theSensorPitch=1; (* mm *)
+thetaMinPriMir=0.0;
+radiusSecMir=0.0;
+pixelSize=3;
+(**)
+If[(iRICH!=1)&&(iRICH!=2)&&(iRICH!=9),killStop];
+(**************************************************************************************************)
+(**)
+If[iRICH==1,(*+/- 300 mrad acceptance real-HOR*)
+minZ=985.0;
+maxZ=2170.0;
+minAcc=25.0/1000.0;
+maxYAcc:=trnsvrsAcc;(*X<->Y swapped between the two riches*)
+maxXAcc:=thrdDimAcc;(*X<->Y swapped between the two riches*)
+minThetaTrsvrsTrack=0.050;
+(**)
+(*use 1000mm path length*)
+];
+(**************************************************************************************************)
+(**)
+If[iRICH==2,(*+/- 120 mrad acceptance real-HOR*)
+minZ=9450;(*ok with LHCb-PUB-2016-XXX EDMS 1685891 13th May 2016*)
+maxZ=11900;(*ok with LHCb-PUB-2016-XXX EDMS 1685891 13th May 2016*)
+minAcc=15.0/1000.0;
+maxXAcc:=trnsvrsAcc;(*X<->Y swapped between the two riches*)
+maxYAcc:=thrdDimAcc;(*X<->Y swapped between the two riches*)
+minThetaTrsvrsTrack=0.030;
+(**)
+(*use 2000mm path length*)
+l000z=(11245-9450);
+l000:=l000z;
+l120z=(11705-9450);
+l120:=l120z/Cos[.12];
+printD@l000;
+printD@l120;
+printD@Mean[{l000,l120}];
+];
+(**)
+miniBanner[" END setBoundaryParametersOLD "];
+Return[]
+];
+
+
+
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 3, expression 1 ---- *)
-(Null)
+(*--------------------------------------------------------------------------------------------------------*)
+setData2022Rich1:=Module[{},
+(*--------------------------------------------------------------------------------------------------------*)
+(*bigBanner[" I DONT LIKE ----- INIT setData2022Rich1 - NEW TO CHECK "];
+bigBanner[" changed structure wrt setData2022Rich1/setData2022Rich2 : probably was better.... "];*)
+printD@iRICH;
+setBoundaryParametersOLD;
+Print[" New vertical Rich1 - final official version presented on 17-06-2013 - "];
+Print[" Fine-Tuned from RICH1-Optical-Layout-EDMS-1390002-v2-CF160401-1050.pdf on Oct. 14th, 2020 "];
+(* OK *)zBoxMin=985;
+(* OK *)zBoxMax=2245;
+(* OK *)p2z=2145.001;
+(* OK *)p4z=1099.242;
+(* OK *)thrdDimAcc=0.300;
+(* OK *)trnsvrsAcc=0.250;
+(* OK *)minAcc=0.025;
+(* OK *)thrdDimMinAcc=minAcc;
+(* OK *)trnsvrsMinAcc=minAcc;
+(* OK *)thetaMinSecMir=trnsvrsAcc;theThetaMinSecMir=thetaMinSecMir(*duplicate info... why ? cleanup*);
+(* IT IS INPUT! OK *)sizeTrnsvrsPriMir=650.;
+(* OK *)sizeTrnsvrsSecMir=883.;
+(* OK *)sizeTrnsvrsScreen=621.5+200;
+(* OK *)sizeThrdDimPriMir=1500.0;
+(* OK *)sizeThrdDimSecMir=1489.0;
+(* OK *)sizeThrdDimScreen=1500.0;
+(* OK *)radiusPriMir=3650;
+(* OK *)tiltPriMir=+170.3Degree;
+(* OK *)tiltSecMir=0.25656*180/Pi Degree;
+(* OK *)tiltScreen=(90-0.561996*180/Pi)Degree;
+(* OK *)zScreen=1641.417;
+(* OK *)xScreen=1407.716;
+PDADepth=300; (* Rough Estimate // Graphics Only *)
+(*Print[" INFO: deltaSphMirr = 30 is just a bit more than enough ... "];deltaSphMirr=0;Print[" deltaSphMirr = ",deltaSphMirr];*)
+execDoCalc;
+miniBanner[" END setData2022Rich1 "];
+Return[]
+];
+
+(*
+(*----------------------------------------------------------------------------------------------------------------------*)
+setData2022Rich1:=Module[{},
+(*--------------------------------------------------------------------------------------------------------*)
+miniBanner[" INIT setData2022Rich1 - Setting default data for Rich1-2022 "];
+miniBanner[" TEMPORARILY SWITCHED-OFF BY PUTTING DATA BY HAND .... TO FIX "];
+printD@iRICH;
+
+setData2022Rich1NewToCheck;(*TEMPORARY*)
+(**)
+(*setData2009Rich1;*) (* NO!!! RICH1 has changed *)
+(*execDoCalc;*)(*no: called already by setData2009Rich1*)
+
+
+miniBanner[" END setData2022Rich1 "];
+Return[]
+];*)
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------------------------------*)
+(*--------------------------------------------------------------------------------------------------------*)
+setData2009Rich2:=Module[{},
+(*--------------------------------------------------------------------------------------------------------*)
+(*Current RICH2 from LHCb 2002-009*)
+(*Print[" Current RICH2 from LHCb 2002-009 - EDR "];*)
+miniBanner[" INIT setData2009Rich2 "];
+printD@iRICH;
+setBoundaryParametersOLD;
+calc2009Rich2Geometry;
+halfOpenAngle=0.0313*(180/\[Pi]);
+sizeThrdDimPriMir=2500.;
+sizeThrdDimSecMir=2000.;
+sizeThrdDimScreen=1500.;
+zBoxMin=9578.0;
+zBoxMax=11705.0;
+thrdDimAcc=100/1000.0;
+trnsvrsAcc=120/1000.0;
+sizeTrnsvrsPriMir=dist[p1z,p1y,p2z,p2y];
+sizeTrnsvrsSecMir=dist[p3z,p3y,p4z,p4y];
+sizeTrnsvrsScreen=dist[p7z,p7y,p9z,p9y];
+thetaMinSecMir=theThetaMinSecMir;
+xScreen=p8y;
+zScreen=p8z;
+tiltPriMir=theTiltPriMir Degree;
+tiltSecMir=theTiltSecMir Degree;
+tiltScreen=theTiltScreen Degree;
+Print[" deltaSphMirr=0 ... "];
+deltaSphMirr=0;
+PDADepth=20;
+execDoCalc;
+miniBanner[" END setData2009Rich2 "];
+Return[]
+];
+
+
+(* ::Input::Initialization:: *)
+(*----------------------------------------------------------------------------------------------------------------------*)
+setData2022Rich2:=Module[{},
+(*--------------------------------------------------------------------------------------------------------*)
+miniBanner[" INIT setData2022Rich2 - Setting default data for Rich2-2022 "];
+printD@iRICH;
+setData2009Rich2; (* RICH2 has NOT changed *)
+(*execDoCalc;*)(*no: called already by setData2009Rich2*)
+miniBanner[" END setData2022Rich2 "];
+Return[]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------------------------------*)
+setDataReal2002Rich1:=Module[{},
+(*--------------------------------------------------------------------------------------------------------*)
+(*Current RICH1 from DW survey*)
+(*Print[" Current RICH1 from DW survey and LHCb DB "];*)
+miniBanner[" INIT setDataReal2002Rich1 "];
+printD@iRICH;
+setBoundaryParametersOLD;
+calc2009RealRich1Geometry;
+zBoxMin=1118.5;
+zBoxMax=2005.1;
+thrdDimAcc=300/1000.0;
+trnsvrsAcc=250/1000.0;
+sizeTrnsvrsPriMir=dist[p1z,p1y,p2z,p2y];
+sizeTrnsvrsSecMir=dist[p3z,p3y,p4z,p4y];
+sizeTrnsvrsScreen=1000;
+thetaMinSecMir=theThetaMinSecMir;
+xScreen=p8y;
+zScreen=p8z;
+tiltPriMir=theTiltPriMir Degree;
+tiltSecMir=theTiltSecMir Degree;
+tiltScreen=theTiltScreen Degree;
+execDoCalc;
+miniBanner[" END setDataReal2002Rich1 "];
+Return[]
+];
+
+
+(* ::Input::Initialization:: *)
+(*--------------------------------------------------------------------------------------------------------*)
+setData2009Rich1:=Module[{},
+(*--------------------------------------------------------------------------------------------------------*)(*Current RICH1 from LHCb 2004-121*)
+(*Print[" Current RICH1 from LHCb 2004-121 - EDR "];*)
+miniBanner[" INIT setData2009Rich1 "];
+printD@iRICH;
+setBoundaryParametersOLD;
+calc2009Rich1Geometry;
+zBoxMin=1118.5;
+zBoxMax=2005.1;
+thrdDimAcc=300/1000.0;
+trnsvrsAcc=250/1000.0;
+sizeTrnsvrsPriMir=dist[p1z,p1y,p2z,p2y];
+sizeTrnsvrsSecMir=dist[p3z,p3y,p4z,p4y];
+sizeTrnsvrsScreen=dist[p7z,p7y,p9z,p9y];
+thetaMinSecMir=theThetaMinSecMir;
+xScreen=p8y;
+zScreen=p8z;
+tiltPriMir=theTiltPriMir Degree;
+tiltSecMir=theTiltSecMir Degree;
+tiltScreen=theTiltScreen Degree;
+execDoCalc;
+miniBanner[" END setData2009Rich1 "];
+Return[]
+];
+
+
+(* ::Subsubtitle::Initialization:: *)
+(*(*OLD layout but good but no more useful*)*)
+
 
 (* ::Section:: *)
-(* MISCELLANEA DEFINITIONS *)
+(*protected code*)
+
+
+(* ::Input::Initialization:: *)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+(*setDataHorizontalRich1:=Module[{},*)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+(*miniBanner[" INIT setDataHorizontalRich1 - HORIZONTAL!!! "];*)
+(*printD@iRICH;*)
+(*setBoundaryParametersOLD;*)
+(*(*New horizontal RICH1*)*)
+(*zBoxMin=1090;*)
+(*zBoxMax=2085;*)
+(*thrdDimAcc=250/1000.0;*)
+(*trnsvrsAcc=300/1000.0;*)
+(*(*HORIZONTAL!!!*)*)
+(*maxYAcc:=thrdDimAcc;*)
+(*maxXAcc:=trnsvrsAcc;*)
+(*thetaMinSecMir=trnsvrsAcc;*)
+(*sizeTrnsvrsPriMir=750;*)
+(*sizeTrnsvrsSecMir=900;*)
+(*sizeTrnsvrsScreen=1200;*)
+(*radiusPriMir=3800;*)
+(*xScreen=1668;*)
+(*(*zScreen=(zBoxMin+zBoxMax)/2;*)*)
+(*zScreen=(minZ+maxZ)/2;*)
+(*tiltPriMir=+170Degree;*)
+(*tiltSecMir=+16Degree;*)
+(*tiltScreen=+62 Degree;*)
+(*execDoCalc;*)
+(*miniBanner[" END setDataHorizontalRich1 "];*)
+(*Return[]*)
+(*];*)
+
+
+(* ::Input::Initialization:: *)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+(*setDataNewVerticalRich1A:=Module[{},*)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+(*setBoundaryParametersOLD;*)
+(*(*New vertical RICH1 A -first official version rich2019-*)*)
+(*Print[" New vertical Rich1 A - first official version rich2019 - "];*)
+(*deltaZBoxMin=0;*)
+(*deltaZBoxMax=0;*)
+(*zBoxMin=1118.5+deltaZBoxMin;*)
+(*zBoxMax=2005.1+deltaZBoxMax;*)
+(*p2z=zBoxMax;*)
+(*p4z=zBoxMin;*)
+(*thirdDimAcc=300/1000.0;*)
+(*trnsvrsAcc=250/1000.0;*)
+(*thetaMinSecMir=trnsvrsAcc;*)
+(*sizeTrnsvrsPriMir=570;*)
+(*sizeTrnsvrsSecMir=850;*)
+(*sizeTrnsvrsScreen=1500;*)
+(*radiusPriMir=3800;*)
+(*xScreen=1600;*)
+(*(*zScreen=(zBoxMin+zBoxMax)/2;*)*)
+(*zScreen=(minZ+maxZ)/2;*)
+(*tiltPriMir=+166Degree;*)
+(*tiltSecMir=+16Degree;*)
+(*xScreen=1569.7265;*)
+(*xScreen=1569.7265+200-125;*)
+(*zScreen=1626.7100;*)
+(*tiltScreen=67.5929 Degree;*)
+(*(*v7C*)*)
+(*Rh1PlaneUpgradeFocalPlaneShift=100;*)
+(*Rh1PhDetTopAngleFromVert=ArcCos[0.928981];*)
+(*xScreen=xScreen+Rh1PlaneUpgradeFocalPlaneShift*Sin[Rh1PhDetTopAngleFromVert]+Rh1PlaneUpgradeFocalPlaneShift*Cos[Rh1PhDetTopAngleFromVert];*)
+(*zScreen=zScreen-Rh1PlaneUpgradeFocalPlaneShift*Cos[Rh1PhDetTopAngleFromVert]+Rh1PlaneUpgradeFocalPlaneShift*Sin[Rh1PhDetTopAngleFromVert];*)
+(*tiltScreen=ArcCos[0.370127];*)
+(*execDoCalc;*)
+(*];*)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+
+
+(* ::Input::Initialization:: *)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+(*setDataNewVerticalRich1B:=Module[{},*)
+(**)
+(*setBoundaryParametersOLD;*)
+(*(*--------------------------------------------------------------------------------------------------------*)(*New vertical RICH1 B -work-*)*)
+(*Print[" New vertical Rich1 B - work - "];*)
+(*deltaZBoxMin=-100;*)
+(*deltaZBoxMax=100;*)
+(*zBoxMin=1118.5+deltaZBoxMin;*)
+(*zBoxMax=2005.1+deltaZBoxMax;*)
+(*p2z=zBoxMax;*)
+(*p4z=zBoxMin+100;*)
+(*thirdDimAcc=300/1000.0;*)
+(*trnsvrsAcc=250/1000.0;*)
+(*thetaMinSecMir=trnsvrsAcc;*)
+(*sizeTrnsvrsPriMir=650.;*)
+(*sizeTrnsvrsSecMir=900.;*)
+(*sizeTrnsvrsScreen=1500.;*)
+(*radiusPriMir=3800;*)
+(*(*PDA*)xScreen=1600;*)
+(*zScreen=(minZ+maxZ)/2;*)
+(*(*Tilts*)tiltPriMir=+166Degree;*)
+(*tiltSecMir=+16Degree;*)
+(*tiltScreen=70 Degree;*)
+(*(*ReCalculated*)tiltScreen=66.9 Degree;*)
+(*zScreen=1633.1;*)
+(*xScreen=1682.3;*)
+(*(*TEST*)tiltPriMir=+168.5 Degree;*)
+(*tiltSecMir=12 Degree;*)
+(*tiltScreen=53 Degree;*)
+(*zScreen=1751;*)
+(*xScreen=1563;*)
+(*tiltScreen=57 Degree;*)
+(*execDoCalc;*)
+(*];*)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+
+
+(* ::Input::Initialization:: *)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+(*setDataNewVerticalRich1C:=Module[{},*)
+(**)
+(*setBoundaryParametersOLD;*)
+(*(*--------------------------------------------------------------------------------------------------------*)(*New vertical RICH1 C-final official version presented on 17-06-2013-*)*)
+(*Print[" New vertical Rich1 C - final official version presented on 17-06-2013 - "];*)
+(*zBoxMin=1080;*)
+(*zBoxMax=2150;*)
+(*p2z=2145;*)
+(*p4z=1100;*)
+(*thirdDimAcc=300/1000.0;*)
+(*trnsvrsAcc=250/1000.0;*)
+(*thetaMinSecMir=trnsvrsAcc;*)
+(*sizeTrnsvrsPriMir=650.;*)
+(*sizeTrnsvrsSecMir=880.;*)
+(*sizeTrnsvrsScreen=650.;*)
+(*radiusPriMir=3800;*)
+(*(*PDA*)*)
+(*xScreen=1600;*)
+(*zScreen=(minZ+maxZ)/2;*)
+(*(*Tilts*)*)
+(*tiltPriMir=+170Degree;*)
+(*tiltSecMir=+16Degree;*)
+(*tiltScreen=61. Degree;*)
+(*(*Tuned*)*)
+(*tiltSecMir=14.5 Degree;*)
+(*tiltScreen=57.3 Degree;*)
+(*zScreen=1694.705;*)
+(*xScreen=1492.335;*)
+(*PDADepth=270;*)
+(*Print[" PATCHING Sajan ... (normal average incidence for zero polar angle tracks)"];*)
+(*tiltScreen=tiltScreen+1.5 Degree;*)
+(*Print[" INFO: deltaSphMirr = 30 is just a bit more than enough ... "];*)
+(*deltaSphMirr=0;*)
+(*Print[" deltaSphMirr = ",deltaSphMirr];*)
+(*execDoCalc;*)
+(*];*)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+
+
+(* ::Input::Initialization:: *)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+(*setDataNewVerticalRich1D:=Module[{},*)
+(**)
+(*setBoundaryParametersOLD;*)
+(*(*--------------------------------------------------------------------------------------------------------*)(*New vertical RICH1 D*)*)
+(*Print[" New vertical Rich1 D "];*)
+(*zBoxMin=1080;*)
+(*zBoxMax=2150;*)
+(*p2z=2145;*)
+(*p4z=1100;*)
+(*thirdDimAcc=300/1000.0;*)
+(*trnsvrsAcc=250/1000.0;*)
+(*thetaMinSecMir=trnsvrsAcc;*)
+(*sizeTrnsvrsPriMir=650.;*)
+(*sizeTrnsvrsSecMir=880.;*)
+(*sizeTrnsvrsScreen=1500.;*)
+(*radiusPriMir=3600;*)
+(*(*PDA*)*)
+(*xScreen=1600;*)
+(*zScreen=(minZ+maxZ)/2;*)
+(*(*Tilts*)*)
+(*tiltPriMir=+170Degree;*)
+(*tiltSecMir=+16Degree;*)
+(*tiltScreen=61. Degree;*)
+(*(*Tuned*)*)
+(*tiltSecMir=14.5 Degree;*)
+(*tiltScreen=57.4 Degree;*)
+(*zScreen=1694.705-100*Cos[tiltScreen];*)
+(*xScreen=1492.335-100*Sin[tiltScreen];*)
+(*PDADepth=370;*)
+(*execDoCalc;*)
+(*];*)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+
+
+(* ::Input::Initialization:: *)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+(*setDataNewVerticalRich1E:=Module[{},*)
+(**)
+(*setBoundaryParametersOLD;*)
+(**)
+(*(*New vertical RICH1 E-spherical second mirror-*)*)
+(*Print[" New vertical Rich1 E - spherical second mirror - "];*)
+(*zBoxMin=1080;*)
+(*zBoxMax=2150;*)
+(*p2z=2145;*)
+(*p4z=1100;*)
+(*thirdDimAcc=300/1000.0;*)
+(*trnsvrsAcc=250/1000.0;*)
+(*thetaMinSecMir=trnsvrsAcc;*)
+(*sizeTrnsvrsPriMir=650.;*)
+(*sizeTrnsvrsSecMir=880.;*)
+(*sizeTrnsvrsScreen=800.;*)
+(*radiusPriMir=3000;*)
+(*radiusSecMir=-10000;*)
+(*(*PDA*)*)
+(*zScreen=1486;*)
+(*xScreen=1202;*)
+(*(*Tilts*)*)
+(*tiltPriMir=+170Degree;*)
+(*tiltSecMir=14.5 Degree;*)
+(*tiltScreen=57.5 Degree;*)
+(*PDADepth=370;*)
+(*execDoCalc;*)
+(*];*)
+(*(*--------------------------------------------------------------------------------------------------------*)*)
+(**)
+
+
+(* ::Subtitle::Initialization:: *)
+(*(*END BASE*)*)
+
+
+(* ::Input::Initialization:: *)
+(*!@#$%I CANT GET THE PACKAGE TO WORK DUE TO SHADOWING WITH OPTICA EM:TO FIX!!!*)
+(*Begin["`Private`"];*) (* Begin Private Context *)
+(*End[]; *)(* End Private Context *)
+(*EndPackage[];*)
+
 
 (* ::Subsubtitle:: *)
-(* GENERAL OPTIONS FOR THIS NOTEBOOK *)
+(*end notebook initialization cells*)
 
-(* ::Section:: *)
-(* MISCELLANEA OPTIONS *)
-
-(* ::Subtitle:: *)
-(* OPTICA setup *)
 
 (* ::Input::Initialization:: *)
-(* ---- initialization cell 4, expression 1 ---- *)
-(Times[(Unprotect[Global`$OpticaSystemProtection];  Null), (SetDelayed[Global`openOpticaEMDocumentation, KernelExecute[NotebookOpen[FileNameJoin[List[$AddOnsDirectory, "Autoload", "OpticaDocumentation", "Documentation", "English", "Tutorials", "OpticaDocumentationOverview.nb"]]]]];  Null), (Global`printD[$VersionNumber];  Null), (Switch[$VersionNumber, 12.3`, (Global`bigBanner[" MATHEMATICA VERSION 12.3: OK for OpticaSE ! "];  Global`bigBanner[" ACTIVATING OpticaSE "];  Off[MessageName[General, "stop"]];  Off[MessageName[$RecursionLimit, "reclim2"]];  Off[MessageName[Complement, "heads"]];  Off[MessageName[Join, "incpt"]];  Once[Needs["OpticaSE`OpticaSE`"], "KernelSession"];  On[MessageName[Join, "incpt"]];  On[MessageName[Complement, "heads"]];  On[MessageName[$RecursionLimit, "reclim2"]];  On[MessageName[General, "stop"]];  Print[Global`$OpticaHome];  Print[Global`$OpticaVersion];  Print[Global`$OpticaBuildDate];  Print[TableForm[Names["$Optica*"]]];  Print[Column[$ContextPath]];  Global`printD[Column[Contexts["*Optica*"]]];  Set[$ContextPath, DeleteDuplicates[Prepend[$ContextPath, "OpticaSE`OpticaSE`"]]];  Set[$ContextPath, DeleteDuplicates[Prepend[$ContextPath, "OpticaTools`"]]];  Print[Column[$ContextPath]]), 14.1`, (Global`bigBanner[" MATHEMATICA VERSION 14.1: OK for OpticaEM ! "];  Global`bigBanner[" ACTIVATING OpticaEM "];  Once[Needs["OpticaEM`OpticaEM`"], "KernelSession"];  Print[Global`$OpticaHome];  Print[Global`$OpticaVersion];  Print[Global`$OpticaBuildDate];  Print[TableForm[Names["$Optica*"]]];  Print[Column[$ContextPath]];  Global`printD[Column[Contexts["*Optica*"]]];  Set[$ContextPath, DeleteDuplicates[Prepend[$ContextPath, "OpticaEM`OpticaEM`"]]];  Set[$ContextPath, DeleteDuplicates[Prepend[$ContextPath, "OpticaTools`"]]];  Print[Column[$ContextPath]]), 14.2`, (Global`bigBanner[" MATHEMATICA VERSION 14.2: OK for OpticaEM ! "];  Global`bigBanner[" ACTIVATING OpticaEM "];  Once[Needs["OpticaEM`OpticaEM`"], "KernelSession"];  Print[Global`$OpticaHome];  Print[Global`$OpticaVersion];  Print[Global`$OpticaBuildDate];  Print[TableForm[Names["$Optica*"]]];  Print[Column[$ContextPath]];  Global`printD[Column[Contexts["*Optica*"]]];  Set[$ContextPath, DeleteDuplicates[Prepend[$ContextPath, "OpticaEM`OpticaEM`"]]];  Set[$ContextPath, DeleteDuplicates[Prepend[$ContextPath, "OpticaTools`"]]];  Print[Column[$ContextPath]]), 14.3`, (Global`bigBanner[" MATHEMATICA VERSION 14.3: OK for OpticaEM ! "];  Global`bigBanner[" ACTIVATING OpticaEM "];  Once[Needs["OpticaEM`OpticaEM`"], "KernelSession"];  Print[Global`$OpticaHome];  Print[Global`$OpticaVersion];  Print[Global`$OpticaBuildDate];  Print[TableForm[Names["$Optica*"]]];  Print[Column[$ContextPath]];  Global`printD[Column[Contexts["*Optica*"]]];  Set[$ContextPath, DeleteDuplicates[Prepend[$ContextPath, "OpticaEM`OpticaEM`"]]];  Set[$ContextPath, DeleteDuplicates[Prepend[$ContextPath, "OpticaTools`"]]];  Print[Column[$ContextPath]]), Blank[], (Global`bigBanner[" WRONG MATHEMATICA VERSION ??? "];  Global`bigBanner[" NOT ACTIVATING OPTICA - NORMAL MATHEMATICA STUFF OK "])];  Null)])
-
-(* ::Section:: *)
-(* Optica HELP *)
-
-(* ::Subsection:: *)
-(* open OpticaEM main help page *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 5, expression 1 ---- *)
-((SetDelayed[Global`openOpticaEMDocumentation, KernelExecute[NotebookOpen[FileNameJoin[List[StringDrop[Global`$OpticaHome, -8], "OpticaDocumentation", "Documentation", "English", "Tutorials", "OpticaDocumentationOverview.nb"]]]]];  Null);  Null;  Information["openOpticaEMDocumentation", Rule[LongForm, False]])
-
-(* ::Subsection:: *)
-(* detailed Optica HELP *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 6, expression 1 ---- *)
-(TableForm[List[List[Global`ComponentFunctions, Global`ShortHandFunctions]], Rule[TableAlignments, Center]];  Null;  TableForm[List[List[Global`SourceFunctions, Global`OpticaFunctions], List[Global`EMFunctions, Global`BuildingBlockFunctions]], Rule[TableAlignments, Center]];  Null)
-
-(* ::Subtitle:: *)
-(* MISCELLANEOUS RICH FUNCTIONS - OPTICS/ANA/SIM *)
-
-(* ::Subsubtitle:: *)
-(* general *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 7, expression 1 ---- *)
-(Null)
-
-(* ::Subsubtitle:: *)
-(* ANALITICAL GEOMETRY *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 8, expression 1 ---- *)
-(Times[Information["swap", Rule[LongForm, False]], (ClearAll[Global`swapTheXYCoords];  Null), (SetDelayed[Global`swapTheXYCoords[Pattern[Global`v, Blank[]]], Module[List[], If[Unequal[Length[Global`v], 2], Return[Print["ERROR swapTheXYCoords "]], Return[Times[1.`, List[Part[Global`v, 2], Part[Global`v, 1]]]]]]];  Null), Attributes[Global`swapTheXYCoords]])
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 9, expression 1 ---- *)
-((SetDelayed[Global`dist[Pattern[Global`z1, Blank[]], Pattern[Global`x1, Blank[]], Pattern[Global`z2, Blank[]], Pattern[Global`x2, Blank[]]], Sqrt[Plus[Power[Plus[Global`z1, Times[-1, Global`z2]], 2], Power[Plus[Global`x1, Times[-1, Global`x2]], 2]]]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 10, expression 1 ---- *)
-((SetDelayed[Global`AngCoeff[Pattern[Global`z1, Blank[]], Pattern[Global`x1, Blank[]], Pattern[Global`z2, Blank[]], Pattern[Global`x2, Blank[]]], Times[Plus[Global`x2, Times[-1, Global`x1]], Power[Plus[Global`z2, Times[-1, Global`z1]], -1]]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 11, expression 1 ---- *)
-((SetDelayed[Global`dirVect[Pattern[Global`z1, Blank[]], Pattern[Global`x1, Blank[]], Pattern[Global`z2, Blank[]], Pattern[Global`x2, Blank[]]], Times[List[Plus[Global`z2, Times[-1, Global`z1]], Plus[Global`x2, Times[-1, Global`x1]]], Power[Global`dist[Global`z1, Global`x1, Global`z2, Global`x2], -1]]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 12, expression 1 ---- *)
-((SetDelayed[Global`dirVectOrth[Pattern[Global`z1, Blank[]], Pattern[Global`x1, Blank[]], Pattern[Global`z2, Blank[]], Pattern[Global`x2, Blank[]]], Times[List[Times[-1, Plus[Global`x2, Times[-1, Global`x1]]], Plus[Global`z2, Times[-1, Global`z1]]], Power[Global`dist[Global`z1, Global`x1, Global`z2, Global`x2], -1]]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 13, expression 1 ---- *)
-((SetDelayed[Global`average[Pattern[Global`t1, Blank[]], Pattern[Global`t2, Blank[]]], Times[Plus[Global`t1, Global`t2], Power[2, -1]]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 14, expression 1 ---- *)
-((SetDelayed[Global`midPoint[Pattern[Global`z1, Blank[]], Pattern[Global`x1, Blank[]], Pattern[Global`z2, Blank[]], Pattern[Global`x2, Blank[]]], List[Global`average[Global`z1, Global`z2], Global`average[Global`x1, Global`x2]]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 15, expression 1 ---- *)
-((SetDelayed[Global`reflect0[Pattern[Global`z0, Blank[]], Pattern[Global`y0, Blank[]], Pattern[Global`axis, Blank[]], Pattern[Global`za, Blank[]], Pattern[Global`ya, Blank[]]], Module[List[Global`uvp, Global`t, Global`s, Global`zp, Global`yp, Global`w, Global`zap, Global`yap, Global`sol], (Set[Global`uvp, List[Times[-1, Part[Global`axis, 2]], Part[Global`axis, 1]]];  Set[Global`zp, Plus[Global`z0, Times[Global`t, Part[Global`uvp, 1]]]];  Set[Global`yp, Plus[Global`y0, Times[Global`t, Part[Global`uvp, 2]]]];  Set[Global`zap, Plus[Global`za, Times[Global`s, Part[Global`axis, 1]]]];  Set[Global`yap, Plus[Global`ya, Times[Global`s, Part[Global`axis, 2]]]];  Set[Global`sol, Solve[List[Equal[Global`zp, Global`zap], Equal[Global`yp, Global`yap]], List[Global`s, Global`t]]];  Set[Global`w, ReplaceAll[List[Global`zp, Global`yp], Part[Global`sol, 1]]];  Set[Global`reflectedPoint, Plus[Times[2, Global`w], Times[-1, List[Global`z0, Global`y0]]]];  Null)]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 16, expression 1 ---- *)
-((SetDelayed[Global`reflect[Pattern[Global`x0, Blank[]], Pattern[Global`y0, Blank[]], Pattern[Global`dirAxis, Blank[]], Pattern[Global`xAxis, Blank[]], Pattern[Global`yAxis, Blank[]]], Module[List[Global`uvp, Global`t, Global`s, Global`xp, Global`yp, Global`w, Global`xap, Global`yap, Global`sol, Global`reflectedPoint], (Set[Global`uvp, List[Times[-1, Part[Global`dirAxis, 2]], Part[Global`dirAxis, 1]]];  Set[Global`xp, Plus[Global`x0, Times[Global`t, Part[Global`uvp, 1]]]];  Set[Global`yp, Plus[Global`y0, Times[Global`t, Part[Global`uvp, 2]]]];  Set[Global`xap, Plus[Global`xAxis, Times[Global`s, Part[Global`dirAxis, 1]]]];  Set[Global`yap, Plus[Global`yAxis, Times[Global`s, Part[Global`dirAxis, 2]]]];  Set[Global`sol, Solve[List[Equal[Global`xp, Global`xap], Equal[Global`yp, Global`yap]], List[Global`s, Global`t]]];  Set[Global`w, ReplaceAll[List[Global`xp, Global`yp], Part[Global`sol, 1]]];  Set[Global`reflectedPoint, Plus[Times[2, Global`w], Times[-1, List[Global`x0, Global`y0]]]];  Return[Global`reflectedPoint])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 17, expression 1 ---- *)
-(Null)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 18, expression 1 ---- *)
-((SetDelayed[Global`angles[Pattern[Global`p, Blank[]], Pattern[Global`q, Blank[]], Pattern[Global`d, Blank[]], Pattern[Global`radius, Blank[]]], Module[List[Global`alpha], (Set[Global`alpha, Chop[N[ArcCos[Part[Global`resX[Global`p, Global`q, Global`d, Global`radius], 2]], Global`wp]]];  Set[Global`beta, Chop[N[Plus[Global`sumAB[Global`p, Global`q, Global`d], Times[-1, Global`alpha]], Global`wp]]];  Null)]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 19, expression 1 ---- *)
-((SetDelayed[Global`circumference[Pattern[Global`z0, Blank[]], Pattern[Global`y0, Blank[]], Pattern[Global`radius, Blank[]], Pattern[Global`z, Blank[]], Pattern[Global`y, Blank[]]], Plus[Power[Plus[Global`z, Times[-1, Global`z0]], 2], Power[Plus[Global`y, Times[-1, Global`y0]], 2], Times[-1, Power[Global`radius, 2]]]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 20, expression 1 ---- *)
-(Times[(Set[Global`tiltAroundVertexMatrix[Pattern[Global`\[Alpha], Blank[]]], List[List[Cos[Global`\[Alpha]], Times[-1, Sin[Global`\[Alpha]]]], List[Sin[Global`\[Alpha]], Cos[Global`\[Alpha]]]]];  Null), (SetDelayed[Global`doCalcSphereCenter[Pattern[Global`zc0, Blank[]], Pattern[Global`xc0, Blank[]], Pattern[Global`zMir, Blank[]], Pattern[Global`xMir, Blank[]], Pattern[Global`tiltMir, Blank[]]], Module[List[Global`centerMirrorTemp, Global`vrtxTemp, Global`centerMir], (Set[Global`centerMirrorTemp, List[Plus[Global`zc0, Global`zMir], Plus[Global`xc0, Global`xMir]]];  Set[Global`vrtxTemp, List[Global`zMir, Global`xMir]];  Set[Global`centerMir, Plus[Global`vrtxTemp, Dot[Global`tiltAroundVertexMatrix[Global`tiltMir], Plus[Global`centerMirrorTemp, Times[-1, Global`vrtxTemp]]]]];  Return[Global`centerMir])]];  Null)])
-
-(* ::Subsubtitle:: *)
-(* SPECIFIC GEOMETRY OF RICH (NEED REFRESHING) *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 21, expression 1 ---- *)
-(Times[(Clear[Global`doCalcPlaneSidewiseCoords];  Null), (SetDelayed[Global`doCalcPlaneSidewiseCoords[Pattern[Global`z, Blank[]], Pattern[Global`x, Blank[]], Pattern[Global`\[Alpha], Blank[]], Pattern[Global`l, Blank[]], Optional[Pattern[Global`d, Blank[]], 0]], Module[List[Global`zxCoords], (Print["\n >>>>>>>>>>>>>>>>>>>>> plane coordinates sidewise calc and report // BEGIN "];  Set[Global`zxCoords, Map[Function[Plus[List[Global`z, Global`x], Times[Slot[1], List[Sin[Global`\[Alpha]], Times[-1, Cos[Global`\[Alpha]]]]]]], List[Times[Times[-1, Global`l], Power[2, -1]], Times[Plus[Global`l], Power[2, -1]]]]];  If[Greater[Part[Part[Global`zxCoords, 1], 1], Part[Part[Global`zxCoords, 2], 1]], (Set[Global`zxCoords, List[Part[Global`zxCoords, 2], Part[Global`zxCoords, 1]]];  Print["points swapped to get p4z < p3z "]), Print[" p4z < p3z"]];  Print[" plane edges (P4)  : ", " *** along z (beam) = ", Global`nf3[N[Part[Part[Global`zxCoords, 1], 1]]], " *** transverseCoordinate / radial from beam = ", Global`nf3[N[Part[Part[Global`zxCoords, 1], 2]]]];  Print[" plane center  C   : ", " *** along z (beam) = ", Global`nf3[N[Global`z]], " *** transverseCoordinate / radial from beam = ", Global`nf3[N[Global`x]]];  Print[" plane edges (P3)  : ", " *** along z (beam) = ", Global`nf3[N[Part[Part[Global`zxCoords, 2], 1]]], " *** transverseCoordinate / radial from beam = ", Global`nf3[N[Part[Part[Global`zxCoords, 2], 2]]]];  Print[" plane tilt (with respect to the beam-line :=: positive z-axis) DEGREES: ", Global`nf1[N[Times[Global`\[Alpha], Power[Degree, -1]]]], " RADIANS: ", Global`nf1[N[Global`\[Alpha]]]];  Print[" plane Transverse size       : ", Global`nf1[Global`l], " ----- plane ThrdDim size :     ", Global`nf1[Global`d]];  Print[" <<<<<<<<<<<<<<<<<<<<< plane coordinates sidewise calc and report // END \n"];  Return[N[List[List[Part[Global`zxCoords, 1], Times[1.`, List[Global`z, Global`x]], Part[Global`zxCoords, 2]], List[Times[Times[-1, Global`d], Power[2, -1]], Times[Plus[Global`d], Power[2, -1]]]]]])]];  Null)])
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 22, expression 1 ---- *)
-((SetDelayed[Global`calcSphericalPrimaryMirror[Pattern[Global`size, Blank[]], Pattern[Global`tilt, Blank[]], Pattern[Global`radius, Blank[]], Pattern[Global`thetaMinPriMir, Blank[]], Pattern[Global`p2z$local, Blank[]]], Module[List[Global`p, Global`q, Global`sol, Global`halfAnglePriMir, Global`sagittaPriMir, Global`antiSagittaPriMir, Global`crossPriMir, Global`zPriMirMinVar, Global`xPriMirMinVar, Global`zPriMirMaxVar, Global`xPriMirMaxVar, Global`lhcbTiltAngle], (Global`printD[Global`size];  Global`printD[Global`tilt];  Global`printD[Global`radius];  Global`printD[Global`thetaMinPriMir];  Global`printD[Global`p2z$local];  Set[Global`zPriMirMinVar, Times[Cos[Global`thetaMinPriMir], Global`p]];  Set[Global`xPriMirMinVar, Times[Sin[Global`thetaMinPriMir], Global`p]];  Set[Global`zPriMirMaxVar, Global`p2z$local];  Set[Global`xPriMirMaxVar, Global`q];  Set[Global`sol, N[Solve[List[Equal[Global`dist[Global`zPriMirMinVar, Global`xPriMirMinVar, Global`zPriMirMaxVar, Global`xPriMirMaxVar], Global`size], Equal[Times[-1, Power[Global`AngCoeff[Global`zPriMirMinVar, Global`xPriMirMinVar, Global`zPriMirMaxVar, Global`xPriMirMaxVar], -1]], Tan[Global`tilt]]], List[Global`p, Global`q]]]];  Set[Global`zPriMirMin, ReplaceAll[Global`zPriMirMinVar, Part[Global`sol, 1]]];  Set[Global`xPriMirMin, ReplaceAll[Global`xPriMirMinVar, Part[Global`sol, 1]]];  Set[Global`zPriMirMax, ReplaceAll[Global`zPriMirMaxVar, Part[Global`sol, 1]]];  Set[Global`xPriMirMax, ReplaceAll[Global`xPriMirMaxVar, Part[Global`sol, 1]]];  Set[Global`zPriMir, Times[Plus[Global`zPriMirMin, Global`zPriMirMax], Power[2, -1]]];  Set[Global`xPriMir, Times[Plus[Global`xPriMirMin, Global`xPriMirMax], Power[2, -1]]];  Set[Global`dirVectPriMir, Times[List[Plus[Global`zPriMirMax, Times[-1, Global`zPriMirMin]], Plus[Global`xPriMirMax, Times[-1, Global`xPriMirMin]]], Power[Global`dist[Global`zPriMirMin, Global`xPriMirMin, Global`zPriMirMax, Global`xPriMirMax], -1]]];  Set[Global`dirVectPriMirAxis, Times[List[Plus[Global`xPriMirMax, Times[-1, Global`xPriMirMin]], Times[-1, Plus[Global`zPriMirMax, Times[-1, Global`zPriMirMin]]]], Power[Global`dist[Global`zPriMirMin, Global`xPriMirMin, Global`zPriMirMax, Global`xPriMirMax], -1]]];  Set[Global`halfAnglePriMir, ArcSin[Times[Times[Global`dist[Global`zPriMirMin, Global`xPriMirMin, Global`zPriMirMax, Global`xPriMirMax], Power[2, -1]], Power[Global`radius, -1]]]];  Set[Global`sagittaPriMir, Times[Global`radius, Plus[1, Times[-1, Cos[Global`halfAnglePriMir]]]]];  Set[Global`antiSagittaPriMir, Times[Global`radius, Cos[Global`halfAnglePriMir]]];  Set[Global`crossPriMir, List[Global`zPriMir, Global`xPriMir]];  Set[Global`centerPriMir, Plus[Global`crossPriMir, Times[-1, Global`antiSagittaPriMir, Global`dirVectPriMirAxis]]];  Set[Global`centerPriMir3D, Flatten[List[Global`centerPriMir, 0]]];  Set[Global`vrtxPriMir, Plus[Global`crossPriMir, Times[Global`sagittaPriMir, Global`dirVectPriMirAxis]]];  Set[Global`zVrtxPriMir, Part[Global`vrtxPriMir, 1]];  Set[Global`xVrtxPriMir, Part[Global`vrtxPriMir, 2]];  Set[Global`lhcbTiltAngle, ArcSin[Times[Part[Global`centerPriMir, 2], Power[Global`radius, -1]]]];  Print[" SPHERICAL MIRROR ================================================================================================ "];  Print[" Spherical mirror ROC : ", Global`radius];  Print[" P1 *** {z} Spherical mirror min : ", Global`nf1[Global`zPriMirMin], " ----- {transverseCoordinate} Spherical mirror min : ", Global`nf1[Global`xPriMirMin]];  Print[" {z} Spherical mirror Vrtx: ", Global`nf1[Global`zVrtxPriMir], " ----- {transverseCoordinate} Spherical mirror Vrtx: ", Global`nf1[Global`xVrtxPriMir]];  Print[" P2 *** {z} Spherical mirror max : ", Global`nf1[Global`zPriMirMax], " ----- {transverseCoordinate} Spherical mirror max : ", Global`nf1[Global`xPriMirMax]];  Print[" Tilt Spherical mirror (with respect to the beam-line :=: negative z-axis) DEGREES: ", Global`nf1[N[Plus[180, Times[-1, Times[Global`tiltPriMir, Power[Degree, -1]]]]]], " RADIANS: ", Global`nf1[N[Plus[Times[180, Degree], Times[-1, Global`tiltPriMir]]]]];  Print[" Tilt Spherical mirror (LHCb convention) DEGREES: ", Global`nf1[Times[Global`lhcbTiltAngle, Power[Degree, -1]]], " RADIANS: ", Global`nf1[Global`lhcbTiltAngle]];  Print[" COC Spherical mirror                   {z,transverseCoordinate} : ", Global`nf1[Global`centerPriMir]];  Print[" Vrtx Spherical mirror                  {z,transverseCoordinate} : ", Global`nf1[Global`vrtxPriMir]];  Print[" Center of the Sagitta Spherical mirror {z,transverseCoordinate} : ", Global`nf1[Global`crossPriMir]];  Print[" Spherical mirror width : ", Global`nf1[Global`sizeTrnsvrsPriMir], " ------ Spherical mirror ThrdDim : ", Global`nf1[Global`sizeThrdDimPriMir]];  Return[])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 23, expression 1 ---- *)
-((SetDelayed[Global`calcFlatSecMirFromLowerAngle[Pattern[Global`size, Blank[]], Pattern[Global`tilt, Blank[]], Pattern[Global`thetaMinSecMir, Blank[]], Pattern[Global`p4z$local, Blank[]]], Module[List[Global`p, Global`q, Global`sol, Global`zSecMirMinVar, Global`xSecMirMinVar, Global`zSecMirMaxVar, Global`xSecMirMaxVar, Global`zSecMirMin, Global`xSecMirMin, Global`zSecMirMax, Global`xSecMirMax, Global`zSecMir, Global`xSecMir, Global`thetaMinSecMir2], (Global`bigBanner[" BEWARE: IT IS OLD !!! ??? it works.... compare with: doCalcPlaneSidewiseCoords"];  Global`bigBanner[" DO NOT USE FOR SPLIT OPTICS WHERE YOU DO NOT NEED TO PUT THE H- FLAT MIRROR AS LOW AS POSSIBLE "];  Set[Global`zSecMirMinVar, Global`p4z$local];  Set[Global`xSecMirMinVar, Global`q];  Set[Global`zSecMirMaxVar, Times[Cos[Global`thetaMinSecMir], Global`p]];  Set[Global`xSecMirMaxVar, Times[Sin[Global`thetaMinSecMir], Global`p]];  Set[Global`sol, N[Solve[List[Equal[Global`dist[Global`zSecMirMinVar, Global`xSecMirMinVar, Global`zSecMirMaxVar, Global`xSecMirMaxVar], Global`size], Equal[Times[1, Power[Global`AngCoeff[Global`zSecMirMinVar, Global`xSecMirMinVar, Global`zSecMirMaxVar, Global`xSecMirMaxVar], -1]], Times[-1, Tan[Global`tilt]]]], List[Global`p, Global`q]]]];  Set[Global`zSecMirMin, ReplaceAll[Global`zSecMirMinVar, Part[Global`sol, 2]]];  Set[Global`xSecMirMin, ReplaceAll[Global`xSecMirMinVar, Part[Global`sol, 2]]];  Set[Global`zSecMirMax, ReplaceAll[Global`zSecMirMaxVar, Part[Global`sol, 2]]];  Set[Global`xSecMirMax, ReplaceAll[Global`xSecMirMaxVar, Part[Global`sol, 2]]];  Set[Global`zSecMir, ReplaceAll[Times[Plus[Global`zSecMirMin, Global`zSecMirMax], Power[2, -1]], Part[Global`sol, 2]]];  Set[Global`xSecMir, ReplaceAll[Times[Plus[Global`xSecMirMin, Global`xSecMirMax], Power[2, -1]], Part[Global`sol, 2]]];  Set[Global`secMirNorm3D, Normalize[List[Times[-1, Plus[Global`xSecMirMax, Times[-1, Global`xSecMirMin]]], Plus[Plus[Global`zSecMirMax, Times[-1, Global`zSecMirMin]]], 0]]];  Set[Global`thetaMinSecMir2, ArcTan[Times[Global`xSecMirMax, Power[Global`zSecMirMax, -1]]]];  Global`miniBanner[" Flat mirror "];  Print[" Flat mirror ROC : ", Global`radiusSecMir];  Print[" P4 *** {z} Flat mirror min     : ", Global`nf1[Global`zSecMirMin], " ----- {transverseCoordinate} Flat mirror min     : ", Global`nf1[Global`xSecMirMin]];  Print["        {z} Flat mirror center  : ", Global`nf1[Global`zSecMir], " ----- {transverseCoordinate} Flat mirror center  : ", Global`nf1[Global`xSecMir]];  Print[" P3 *** {z} Flat mirror max     : ", Global`nf1[Global`zSecMirMax], " ----- {transverseCoordinate} Flat mirror max     : ", Global`nf1[Global`xSecMirMax]];  Print[" thetaMinSecMir (imposed): ", Global`thetaMinSecMir, " thetaMinSecMir (calculated) DEGREES: ", Times[Global`thetaMinSecMir2, Power[Degree, -1]], " ===>>> RADIANS: ", Global`thetaMinSecMir2];  Print[" Tilt Flat mirror (with respect to the beam-line :=: positive z-axis) DEGREES: ", Global`nf1[N[Times[Global`tiltSecMir, Power[Degree, -1]]]], " RADIANS: ", Global`nf1[N[Global`tiltSecMir]]];  Print[" Flat mirror width :     ", Global`nf1[Global`sizeTrnsvrsSecMir], " ----- Flat mirror ThrdDim :     ", Global`nf1[Global`sizeThrdDimSecMir]];  Return[List[Global`zSecMir, Global`xSecMir, Global`zSecMirMin, Global`xSecMirMin, Global`zSecMirMax, Global`xSecMirMax]])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 24, expression 1 ---- *)
-((SetDelayed[Global`calcFS[Pattern[Global`zCc, Blank[]], Pattern[Global`xCc, Blank[]], Pattern[Global`radius, Blank[]], Pattern[Global`tilt, Blank[]]], Module[List[Global`alpha, Global`beta, Global`gamma], (Set[Global`diffXCcIp, Global`xCc];  Set[Global`diffZCcIp, Times[-1, Global`zCc]];  Set[Global`CHToIPToCcAngle, ArcTan[Times[Global`diffXCcIp, Power[Global`diffZCcIp, -1]]]];  Set[Global`betaVrtx, Plus[Global`CHToIPToCcAngle, Times[-1, Global`tilt]]];  SetDelayed[Global`gamma[Pattern[Global`alpha, Blank[]]], ArcSin[Times[Times[Sqrt[Plus[Power[Global`diffZCcIp, 2], Power[Global`diffXCcIp, 2]]], Power[Global`radius, -1]], Sin[Plus[Global`alpha, Global`CHToIPToCcAngle]]]]];  SetDelayed[Global`nu[Pattern[Global`alpha, Blank[]]], Plus[ArcSin[Times[2, Sin[Global`gamma[Global`alpha]]]], Times[-1, Global`gamma[Global`alpha]]]];  SetDelayed[Global`beta[Pattern[Global`alpha, Blank[]]], Plus[Global`alpha, Global`CHToIPToCcAngle, Times[-1, Global`gamma[Global`alpha]]]];  SetDelayed[Global`tau[Pattern[Global`alpha, Blank[]]], Plus[Global`nu[Global`alpha], Global`beta[Global`alpha], Times[-1, Global`CHToIPToCcAngle]]];  Set[Part[Global`edgeParaFSNear, 1], Plus[Times[Times[Global`radius, Power[2, -1]], Cos[Global`tau[0]]], Global`zCc]];  Set[Part[Global`edgeParaFSNear, 2], Plus[Times[Times[Global`radius, Power[2, -1]], Sin[Global`tau[0]]], Global`xCc]];  Set[Part[Global`edgeParaFSAway, 1], Plus[Times[Times[Global`radius, Power[2, -1]], Cos[Global`tau[Global`trnsvrsAcc]]], Global`zCc]];  Set[Part[Global`edgeParaFSAway, 2], Plus[Times[Times[Global`radius, Power[2, -1]], Sin[Global`tau[Global`trnsvrsAcc]]], Global`xCc]];  Print[" CHToIPToCcAngle   ", Global`nf1[Global`CHToIPToCcAngle], "   --- betaVrtx   ", Global`nf1[Global`betaVrtx]];  Global`miniBanner[" \n PD-PLANE ========================================================================= "];  Print[" P8 *** {z} PD-PLANE center  : ", Global`nf1[Global`zScreen], " ----- {transverseCoordinate} PD-PLANE center  : ", Global`nf1[Global`xScreen]];  Print[" PD-PLANE width :     ", Global`nf1[Global`sizeTrnsvrsScreen], " ----- PD-PLANE ThrdDim :     ", Global`nf1[Global`sizeThrdDimScreen]])]];  Null))
-
-(* ::Subsubtitle:: *)
-(* Quartic solution to back - tracing *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 25, expression 1 ---- *)
-((Set[Global`wp, 50];  Null);  Null;  (Set[Global`sumAB[Pattern[Global`p, Blank[]], Pattern[Global`q, Blank[]], Pattern[Global`d, Blank[]]], ArcCos[Times[Plus[Power[Global`p, 2], Power[Global`q, 2], Times[-1, Power[Global`d, 2]]], Power[Times[2, Global`p, Global`q], -1]]]];  Null);  Null;  (Set[Global`eq1, FullSimplify[TrigExpand[ReplaceAll[Plus[Times[Sin[Global`\[Alpha]], Plus[Times[Global`radius, Power[Global`p, -1]], Times[-1, Cos[Global`\[Beta]]]]], Times[-1, Sin[Global`\[Beta]], Plus[Times[Global`radius, Power[Global`q, -1]], Times[-1, Cos[Global`\[Alpha]]]]]], Rule[Global`\[Beta], Plus[Global`sumAB[Global`p, Global`q, Global`d], Times[-1, Global`\[Alpha]]]]]]]];  Null);  Null;  (Set[Global`eq1, TrigExpand[ReplaceAll[Plus[Times[Sin[Global`\[Alpha]], Plus[Times[Global`radius, Power[Global`p, -1]], Times[-1, Cos[Global`\[Beta]]]]], Times[-1, Sin[Global`\[Beta]], Plus[Times[Global`radius, Power[Global`q, -1]], Times[-1, Cos[Global`\[Alpha]]]]]], Rule[Global`\[Beta], Plus[Global`sumAB[Global`p, Global`q, Global`d], Times[-1, Global`\[Alpha]]]]]]];  Null);  Null;  (Set[Global`eq2, Plus[Power[Sin[Global`\[Alpha]], 2], Power[Cos[Global`\[Alpha]], 2], -1]];  Null);  Null;  (Set[Global`eq2bis, ReplaceAll[Global`eq2, List[Rule[Cos[Global`\[Alpha]], Global`X], Rule[Sin[Global`\[Alpha]], Global`Y]]]];  Null);  Null;  (Set[Global`eq1bis, ReplaceAll[Global`eq1, List[Rule[Power[Sin[Global`\[Alpha]], 2], Plus[1, Times[-1, Power[Global`X, 2]]]], Rule[Cos[Global`\[Alpha]], Global`X], Rule[Sin[Global`\[Alpha]], Global`Y]]]];  Null);  Null;  (Set[Global`solY, Part[Solve[Equal[Global`eq1bis, 0], List[Global`Y], Rule[WorkingPrecision, Global`wp]], 1]];  Null);  Null;  (Set[Global`eq2tris, ReplaceAll[Global`eq2bis, Global`solY]];  Null);  Null;  (Set[Global`solX, Solve[Equal[Global`eq2tris, 0], Global`X, Rule[WorkingPrecision, Global`wp]]];  Null);  Null;  (Set[Global`resX[Pattern[Global`p, Blank[]], Pattern[Global`q, Blank[]], Pattern[Global`d, Blank[]], Pattern[Global`radius, Blank[]]], N[ReplaceAll[Global`X, Global`solX], Global`wp]];  Null);  Null;  (Set[Global`resY[Pattern[Global`p, Blank[]], Pattern[Global`q, Blank[]], Pattern[Global`d, Blank[]], Pattern[Global`radius, Blank[]]], N[ReplaceAll[ReplaceAll[Global`Y, Global`solY], Global`solX], Global`wp]];  Null);  Null)
-
-(* ::Subsubtitle:: *)
-(* SIMULATION/ANALYSIS/TRACING *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 26, expression 1 ---- *)
-((SetDelayed[Global`trackGen[Pattern[Global`num, Blank[]], Pattern[Global`minAcc, Blank[]], Pattern[Global`maxYAcc, Blank[]], Pattern[Global`maxXAcc, Blank[]]], Module[List[Global`\[Theta], Global`\[Phi], Global`zeta, Global`radius, Global`theta0X, Global`theta0Y], (Set[Global`zSphe[Pattern[Global`radius, Blank[]], Pattern[Global`\[Theta], Blank[]], Pattern[Global`\[Phi], Blank[]]], Times[Global`radius, Cos[Global`\[Theta]]]];  Set[Global`xSphe[Pattern[Global`radius, Blank[]], Pattern[Global`\[Theta], Blank[]], Pattern[Global`\[Phi], Blank[]]], Times[Global`radius, Sin[Global`\[Theta]], Cos[Global`\[Phi]]]];  Set[Global`ySphe[Pattern[Global`radius, Blank[]], Pattern[Global`\[Theta], Blank[]], Pattern[Global`\[Phi], Blank[]]], Times[Global`radius, Sin[Global`\[Theta]], Sin[Global`\[Phi]]]];  Set[Global`xRect[Pattern[Global`zeta, Blank[]], Pattern[Global`thetaX, Blank[]], Pattern[Global`thetaY, Blank[]]], Times[Global`zeta, Tan[Global`thetaX]]];  Set[Global`yRect[Pattern[Global`zeta, Blank[]], Pattern[Global`thetaX, Blank[]], Pattern[Global`thetaY, Blank[]]], Times[Global`zeta, Tan[Global`thetaY]]];  Set[Global`thetaX, List[]];  Set[Global`thetaY, List[]];  Set[Global`phi, RandomReal[List[0, Plus[Pi]], Global`num]];  Set[Global`theta, RandomReal[List[Global`minAcc, Sqrt[Plus[Power[Global`maxYAcc, 2], Power[Global`maxXAcc, 2]]]], Global`num]];  Set[Global`theta0X, ArcTan[Times[Global`xSphe[1, Global`theta, Global`phi], Power[Global`zSphe[1, Global`theta, Global`phi], -1]]]];  Set[Global`theta0Y, ArcTan[Times[Global`ySphe[1, Global`theta, Global`phi], Power[Global`zSphe[1, Global`theta, Global`phi], -1]]]];  Do[If[Or[Greater[Abs[Part[Global`theta0Y, Global`k]], Global`maxYAcc], Greater[Abs[Part[Global`theta0X, Global`k]], Global`maxXAcc]], Null, (AppendTo[Global`thetaX, Part[Global`theta0X, Global`k]];  AppendTo[Global`thetaY, Part[Global`theta0Y, Global`k]];  Null)], List[Global`k, 1, Global`num]];  Set[Global`angle, Transpose[List[Global`thetaX, Global`thetaY]]];  Length[Global`angle];  Print[Graphics[Point[Global`angle], Rule[GridLines, Automatic], Rule[Axes, True]]];  Null)]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 27, expression 1 ---- *)
-((SetDelayed[Global`localTrackUnitVectors[Pattern[Global`trackDir, Blank[]]], Module[List[Global`w, Global`theTrackDir], (Set[Global`theTrackDir, Normalize[Global`trackDir]];  Set[Global`localPerpUnitVector, Normalize[Cross[Global`theTrackDir, List[0, 0, 1]]]];  Set[Global`localThirdUnitVector, Normalize[Cross[Global`localPerpUnitVector, Global`theTrackDir]]];  Return[List[Global`localPerpUnitVector, Global`localThirdUnitVector]])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 28, expression 1 ---- *)
-((SetDelayed[Global`execBackTracing[Pattern[Global`re, Blank[]], Pattern[Global`rd, Blank[]], Pattern[Global`rc, Blank[]], Pattern[Global`rv, Blank[]]], Module[List[Global`p, Global`q, Global`d, Global`gamma1, Global`gamma2, Global`gammap, Global`gammaq, Global`unitPerp, Global`unitCE, Global`unit3, Global`rvRec, Global`err, Global`trackPhotonPlaneUnitVector, Global`trackUnitVector, Global`projXLocal, Global`projYLocal], (Set[Global`p, Norm[Plus[Global`rd, Times[-1, Global`rc]]]];  Set[Global`q, Norm[Plus[Global`re, Times[-1, Global`rc]]]];  Set[Global`d, Norm[Plus[Global`rd, Times[-1, Global`re]]]];  Global`angles[Global`p, Global`q, Global`d, Global`radiusPriMir];  Set[Global`gamma1, ArcTan[Times[Sin[Global`alpha], Power[Plus[Times[Global`radiusPriMir, Power[Global`q, -1]], Times[-1, Cos[Global`alpha]]], -1]]]];  Set[Global`gamma2, ArcTan[Times[Sin[Global`beta], Power[Plus[Times[Global`radiusPriMir, Power[Global`p, -1]], Times[-1, Cos[Global`beta]]], -1]]]];  Set[Global`gammaq, ArcCos[Times[Plus[Power[Global`radiusPriMir, 2], Power[Norm[Plus[Global`rv, Times[-1, Global`re]]], 2], Times[-1, Power[Global`q, 2]]], Power[Times[2, Global`radiusPriMir, Norm[Plus[Global`rv, Times[-1, Global`re]]]], -1]]]];  Set[Global`gammap, ArcCos[Times[Plus[Power[Global`radiusPriMir, 2], Power[Norm[Plus[Global`rv, Times[-1, Global`rd]]], 2], Times[-1, Power[Global`p, 2]]], Power[Times[2, Global`radiusPriMir, Norm[Plus[Global`rv, Times[-1, Global`rd]]]], -1]]]];  Set[Global`unitPerp, Normalize[Cross[Plus[Global`re, Times[-1, Global`rc]], Plus[Global`rd, Times[-1, Global`rc]]]]];  Set[Global`unitCE, Normalize[Plus[Global`re, Times[-1, Global`rc]]]];  Set[Global`unit3, Normalize[Cross[Global`unitPerp, Global`unitCE]]];  Set[Global`rvRec, Plus[Times[Global`unitCE, Global`radiusPriMir, Cos[Global`alpha]], Times[Global`unit3, Global`radiusPriMir, Sin[Global`alpha]], Global`rc]];  Set[Global`err, Norm[Plus[Global`rv, Times[-1, Global`rvRec]]]];  Set[Global`trackPhotonPlaneUnitVector, Normalize[Cross[Global`trackDir, Plus[Global`rvRec, Times[-1, Global`re]]]]];  Set[List[Global`localPerpUnitVector, Global`localThirdUnitVector], Global`localTrackUnitVectors[Global`trackDir]];  Set[Global`projXLocal, Dot[Global`trackPhotonPlaneUnitVector, Global`localPerpUnitVector]];  Set[Global`projYLocal, Dot[Global`trackPhotonPlaneUnitVector, Global`localThirdUnitVector]];  AppendTo[Global`resChThe, VectorAngle[Plus[Global`rvRec, Times[-1, Global`re]], Global`trackDir]];  AppendTo[Global`resChPhi, ArcTan[Global`projXLocal, Global`projYLocal]];  Null)]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 29, expression 1 ---- *)
-(Times[(ClearAll[Global`myFocalSurfaceAnalyze];  Null), (SetDelayed[Global`myFocalSurfaceAnalyze[Pattern[Global`points3DOnTheFS, Blank[]], Pattern[Global`points2DOnTheFS, Blank[]], Pattern[Global`pointsTiltOnTheFS, Blank[]], Pattern[Global`tilt, Blank[]], Optional[Pattern[Global`sensorPitch, Blank[]], 1]], Module[List[Global`sizeFSTrnsvrs, Global`sizeFSThrdDim, Global`areaFS, Global`numSensors, Global`resThetaProj, Global`resTheta, Global`pointsTiltProjOnTheFS, Global`vvv, Global`uuu, Global`trnsvrsMagnification, Global`thrdDimMagnification, Global`zPDACenter, Global`xPDACenter, Global`finalRaysDir], (If[Or[LessEqual[Length[Global`points3DOnTheFS], 0], LessEqual[Length[Global`points2DOnTheFS], 0]], (Global`bigBanner[" ERROR ON myFocalSurfaceAnalyze - Returning "];  Return[])];  Set[Global`zPDACenter, Median[Part[Transpose[Global`points3DOnTheFS], 1]]];  Set[Global`xPDACenter, Median[Part[Transpose[Global`points3DOnTheFS], 2]]];  Histogram[Part[Transpose[Global`points2DOnTheFS], 1], 100, Rule[AspectRatio, Times[1, Power[2, -1]]]];  Histogram[Part[Transpose[Global`points2DOnTheFS], 2], 100, Rule[AspectRatio, Times[1, Power[2, -1]]]];  Set[Global`sizeFSTrnsvrs, Plus[Max[Part[Transpose[Global`points2DOnTheFS], 1]], Times[-1, Min[Part[Transpose[Global`points2DOnTheFS], 1]]]]];  Set[Global`sizeFSThrdDim, Plus[Max[Part[Transpose[Global`points2DOnTheFS], 2]], Times[-1, Min[Part[Transpose[Global`points2DOnTheFS], 2]]]]];  Set[Global`areaFS, Times[Global`sizeFSTrnsvrs, Times[Global`sizeFSThrdDim, Power[1000000, -1]]]];  Set[Global`numSensors, Times[Global`sizeFSTrnsvrs, Times[Global`sizeFSThrdDim, Power[Power[Global`sensorPitch, 2], -1]]]];  Set[Global`resThetaProj, List[]];  Set[Global`resTheta, List[]];  Set[Global`finalRaysDir, Times[Mean[ArcTan[Times[Part[Transpose[Global`pointsTiltOnTheFS], 2], Power[Part[Transpose[Global`pointsTiltOnTheFS], 1], -1]]]], Power[Degree, -1]]];  If[Greater[Length[Global`pointsTiltOnTheFS], 0], (AppendTo[Global`resTheta, Times[1000, ArcCos[Dot[Global`pointsTiltOnTheFS, List[Cos[Global`tilt], Sin[Global`tilt], 0]]]]];  Set[Global`pointsTiltProjOnTheFS, Transpose[List[Part[Transpose[Global`pointsTiltOnTheFS], 1], Part[Transpose[Global`pointsTiltOnTheFS], 2], ConstantArray[0, Length[Global`pointsTiltOnTheFS]]]]];  Set[Global`uuu, Map[Normalize, Global`pointsTiltProjOnTheFS]];  Set[Global`vvv, Table[Cross[List[Cos[Global`tilt], Sin[Global`tilt], 0], Part[Global`uuu, Global`k]], List[Global`k, 1, Length[Global`uuu]]]];  AppendTo[Global`resThetaProj, Times[1000, ArcSin[Part[Transpose[Global`vvv], 3]]]]), (Print["zero length pointsTiltOnTheFS"];  Remove[Global`uuu]), Print["zero length pointsTiltOnTheFS  "]];  Set[Global`trnsvrsMagnification, Times[Global`sizeFSTrnsvrs, Power[Times[2, Global`halfOpenAngleMRad], -1]]];  Set[Global`thrdDimMagnification, Times[Global`sizeFSThrdDim, Power[Times[2, Global`halfOpenAngleMRad], -1]]];  Set[Global`resThetaProj, Flatten[Global`resThetaProj]];  Set[Global`resTheta, Flatten[Global`resTheta]];  Print[Histogram[Global`resThetaProj, Rule[ChartElementFunction, "FadingRectangle"], Rule[ChartStyle, Orange], Rule[PlotLabel, "resThetaProj (mrad)"], Rule[AspectRatio, Times[1, Power[2, -1]]], Rule[Frame, True]]];  Print[Histogram[Global`resTheta, Rule[ChartElementFunction, "FadingRectangle"], Rule[ChartStyle, Orange], Rule[PlotLabel, "resTheta (mrad)"], Rule[AspectRatio, Times[1, Power[2, -1]]], Rule[Frame, True]]];  Print["   zPDACenter                                                       ", Global`nf1[Global`zPDACenter]];  Print["   xPDACenter                                                       ", Global`nf1[Global`xPDACenter]];  Print["   finalRaysDir in plane z-x (degrees)                              ", Global`nf1[Global`finalRaysDir]];  Print["   Mean resThetaProj         (mrad)                                 ", Global`nf1[Mean[Global`resThetaProj]]];  Print["   Median resThetaProj       (mrad)                                 ", Global`nf1[Median[Global`resThetaProj]]];  Print["   Mean resTheta             (mrad)                                 ", Global`nf1[Mean[Global`resTheta]]];  Print["   Median resTheta           (mrad)                                 ", Global`nf1[Median[Global`resTheta]]];  Print["   Estimated size PD-plane local z-Trnsvrs coordinate (mm)          ", Global`nf1[Global`sizeFSTrnsvrs]];  Print["   Estimated size PD-plane ThrdDim (mm)                             ", Global`nf1[Global`sizeFSThrdDim]];  Print["   Estimated area of the PD-plane (m**2)                            ", Global`nf1[Global`areaFS]];  Print["   Estimated number of sensors (one half detector)                  ", Global`nf1[Global`numSensors]];  Print["   Assumed Nominal Sensor Pitch                                     ", Global`nf1[Global`sensorPitch]];  Print["   Transverse Magnification (mm/mrad) - meaningful for one single particle ray-tracing ", Global`nf3[Global`trnsvrsMagnification]];  Print["   ThrdDim Magnification    (mm/mrad) - meaningful for one single particle ray-tracing ", Global`nf3[Global`thrdDimMagnification]];  Print["   Average Magnification    (mm/mrad) - meaningful for one single particle ray-tracing ", Global`nf3[Global`average[Global`trnsvrsMagnification, Global`thrdDimMagnification]]];  Global`miniBanner["For full PDA magnfication use (maxPos-asyRngRadius)/trackAngle"];  Print[List["zPDACenter", "xPDACenter", "sizeFSTrnsvrs", "sizeFSThrdDim", "Median[resThetaProj]", "Median[resTheta]"]];  Return[List[Global`zPDACenter, Global`xPDACenter, Global`sizeFSTrnsvrs, Global`sizeFSThrdDim, Median[Global`resThetaProj], Median[Global`resTheta]]];  Null)]];  Null)])
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 30, expression 1 ---- *)
-((SetDelayed[Global`cherenkovPhotonsRandomGenerate[Pattern[Global`nTot, Blank[]], Pattern[Global`partMass, Blank[]], Pattern[Global`partMomentum, Blank[]], Pattern[Global`thetaY, Blank[]], Pattern[Global`thetaX, Blank[]], Optional[Pattern[Global`chromatic, Blank[]], 0], Optional[Pattern[Global`phiMin, Blank[]], 0], Optional[Pattern[Global`phiMax, Blank[]], Times[2, Pi]], Optional[Pattern[Global`zeta, Blank[]], 0]], Module[List[Global`t, Global`x0, Global`y0, Global`z0, Global`d, Global`photonEnergies, Global`rWaveLength, Global`rChZet, Global`rChThe, Global`rChPhi, Global`rStart, Global`photonDir, Global`trackDir, Global`idCntBlwThrMax, Global`idCntBlwThr, Global`localPerpUnitVector, Global`localThirdUnitVector], (Print[" >>>>>>>>>>>> Photon random generation "];  Print[" zBoxMin = ", Global`zBoxMin];  Print[" zeta    = ", Global`zeta];  Print[" zBoxMax = ", Global`zBoxMax];  If[And[GreaterEqual[Global`zeta, 0], Greater[Global`zeta, Global`zBoxMin]], (Print[" \n Doing random zeta"];  Set[Global`rChZet, RandomReal[List[Global`zBoxMin, Global`zeta], Global`nTot]]), (Print[" \n Skipping random zeta"];  Set[Global`rChZet, Array[Function[Global`zeta], Global`nTot]])];  Set[Global`rStart, Transpose[List[Global`rChZet, Times[Global`rChZet, Tan[Global`thetaY]], Times[Global`rChZet, Tan[Global`thetaX]]]]];  Set[Global`trackDir, Normalize[List[1, Tan[Global`thetaY], Tan[Global`thetaX]]]];  Set[List[Global`localPerpUnitVector, Global`localThirdUnitVector], Global`localTrackUnitVectors[Global`trackDir]];  Global`debugPrint[" z_c = ", Round[Global`rChZet]];  Set[Global`zetaMax, Global`zeta];  Set[Global`zetaMin, Global`zBoxMin];  Print[" zetaMin = ", Global`nf[Global`zetaMin]];  Print[" zetaMax = ", Global`nf[Global`zetaMax]];  Print[" <<<<<<< END random zeta "];  If[Equal[Global`chromatic, 1], (Print[" \n Doing chromaticity"];  Set[Global`photonEnergies, Global`generatePhotonEnergy[Global`nTot]];  Set[Global`rWaveLength, Global`\[Lambda][Global`photonEnergies]];  Set[Global`rChThe, Global`chrnkvAngle[Global`partMass, Global`partMomentum, Global`rWaveLength]];  Null), (Print[" \n Skipping chromaticity"];  Set[Global`photonEnergies, Array[Function[Global`\[Epsilon][Global`theWavLen]], Global`nTot]];  Set[Global`rWaveLength, Array[Function[Global`theWavLen], Global`nTot]];  Set[Global`rChThe, Array[Function[Global`chrnkvAngle[Global`partMass, Global`partMomentum, Global`theWavLen]], Global`nTot]])];  Global`debugPrint["  \[Lambda]  = ", Round[Global`rWaveLength]];  Global`debugPrint[" \[Theta]_c = ", Global`nf[Global`rChThe, 7, 4]];  Print[" <<<<<<< END chromaticity "];  If[Less[Global`phiMin, Global`phiMax], (Print[" \n Doing random phi"];  Set[Global`rChPhi, RandomReal[List[Global`phiMin, Global`phiMax], Global`nTot]]), (Print[" \n Skipping random phi"];  Set[Global`d, Times[Plus[Global`phiMax, Times[-1, Global`phiMin]], Power[Global`nTot, -1]]];  Set[Global`rChPhi, Table[Plus[Global`k, Times[Global`d, Power[2, -1]]], List[Global`k, 0, Plus[Global`nTot, -1]]]])];  Global`debugPrint[" \[Phi]_c = ", Global`nf[Global`rChPhi, 7, 4]];  Print[" <<<<<<< END random phi "];  Set[Global`photonDir, List[]];  Set[Global`idCntBlwThr, 0];  Set[Global`idCntBlwThrMax, 5];  Do[(If[Equal[Part[Global`rChThe, Global`j], 0], (Set[Global`idCntBlwThr, Plus[Global`idCntBlwThr, 1]];  Global`exception[Global`idCntBlwThr, Global`idCntBlwThrMax, " \[Theta]_C = 0 "])];  AppendTo[Global`photonDir, Plus[Times[Part[Cos[Global`rChThe], Global`j], Global`trackDir], Times[Part[Sin[Global`rChThe], Global`j], Plus[Times[Part[Cos[Global`rChPhi], Global`j], Global`localPerpUnitVector], Times[Part[Sin[Global`rChPhi], Global`j], Global`localThirdUnitVector]]]]]), List[Global`j, 1, Global`nTot]];  Set[Global`exportTrueChPhi, Global`rChPhi];  Set[Global`exportTrueChThe, Global`rChThe];  Set[Global`exportTrueChZet, Global`rChZet];  Return[Global`CustomRays[List[List[Global`RayStart, Global`rStart], List[Global`RayTilt, Global`photonDir], List[Global`WaveLength, N[Times[Global`rWaveLength, Power[1000, -1]]]]]]])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 31, expression 1 ---- *)
-((SetDelayed[Global`doExecBackTracingSimul[Pattern[Global`method, Blank[]], Pattern[Global`poisson, Blank[]], Pattern[Global`pixel, Blank[]], Pattern[Global`chromaticity, Blank[]], Pattern[Global`theZeta, Blank[]]], Module[List[Global`backTracingSimulResults, Global`resTThrdDim, Global`resTTrnsvrs, Global`resNTot, Global`resNDet], (Global`bigBanner[" MAIN LOOP for backtracing - START "];  Set[Global`resNTot, List[]];  Set[Global`resNDet, List[]];  Set[Global`resTThrdDim, List[]];  Set[Global`resTTrnsvrs, List[]];  Global`bigBanner[" Start SIMULATE ONE TRACK "];  Print[" New Track at ****** ", "tThrdDim   ", Global`tThrdDim, "   --- tTrnsvrs   ", Global`tTrnsvrs];  Global`backTracingSimul[Global`method, Global`poisson, Global`numGenPho, Global`tTrnsvrs, Global`tThrdDim, Global`pixel, Global`chromaticity, Global`theZeta];  Set[Global`backTracingSimulResults, Transpose[List[Global`resTThrdDim, Global`resTTrnsvrs, Global`resNTot, Global`resNDet]]];  Global`bigBanner[" End SIMULATE ONE TRACK "];  Print[" Summary results for loop with:"];  Print[" pixel        : ", Global`pixel];  Print[" chromaticity : ", Global`chromaticity];  Print[" theZeta      : ", Global`theZeta];  Return[Global`backTracingSimulResults])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 32, expression 1 ---- *)
-((SetDelayed[Global`backTracingSimul[Pattern[Global`method, Blank[]], Pattern[Global`poisson, Blank[]], Pattern[Global`numGenPho, Blank[]], Pattern[Global`thetaY, Blank[]], Pattern[Global`thetaX, Blank[]], Pattern[Global`pixel, Blank[]], Pattern[Global`chromatic, Blank[]], Pattern[Global`theZeta, Blank[]]], Module[List[Global`opticalSystemLHCbRICHTheTrack, Global`nTot, Global`nDet, Global`tTracedSystem, Global`rPD, Global`rv, Global`rStartTrack, Global`rMidTra, Global`rStrTra, Global`rEndTra, Global`myTrack, Global`thetaHalfRange, Global`tracedPointsFS, Global`rStrPho, Global`rEndPriMirPho, Global`tracedTrack, Global`tracedTruePhotons, Global`tracedPointsFS2D, Global`tracedPointsFSDigitized], (Set[Global`resChThe, List[]];  Set[Global`resChPhi, List[]];  Set[Global`resChZet, List[]];  Set[Global`trackLength, List[]];  Set[Global`resNTot, List[]];  Set[Global`resNDet, List[]];  Set[Global`bestFitTrack, List[]];  Global`bigBanner[" Create the TRACK geometry "];  Set[Global`trackDir, Normalize[List[1, Tan[Global`thetaY], Tan[Global`thetaX]]]];  If[Equal[Global`theZeta, 0], Set[Global`rStartTrack, List[0, 0, 0]], (If[Greater[Global`theZeta, 0], Set[Global`rStartTrack, List[Global`theZeta, Times[Global`theZeta, Tan[Global`thetaY]], Times[Global`theZeta, Tan[Global`thetaX]]]], Set[Global`rStartTrack, List[Global`zBoxMin, Times[Global`zBoxMin, Tan[Global`thetaY]], Times[Global`zBoxMin, Tan[Global`thetaX]]]]];  Null)];  SetDelayed[Global`myTrack, Global`Move[Global`SingleRay[], Global`rStartTrack, Global`trackDir]];  Set[Global`opticalSystemLHCbRICHTheTrack, List[Global`myTrack, Global`myOptics, Global`myBoundary]];  Set[Global`tracedTrack, Global`AnalyzeSystem[Global`opticalSystemLHCbRICHTheTrack, Rule[DefaultStyle, List[AbsoluteThickness[5], AbsolutePointSize[5]]]]];  Set[Global`rStrTra, Flatten[Global`ReadRays[Global`tracedTrack, Global`RayStart, Global`onThePriMirror]]];  Set[Global`rEndTra, Flatten[Global`ReadRays[Global`tracedTrack, Global`RayEnd, Global`onThePriMirror]]];  AppendTo[Global`trackLength, Norm[Plus[Global`rEndTra, Times[-1, Global`rStrTra]]]];  Set[Global`rMidTra, Map[Mean, Transpose[List[Global`rStrTra, Global`rEndTra]]]];  If[Equal[Global`debugPrintEnabledFlag, True], (Print[" myTrack     = ", Global`myTrack];  Print[" rStartTrack = ", Global`rStartTrack, " must be rStrTra==rStartTrack "];  Print[" rStrTra     = ", Global`rStrTra, " must be rStrTra==rStartTrack "];  Print[" rMidTra     = ", Global`rMidTra];  Print[" rEndTra     = ", Global`rEndTra];  Print[" <<<<<<< END generate one track "])];  Global`bigBanner[" Generate the TRUE photons "];  Print["   poisson =   ", Global`poisson, " (1 = poissonized)          AVERAGE numGenPho =   ", Global`numGenPho];  Global`bigBanner[" Start generate the TRUE photons "];  If[Equal[Global`poisson, 1], (Set[Global`nTot, RandomVariate[PoissonDistribution[Global`numGenPho]]];  Print[" Generate nTot = ", Global`nTot, "        Poisson true photons - from Poissonization of numGenPho "];  If[Greater[Global`nTot, 0], Set[Global`myTrueCherenkovPhotons, Global`cherenkovPhotonsRandomGenerate[Global`nTot, Global`partMass, Global`partMomentum, Global`thetaY, Global`thetaX, Global`chromatic, 0, Times[2, Pi], Part[Global`rEndTra, 1]]], (Print[" ZERO number of generated photons - STOP "];  Global`killStop)]), (Set[Global`nTot, Global`numGenPho];  Print[" Generate nTot = ", Global`nTot, "        exact true photons (no Poissonization) "];  Set[Global`myTrueCherenkovPhotons, Global`cherenkovPhotonsRandomGenerate[Global`nTot, Global`partMass, Global`partMomentum, Global`thetaY, Global`thetaX, Global`chromatic, 0, Times[2, Pi], Part[Global`rEndTra, 1]]])];  Global`debugPrint[" myTrueCherenkovPhotons as generated = ", TableForm[Global`myTrueCherenkovPhotons]];  Set[Global`opticalSystemLHCbRICHTruePhotons, List[Global`myTrueCherenkovPhotons, Global`myOptics, Global`myBoundary]];  Set[Global`tracedTruePhotons, Global`AnalyzeSystem[Global`opticalSystemLHCbRICHTruePhotons]];  Set[Global`tracedPointsFS, Global`ReadRays[Global`tracedTruePhotons, Global`RayEnd, Global`onTheFS]];  Set[Global`rStrPho, Global`ReadRays[Global`tracedTruePhotons, Global`RayStart, Global`onThePriMirror]];  Set[Global`rEndPriMirPho, Global`ReadRays[Global`tracedTruePhotons, Global`RayEnd, Global`onThePriMirror]];  Print[Graphics3D[Point[Join[Global`rEndPriMirPho, Global`rEndPriMirPho]]]];  Set[Global`rv, Global`ReadRays[Global`tracedTruePhotons, Global`RayEnd, Global`onThePriMirror]];  Set[Global`tracedPointsFS2D, Global`ReadRays[Global`tracedTruePhotons, Global`SurfaceCoordinates, Global`onTheFS]];  If[Greater[Global`pixel, 0], (Set[Global`rPD, Set[Global`tracedPointsFSDigitized, Global`pixelize[Global`tracedPointsFS2D, Global`pixel]]];  Print[" \n Doing pixelization"]), (Set[Global`rPD, Global`tracedPointsFS];  Print[" \n Skipping pixelization"])];  If[Equal[Global`method, "generalBackTrace"], Do[Global`doExecGeneralForwardTrace[First[Global`rStartTrack], Global`thetaY, Global`thetaX, Part[Global`rPD, Global`j]], List[Global`j, 1, Length[Global`rPD]]]];  Set[Global`nDet, Length[Global`tracedPointsFS]];  Print[" number of generated photons           : ", Global`nTot];  Print[" number of detected photons on the PDA : ", Global`nDet];  If[Unequal[Global`nTot, Global`nDet], Global`bigBanner[" WARNING: nTot\[NotEqual]nDet "]];  AppendTo[Global`resNTot, Global`nTot];  AppendTo[Global`resNDet, Global`nDet];  Global`bigBanner[" "];  Global`bigBanner[" END single track analysis - SUMMARY RESULTS "];  Set[Global`thetaHalfRange, 0.02`];  Print[Histogram[Global`resChPhi]];  Print[Histogram[Global`resChPhi, List[Times[-1, Pi], Plus[Pi], 0.1`], Rule[AxesLabel, List[" \!\(\*SubscriptBox[\(\[Phi]\), \(c\)]\) (rad) ", ""]], Rule[Axes, List[True, False]]]];  Print[Histogram[Global`resChThe]];  Print[Histogram[Global`resChThe, List[Plus[Global`halfOpenAngle, Times[-1, Global`thetaHalfRange]], Plus[Global`halfOpenAngle, Global`thetaHalfRange], 0.001`], Rule[AxesLabel, List[" \!\(\*SubscriptBox[\(\[Theta]\), \(c\)]\) (rad) ", ""]], Rule[Axes, List[True, False]]]];  Print[ListPlot[Transpose[List[Global`resChPhi, Global`resChThe]], Rule[AxesLabel, List[" \!\(\*SubscriptBox[\(\[Phi]\), \(c\)]\) (rad) ", " \!\(\*SubscriptBox[\(\[Theta]\), \(c\)]\) (rad) "]], Rule[Axes, List[True, True]], Rule[AxesOrigin, List[0, Global`halfOpenAngle]], Rule[PlotRange, List[List[Times[-1, Pi], Plus[Pi]], List[Plus[Global`halfOpenAngle, Times[-1, Global`thetaHalfRange]], Plus[Global`halfOpenAngle, Global`thetaHalfRange]]]], Rule[GridLines, Automatic]]];  Print[Histogram3D[Transpose[List[Global`resChPhi, Global`resChThe]]]];  Print[Histogram[Global`resChZet]];  Print[Histogram[Global`resChThe, List[Global`zBoxMin, Global`zBoxMax, 10], Rule[AxesLabel, List[" z (mm) ", ""]], Rule[Axes, List[True, False]]]];  Print[ListPlot[Transpose[List[Global`resChZet, Global`resChPhi]], Rule[AxesLabel, List[" z (mm) ", " \!\(\*SubscriptBox[\(\[Phi]\), \(c\)]\) (rad) "]], Rule[Axes, List[True, True]], Rule[AxesOrigin, List[Global`zBoxCen, 0]], Rule[PlotRange, List[List[Global`zBoxMin, Global`zBoxMax], List[Times[-1, Pi], Plus[Pi]]]], Rule[Filling, Axis], Rule[FillingStyle, List[Thickness[0.005`]]], Rule[GridLines, Automatic]]];  Print[ListPlot[Transpose[List[Global`resChZet, Global`resChThe]], Rule[AxesLabel, List[" z (mm) ", " \!\(\*SubscriptBox[\(\[Theta]\), \(c\)]\) (rad) "]], Rule[Axes, List[True, True]], Rule[AxesOrigin, List[Global`zBoxCen, Global`halfOpenAngle]], Rule[PlotRange, List[List[Global`zBoxMin, Global`zBoxMax], List[Plus[Global`halfOpenAngle, Times[-1, Global`thetaHalfRange]], Plus[Global`halfOpenAngle, Global`thetaHalfRange]]]], Rule[Filling, Axis], Rule[FillingStyle, List[Thickness[0.005`]]], Rule[GridLines, Automatic]]];  Null)]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 33, expression 1 ---- *)
-((SetDelayed[Global`doExecGeneralForwardTrace[Pattern[Global`zetaStartTrack, Blank[]], Pattern[Global`thetaY, Blank[]], Pattern[Global`thetaX, Blank[]], Pattern[Global`target3D, Blank[]]], Module[List[Global`newPhi, Global`newThe, Global`newZet], (Set[Global`bestFitTestForwardTraceCherenkovPhotonThr, 0.5`];  Set[Global`bestFitPhoton, List[]];  Global`bigBanner[" Start general back-trace for one given photon emitted by a given track "];  Print[" zetaMin = ", Global`zetaMin];  Print[" zetaMax = ", Global`zetaMax];  Set[Global`newThe, Times[Global`halfOpenAngle, Power[1000, -1]]];  Set[Global`newPhi, 0];  Set[Global`newZet, Times[Plus[Global`zetaMax, Global`zetaMin], Power[2, -1]]];  Print[" Starting phi for photon (rad) : ", Global`nf1[Global`reduceAngle[Global`newPhi]], " +/- ", Global`dPhi0];  Print[" Starting the for photon (rad) : ", Global`nf1[Global`newThe], " +/- ", Global`dThe0];  Print[" Starting zet for photon (mm)  : ", Global`nf1[Global`newZet], " +/- ", Global`dZet0];  Set[Global`bestFitTestForwardTraceCherenkovPhoton, 1000000000];  Print[" --- newPhi = ", Global`nf1[Global`newPhi], " --- newThe = ", Global`nf1[Global`newThe], " --- newZet = ", Global`nf1[Global`newZet]];  If[Greater[Global`bestFitTestForwardTraceCherenkovPhoton, Global`bestFitTestForwardTraceCherenkovPhotonThr], Set[List[Global`newPhi, Global`newThe, Global`newZet], Global`forwardTrace[Global`zetaStartTrack, Global`thetaY, Global`thetaX, Global`newPhi, Global`newThe, Global`newZet, Global`nPhi1, 0, 0, Global`dPhi1, 0, 0, Global`target3D]], (Print[" Target goal reached: stop iterating .... "];  Null)];  Print[" --- newPhi = ", Global`nf1[Global`newPhi], " --- newThe = ", Global`nf1[Global`newThe], " --- newZet = ", Global`nf1[Global`newZet]];  If[Greater[Global`bestFitTestForwardTraceCherenkovPhoton, Global`bestFitTestForwardTraceCherenkovPhotonThr], Set[List[Global`newPhi, Global`newThe, Global`newZet], Global`forwardTrace[Global`zetaStartTrack, Global`thetaY, Global`thetaX, Global`newPhi, Global`newThe, Global`newZet, 0, Global`nThe1, 0, 0, Global`dThe1, 0, Global`target3D]], (Print[" Target goal reached: stop iterating .... "];  Null)];  Print[" --- newPhi = ", Global`nf1[Global`newPhi], " --- newThe = ", Global`nf1[Global`newThe], " --- newZet = ", Global`nf1[Global`newZet]];  If[Greater[Global`bestFitTestForwardTraceCherenkovPhoton, Global`bestFitTestForwardTraceCherenkovPhotonThr], Set[List[Global`newPhi, Global`newThe, Global`newZet], Global`forwardTrace[Global`zetaStartTrack, Global`thetaY, Global`thetaX, Global`newPhi, Global`newThe, Global`newZet, Global`nPhi2, 0, 0, Global`dPhi2, 0, 0, Global`target3D]], (Print[" Target goal reached: stop iterating .... "];  Null)];  Print[" --- newPhi = ", Global`nf1[Global`newPhi], " --- newThe = ", Global`nf1[Global`newThe], " --- newZet = ", Global`nf1[Global`newZet]];  If[Greater[Global`bestFitTestForwardTraceCherenkovPhoton, Global`bestFitTestForwardTraceCherenkovPhotonThr], Set[List[Global`newPhi, Global`newThe, Global`newZet], Global`forwardTrace[Global`zetaStartTrack, Global`thetaY, Global`thetaX, Global`newPhi, Global`newThe, Global`newZet, 0, Global`nThe2, 0, 0, Global`dThe2, 0, Global`target3D]], (Print[" Target goal reached: stop iterating .... "];  Null)];  Print[" --- newPhi = ", Global`nf1[Global`newPhi], " --- newThe = ", Global`nf1[Global`newThe], " --- newZet = ", Global`nf1[Global`newZet]];  If[Greater[Global`bestFitTestForwardTraceCherenkovPhoton, Global`bestFitTestForwardTraceCherenkovPhotonThr], Set[List[Global`newPhi, Global`newThe, Global`newZet], Global`forwardTrace[Global`zetaStartTrack, Global`thetaY, Global`thetaX, Global`newPhi, Global`newThe, Global`newZet, 0, 0, Global`nZet1, 0, 0, Global`dZet1, Global`target3D]], (Print[" Target goal reached: stop iterating .... "];  Null)];  Print[" --- newPhi = ", Global`nf1[Global`newPhi], " --- newThe = ", Global`nf1[Global`newThe], " --- newZet = ", Global`nf1[Global`newZet]];  If[Greater[Global`bestFitTestForwardTraceCherenkovPhoton, Global`bestFitTestForwardTraceCherenkovPhotonThr], Set[List[Global`newPhi, Global`newThe, Global`newZet], Global`forwardTrace[Global`zetaStartTrack, Global`thetaY, Global`thetaX, Global`newPhi, Global`newThe, Global`newZet, 0, 0, Global`nZet2, 0, 0, Global`dZet2, Global`target3D]], (Print[" Target goal reached: stop iterating .... "];  Null)];  Print[" --- newPhi = ", Global`nf1[Global`newPhi], " --- newThe = ", Global`nf1[Global`newThe], " --- newZet = ", Global`nf1[Global`newZet]];  If[Greater[Global`bestFitTestForwardTraceCherenkovPhoton, Global`bestFitTestForwardTraceCherenkovPhotonThr], Set[List[Global`newPhi, Global`newThe, Global`newZet], Global`forwardTrace[Global`zetaStartTrack, Global`thetaY, Global`thetaX, Global`newPhi, Global`newThe, Global`newZet, Global`nPhi3, Global`nThe3, Global`nZet3, Global`dPhi3, Global`dThe3, Global`dZet3, Global`target3D]], (Print[" Target goal reached: stop iterating .... "];  Null)];  Print[" --- newPhi = ", Global`nf1[Global`newPhi], " --- newThe = ", Global`nf1[Global`newThe], " --- newZet = ", Global`nf1[Global`newZet]];  If[Greater[Global`bestFitTestForwardTraceCherenkovPhoton, Global`bestFitTestForwardTraceCherenkovPhotonThr], Print[" WARNING: bestFitTestForwardTraceCherenkovPhoton too LARGE ", Global`bestFitTestForwardTraceCherenkovPhoton]];  Global`bigBanner[" ===>>> results for one single photon reconstruction "];  Print[" Estimated phi for photon (rad) : ", Global`nf1[Global`reduceAngle[Global`newPhi]], " +/- ", Global`dPhi2];  Print[" Estimated the for photon (rad) : ", Global`nf1[Global`newThe], " +/- ", Global`dThe2];  Print[" Estimated zet for photon (mm)  : ", Global`nf1[Global`newZet], " +/- ", Global`dZet2];  AppendTo[Global`resChPhi, Global`reduceAngle[Global`newPhi]];  AppendTo[Global`resChThe, Global`newThe];  AppendTo[Global`resChZet, Global`newZet];  AppendTo[Global`bestFitTrack, Global`bestFitPhoton];  Null)]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 34, expression 1 ---- *)
-((SetDelayed[Global`forwardTrace[Pattern[Global`zetaStartTrack, Blank[]], Pattern[Global`alphaY, Blank[]], Pattern[Global`alphaX, Blank[]], Pattern[Global`phi0, Blank[]], Pattern[Global`the0, Blank[]], Pattern[Global`zet0, Blank[]], Pattern[Global`nPhi, Blank[]], Pattern[Global`nThe, Blank[]], Pattern[Global`nZet, Blank[]], Pattern[Global`dPhi, Blank[]], Pattern[Global`dThe, Blank[]], Pattern[Global`dZet, Blank[]], Pattern[Global`rPD, Blank[]]], Module[List[Global`gridPhiTheZet, Global`rTilt, Global`rEmis, Global`r0, Global`trackDir, Global`rForwardTraced, Global`errorTestForwardTraceCherenkovPhoton, Global`jbest, Global`zetaPhotonEmission, Global`localPerpUnitVector, Global`localThirdUnitVector, Global`numGridPoints, Global`myTrack, Global`myTestCherenkovPhotons, Global`opticalSystemLHCbRICHTestPhotons, Global`tracedTestPhotons, Global`phiSol, Global`theSol, Global`zetSol], (Print[" Target point on the FS: rPD = ", Global`rPD];  Set[Global`gridPhiTheZet, Flatten[N[Table[List[Plus[Global`phi0, Times[Global`iPhi, Global`dPhi]], Plus[Global`the0, Times[Global`iThe, Global`dThe]], Plus[Global`zet0, Times[Global`iZet, Global`dZet]]], List[Global`iPhi, Times[-1, Global`nPhi], Plus[Global`nPhi]], List[Global`iThe, Times[-1, Global`nThe], Plus[Global`nThe]], List[Global`iZet, Times[-1, Global`nZet], Plus[Global`nZet]]]], 2]];  Print[" numGridPoints = ", Set[Global`numGridPoints, Times[Plus[Times[2, Global`nPhi], 1], Plus[Times[2, Global`nThe], 1], Plus[Times[2, Global`nZet], 1]]]];  Global`debugPrint[" gridPhiTheZet = ", Global`nicePrint[TableForm[Global`gridPhiTheZet], 10, 5]];  Set[Global`trackDir, Normalize[List[1, Tan[Global`alphaY], Tan[Global`alphaX]]]];  Global`debugPrint[" trackDir = ", Global`trackDir];  Set[List[Global`localPerpUnitVector, Global`localThirdUnitVector], Global`localTrackUnitVectors[Global`trackDir]];  Global`debugPrint[" localPerpUnitVector = ", Global`localPerpUnitVector];  Global`debugPrint[" localThirdUnitVector = ", Global`localThirdUnitVector];  SetDelayed[Global`myTrack, Global`Move[Global`SingleRay[], List[Global`zetaStartTrack, Times[Global`zetaStartTrack, Tan[Global`alphaY]], Times[Global`zetaStartTrack, Tan[Global`alphaX]]], Global`trackDir]];  Global`debugPrint[" myTrack = ", Global`myTrack];  Global`bigBanner[" Generate test photons "];  Set[Global`rEmis, List[]];  Set[Global`rTilt, List[]];  Do[(Set[Global`zetaPhotonEmission, Part[Part[Global`gridPhiTheZet, Global`j], 3]];  AppendTo[Global`rEmis, List[Global`zetaPhotonEmission, Times[Global`zetaPhotonEmission, Tan[Global`alphaY]], Times[Global`zetaPhotonEmission, Tan[Global`alphaX]]]];  AppendTo[Global`rTilt, Plus[Times[Cos[Part[Part[Global`gridPhiTheZet, Global`j], 2]], Global`trackDir], Times[Sin[Part[Part[Global`gridPhiTheZet, Global`j], 2]], Plus[Times[Cos[Part[Part[Global`gridPhiTheZet, Global`j], 1]], Global`localPerpUnitVector], Times[Sin[Part[Part[Global`gridPhiTheZet, Global`j], 1]], Global`localThirdUnitVector]]]]]), List[Global`j, 1, Length[Global`gridPhiTheZet]]];  Global`debugPrint[" zetaPhotonEmission ", Global`zetaPhotonEmission];  Global`debugPrint[" rEmis ", Global`rEmis];  Global`debugPrint[" rTilt ", Global`rTilt];  Set[Global`myTestCherenkovPhotons, Global`CustomRays[List[List[Global`RayStart, Global`rEmis], List[Global`RayTilt, Global`rTilt]]]];  Global`debugPrint[" myTestCherenkovPhotons = ", Global`myTestCherenkovPhotons];  Set[Global`opticalSystemLHCbRICHTestPhotons, List[Global`myTestCherenkovPhotons, Global`myOptics, Global`myBoundary]];  Set[Global`tracedTestPhotons, Global`AnalyzeSystem[Global`opticalSystemLHCbRICHTestPhotons]];  Set[Global`rForwardTraced, Global`ReadRays[Global`tracedTestPhotons, Global`RayEnd, Global`onTheFS]];  Global`debugPrint[" rForwardTraced ", Global`rForwardTraced];  Set[Global`errorTestForwardTraceCherenkovPhoton, Map[Function[Norm[Plus[Global`rPD, Times[-1, Slot[1]]]]], Global`rForwardTraced]];  Global`debugPrint[" errorTestForwardTraceCherenkovPhoton ", Global`nf[Global`errorTestForwardTraceCherenkovPhoton]];  Set[Global`bestFitTestForwardTraceCherenkovPhoton, Min[Global`errorTestForwardTraceCherenkovPhoton]];  Set[Global`jbest, First[Flatten[Position[Global`errorTestForwardTraceCherenkovPhoton, Global`bestFitTestForwardTraceCherenkovPhoton], 1]]];  If[Or[Equal[Global`jbest, 1], Equal[Global`jbest, Length[Global`gridPhiTheZet]]], Print[" Warning, minimum at the limit ..... makes sense only if 1-dim ", "   nThe = ", Global`nThe, "   nPhi = ", Global`nPhi, "   nZet = ", Global`nZet]];  Set[Global`phiSol, Part[Part[Global`gridPhiTheZet, Global`jbest], 1]];  Set[Global`theSol, Part[Part[Global`gridPhiTheZet, Global`jbest], 2]];  Set[Global`zetSol, Part[Part[Global`gridPhiTheZet, Global`jbest], 3]];  Print[" bestFitTestForwardTraceCherenkovPhoton = ", Global`bestFitTestForwardTraceCherenkovPhoton];  AppendTo[Global`bestFitPhoton, Global`bestFitTestForwardTraceCherenkovPhoton];  If[Equal[Global`debugPrintEnabledFlag, True], (Print[" --- >>> "];  Print[" jbest ", Global`jbest, " Lenght of grid ", Length[Global`gridPhiTheZet]];  Print[" bestFitTestForwardTraceCherenkovPhoton = ", Global`bestFitTestForwardTraceCherenkovPhoton];  Print[Part[Global`gridPhiTheZet, Global`jbest]];  Null)];  Print[" phiSol   =  ", Global`nf1[Global`phiSol], " dPhi     = ", Global`dPhi];  Print[" theSol   =  ", Global`nf1[Global`theSol], " dThe     = ", Global`dThe];  Print[" zetSol   =  ", Global`nf1[Global`zetSol], " dZet     = ", Global`dZet];  Return[List[Global`phiSol, Global`theSol, Global`zetSol]])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 35, expression 1 ---- *)
-((SetDelayed[Global`simul[Pattern[Global`numIter, Blank[]], Pattern[Global`numPhoAlongTrack, Blank[]]], Module[List[Global`u, Global`v, Global`tracedPointsDir, Global`tracedPoints], Do[(Print[" iter ", Global`nf0[Global`k]];  Set[Global`mySource, List[Global`CherenkovPhotonsXYUniformAlongTrack[Global`halfOpenAngle, Global`numPhoAlongTrack, 1, Part[Global`thetaY, Global`k], Part[Global`thetaX, Global`k]]]];  Set[Global`opticalSystemLHCbRICH, List[Global`mySource, Global`myOptics, Global`myBoundary]];  Set[Global`tTracedSystem, Global`TurboTrace[Global`opticalSystemLHCbRICH, Rule[Global`SequentialTrace, True]]];  Set[Global`tracedPoints, Global`ReadTurboRays[Global`tTracedSystem, Global`SurfaceCoordinates, Global`onTheFS]];  Set[Global`tracedPointsDir, Global`ReadTurboRays[Global`tTracedSystem, Global`RayTilt, Global`onTheFS]];  If[Greater[Length[Global`tracedPointsDir], 0], AppendTo[Global`resTheta, Times[ArcCos[Dot[Global`tracedPointsDir, Global`dirScreen]], Power[Degree, -1]]], (Print["zero length tracedPointsDir - iter: ", Global`nf0[Global`k]];  Null)];  If[Greater[Length[Global`tracedPointsDir], 0], (Set[Global`tracedPointsDir, Transpose[List[Part[Transpose[Global`tracedPointsDir], 1], Part[Transpose[Global`tracedPointsDir], 2], ConstantArray[0, Length[Global`tracedPointsDir]]]]];  Set[Global`u, Map[Normalize, Global`tracedPointsDir]];  Set[Global`v, Table[Cross[Global`dirScreen, Part[Global`u, Global`k]], List[Global`k, 1, Length[Global`u]]]];  AppendTo[Global`resThetaProj, Times[ArcSin[Part[Transpose[Global`v], 3]], Power[Degree, -1]]]), (Print["zero length tracedPointsDir"];  Null)];  Set[Global`numPho, Length[Global`tracedPoints]];  If[Greater[Length[Global`tracedPoints], 1], (Set[Global`sizeSpotTrnsvrs, Plus[Max[Part[Transpose[Global`tracedPoints], 1]], Times[-1, Min[Part[Transpose[Global`tracedPoints], 1]]]]];  Set[Global`sizeSpotThrdDim, Plus[Max[Part[Transpose[Global`tracedPoints], 2]], Times[-1, Min[Part[Transpose[Global`tracedPoints], 2]]]]];  Set[Global`sizeSpotTrnsvrsRMS, StandardDeviation[Part[Transpose[Global`tracedPoints], 1]]];  Set[Global`sizeSpotThrdDimRMS, StandardDeviation[Part[Transpose[Global`tracedPoints], 2]]];  Set[Global`maxDist, Sqrt[Plus[Power[Global`sizeSpotTrnsvrs, 2], Power[Global`sizeSpotThrdDim, 2]]]];  Set[Global`maxDistRMS, Sqrt[Plus[Power[Global`sizeSpotTrnsvrsRMS, 2], Power[Global`sizeSpotThrdDimRMS, 2]]]];  Set[Global`maxTrnsvrs, Max[Global`maxTrnsvrs, Part[Transpose[Global`tracedPoints], 1]]];  Set[Global`minTrnsvrs, Min[Global`minTrnsvrs, Part[Transpose[Global`tracedPoints], 1]]];  Set[Global`maxThrdDim, Max[Global`maxThrdDim, Part[Transpose[Global`tracedPoints], 2]]];  Set[Global`minThrdDim, Min[Global`minThrdDim, Part[Transpose[Global`tracedPoints], 2]]]), (Set[Global`sizeSpotTrnsvrs, 0];  Set[Global`sizeSpotThrdDim, 0];  Set[Global`sizeSpotTrnsvrsRMS, 0];  Set[Global`sizeSpotThrdDimRMS, 0];  Set[Global`maxDist, 0];  Set[Global`maxDistRMS, 0];  Set[Global`maxTrnsvrs, 0];  Set[Global`minTrnsvrs, 0];  Set[Global`maxThrdDim, 0];  Set[Global`minThrdDim, 0];  Print["zero length tracedPoints"])];  AppendTo[Global`resSizeSpotTrnsvrs, Global`sizeSpotTrnsvrsRMS];  AppendTo[Global`resSizeSpotThrdDim, Global`sizeSpotThrdDimRMS];  AppendTo[Global`resNumPho, Global`numPho];  AppendTo[Global`resMaxDist, Global`maxDist];  AppendTo[Global`resMaxDistRMS, Global`maxDistRMS]), List[Global`k, 1, Global`numIter]]]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 36, expression 1 ---- *)
-((SetDelayed[Global`doSimul[Pattern[Global`numIters, Blank[]]], Module[List[], (Print[ColumnForm[Global`myOptics]];  Global`trackGen[Global`numIters, Global`minAcc, Global`maxYAcc, Global`maxXAcc];  Set[Global`twist, RandomReal[List[0, 360], Min[Length[Global`thetaX], Length[Global`thetaY]]]];  Print["Length[thetaX]: ", Length[Global`thetaX], " thetaX ", Global`thetaX];  Print["Length[thetaY]: ", Length[Global`thetaY], " thetaY ", Global`thetaY];  Print["Length[twist]:  ", Length[Global`twist], " twist ", Global`twist];  Set[Global`dirScreen, List[Cos[Global`tiltScreen], Sin[Global`tiltScreen], 0]];  Set[Global`resThetaProj, List[]];  Set[Global`resNumPho, List[]];  Set[Global`resMaxDist, List[]];  Set[Global`resMaxDistRMS, List[]];  Set[Global`resTheta, List[]];  Set[Global`resSizeSpotTrnsvrs, List[]];  Set[Global`resSizeSpotThrdDim, List[]];  Set[Global`maxTrnsvrs, -100000];  Set[Global`maxThrdDim, -100000];  Set[Global`minTrnsvrs, Plus[100000]];  Set[Global`minThrdDim, Plus[100000]];  Global`simul[Min[Length[Global`thetaX], Length[Global`thetaY]], Global`numPhoAlongTrack];  Print[ColumnForm[Global`myOptics]];  Print[" resNumPho :     ", N[Median[Flatten[Global`resNumPho]]], " +/- ", N[Times[StandardDeviation[Flatten[Global`resNumPho]], Power[Sqrt[Plus[Length[Global`resNumPho], -1]], -1]]]];  Print[" eff       :     ", Set[Global`eff, N[Times[Median[Flatten[Global`resNumPho]], Power[Global`numPhoAlongTrack, -1]]]]];  Print[" resThetaProj :  ", Median[Flatten[Global`resThetaProj]], " +/- ", Times[StandardDeviation[Flatten[Global`resThetaProj]], Power[Sqrt[Plus[Length[Global`resThetaProj], -1]], -1]]];  Print[" resTheta     :  ", Median[Flatten[Global`resTheta]], " +/- ", Times[StandardDeviation[Flatten[Global`resTheta]], Power[Sqrt[Plus[Length[Global`resTheta], -1]], -1]]];  Print[" resMaxDist :    ", Median[Flatten[Global`resMaxDist]], " +/- ", Times[StandardDeviation[Flatten[Global`resMaxDist]], Power[Sqrt[Plus[Length[Global`resMaxDist], -1]], -1]]];  Print[" resMaxDistRMS : ", Median[Flatten[Global`resMaxDistRMS]], " +/- ", Times[StandardDeviation[Flatten[Global`resMaxDistRMS]], Power[Sqrt[Plus[Length[Global`resMaxDistRMS], -1]], -1]]];  Print[" minTrnsvrs : ", Global`minTrnsvrs, "----- maxTrnsvrs : ", Global`maxTrnsvrs, "----- Trnsvrs Size : ", Plus[Global`maxTrnsvrs, Times[-1, Global`minTrnsvrs]]];  Print[" minThrdDim : ", Global`minThrdDim, "----- maxThrdDim : ", Global`maxThrdDim, "----- ThrdDim Size : ", Plus[Global`maxThrdDim, Times[-1, Global`minThrdDim]]];  Print[" resSizeSpotTrnsvrs : ", Median[Global`resSizeSpotTrnsvrs], " +/- ", Times[StandardDeviation[Flatten[Global`resSizeSpotTrnsvrs]], Power[Sqrt[Plus[Length[Global`resSizeSpotTrnsvrs], -1]], -1]]];  Print[" resSizeSpotThrdDim : ", Median[Global`resSizeSpotThrdDim], " +/- ", Times[StandardDeviation[Flatten[Global`resSizeSpotThrdDim]], Power[Sqrt[Plus[Length[Global`resSizeSpotThrdDim], -1]], -1]]];  Histogram[Flatten[Global`resNumPho], 40];  Histogram[Flatten[Global`resThetaProj], 40];  Histogram[Flatten[Global`resTheta], 40];  Histogram[Flatten[Global`resMaxDist], 40];  Histogram[Flatten[Global`resMaxDistRMS], 40];  Histogram[Flatten[Global`resSizeSpotTrnsvrs], 40];  Histogram[Flatten[Global`resSizeSpotThrdDim], 40];  Set[Global`deltaTiltScreen, Median[Flatten[Global`resThetaProj]]];  Print["systemResults    ", ColumnForm[Global`systemResults]])]];  Null))
-
-(* ::Subsubtitle:: *)
-(* Light sources for OPTICA *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 37, expression 1 ---- *)
-((SetDelayed[Global`lightGrid[Pattern[Global`gridSize, Blank[]], Pattern[Global`gridPoints, Blank[]], Pattern[Global`thetaY, Blank[]], Pattern[Global`thetaX, Blank[]]], Module[List[Global`t, Global`x0, Global`y0, Global`z0, Global`zeta], (Set[Global`zeta, Global`zFrstEmission];  Set[Global`x0, Times[Global`zeta, Tan[Global`thetaX]]];  Set[Global`y0, Times[Global`zeta, Tan[Global`thetaY]]];  Set[Global`z0, Global`zeta];  Global`MoveDirected[Global`DistortionGrid[Global`gridSize, Global`gridPoints], List[Times[1.`, Global`z0], Times[1.`, Global`y0], Times[1.`, Global`x0]], List[Times[0.8`, Global`z0], Times[0.8`, Global`y0], Times[0.8`, Global`x0]]])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 38, expression 1 ---- *)
-(Times[(SetDelayed[Global`z0Step, N[Global`zBoxMin]];  Null), (SetDelayed[Global`z1Step, N[Plus[Global`zBoxMin, Times[Plus[Global`zBoxMax, Times[-1, Global`zBoxMin]], Times[1, Power[4, -1]]]]]];  Null), (SetDelayed[Global`z2Step, N[Plus[Global`zBoxMin, Times[Plus[Global`zBoxMax, Times[-1, Global`zBoxMin]], Times[2, Power[4, -1]]]]]];  Null), (SetDelayed[Global`z3Step, N[Plus[Global`zBoxMin, Times[Plus[Global`zBoxMax, Times[-1, Global`zBoxMin]], Times[3, Power[4, -1]]]]]];  Null), (SetDelayed[Global`z4Step, N[Global`zBoxMax]];  Null), (SetDelayed[Global`zBoxCen, Times[Plus[Global`zBoxMin, Global`zBoxMax], Power[2, -1]]];  Null)])
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 39, expression 1 ---- *)
-((SetDelayed[Global`CherenkovPhotonsXY, List[Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, Plus[Global`thrdDimAcc], Global`z0Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, 0, Global`z0Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, Times[-1, Global`thrdDimAcc], Global`z0Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], Plus[Global`thrdDimAcc], Global`z0Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], 0, Global`z0Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], Times[-1, Global`thrdDimAcc], Global`z0Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, Plus[Global`thrdDimAcc], Global`z0Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, 0, Global`z0Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, Times[-1, Global`thrdDimAcc], Global`z0Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, Plus[Global`thrdDimAcc], Global`z1Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, 0, Global`z1Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, Times[-1, Global`thrdDimAcc], Global`z1Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], Plus[Global`thrdDimAcc], Global`z1Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], 0, Global`z1Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], Times[-1, Global`thrdDimAcc], Global`z1Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, Plus[Global`thrdDimAcc], Global`z1Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, 0, Global`z1Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, Times[-1, Global`thrdDimAcc], Global`z1Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, Plus[Global`thrdDimAcc], Global`z2Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, 0, Global`z2Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, Times[-1, Global`thrdDimAcc], Global`z2Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], Plus[Global`thrdDimAcc], Global`z2Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], 0, Global`z2Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], Times[-1, Global`thrdDimAcc], Global`z2Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, Plus[Global`thrdDimAcc], Global`z2Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, 0, Global`z2Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, Times[-1, Global`thrdDimAcc], Global`z2Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, Plus[Global`thrdDimAcc], Global`z3Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, 0, Global`z3Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`trnsvrsAcc, Times[-1, Global`thrdDimAcc], Global`z3Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], Plus[Global`thrdDimAcc], Global`z3Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], 0, Global`z3Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Times[Plus[Global`minAcc, Global`trnsvrsAcc], Power[2, -1]], Times[-1, Global`thrdDimAcc], Global`z3Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, Plus[Global`thrdDimAcc], Global`z3Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, 0, Global`z3Step, Global`numPhoInAzimuth], Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`minAcc, Times[-1, Global`thrdDimAcc], Global`z3Step, Global`numPhoInAzimuth]]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 40, expression 1 ---- *)
-((SetDelayed[Global`rayFan[Pattern[Global`size, Blank[]], Pattern[Global`thetaY, Blank[]], Pattern[Global`thetaX, Blank[]], Pattern[Global`zeta, Blank[]], Pattern[Global`numRays, Blank[]]], Module[List[Global`t, Global`x0, Global`y0, Global`z0], (Set[Global`x0, Times[Global`zeta, Tan[Global`thetaX]]];  Set[Global`y0, Times[Global`zeta, Tan[Global`thetaY]]];  Set[Global`z0, Global`zeta];  Set[Global`trackDir, Normalize[List[Global`z0, Global`y0, Global`x0]]];  Global`MoveDirected[Global`GridOfRays[List[Global`size, Global`size], Rule[Global`NumberOfRays, Global`numRays], Rule[Global`RayLineRGB, Red]], List[Times[1.`, Global`z0], Times[1.`, Global`y0], Times[1.`, Global`x0]], List[Times[0.8`, Global`z0], Times[0.8`, Global`y0], Times[0.8`, Global`x0]]])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 41, expression 1 ---- *)
-((SetDelayed[Global`CherenkovPhotonsXYUniformAlongTrack[Pattern[Global`halfOpenAngle, Blank[]], Pattern[Global`numPhoAlongTrack, Blank[]], Pattern[Global`numPhoInAzimuth, Blank[]], Pattern[Global`thetaY, Blank[]], Pattern[Global`thetaX, Blank[]], Optional[Pattern[Global`startSrc, Blank[]], 0], Optional[Pattern[Global`endSrc, Blank[]], 1], Optional[Pattern[Global`twist, Blank[]], 0]], Module[List[Global`deltaZ], (Set[Global`deltaZ, Times[Plus[Global`zLastEmission, Times[-1, Global`zFrstEmission]], Power[Global`numPhoAlongTrack, -1]]];  Table[Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`thetaY, Global`thetaX, Plus[Global`zFrstEmission, Times[Plus[Global`k, -1], Global`deltaZ]], Global`numPhoInAzimuth, Global`startSrc, Global`endSrc, Global`twist], List[Global`k, 1, Global`numPhoAlongTrack]])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 42, expression 1 ---- *)
-(Times[(ClearAll[Global`chrPhoXYAtZ];  Null), (SetDelayed[Global`chrPhoXYAtZ[Pattern[Global`thetaCher, Blank[]], Pattern[Global`thetaX, Blank[]], Pattern[Global`thetaY, Blank[]], Pattern[Global`zeta, Blank[]], Pattern[Global`numRays, Blank[]], Optional[Pattern[Global`startSrc, Blank[]], 0], Optional[Pattern[Global`endSrc, Blank[]], 1], Optional[Pattern[Global`twist, Blank[]], 0], Optional[Pattern[Global`wl, Blank[]], Global`defaultWavLen], Optional[Pattern[Global`id, Blank[]], 1234567890]], Module[List[Global`t, Global`x0, Global`y0, Global`z0], (Set[Global`x0, Times[Global`zeta, Tan[Global`thetaX]]];  Set[Global`y0, Times[Global`zeta, Tan[Global`thetaY]]];  Set[Global`z0, Global`zeta];  Set[Global`trackDir, Normalize[List[Global`z0, Global`y0, Global`x0]]];  Global`MoveDirected[Global`ConeOfRays[Times[2, Global`thetaCher], Rule[Global`NumberOfRays, Global`numRays], Rule[Global`RayLineRGB, Red], Rule[Global`SourceOffset, Global`startSrc], Rule[Global`SourceFraction, Plus[Global`endSrc, Times[-1, Global`startSrc]]], Rule[Global`WaveLength, Global`wl], Rule[Global`SourceID, Global`id]], List[Global`z0, Global`y0, Global`x0], List[Times[0.5`, Global`z0], Times[0.5`, Global`y0], Times[0.5`, Global`x0]], Rule[Global`TwistAngle, Global`twist], Rule[Global`SideOfObject, Before]])]];  Null)])
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 43, expression 1 ---- *)
-(Times[(ClearAll[Global`CherenkovPhotonsXYTrack];  Null), (SetDelayed[Global`CherenkovPhotonsXYTrack[Pattern[Global`halfOpenAngle, Blank[]], Pattern[Global`numPhoAlongTrack, Blank[]], Pattern[Global`numPhoInAzimuth, Blank[]], Pattern[Global`thetaY, Blank[]], Pattern[Global`thetaX, Blank[]], Optional[Pattern[Global`startSrc, Blank[]], 0], Optional[Pattern[Global`endSrc, Blank[]], 1], Optional[Pattern[Global`twist, Blank[]], 0], Optional[Pattern[Global`wl, Blank[]], Global`defaultWavLen], Optional[Pattern[Global`id0, Blank[]], 1234567890]], Module[List[Global`deltaZ, Global`rEnt, Global`rOFS, Global`rStr, Global`rMid, Global`rEnd, Global`w, Global`y, Global`zStart, Global`theLastZ, Global`id], (If[Or[Or[Less[Global`startSrc, 0], Greater[Global`startSrc, 1]], Or[Less[Global`endSrc, 0], Greater[Global`endSrc, 1]], Greater[Global`startSrc, Global`endSrc]], (Print[" ERROR in CherenkovPhotonsXYTrack - parameters "];  Global`killStop)];  If[Equal[Global`id0, 0], Set[Global`id, Global`encodeTrackId[Round[Times[1000, Global`thetaY]], Round[Times[1000, Global`thetaX]]]], Set[Global`id, Global`id0]];  Set[Global`y, Global`getTrackGeometry[Global`thetaY, Global`thetaX]];  If[Less[Length[Flatten[Global`y]], 1], (Print[" ERROR in CherenkovPhotonsXYTrack - geometry - RETURN "];  Return[])];  Set[Global`zStart, Global`zFrstEmission];  Set[Global`rStr, Part[Global`y, 1]];  SetDelayed[Global`rEnt, List[Global`zStart, Times[Global`zStart, Tan[Global`thetaY]], Times[Global`zStart, Tan[Global`thetaX]]]];  Set[Global`rEnd, Part[Global`y, 2]];  Set[Global`rOFS, Part[Global`y, 3]];  SetDelayed[Global`rMid, Times[Plus[Global`rEnt, Global`rEnd], Power[2, -1]]];  AppendTo[Global`trackAngles, List[Global`thetaY, Global`thetaX]];  AppendTo[Global`trackImprintOnTheFS, Global`rOFS];  AppendTo[Global`trackPathLength, Norm[Plus[Global`rEnt, Times[-1, Global`rEnd]]]];  AppendTo[Global`trackMidPath, Global`rMid];  AppendTo[Global`allREnd, Global`rEnd];  Set[Global`w, Times[Plus[Part[Global`rEnd, 1], Times[-1, Global`zStart]], Power[1000, -1]]];  Set[Global`theLastZ, ReplaceAll[Plus[Global`zStart, Times[Plus[Global`k, -1], Global`deltaZ]], Rule[Global`k, Global`numPhoAlongTrack]]];  If[Greater[Global`numPhoAlongTrack, 1], Set[Global`deltaZ, Times[Plus[Part[Global`rEnd, 1], Times[-1, Global`w], Times[-1, Global`zStart]], Power[Plus[Global`numPhoAlongTrack, -1], -1]]]];  If[Equal[Global`numPhoAlongTrack, 1], (Set[Global`deltaZ, Times[Plus[Part[Global`rEnd, 1], Times[-1, Global`w], Times[-1, Global`zStart]], Power[2, -1]]];  Set[Global`zStart, Plus[Global`zFrstEmission, Global`deltaZ]])];  Table[Global`chrPhoXYAtZ[Global`halfOpenAngle, Global`thetaX, Global`thetaY, Plus[Global`zStart, Times[Plus[Global`k, -1], Global`deltaZ]], Global`numPhoInAzimuth, Global`startSrc, Global`endSrc, Global`twist, Plus[Global`wl, Times[Global`k, Power[1000, -1]]], Global`id], List[Global`k, 1, Global`numPhoAlongTrack]])]];  Null)])
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 44, expression 1 ---- *)
-(Times[(ClearAll[Global`getTrackGeometry];  Null), (SetDelayed[Global`getTrackGeometry[Pattern[Global`theta0Y, Blank[]], Pattern[Global`theta0X, Blank[]], Optional[Pattern[Global`localDebugPrintFlag, Blank[]], False], Optional[Pattern[Global`opticalsystem, Blank[]], Global`myOptics]], Module[List[Global`rStartTrack, Global`thetaX, Global`thetaY, Global`rStrTra, Global`rEndTra, Global`rOnTheFS, Global`rOnTheFS2D, Global`numHits, Global`opticalSystemLHCbRICHTheTrack], (Set[MessageName[Global`getTrackGeometry, "noPointOnFS"], "WARNING on track geometry - no point on the FS (might be ok)"];  Once[Global`bigBanner[" WARNING : ONLY for high-momentum track this ring center is correct "], Rule[PersistenceTime, 3600]];  Once[Global`miniBanner[" getTrackGeometry - a straigth track as a photon to determine the ring center on the FS "], Rule[PersistenceTime, 3600]];  Once[Global`miniBanner[" !@#$% selection to be improved; also check for correctness when resonate or not "], Rule[PersistenceTime, 3600]];  Set[Global`thetaY, Times[1.`, Global`theta0Y]];  Set[Global`thetaX, Times[1.`, Global`theta0X]];  Set[Global`trackDir, Normalize[List[1, Tan[Global`thetaY], Tan[Global`thetaX]]]];  Set[Global`rStartTrack, List[0.`, 0.`, 0.`]];  SetDelayed[Global`myTrack, Global`Move[Global`SingleRay[], Global`rStartTrack, Global`trackDir]];  AppendTo[Global`allTracks, Global`myTrack];  SetDelayed[Global`opticalSystemLHCbRICHTheTrack, List[Global`myTrack, Global`opticalsystem, Global`myBoundary]];  SetDelayed[Global`tracedTrack, Global`PropagateSystem[Global`opticalSystemLHCbRICHTheTrack, Rule[Global`SequentialTrace, True], Rule[DefaultStyle, List[AbsoluteThickness[5], AbsolutePointSize[5]]]]];  Set[Global`allHits, Flatten[Global`ReadRays[Global`tracedTrack]]];  If[Equal[Global`localDebugPrintFlag, True], (Print[" straight track from : ", Global`rStartTrack];  Print[" thetaX = ", Global`thetaX];  Print[" thetaY = ", Global`thetaY];  Print[" Number of calculated virtual hits from the track ", Set[Global`numHits, Length[Global`allHits]]];  Global`rayDump[Global`tracedTrack];  Print[Global`AnalyzeSystem[Global`tracedTrack]])];  Set[Global`rStrTra, Flatten[Global`ReadRays[Global`tracedTrack, Global`RayStart, List[Rule[Global`IntersectionNumber, 1], Rule[Global`GenerationNumber, 1]]]]];  If[Less[Length[Global`rStrTra], 1], (Print[" ERROR on track geometry - no start point "];  Return[])];  If[Global`checkEqualRealNumbers[Norm[Plus[Global`rStartTrack, Times[-1, Global`rStrTra]]], 0, 1000], Global`debugPrint[" OK on track geometry: rStartTrack == rStrTra ", Global`localDebugPrintFlag], (Print[" ERROR on track geometry : rStartTrack =!= rStrTra "];  Return[])];  Set[Global`rEndTra, Flatten[Global`ReadRays[Global`tracedTrack, Global`RayEnd, List[Rule[Global`IntersectionNumber, 1], Rule[Global`GenerationNumber, 1]]]]];  Set[Global`rOnTheFS, Last[Global`ReadRays[Global`tracedTrack, Global`RayEnd]]];  Set[Global`rOnTheFS2D, Last[Global`ReadRays[Global`tracedTrack, Global`SurfaceCoordinates]]];  If[Less[Length[Global`rOnTheFS], 1], Message[MessageName[Global`getTrackGeometry, "noPointOnFS"]]];  If[Equal[Global`localDebugPrintFlag, True], (Print[" myTrack                     = ", Global`myTrack];  Print[" rStartTrack                 = ", Global`rStartTrack, " must be rStrTra==rStartTrack "];  Print[" rStrTra                     = ", Global`rStrTra, " must be rStrTra==rStartTrack "];  Print[" rEndTra (first segment)     = ", Global`rEndTra];  Print[" rOnTheFS (FS point)         = ", Global`rOnTheFS];  Print[" rOnTheFS2D (FS point)       = ", Global`rOnTheFS2D])];  Return[List[Global`rStrTra, Global`rEndTra, Global`rOnTheFS, Global`rOnTheFS2D]])]];  Null)])
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 45, expression 1 ---- *)
-((Unprotect[Global`offsetTrackId, Global`scaleTrackId];  Null);  Null;  (Clear[Global`encodeTrackId, Global`decodeTrackId];  Null);  Null;  (Set[Global`offsetTrackId, 1000000000];  Null);  Null;  (Set[Global`scaleTrackId, 1000];  Null);  Null;  (Protect[Global`offsetTrackId, Global`scaleTrackId];  Null);  Null;  (SetDelayed[Global`decodeTrackId[Pattern[Global`w, Blank[]], Optional[Pattern[Global`offset, Blank[]], Global`offsetTrackId], Optional[Pattern[Global`scale, Blank[]], Global`scaleTrackId]], Module[List[Global`z, Global`t1, Global`t2, Global`t3], (Set[Global`z, Plus[Global`w, Times[-1, Global`offset]]];  Set[Global`t1, Quotient[Global`z, Times[Global`scale, Global`scale]]];  Set[Global`t2, Quotient[Mod[Global`z, Times[Global`scale, Global`scale]], Global`scale]];  Set[Global`t3, Mod[Mod[Global`z, Times[Global`scale, Global`scale]], Global`scale]];  Return[List[Global`t1, Global`t2, Global`t3]])]];  Null);  Null;  (SetDelayed[Global`encodeTrackId[Pattern[Global`t1, Blank[Integer]], Pattern[Global`t2, Blank[Integer]], Optional[Pattern[Global`t3, Blank[Integer]], 0], Optional[Pattern[Global`offset, Blank[]], Global`offsetTrackId], Optional[Pattern[Global`scale, Blank[]], Global`scaleTrackId]], Module[List[Global`z], (Global`miniBanner["so far only positive input: beware when using angles"];  If[Or[Less[Global`t1, 0], Greater[Global`t1, Global`scale]], (Print[" ERROR - encodeTrackId : t1 ", Global`t1];  Return[1234567890])];  If[Or[Less[Global`t2, 0], Greater[Global`t2, Global`scale]], (Print[" ERROR - encodeTrackId : t2 ", Global`t2];  Return[1234567890])];  If[Or[Less[Global`t3, 0], Greater[Global`t3, Global`scale]], (Print[" ERROR - encodeTrackId : t3 ", Global`t3];  Return[1234567890])];  Set[Global`z, Plus[Global`offset, Global`t1, Times[Global`scale, Global`t2], Times[Global`scale, Global`scale, Global`t3]]];  Global`debugPrint[" TrackId encoded into : ", Global`z];  Return[Global`z])]];  Null);  Null;  (Global`encodeTrackId[100, 57, 7];  Null);  Null;  (Global`decodeTrackId[Out[]];  Null))
-
-(* ::Subsubtitle:: *)
-(* pixels *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 46, expression 1 ---- *)
-((SetDelayed[Global`digitize[Pattern[Global`x, Blank[]], Pattern[Global`y, Blank[]], Pattern[Global`pixelSize, Blank[]], Pattern[Global`offset, Blank[]]], Module[List[Global`center], (Set[Global`xd, N[Plus[Times[Global`pixelSize, Floor[Times[Global`x, Power[Global`pixelSize, -1]]]], Times[Global`pixelSize, Power[2, -1]]]]];  Set[Global`yd, N[Plus[Times[Global`pixelSize, Floor[Times[Global`y, Power[Global`pixelSize, -1]]]], Times[Global`pixelSize, Power[2, -1]]]]])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 47, expression 1 ---- *)
-((SetDelayed[Global`pixelize[Pattern[Global`tracedPointsFS, Blank[]], Pattern[Global`pixelSize, Blank[]]], Module[List[Global`x, Global`y, Global`res, Global`tracedPointsFSDigitized, Global`centerScreen], (Set[Global`tracedPointsFSDigitized, List[]];  Set[Global`res, List[]];  Set[Global`unitVectorScreen, List[Cos[Global`tiltScreen], Sin[Global`tiltScreen], 0]];  Set[Global`eX, List[Times[-1, Sin[Global`tiltScreen]], Plus[Cos[Global`tiltScreen]], 0]];  Set[Global`eY, List[0, 0, 1]];  Set[Global`centerScreen, List[Global`zScreen, Global`xScreen, 0]];  Set[Global`x, Part[Transpose[Global`tracedPointsFS], 1]];  Set[Global`y, Part[Transpose[Global`tracedPointsFS], 2]];  Global`digitize[Global`x, Global`y, Global`pixelSize, 0];  Do[AppendTo[Global`tracedPointsFSDigitized, Plus[Global`centerScreen, Times[Part[Global`xd, Global`j], Global`eX], Times[Part[Global`yd, Global`j], Global`eY]]], List[Global`j, 1, Length[Global`tracedPointsFS]]];  Return[Global`tracedPointsFSDigitized])]];  Null))
-
-(* ::Subtitle:: *)
-(* OPTICS DEFINITIONS - many historical as of 2024 - but don’t delete as some may be called by others *)
-
-(* ::Subsubtitle:: *)
-(* general *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 48, expression 1 ---- *)
-((SetDelayed[Global`execDoCalc, Module[List[], (Global`miniBanner[" INIT execDoCalc "];  Print[" RICH is : ", Global`iRICH];  Set[Global`centerPriMirRefl, List[0, 0]];  Set[Global`edgeParaFSNear, List[0, 0]];  Set[Global`edgeParaFSAway, List[0, 0]];  Set[Global`edgeParaFSNearRefl, List[0, 0]];  Set[Global`edgeParaFSAwayRefl, List[0, 0]];  Print[" *LEGENDA ========================================================================================== "];  Print[" transverseCoordinate == perpendicular to beam-line, towards the PD-PLANE, that is : "];  Print["                         y, for vertical RICH // vertical "];  Print["                         x, for horizontal RICH // horizontal "];  Print[" thrdDim == perpendicular to beam-line and perpendicular to transverseCoordinate, that is :"];  Print["                         x, for vertical RICH "];  Print["                         y, for horizontal RICH "];  Set[Global`ecnf0, Set[List[Global`zSecMir, Global`xSecMir, Global`zSecMirMin, Global`xSecMirMin, Global`zSecMirMax, Global`xSecMirMax], Global`calcFlatSecMirFromLowerAngle[Global`sizeTrnsvrsSecMir, Global`tiltSecMir, Global`theThetaMinSecMir, Global`p4z]]];  Print["{zSecMir,xSecMir,zSecMirMin,xSecMirMin,zSecMirMax,xSecMirMax}", List[Global`zSecMir, Global`xSecMir, Global`zSecMirMin, Global`xSecMirMin, Global`zSecMirMax, Global`xSecMirMax]];  Set[Global`zSecMirCen, Part[Global`ecnf0, 1]];  Set[Global`xSecMirCen, Part[Global`ecnf0, 2]];  Set[Global`zSecMirMin, Part[Global`ecnf0, 3]];  Set[Global`xSecMirMin, Part[Global`ecnf0, 4]];  Set[Global`zSecMirMax, Part[Global`ecnf0, 5]];  Set[Global`xSecMirMax, Part[Global`ecnf0, 6]];  Global`calcFS[Part[Global`centerPriMir, 1], Part[Global`centerPriMir, 2], Global`radiusPriMir, Abs[Plus[Pi, Times[-1, Global`tiltPriMir]]]];  Global`reflect0[Part[Global`centerPriMir, 1], Part[Global`centerPriMir, 2], Global`dirVect[Plus[Global`zSecMirMin, Times[-1, Global`zSecMirMax]], Plus[Global`xSecMirMin, Times[-1, Global`xSecMirMax]]], Global`zSecMir, Global`xSecMir];  Set[Part[Global`centerPriMirRefl, 1], Part[Global`reflectedPoint, 1]];  Set[Part[Global`centerPriMirRefl, 2], Part[Global`reflectedPoint, 2]];  Global`reflect0[Part[Global`edgeParaFSNear, 1], Part[Global`edgeParaFSNear, 2], Global`dirVect[Plus[Global`zSecMirMin, Times[-1, Global`zSecMirMax]], Plus[Global`xSecMirMin, Times[-1, Global`xSecMirMax]]], Global`zSecMir, Global`xSecMir];  Set[Part[Global`edgeParaFSNearRefl, 1], Part[Global`reflectedPoint, 1]];  Set[Part[Global`edgeParaFSNearRefl, 2], Part[Global`reflectedPoint, 2]];  Global`reflect0[Part[Global`edgeParaFSAway, 1], Part[Global`edgeParaFSAway, 2], Global`dirVect[Plus[Global`zSecMirMin, Times[-1, Global`zSecMirMax]], Plus[Global`xSecMirMin, Times[-1, Global`xSecMirMax]]], Global`zSecMir, Global`xSecMir];  Set[Part[Global`edgeParaFSAwayRefl, 1], Part[Global`reflectedPoint, 1]];  Set[Part[Global`edgeParaFSAwayRefl, 2], Part[Global`reflectedPoint, 2]];  Global`miniBanner[" END execDoCalc "];  Return[])]];  Null))
-
-(* ::Subsubtitle:: *)
-(* calc - calc the p points *)
-
-(* ::Section:: *)
-(* Geometry of Rich1 according to DW survey *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 49, expression 1 ---- *)
-(SetDelayed[Global`calc2009RealRich1Geometry, Module[List[Global`tt, Global`ll, Global`z, Global`radius, Global`sol], (Global`miniBanner[" INIT calc2009RealRich1Geometry "];  Set[Global`radius, 2710];  Set[Global`radiusPriMir, Global`radius];  Set[Global`zc, Global`average[-672.8`, -671.8`]];  Set[Global`yc, Global`average[Plus[841.2`], Plus[840.8`]]];  Set[Global`cc, List[Global`zc, Global`yc]];  Set[Global`p1y, 0];  Set[Global`sol, Solve[Equal[Global`circumference[Global`zc, Global`yc, Global`radius, Global`z, Global`p1y], 0], Global`z]];  Set[Global`p1z, ReplaceAll[Global`z, Part[Global`sol, 2]]];  Set[Global`p1, List[Global`p1z, Global`p1y]];  Set[Global`p2y, 600];  Set[Global`sol, Solve[Equal[Global`circumference[Global`zc, Global`yc, Global`radius, Global`z, Global`p2y], 0], Global`z]];  Set[Global`p2z, ReplaceAll[Global`z, Part[Global`sol, 2]]];  Set[Global`p2, List[Global`p2z, Global`p2y]];  Set[Global`theTiltPriMir, Plus[180, Times[ArcTan[Times[-1, Power[Global`AngCoeff[Global`p1z, Global`p1y, Global`p2z, Global`p2y], -1]]], Power[Degree, -1]]]];  Set[Global`p3z, Global`average[Plus[1333.7`], Plus[1335.4`]]];  Set[Global`p3y, Global`average[Plus[349.`], Plus[351.3`]]];  Set[Global`p3, List[Global`p3z, Global`p3y]];  Set[Global`ll, 800];  Set[Global`tt, Global`average[0.2502`, 0.2506`]];  Set[Global`p4z, Plus[Global`p3z, Times[Global`ll, Cos[Plus[Times[Pi, Power[2, -1]], Global`tt]]]]];  Set[Global`p4y, Plus[Global`p3y, Times[Global`ll, Sin[Plus[Times[Pi, Power[2, -1]], Global`tt]]]]];  Set[Global`theTiltSecMir, Times[ArcTan[Times[-1, Power[Global`AngCoeff[Global`p4z, Global`p4y, Global`p3z, Global`p3y], -1]]], Power[Degree, -1]]];  Set[Global`theThetaMinSecMir, ArcTan[Times[Global`p3y, Power[Global`p3z, -1]]]];  Set[Global`p8z, Global`average[1491.125`, 1491.075`]];  Set[Global`p8y, Global`average[1182.325`, 1182.75`]];  Set[Global`p8, List[Global`p8z, Global`p8y]];  Set[Global`theTiltScreen, Times[Global`average[Global`average[ArcSin[0.8866`], ArcSin[0.8867`]], Global`average[ArcCos[0.4624`], ArcCos[0.4623`]]], Power[Degree, -1]]];  Global`miniBanner[" END calc2009RealRich1Geometry "];  Return[])]])
-
-(* ::Section:: *)
-(* Geometry of Rich1 according to LHCb - 2004 - 121 *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 50, expression 1 ---- *)
-(SetDelayed[Global`calc2009Rich1Geometry, Module[List[Global`z, Global`radius, Global`sol], (Global`miniBanner[" INIT calc2009Rich1Geometry "];  Set[Global`radius, 2700];  Set[Global`radiusPriMir, Global`radius];  Set[Global`zc, -684.4`];  Set[Global`yc, Plus[837.9`]];  Set[Global`cc, List[Global`zc, Global`yc]];  Set[Global`p1y, 0];  Set[Global`sol, Solve[Equal[Global`circumference[Global`zc, Global`yc, Global`radius, Global`z, Global`p1y], 0], Global`z]];  Set[Global`p1z, ReplaceAll[Global`z, Part[Global`sol, 2]]];  Set[Global`p1, List[Global`p1z, Global`p1y]];  Set[Global`p2y, 600];  Set[Global`sol, Solve[Equal[Global`circumference[Global`zc, Global`yc, Global`radius, Global`z, Global`p2y], 0], Global`z]];  Set[Global`p2z, ReplaceAll[Global`z, Part[Global`sol, 2]]];  Set[Global`p2, List[Global`p2z, Global`p2y]];  Set[Global`theTiltPriMir, Plus[180, Times[ArcTan[Times[-1, Power[Global`AngCoeff[Global`p1z, Global`p1y, Global`p2z, Global`p2y], -1]]], Power[Degree, -1]]]];  Set[Global`p3z, 1310.`];  Set[Global`p3y, 350.`];  Set[Global`p3, List[Global`p3z, Global`p3y]];  Set[Global`p4y, 1100.`];  Set[Global`p4z, 1118.5`];  Set[Global`p4, List[Global`p4z, Global`p4y]];  Set[Global`theTiltSecMir, Times[ArcTan[Times[-1, Power[Global`AngCoeff[Global`p4z, Global`p4y, Global`p3z, Global`p3y], -1]]], Power[Degree, -1]]];  Set[Global`theThetaMinSecMir, ArcTan[Times[Global`p3y, Power[Global`p3z, -1]]]];  Set[Global`p7z, 1231.7`];  Set[Global`p7y, 1317.7`];  Set[Global`p7, List[Global`p7z, Global`p7y]];  Set[Global`p8z, 1482.3`];  Set[Global`p8y, 1187.4`];  Set[Global`p8, List[Global`p8z, Global`p8y]];  Set[Global`p9z, 1733.8`];  Set[Global`p9y, 1056.7`];  Set[Global`p9, List[Global`p9z, Global`p9y]];  Set[Global`theTiltScreen, Times[ArcTan[Times[-1, Power[Global`AngCoeff[Global`p7z, Global`p7y, Global`p9z, Global`p9y], -1]]], Power[Degree, -1]]];  Global`miniBanner[" END calc2009Rich1Geometry "];  Return[])]])
-
-(* ::Section:: *)
-(* Geometry of Rich2 according to LHCb - 2002 - 009 *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 51, expression 1 ---- *)
-(SetDelayed[Global`calc2009Rich2Geometry, Module[List[Global`z, Global`y, Global`radius, Global`sol], (Global`miniBanner[" INIT calc2009Rich2Geometry "];  Set[Global`radius, 8600];  Set[Global`radiusPriMir, Global`radius];  Set[Global`zc, 3291.`];  Set[Global`yc, 3270.`];  Set[Global`cc, List[Global`zc, Global`yc]];  Set[Global`p1y, 0];  Set[Global`sol, Solve[Equal[Global`circumference[Global`zc, Global`yc, Global`radius, Global`z, Global`p1y], 0], Global`z]];  Set[Global`p1z, ReplaceAll[Global`z, Part[Global`sol, 2]]];  Set[Global`p1, List[Global`p1z, Global`p1y]];  Set[Global`p2z, 11705];  Set[Global`sol, Solve[Equal[Global`circumference[Global`zc, Global`yc, Global`radius, Global`p2z, Global`y], 0], Global`y]];  Set[Global`p2y, ReplaceAll[Global`y, Part[Global`sol, 1]]];  Set[Global`p2, List[Global`p2z, Global`p2y]];  Set[Global`theTiltPriMir, Plus[180, Times[ArcTan[Times[-1, Power[Global`AngCoeff[Global`p1z, Global`p1y, Global`p2z, Global`p2y], -1]]], Power[Degree, -1]]]];  Set[Global`p3z, 9880];  Set[Global`p3y, 1234.`];  Set[Global`p3, List[Global`p3z, Global`p3y]];  Set[Global`p4y, 2848.`];  Set[Global`p4z, 9578.`];  Set[Global`p4, List[Global`p4z, Global`p4y]];  Set[Global`theTiltSecMir, Times[ArcTan[Times[-1, Power[Global`AngCoeff[Global`p4z, Global`p4y, Global`p3z, Global`p3y], -1]]], Power[Degree, -1]]];  Set[Global`theThetaMinSecMir, ArcTan[Times[Global`p3y, Power[Global`p3z, -1]]]];  Set[Global`p8z, 10761.`];  Set[Global`p8y, 3892.`];  Set[Global`p8, List[Global`p8z, Global`p8y]];  Set[Global`p7, Plus[Global`p8, Times[List[Cos[Plus[Times[Pi, Power[2, -1]], -1.065`]], Times[-1, Sin[Plus[Times[Pi, Power[2, -1]], -1.065`]]]], Times[682, Power[2, -1]]]]];  Set[Global`p9, Plus[Global`p8, Times[-1, List[Cos[Plus[Times[Pi, Power[2, -1]], -1.065`]], Times[-1, Sin[Plus[Times[Pi, Power[2, -1]], -1.065`]]]], Times[682, Power[2, -1]]]]];  Set[Global`p7z, Part[Global`p7, 1]];  Set[Global`p7y, Part[Global`p7, 2]];  Set[Global`p9z, Part[Global`p9, 1]];  Set[Global`p9y, Part[Global`p9, 2]];  Set[Global`theTiltScreen, Times[1.065`, Power[Degree, -1]]];  Global`miniBanner[" END calc2009Rich2Geometry "];  Return[])]])
-
-(* ::Subtitle:: *)
-(* OLD layouts *)
-
-(* ::Subsubtitle:: *)
-(* OLD layouts still needed for LS2/2022 *)
-
-(* ::Section:: *)
-(* protected code *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 52, expression 1 ---- *)
-((SetDelayed[Global`setBoundaryParametersOLD, Module[List[], (Global`miniBanner[" INIT setBoundaryParametersOLD "];  Print[" RICH is : ", Global`iRICH];  Set[Global`theSensorPitch, 1];  Set[Global`thetaMinPriMir, 0.`];  Set[Global`radiusSecMir, 0.`];  Set[Global`pixelSize, 3];  If[And[Unequal[Global`iRICH, 1], Unequal[Global`iRICH, 2], Unequal[Global`iRICH, 9]], Global`killStop];  If[Equal[Global`iRICH, 1], (Set[Global`minZ, 985.`];  Set[Global`maxZ, 2170.`];  Set[Global`minAcc, Times[25.`, Power[1000.`, -1]]];  SetDelayed[Global`maxYAcc, Global`trnsvrsAcc];  SetDelayed[Global`maxXAcc, Global`thrdDimAcc];  Set[Global`minThetaTrsvrsTrack, 0.05`];  Null)];  If[Equal[Global`iRICH, 2], (Set[Global`minZ, 9450];  Set[Global`maxZ, 11900];  Set[Global`minAcc, Times[15.`, Power[1000.`, -1]]];  SetDelayed[Global`maxXAcc, Global`trnsvrsAcc];  SetDelayed[Global`maxYAcc, Global`thrdDimAcc];  Set[Global`minThetaTrsvrsTrack, 0.03`];  Set[Global`l000z, Plus[11245, -9450]];  SetDelayed[Global`l000, Global`l000z];  Set[Global`l120z, Plus[11705, -9450]];  SetDelayed[Global`l120, Times[Global`l120z, Power[Cos[0.12`], -1]]];  Global`printD[Global`l000];  Global`printD[Global`l120];  Global`printD[Mean[List[Global`l000, Global`l120]]];  Null)];  Global`miniBanner[" END setBoundaryParametersOLD "];  Return[])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 53, expression 1 ---- *)
-((SetDelayed[Global`setData2022Rich1, Module[List[], (Global`printD[Global`iRICH];  Global`setBoundaryParametersOLD;  Print[" New vertical Rich1 - final official version presented on 17-06-2013 - "];  Print[" Fine-Tuned from RICH1-Optical-Layout-EDMS-1390002-v2-CF160401-1050.pdf on Oct. 14th, 2020 "];  Set[Global`zBoxMin, 985];  Set[Global`zBoxMax, 2245];  Set[Global`p2z, 2145.001`];  Set[Global`p4z, 1099.242`];  Set[Global`thrdDimAcc, 0.3`];  Set[Global`trnsvrsAcc, 0.25`];  Set[Global`minAcc, 0.025`];  Set[Global`thrdDimMinAcc, Global`minAcc];  Set[Global`trnsvrsMinAcc, Global`minAcc];  Set[Global`thetaMinSecMir, Global`trnsvrsAcc];  Set[Global`theThetaMinSecMir, Global`thetaMinSecMir];  Set[Global`sizeTrnsvrsPriMir, 650.`];  Set[Global`sizeTrnsvrsSecMir, 883.`];  Set[Global`sizeTrnsvrsScreen, Plus[621.5`, 200]];  Set[Global`sizeThrdDimPriMir, 1500.`];  Set[Global`sizeThrdDimSecMir, 1489.`];  Set[Global`sizeThrdDimScreen, 1500.`];  Set[Global`radiusPriMir, 3650];  Set[Global`tiltPriMir, Times[Plus[170.3`], Degree]];  Set[Global`tiltSecMir, Times[0.25656`, Times[180, Power[Pi, -1]], Degree]];  Set[Global`tiltScreen, Times[Plus[90, Times[-1, 0.561996`, Times[180, Power[Pi, -1]]]], Degree]];  Set[Global`zScreen, 1641.417`];  Set[Global`xScreen, 1407.716`];  Set[Global`PDADepth, 300];  Global`execDoCalc;  Global`miniBanner[" END setData2022Rich1 "];  Return[])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 54, expression 1 ---- *)
-((SetDelayed[Global`setData2009Rich2, Module[List[], (Global`miniBanner[" INIT setData2009Rich2 "];  Global`printD[Global`iRICH];  Global`setBoundaryParametersOLD;  Global`calc2009Rich2Geometry;  Set[Global`halfOpenAngle, Times[0.0313`, Times[180, Power[Pi, -1]]]];  Set[Global`sizeThrdDimPriMir, 2500.`];  Set[Global`sizeThrdDimSecMir, 2000.`];  Set[Global`sizeThrdDimScreen, 1500.`];  Set[Global`zBoxMin, 9578.`];  Set[Global`zBoxMax, 11705.`];  Set[Global`thrdDimAcc, Times[100, Power[1000.`, -1]]];  Set[Global`trnsvrsAcc, Times[120, Power[1000.`, -1]]];  Set[Global`sizeTrnsvrsPriMir, Global`dist[Global`p1z, Global`p1y, Global`p2z, Global`p2y]];  Set[Global`sizeTrnsvrsSecMir, Global`dist[Global`p3z, Global`p3y, Global`p4z, Global`p4y]];  Set[Global`sizeTrnsvrsScreen, Global`dist[Global`p7z, Global`p7y, Global`p9z, Global`p9y]];  Set[Global`thetaMinSecMir, Global`theThetaMinSecMir];  Set[Global`xScreen, Global`p8y];  Set[Global`zScreen, Global`p8z];  Set[Global`tiltPriMir, Times[Global`theTiltPriMir, Degree]];  Set[Global`tiltSecMir, Times[Global`theTiltSecMir, Degree]];  Set[Global`tiltScreen, Times[Global`theTiltScreen, Degree]];  Print[" deltaSphMirr=0 ... "];  Set[Global`deltaSphMirr, 0];  Set[Global`PDADepth, 20];  Global`execDoCalc;  Global`miniBanner[" END setData2009Rich2 "];  Return[])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 55, expression 1 ---- *)
-((SetDelayed[Global`setData2022Rich2, Module[List[], (Global`miniBanner[" INIT setData2022Rich2 - Setting default data for Rich2-2022 "];  Global`printD[Global`iRICH];  Global`setData2009Rich2;  Global`miniBanner[" END setData2022Rich2 "];  Return[])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 56, expression 1 ---- *)
-((SetDelayed[Global`setDataReal2002Rich1, Module[List[], (Global`miniBanner[" INIT setDataReal2002Rich1 "];  Global`printD[Global`iRICH];  Global`setBoundaryParametersOLD;  Global`calc2009RealRich1Geometry;  Set[Global`zBoxMin, 1118.5`];  Set[Global`zBoxMax, 2005.1`];  Set[Global`thrdDimAcc, Times[300, Power[1000.`, -1]]];  Set[Global`trnsvrsAcc, Times[250, Power[1000.`, -1]]];  Set[Global`sizeTrnsvrsPriMir, Global`dist[Global`p1z, Global`p1y, Global`p2z, Global`p2y]];  Set[Global`sizeTrnsvrsSecMir, Global`dist[Global`p3z, Global`p3y, Global`p4z, Global`p4y]];  Set[Global`sizeTrnsvrsScreen, 1000];  Set[Global`thetaMinSecMir, Global`theThetaMinSecMir];  Set[Global`xScreen, Global`p8y];  Set[Global`zScreen, Global`p8z];  Set[Global`tiltPriMir, Times[Global`theTiltPriMir, Degree]];  Set[Global`tiltSecMir, Times[Global`theTiltSecMir, Degree]];  Set[Global`tiltScreen, Times[Global`theTiltScreen, Degree]];  Global`execDoCalc;  Global`miniBanner[" END setDataReal2002Rich1 "];  Return[])]];  Null))
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 57, expression 1 ---- *)
-((SetDelayed[Global`setData2009Rich1, Module[List[], (Global`miniBanner[" INIT setData2009Rich1 "];  Global`printD[Global`iRICH];  Global`setBoundaryParametersOLD;  Global`calc2009Rich1Geometry;  Set[Global`zBoxMin, 1118.5`];  Set[Global`zBoxMax, 2005.1`];  Set[Global`thrdDimAcc, Times[300, Power[1000.`, -1]]];  Set[Global`trnsvrsAcc, Times[250, Power[1000.`, -1]]];  Set[Global`sizeTrnsvrsPriMir, Global`dist[Global`p1z, Global`p1y, Global`p2z, Global`p2y]];  Set[Global`sizeTrnsvrsSecMir, Global`dist[Global`p3z, Global`p3y, Global`p4z, Global`p4y]];  Set[Global`sizeTrnsvrsScreen, Global`dist[Global`p7z, Global`p7y, Global`p9z, Global`p9y]];  Set[Global`thetaMinSecMir, Global`theThetaMinSecMir];  Set[Global`xScreen, Global`p8y];  Set[Global`zScreen, Global`p8z];  Set[Global`tiltPriMir, Times[Global`theTiltPriMir, Degree]];  Set[Global`tiltSecMir, Times[Global`theTiltSecMir, Degree]];  Set[Global`tiltScreen, Times[Global`theTiltScreen, Degree]];  Global`execDoCalc;  Global`miniBanner[" END setData2009Rich1 "];  Return[])]];  Null))
-
-(* ::Subsubtitle:: *)
-(* OLD layout but good but no more useful *)
-
-(* ::Section:: *)
-(* protected code *)
-
-(* ::Subtitle:: *)
-(* END BASE *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 58, expression 1 ---- *)
-(Null)
-
-(* ::Subsubtitle:: *)
-(* end notebook initialization cells *)
-
-(* ::Input::Initialization:: *)
-(* ---- initialization cell 59, expression 1 ---- *)
-((Global`endEvalPrintOut[];  Null))
+endEvalPrintOut[];

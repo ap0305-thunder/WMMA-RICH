@@ -18,6 +18,8 @@ applySettings::usage = "applySettings[name] or applySettings[{names...}] applies
 availableSettings::usage = "availableSettings[] returns the list of names accepted by applySettings and removeSettings.";
 bannerLine::usage = "bannerLine[char:\"-\", width:98] returns char repeated width times (at least once) as a String and does not print.";
 bigBanner::usage = "bigBanner[msg:\"\", char:\"=\", width:98] prints two banner lines above and below an optional message and returns msg.";
+packageBanner::usage = "packageBanner";
+
 cellsByStyle::usage = "cellsByStyle[styles] returns CellObject expressions from the evaluation notebook whose current CellStyle is a member of the supplied list of style names.";
 checkNewCreatedSymbols::usage = "checkNewCreatedSymbols[pattern:\"Global`*\"] returns symbol-name Strings newly matching pattern since the previous call. The first call initializes the private snapshot and returns {}.";
 deleteAllEmptyCellsInNotebook::usage = "deleteAllEmptyCellsInNotebook deletes non-generated cells in the current notebook whose content is empty or whitespace-only. It is a delayed symbol, not a function call, and requires a notebook front end.";
@@ -744,6 +746,19 @@ ClearAll[bannerLine, bigBanner, midBanner, miniBanner, smallBanner, timeBanner];
 
 bannerLine[char_: "-", width_: 98] :=
   StringJoin @ ConstantArray[char, Max[1, width]];
+
+packageBanner[msg_: "", char_: "=", width_: 98] := Module[{line = bannerLine[char, width]},
+Print[line]; 
+ Print[bannerLine["|",width]];
+If[StringLength@ToString[msg] > 0, Print["***---   ", msg,"   ---***"]];
+Print[ bannerLine["*",width]];
+(* Print[bannerLine["|",width]];*)
+  Print[line]; 
+(*  msg*)
+];
+
+
+
 
 bigBanner[msg_: "", char_: "=", width_: 98] := Module[{line = bannerLine[char, width]},
   Print[line];  Print[line];

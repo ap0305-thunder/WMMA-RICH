@@ -269,30 +269,35 @@ $comparer = Join-Path $runRoot "validation\CompareBaselines.wls"
 $runFailures = @()
 $stagedFiles = @()
 
-# Native Wolfram Save As files are the maintained source baseline. Validation
-# must never regenerate or rewrite them from the legacy notebooks.
+# Native Wolfram Save As files are validation baselines kept outside src so
+# project loaders cannot treat them as runtime components. Validation must
+# never regenerate or rewrite them from the legacy notebooks.
 $generationLog = Join-Path $hostLogs "source-regeneration.log"
-$nativeSourceNames = @(
-    "CellStyleDataRules.wl",
-    "base.wl",
-    "physics-general.wl",
-    "statDataAnal.wl",
-    "inputDataForRICH.wl",
-    "RICH.wl",
-    "calculator-reboot.wl",
-    "calculator-reboot-native.wl"
+$requiredSourcePaths = @(
+    "src\CellStyleDataRules.wl",
+    "src\base.wl",
+    "src\physics-general.wl",
+    "src\statDataAnal.wl",
+    "src\inputDataForRICH.wl",
+    "src\RICH.wl",
+    "src\calculator-reboot.wl",
+    "validation\native-sources\calculator-reboot-native.wl",
+    "validation\native-sources\optics-native.wl"
 )
-$missingNativeSources = @(
-    foreach ($sourceName in $nativeSourceNames) {
-        $sourcePath = Join-Path $runRoot ("src\" + $sourceName)
+$missingRequiredSources = @(
+    foreach ($relativeSourcePath in $requiredSourcePaths) {
+        $sourcePath = Join-Path $runRoot $relativeSourcePath
         if (-not (Test-Path -LiteralPath $sourcePath)) {
             $sourcePath
         }
     }
 )
-if ($missingNativeSources.Count -gt 0) {
-    throw "Missing native source files: $($missingNativeSources -join ', ')"
+if ($missingRequiredSources.Count -gt 0) {
+    throw "Missing required source files: $($missingRequiredSources -join ', ')"
 }
+
+$opticsBuilder = Join-Path $runRoot "validation\BuildOpticsFromNative.ps1"
+& $opticsBuilder -ProjectRoot $runRoot -Check
 
 $calculatorSource = Join-Path $runRoot "src\calculator-reboot.wl"
 $calculatorText = [System.IO.File]::ReadAllText($calculatorSource)
@@ -305,7 +310,7 @@ if ($calculatorMarkerCount -ne 1) {
     throw "Expected exactly one CALCULATOR BODY marker in src\calculator-reboot.wl; found $calculatorMarkerCount."
 }
 
-$calculatorNativeSource = Join-Path $runRoot "src\calculator-reboot-native.wl"
+$calculatorNativeSource = Join-Path $runRoot "validation\native-sources\calculator-reboot-native.wl"
 $calculatorSourceHash = (Get-FileHash `
     -LiteralPath $calculatorSource `
     -Algorithm SHA256
@@ -315,14 +320,15 @@ $calculatorNativeHash = (Get-FileHash `
     -Algorithm SHA256
 ).Hash
 if ($calculatorSourceHash -cne $calculatorNativeHash) {
-    throw "src\calculator-reboot.wl differs from its complete native Save As export."
+    throw "src\calculator-reboot.wl differs from validation\native-sources\calculator-reboot-native.wl."
 }
 
 @(
     "Native Wolfram Save As sources preserved; no regeneration performed.",
-    "Verified source files: $($nativeSourceNames -join ', ')",
+    "Verified source files: $($requiredSourcePaths -join ', ')",
+    "Verified src\optics.wl is derived textually from the Wolfram Save As source.",
     "Verified one CALCULATOR BODY marker in src\calculator-reboot.wl.",
-    "Verified calculator-reboot.wl matches calculator-reboot-native.wl."
+    "Verified src\calculator-reboot.wl matches validation\native-sources\calculator-reboot-native.wl."
 ) | Set-Content -LiteralPath $generationLog -Encoding UTF8
 Write-LauncherLog -Path $launcherLog -Message "Native WL sources verified without modification."
 

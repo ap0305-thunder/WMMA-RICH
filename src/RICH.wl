@@ -1,29 +1,26 @@
 (* ::Package::"Tags"-><|"SuspiciousBox" -> <|Enabled -> False|>|>:: *)
 
 (* ::Text::Initialization:: *)
-(*This package/notebook does all basic calculations for a RICH detector.*)
-(*Precision[x] gives a measure of the relative uncertainty in the value of x . With absolute uncertainty dx, Precision[x] is - Log[10, dx/x] .*)
-(*Accuracy[x] gives a measure of the absolute uncertainty in the value of x . With uncertainty dx, Accuracy[x] is - Log[10, dx] .*)
+(*(*(*(*This package/notebook does all basic calculations for a RICH detector.*)*)*)*)
+(*(*(*(*Precision[x] gives a measure of the relative uncertainty in the value of x . With absolute uncertainty dx, Precision[x] is - Log[10, dx/x] .*)*)*)*)
+(*(*(*(*Accuracy[x] gives a measure of the absolute uncertainty in the value of x . With uncertainty dx, Accuracy[x] is - Log[10, dx] .*)*)*)*)
 
 
-(* ::Title::Initialization::Closed:: *)
-(*SETUP*)
+(* ::Title::Initialization:: *)
+(*(*(*(*SETUP*)*)*)*)
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*SETUP*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*SETUP*)*)*)*)
 
 
-(* ::Subsubtitle::Closed:: *)
+(* ::Subsubtitle:: *)
 (*INIT*)
 
 
 (* ::Input::Initialization:: *)
-Print["*==================================================================================================*"];
-Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"];
-Print["***--- rich ---***"];
-Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"];
-Print["*==================================================================================================*"];
+packageBanner["LOADING rich"];
+
 
 
 (* ::Input::Initialization:: *)
@@ -40,7 +37,6 @@ showContextInfo[]
 
 
 (* ::Input::Initialization:: *)
-
 
 
 
@@ -84,16 +80,8 @@ If[
 (*,"Notebook"];*)
 
 
-(* ::Input::Initialization:: *)
-Print["*==================================================================================================*"];
-Print["*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*"];
-Print["***--- rich ---***"];
-Print["*VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*"];
-Print["*==================================================================================================*"];
-
-
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*Additional general settings for any (complex) notebook*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*Additional general settings for any (complex) notebook*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -140,12 +128,12 @@ Print[" NotebookInformation : ",TableForm@NotebookInformation[EvaluationNotebook
 (*deleteAllEmptyCellsInNotebook*)
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*>>> START INITIALIZATION*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*>>> START INITIALIZATION*)*)*)*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*INIT*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*INIT*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -179,24 +167,24 @@ Print[" t0=AbsoluteTime[]   ",t0=AbsoluteTime[]];
 Print[" ************************************************************************************************* "];
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*notes to remember*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*notes to remember*)*)*)*)
 
 
 (* ::Text::Initialization:: *)
-(*.............Needs versus Get*)
-(*<<name reads in a file, evaluating each expression in it, and returning the last one.*)
-(*(<< is shorthand for Get.)*)
-(*Needs["context`"] loads an appropriate file if the specified context is not already in $Packages.*)
-(*Needs is normally appropriate for making sure that a package has been loaded, but when you need to force the package to reload you want Get. *)
-(*Get can be used for loading several different formats containing data or definitions, in addition to formal packages. See this answer for an overview of such methods.*)
-(*A related function that deserves mentioning is DeclarePackage. While Get does a hard load and Needs does a soft one, DeclarePackage does a delayed load.*)
-(*But there is another big difference: Needs insists on a correct package format and will complain when the .m file doesn't correctly create a context which matches the file name and path. Get will instead load every file with correct Mathematica InputForm syntax. That means that you can e.g. use Put and Get to save and load arbitrary mathematica expressions to file, which would not be possible with Needs. *)
-(**)
+(*(*(*(*.............Needs versus Get*)*)*)*)
+(*(*(*(*<<name reads in a file, evaluating each expression in it, and returning the last one.*)*)*)*)
+(*(*(*(*(<< is shorthand for Get.)*)*)*)*)
+(*(*(*(*Needs["context`"] loads an appropriate file if the specified context is not already in $Packages.*)*)*)*)
+(*(*(*(*Needs is normally appropriate for making sure that a package has been loaded, but when you need to force the package to reload you want Get. *)*)*)*)
+(*(*(*(*Get can be used for loading several different formats containing data or definitions, in addition to formal packages. See this answer for an overview of such methods.*)*)*)*)
+(*(*(*(*A related function that deserves mentioning is DeclarePackage. While Get does a hard load and Needs does a soft one, DeclarePackage does a delayed load.*)*)*)*)
+(*(*(*(*But there is another big difference: Needs insists on a correct package format and will complain when the .m file doesn't correctly create a context which matches the file name and path. Get will instead load every file with correct Mathematica InputForm syntax. That means that you can e.g. use Put and Get to save and load arbitrary mathematica expressions to file, which would not be possible with Needs. *)*)*)*)
+(*(*(*(**)*)*)*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*have a look at this notebook*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*have a look at this notebook*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -217,8 +205,8 @@ If[Length@Cells[CellStyle->"Print"]>0,Cells[CellStyle->"Print"];Print[     "Leng
 prettyPrintedCellStyleNumber
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*MY LIBRARIES*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*MY LIBRARIES*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -268,15 +256,15 @@ showContextInfo[]
 
 
 (* ::Subtitle::Initialization:: *)
-(*<<< END ALL INTIALIZATION*)
+(*(*(*(*<<< END ALL INTIALIZATION*)*)*)*)
 
 
-(* ::Title::Initialization::Closed:: *)
-(*RICH*)
+(* ::Title::Initialization:: *)
+(*(*(*(*RICH*)*)*)*)
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*>>> INIT PACKAGE*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*>>> INIT PACKAGE*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -303,16 +291,16 @@ checkNewCreatedSymbols[]
 showContextInfo[]
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*>>> INIT PACKAGE INITIALIZATION*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*>>> INIT PACKAGE INITIALIZATION*)*)*)*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*GENERAL DEFINITIONS FOR THIS NOTEBOOK*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*GENERAL DEFINITIONS FOR THIS NOTEBOOK*)*)*)*)
 
 
-(* ::Section::Initialization::Closed:: *)
-(*MISCELLANEA DEFINITIONS*)
+(* ::Section::Initialization:: *)
+(*(*(*(*MISCELLANEA DEFINITIONS*)*)*)*)
 
 
 (* ::Input::Initialization::"Tags"-><|"SuspiciousBox" -> <|Enabled -> False|>, "PrefixPlus" -> <|Enabled -> False|>, "NoVariables" -> <|"Module" -> <||>|>|>:: *)
@@ -422,12 +410,12 @@ ExtractViewsFromGraphics[ll_]:=Flatten[Union[Extract[ll,Position[ll,#]]&/@{ViewP
 
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*GENERAL OPTIONS FOR THIS NOTEBOOK*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*GENERAL OPTIONS FOR THIS NOTEBOOK*)*)*)*)
 
 
-(* ::Section::Initialization::Closed:: *)
-(*MISCELLANEA OPTIONS*)
+(* ::Section::Initialization:: *)
+(*(*(*(*MISCELLANEA OPTIONS*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -458,12 +446,12 @@ Print@Plot[Sin[rich`x],{rich`x,0,99},AxesLabel->labelNmVsEv];
 Print@ListPlot[{2,33,2,3,27},AxesLabel->labelNmVsEv];
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*PHYSICS*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*PHYSICS*)*)*)*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*load PHYSICS-GENERAL FUNCTIONS*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*load PHYSICS-GENERAL FUNCTIONS*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -488,12 +476,12 @@ showContextInfo[]
 
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*INPUT DATA FOR RICH*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*INPUT DATA FOR RICH*)*)*)*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*load INPUT DATA FOR RICH*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*load INPUT DATA FOR RICH*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -535,16 +523,16 @@ showContextInfo[]
 
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*RICH*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*RICH*)*)*)*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*RICH PHYSICS DETECTOR FUNCTIONS*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*RICH PHYSICS DETECTOR FUNCTIONS*)*)*)*)
 
 
-(* ::Section::Initialization::Closed:: *)
-(*Define efficiencies*)
+(* ::Section::Initialization:: *)
+(*(*(*(*Define efficiencies*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -647,8 +635,8 @@ Print[TableForm@Transpose[{effNames,allEff}]];
 efficiencyDebugPrintout;
 
 
-(* ::Section::Initialization::Closed:: *)
-(*Efficiency debug printout*)
+(* ::Section::Initialization:: *)
+(*(*(*(*Efficiency debug printout*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -664,8 +652,8 @@ efficiencyDebugPrintout := Module[  {r1, r2}  ,
 ];
 
 
-(* ::Section::Initialization::Closed:: *)
-(*Plot Cherenkov angle chromatic limits*)
+(* ::Section::Initialization:: *)
+(*(*(*(*Plot Cherenkov angle chromatic limits*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -692,8 +680,8 @@ Export[Global`RICHOutputPath["chrErrLimitsVersusMomentum-"<>fileNameTagRichRad<>
 ];
 
 
-(* ::Section::Initialization::Closed:: *)
-(*generatePhotonEnergy*)
+(* ::Section::Initialization:: *)
+(*(*(*(*generatePhotonEnergy*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -737,12 +725,12 @@ Return[photonEnergies];
 ];
 
 
-(* ::Section::Initialization::Closed:: *)
-(*YIELD*)
+(* ::Section::Initialization:: *)
+(*(*(*(*YIELD*)*)*)*)
 
 
-(* ::Subsection::Initialization::Closed:: *)
-(*INIT*)
+(* ::Subsection::Initialization:: *)
+(*(*(*(*INIT*)*)*)*)
 
 
 (* ::Input::Initialization::"Tags"-><|"UppercaseVariable" -> <||>|>:: *)
@@ -823,8 +811,8 @@ debugPrintTempD[input__]:=Module[
 SetAttributes[{showItTemp,printTempD,debugPrintTempD},HoldAll];
 
 
-(* ::Subsection::Initialization::Closed:: *)
-(*calcRICHYield*)
+(* ::Subsection::Initialization:: *)
+(*(*(*(*calcRICHYield*)*)*)*)
 
 
 (* ::Input::Initialization::"Tags"-><|"UppercaseVariable" -> <||>, "SuspiciousBox" -> <||>|>:: *)
@@ -1377,8 +1365,8 @@ Return[detectorResults]
 (*Save["calcRICHYield.m",{calcRICHYield}]*)
 
 
-(* ::Subsection::Initialization::Closed:: *)
-(*calcDetectedPhotons*)
+(* ::Subsection::Initialization:: *)
+(*(*(*(*calcDetectedPhotons*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -1869,8 +1857,8 @@ Return[{theIntegratedFullYieldEne,thisTotEff,overallIntegratedPDEEne,allTheEffic
 ];
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*CALC all detector data*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*CALC all detector data*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -2051,8 +2039,8 @@ calcRICHYield["C4F10",\[Lambda]MinRef,\[Lambda]MaxRef,1,"MAPMT22"]
 killStop*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*examples (non-evaluatable cells)*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*examples (non-evaluatable cells)*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -2080,11 +2068,11 @@ killStop*)
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*OPTIONS FOR THIS RUN*)
+(*(*(*(*OPTIONS FOR THIS RUN*)*)*)*)
 
 
-(* ::Subsubtitle::Initialization::Closed:: *)
-(*PREAMBLE*)
+(* ::Subsubtitle::Initialization:: *)
+(*(*(*(*PREAMBLE*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -2131,8 +2119,8 @@ Options[Histogram]
 (**)
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*<<< END PACKAGE INTIALIZATION*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*<<< END PACKAGE INTIALIZATION*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -2143,7 +2131,7 @@ Options[Histogram]
 (**)
 (*FrontEndExecute[FrontEndToken["DeleteGeneratedCells"]]*)
 (**)
-myNotebookInit`bigBanner[" FINISHING INITIALIZATION "]
+
 (**)
 (*FrontEndExecute[FrontEndToken[EvaluationNotebook[],"SelectAll"]];*)
 (*FrontEndTokenExecute["SelectionCloseAllGroups"];*)
@@ -2161,18 +2149,25 @@ checkNewCreatedSymbols[]
 showContextInfo[]
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*CODE*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*CODE*)*)*)*)
 
 
 (* ::Text::Initialization:: *)
-(*bla *)
-(*bla*)
+(*(*(*(*bla *)*)*)*)
+(*(*(*(*bla*)*)*)*)
 
 
-(* ::Subtitle::Initialization::Closed:: *)
-(*<<< END PACKAGE*)
+(* ::Subtitle::Initialization:: *)
+(*(*(*(*<<< END PACKAGE*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
 EndPackage[]
+
+
+endEvalPrintOut[]
+
+
+packageBanner["END rich"];
+
