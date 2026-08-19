@@ -82,7 +82,7 @@ Cell[BoxData[
    RowBox[{"Once", "["}], "*)"}], "\n", 
   RowBox[{
    RowBox[{
-   "myNotebookInit`loadMyFile", "[", "\"\<CellStyleDataRules.m\>\"", "]"}], "\[IndentingNewLine]", 
+   "myNotebookInit`loadMyFile", "[", "\"\<cellStyleDataRules.m\>\"", "]"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{",", "\"\<Notebook\>\""}], "]"}], "*)"}]}]}]], "Input",

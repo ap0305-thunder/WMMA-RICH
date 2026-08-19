@@ -94,7 +94,7 @@ Validation`$ValidationCases = <|
     |>
   |>,
 
-  "RICH-source" -> <|
+  "RICH" -> <|
     "CompareNotebookSideEffects" -> False,
     (* Notebook parsing created the complete public RICH symbol set in
        Global`; the regenerated source explicitly and correctly owns that
@@ -123,22 +123,22 @@ Validation`$ValidationCases = <|
     "Restructured" -> <|
       "Type" -> "Script",
       "Path" -> {"src", "LoadProject.wl"},
-      "ProjectCase" -> "RICH-source",
+      "ProjectCase" -> "RICH",
       "NotebookDirectory" -> {"notebooks"}
     |>
   |>,
 
-  "CellStyleDataRules-source" -> <|
+  "cellStyleDataRules" -> <|
     "CompareNotebookSideEffects" -> False,
     "Original" -> <|
       "Type" -> "Notebook",
-      "Path" -> {"legacy-original", "CellStyleDataRules.nb"},
+      "Path" -> {"legacy-original", "cellStyleDataRules.nb"},
       "EvaluationMode" -> "InitializationOnly"
     |>,
     "Restructured" -> <|
       "Type" -> "Script",
       "Path" -> {"src", "LoadProject.wl"},
-      "ProjectCase" -> "CellStyleDataRules-source",
+      "ProjectCase" -> "cellStyleDataRules",
       "NotebookDirectory" -> {"notebooks"}
     |>
   |>

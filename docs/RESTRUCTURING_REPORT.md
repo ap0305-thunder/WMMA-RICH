@@ -42,7 +42,7 @@ clear symbols in `System``.
 | `RICH.nb` | 62 | 0 | `src/RICH.wl` |
 | `calculator.nb` | 38 | 1 | `src/calculator.wl` |
 | `optics.nb` (`---... OPTICS` Title section only) | 59 | 0 | `src/optics.wl` |
-| `CellStyleDataRules.nb` | 9 | 0 | `src/CellStyleDataRules.wl` |
+| `cellStyleDataRules.nb` | 9 | 0 | `src/cellStyleDataRules.wl` |
 
 ## Behavioural validation
 

@@ -46,7 +46,7 @@ SetOptions[EvaluationNotebook[],"DynamicUpdating"->True];(* It looks ok, even if
 If[
   ! TrueQ[Global`$RICHProjectManagedLoad],
   myNotebookInit`loadMyFile[
-    "CellStyleDataRules.wl",
+    "cellStyleDataRules.wl",
     DirectoryName[$InputFileName]
   ]
 ]

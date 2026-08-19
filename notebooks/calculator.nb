@@ -180,7 +180,7 @@ unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\notebooks"],
   "8/13/26 20:15:39 During evaluation of \
 In[2]:=",ExpressionUUID->"0d67944c-0d1a-1942-b0cd-d5fc2c9a6c61"],
 
-Cell[BoxData["\<\" SETTING CELL STYLE DATA RULES - CellStyleDataRules \"\>"], \
+Cell[BoxData["\<\" SETTING CELL STYLE DATA RULES - cellStyleDataRules \"\>"], \
 "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
  CellLabel->
@@ -236,11 +236,11 @@ Cell[BoxData[
   RowBox[{"\<\" This package lives at $InputFileName    \"\>", 
    "\[InvisibleSpace]", "\<\"C:\\\\Users\\\\Ale\\\\OneDrive - \
 unige.it\\\\Documenti\\\\WolframMMAProjectRICH-Git-new\\\\src\\\\\
-CellStyleDataRules.wl\"\>"}],
+cellStyleDataRules.wl\"\>"}],
   SequenceForm[
   " This package lives at $InputFileName    ", 
    "C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\CellStyleDataRules.\
+unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\cellStyleDataRules.\
 wl"],
   Editable->False]], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
@@ -253,11 +253,11 @@ Cell[BoxData[
   RowBox[{"\<\" This package lives at $Input           \"\>", 
    "\[InvisibleSpace]", "\<\"C:\\\\Users\\\\Ale\\\\OneDrive - \
 unige.it\\\\Documenti\\\\WolframMMAProjectRICH-Git-new\\\\src\\\\\
-CellStyleDataRules.wl\"\>"}],
+cellStyleDataRules.wl\"\>"}],
   SequenceForm[
   " This package lives at $Input           ", 
    "C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\CellStyleDataRules.\
+unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\cellStyleDataRules.\
 wl"],
   Editable->False]], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
@@ -1559,12 +1559,12 @@ Cell[BoxData[
   RowBox[{"\<\"    \"\>", 
    "\[InvisibleSpace]", "\<\"C:\\\\Users\\\\Ale\\\\OneDrive - \
 unige.it\\\\Documenti\\\\WolframMMAProjectRICH-Git-new\\\\src\\\\\
-CellStyleDataRules.wl\"\>", "\[InvisibleSpace]", "\<\"  [\"\>", 
+cellStyleDataRules.wl\"\>", "\[InvisibleSpace]", "\<\"  [\"\>", 
    "\[InvisibleSpace]", "\<\"Get\"\>", "\[InvisibleSpace]", "\<\"]  *\"\>", "\[InvisibleSpace]",
     "2"}],
   SequenceForm[
   "    ", "C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\CellStyleDataRules.\
+unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\cellStyleDataRules.\
 wl", "  [", "Get", "]  *", 2],
   Editable->False]], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
@@ -2216,12 +2216,12 @@ Cell[BoxData[
   RowBox[{"\<\"    \"\>", 
    "\[InvisibleSpace]", "\<\"C:\\\\Users\\\\Ale\\\\OneDrive - \
 unige.it\\\\Documenti\\\\WolframMMAProjectRICH-Git-new\\\\src\\\\\
-CellStyleDataRules.wl\"\>", "\[InvisibleSpace]", "\<\"  [\"\>", 
+cellStyleDataRules.wl\"\>", "\[InvisibleSpace]", "\<\"  [\"\>", 
    "\[InvisibleSpace]", "\<\"Get\"\>", "\[InvisibleSpace]", "\<\"]  *\"\>", "\[InvisibleSpace]",
     "2"}],
   SequenceForm[
   "    ", "C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\CellStyleDataRules.\
+unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\cellStyleDataRules.\
 wl", "  [", "Get", "]  *", 2],
   Editable->False]], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
@@ -59710,7 +59710,7 @@ AutoMultiplicationSymbol->True,
     3.9615944408950576`17.350445002740923*^9, "LanguageVersion" -> 14.2, 
     "ValuePreprocessingFunction" -> Identity|>, 
   "Hashes/Once/cqqe5xUmvK" -> <|"HeldValue" -> Hold[
-      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\CellStyleDataRules.m"]], 
+      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\cellStyleDataRules.m"]], 
     "CreationDate" -> 3.9802551583947874`17.35248590302532*^9, "Creator" -> 
     "Ale", "ModificationDate" -> 3.9802551583947874`17.35248590302532*^9, 
     "LanguageVersion" -> 14.3, "ValuePreprocessingFunction" -> Identity|>|>,

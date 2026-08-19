@@ -45,7 +45,7 @@ showContextInfo[]
 If[
   ! TrueQ[Global`$RICHProjectManagedLoad],
   myNotebookInit`loadMyFile[
-    "CellStyleDataRules.wl",
+    "cellStyleDataRules.wl",
     DirectoryName[$InputFileName]
   ]
 ]

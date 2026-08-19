@@ -795,7 +795,7 @@ Cell[BoxData[
   RowBox[{"(*", 
    RowBox[{"Once", "["}], "*)"}], 
   RowBox[{
-  "myNotebookInit`loadMyFile", "[", "\"\<CellStyleDataRules.m\>\"", "]"}], 
+  "myNotebookInit`loadMyFile", "[", "\"\<cellStyleDataRules.m\>\"", "]"}], 
   RowBox[{"(*", 
    RowBox[{
     RowBox[{",", "\"\<Notebook\>\""}], "]"}], "*)"}]}]], "Input",
@@ -50875,7 +50875,7 @@ AutoMultiplicationSymbol->True,
     3.9615944408950576`17.350445002740923*^9, "LanguageVersion" -> 14.2, 
     "ValuePreprocessingFunction" -> Identity|>, 
   "Hashes/Once/cqqe5xUmvK" -> <|"HeldValue" -> Hold[
-      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\CellStyleDataRules.m"]], 
+      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\cellStyleDataRules.m"]], 
     "CreationDate" -> 3.9802551583947874`17.35248590302532*^9, "Creator" -> 
     "Ale", "ModificationDate" -> 3.9802551583947874`17.35248590302532*^9, 
     "LanguageVersion" -> 14.3, "ValuePreprocessingFunction" -> Identity|>|>,

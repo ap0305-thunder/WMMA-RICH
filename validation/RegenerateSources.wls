@@ -645,12 +645,12 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
       "StyleDefinitions->If[StringQ[Global`$RICHProjectStyleDefinitions],Global`$RICHProjectStyleDefinitions,FileNameJoin[{ParentDirectory[NotebookDirectory[]],\"myStyle.nb\"}]]",
     "WindowTitle->StringJoin[\" ------- \",nbFileName]" ->
       "WindowTitle->StringJoin[\" ------- \",myNotebookInit`safeNotebookBaseName[]]",
-    "myNotebookInit`loadMyFile[\"CellStyleDataRules.m\"]" ->
-      "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\", DirectoryName[$InputFileName]]]",
-    "myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\"]" ->
-      "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"CellStyleDataRules.wl\", DirectoryName[$InputFileName]]]"
+    "myNotebookInit`loadMyFile[\"cellStyleDataRules.m\"]" ->
+      "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"cellStyleDataRules.wl\", DirectoryName[$InputFileName]]]",
+    "myNotebookInit`loadMyFile[\"cellStyleDataRules.wl\"]" ->
+      "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"cellStyleDataRules.wl\", DirectoryName[$InputFileName]]]"
   }];
-  If[fileName === "CellStyleDataRules.wl",
+  If[fileName === "cellStyleDataRules.wl",
     repairedText = StringReplace[
       repairedText,
       RegularExpression[
@@ -731,7 +731,7 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
   repairedText = StringReplace[repairedText, {
     oldEnergy -> newEnergy,
     oldWavelength -> newWavelength,
-    "CellStyleDataRules.m" -> "CellStyleDataRules.wl",
+    "cellStyleDataRules.m" -> "cellStyleDataRules.wl",
     "base.m" -> "base.wl",
     "statDataAnal.m" -> "statDataAnal.wl",
     "physicsGeneral.m" -> "physicsGeneral.wl",
@@ -942,12 +942,12 @@ main[] := Module[
   (* optics.wl is deliberately absent: it is derived textually from the
      Wolfram Save As source by BuildOpticsFromNative.ps1. *)
   mappings = {
-    <|"Key" -> "CellStyleDataRules-source", "Source" -> {"legacy-original", "CellStyleDataRules.nb"}, "Destination" -> {"src", "CellStyleDataRules.wl"}, "Cutoff" -> None|>,
+    <|"Key" -> "cellStyleDataRules", "Source" -> {"legacy-original", "cellStyleDataRules.nb"}, "Destination" -> {"src", "cellStyleDataRules.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "base", "Source" -> {"legacy-original", "base.nb"}, "Destination" -> {"src", "base.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "physicsGeneral", "Source" -> {"legacy-original", "physicsGeneral.nb"}, "Destination" -> {"src", "physicsGeneral.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "statDataAnal", "Source" -> {"legacy-original", "statDataAnal.nb"}, "Destination" -> {"src", "statDataAnal.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "inputDataForRICH", "Source" -> {"legacy-original", "inputDataForRICH.nb"}, "Destination" -> {"src", "inputDataForRICH.wl"}, "Cutoff" -> None|>,
-    <|"Key" -> "RICH-source", "Source" -> {"legacy-original", "RICH.nb"}, "Destination" -> {"src", "RICH.wl"}, "Cutoff" -> None|>,
+    <|"Key" -> "RICH", "Source" -> {"legacy-original", "RICH.nb"}, "Destination" -> {"src", "RICH.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "calculator", "Source" -> {"legacy-original", "calculator.nb"}, "Destination" -> {"src", "calculator.wl"}, "Cutoff" -> "CALCULATOR BODY"|>
   };
 
@@ -958,7 +958,7 @@ main[] := Module[
     True,
       Select[
         mappings,
-        MemberQ[{"base", "CellStyleDataRules-source"}, Lookup[#, "Key"]] &
+        MemberQ[{"base", "cellStyleDataRules"}, Lookup[#, "Key"]] &
       ]
   ];
 

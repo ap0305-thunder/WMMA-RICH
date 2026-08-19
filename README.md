@@ -81,7 +81,7 @@ result interpretation and the files to upload for review.
 
 ## Validation v2 correction
 
-The baseline runner now stages the missing original `CellStyleDataRules.m`
+The baseline runner now stages the missing original `cellStyleDataRules.m`
 dependency, avoids evaluating initialization cells twice, reports progress by
 phase, and excludes the `base.nb` cell explicitly marked
 `Evaluatable -> False` from `src/base.wl`.

@@ -221,7 +221,7 @@ Cell[BoxData[
      RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
      RowBox[{"(*", 
       RowBox[{"Once", "["}], "*)"}], 
-     RowBox[{"myNotebookInit`loadMyFile", "[", "\"\<CellStyleDataRules.m\>\"", 
+     RowBox[{"myNotebookInit`loadMyFile", "[", "\"\<cellStyleDataRules.m\>\"", 
       RowBox[{"(*", 
        RowBox[{",", "$dirSWRoot"}], "*)"}], "]"}]}]}], 
    RowBox[{"(*", 

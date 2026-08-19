@@ -164,7 +164,7 @@ loadMyFile["myDockedCells.wl"]
 
 
 (* ::Input::Initialization:: *)
-(*Once[*)myNotebookInit`loadMyFile["CellStyleDataRules.m"](*,"Notebook"]*)
+(*Once[*)myNotebookInit`loadMyFile["cellStyleDataRules.m"](*,"Notebook"]*)
 
 
 (* ::Input::Initialization:: *)

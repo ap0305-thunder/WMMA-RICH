@@ -257,7 +257,7 @@ Cell[BoxData[
    RowBox[{"Once", "["}], "*)"}], "\[IndentingNewLine]", 
   RowBox[{
    RowBox[{
-   "myNotebookInit`loadMyFile", "[", "\"\<CellStyleDataRules.m\>\"", "]"}], "\[IndentingNewLine]", 
+   "myNotebookInit`loadMyFile", "[", "\"\<cellStyleDataRules.m\>\"", "]"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{
@@ -11181,7 +11181,7 @@ AutoMultiplicationSymbol->True,
     3.9591522306820386`17.350177189996305*^9, "LanguageVersion" -> 14.2, 
     "ValuePreprocessingFunction" -> Identity|>, 
   "Hashes/Once/cqqe5xUmvK" -> <|"HeldValue" -> Hold[
-      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\CellStyleDataRules.m"]], 
+      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\cellStyleDataRules.m"]], 
     "CreationDate" -> 3.9802555915410537`17.352485950286866*^9, "Creator" -> 
     "Ale", "ModificationDate" -> 3.9802555915410537`17.352485950286866*^9, 
     "LanguageVersion" -> 14.3, "ValuePreprocessingFunction" -> Identity|>|>,

@@ -38,7 +38,7 @@ Print["NotebookDirectory[] : ",Directory[]];
 
 
 (* ::Input::Initialization:: *)
-Print[" SETTING CELL STYLE DATA RULES - CellStyleDataRules "];
+Print[" SETTING CELL STYLE DATA RULES - cellStyleDataRules "];
 
 
 (* ::Input::Initialization:: *)

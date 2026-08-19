@@ -32425,7 +32425,7 @@ AutoMultiplicationSymbol->True,
     3.9635692579406888`17.35066144045654*^9, "LanguageVersion" -> 14.2, 
     "ValuePreprocessingFunction" -> Identity|>, 
   "Hashes/Once/cqqe5xUmvK" -> <|"HeldValue" -> Hold[
-      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\CellStyleDataRules.m"]], 
+      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\cellStyleDataRules.m"]], 
     "CreationDate" -> 3.980595493780636`17.352523036187744*^9, "Creator" -> 
     "Ale", "ModificationDate" -> 3.980595493780636`17.352523036187744*^9, 
     "LanguageVersion" -> 14.3, "ValuePreprocessingFunction" -> Identity|>|>,

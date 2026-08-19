@@ -14,8 +14,8 @@ value differences in every case. No Wolfram validation process remains active.
 | statDataAnal | PASS | 178 | 312 | 0 | 0 | 0 |
 | inputDataForRICH | PASS | 117 | 438 | 0 | 0 | 0 |
 | calculator | PASS | 114 | 750 | 0 | 0 | 0 |
-| RICH-source | PASS | 297 | 739 | 0 | 0 | 0 |
-| CellStyleDataRules-source | PASS | 0 | 10 | 0 | 0 | 0 |
+| RICH | PASS | 297 | 739 | 0 | 0 | 0 |
+| cellStyleDataRules | PASS | 0 | 10 | 0 | 0 | 0 |
 
 ### Final installed evidence
 
@@ -57,7 +57,7 @@ are superseded by this completed result.
 
 The resumed equivalence task was stopped cleanly because the execution-time
 window was approaching its limit. The owned controller (PID 25496) and its
-Wolfram child (PID 31924) were stopped after the restructured `RICH-source`
+Wolfram child (PID 31924) were stopped after the restructured `RICH`
 evaluation remained CPU-active for more than five minutes in the same
 `FindRoot`/numerical-integration block. A follow-up audit found zero running
 Wolfram processes.
@@ -66,7 +66,7 @@ Wolfram processes.
 
 - Fixed all five restructured notebook loaders so their requested case is set
   as `Global`$RICHProjectCase`; previously every stub silently loaded the full
-  `RICH-source` case.
+  `RICH` case.
 - Made `src/LoadProject.wl` discover that explicit global case value safely.
 - Added case-scoped filtering for random demo values, notebook-path runtime
   bookkeeping, and the RICH new-symbol inventories `symbolsNew` and
@@ -87,7 +87,7 @@ Wolfram processes.
 The disposable workspace remains:
 `%TEMP%\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c`.
 
-The final-attempt original `RICH-source` artifact completed successfully at
+The final-attempt original `RICH` artifact completed successfully at
 06:40:14 using the current harness and source. The restructured side was
 stopped before capture and did not write a corresponding current artifact.
 Consequently the disposable raw pair and its existing aggregate report are now
@@ -101,7 +101,7 @@ installed all-case result rather than this incomplete attempt.
 2. Synchronize `src/RICH.wl`, `validation/RunNotebookCase.wls`,
    `validation/ValidationConfig.wl`, and `validation/CompareBaselines.wls` into
    the disposable workspace (their hashes matched immediately before the run).
-3. Re-run `original RICH-source` and `restructured RICH-source`, then run
+3. Re-run `original RICH` and `restructured RICH`, then run
    `CompareBaselines.wls` over all seven cases. The approved launcher writes
    `validation/results/current/rich-final-rerun.log` in the disposable copy.
    Although the original artifact is complete, rerun both sides so the pair is
@@ -131,7 +131,7 @@ validation process started by this session remains active.
   or its generated filename.
 - A comparison-only pass over the retained artifacts confirmed that the
   defined-symbol filter is narrow: `physicsGeneral` changed from FAIL to PASS,
-  while the genuine `statDataAnal` and `RICH-source` differences remained.
+  while the genuine `statDataAnal` and `RICH` differences remained.
   That intermediate report showed 3 PASS and 4 FAIL, but it is not the final
   result because the old artifacts predate the new runtime-alias exclusions.
 
@@ -160,8 +160,8 @@ Resume with these evaluations, in this order:
 
 1. restructured `inputDataForRICH` (the original side is fresh),
 2. original and restructured `calculator`,
-3. original and restructured `RICH-source`,
-4. original and restructured `CellStyleDataRules-source`,
+3. original and restructured `RICH`,
+4. original and restructured `cellStyleDataRules`,
 5. run `CompareBaselines.wls` for all seven cases.
 
 Do not reinstall the disposable report into the project until all remaining
@@ -190,9 +190,9 @@ started by this session remains active.
   All twelve evaluations completed successfully, including both
   `calculator` sides; the former multi-hour calculator blockage is gone.
 - The disposable all-case comparison currently reports:
-  2 PASS (`base`, `CellStyleDataRules-source`) and 5 FAIL
+  2 PASS (`base`, `cellStyleDataRules`) and 5 FAIL
   (`physicsGeneral`, `statDataAnal`, `inputDataForRICH`,
-  `calculator`, `RICH-source`). Its report is at
+  `calculator`, `RICH`). Its report is at
   `validation/results/current/VALIDATION_REPORT.md` inside that disposable
   workspace. The project’s installed report intentionally remains the verified
   base-only PASS result.
@@ -213,7 +213,7 @@ wholesale. The mechanically regenerated source returns normally.
 - Resume by analyzing the five remaining all-case failures from the disposable
   report. The quickest wins are the notebook-runtime-only differences
   (`myNotebookInit\`nb`, `myNotebookInit\`nbFileName`) and the two navigation
-  helpers (`rich\`goBack`, `rich\`pushHistory`); the large `RICH-source`
+  helpers (`rich\`goBack`, `rich\`pushHistory`); the large `RICH`
   context migration requires separate, careful treatment.
 
 Completed: 2026-07-28
@@ -239,8 +239,8 @@ Overall strict status: **FAIL**
 | statDataAnal | FAIL | 386 | 1075 | 0 | 0 | 7 | no |
 | inputDataForRICH | FAIL | 264 | 1077 | 2 | 0 | 2 | no |
 | calculator | NOT RUN | 0 | 0 | 0 | 0 | 0 | no |
-| RICH-source | FAIL | 742 | 1075 | 0 | 3 | 4 | yes |
-| CellStyleDataRules-source | PASS | 0 | 1075 | 0 | 0 | 0 | yes |
+| RICH | FAIL | 742 | 1075 | 0 | 3 | 4 | yes |
+| cellStyleDataRules | PASS | 0 | 1075 | 0 | 0 | 0 | yes |
 
 Completed-case totals are 1,877 original symbol captures and 5,854
 restructured symbol captures. These are sums of per-case captures, not unique
@@ -251,7 +251,7 @@ Source regeneration succeeded for all seven notebook-derived files:
 
 | Source | Selected initialization cells | Imported held expressions | Parsed source expressions |
 |---|---:|---:|---:|
-| CellStyleDataRules.wl | 9 | 9 | 20 |
+| cellStyleDataRules.wl | 9 | 9 | 20 |
 | base.wl | 69 | 69 | 140 |
 | physicsGeneral.wl | 16 | 16 | 34 |
 | statDataAnal.wl | 25 | 25 | 52 |
@@ -282,11 +282,11 @@ Source regeneration succeeded for all seven notebook-derived files:
   only after approximately 43,769 seconds. The restructured notebook was
   terminated after the documented five-minute ceiling, so there is no paired
   readable result and no valid symbol comparison.
-- `RICH-source`: definitions differ for `calcDetectedPhotons`,
+- `RICH`: definitions differ for `calcDetectedPhotons`,
   `descriptivestatistics`, and `displayHistoStats`; assigned values differ for
   `initialContexts`, `myNotebookInit\`Private\`$LoadLog`, `title`, and
   `versionTAG`.
-- `CellStyleDataRules-source`: captured original state matches; notebook side
+- `cellStyleDataRules`: captured original state matches; notebook side
   effects were intentionally excluded by configuration.
 
 ## Files changed and reasons
@@ -335,40 +335,40 @@ The final generated result set contains these 53 files:
 - `validation/results/current/raw/original/base.wxf`
 - `validation/results/current/raw/original/calculator.json`
 - `validation/results/current/raw/original/calculator.wxf`
-- `validation/results/current/raw/original/CellStyleDataRules-source.json`
-- `validation/results/current/raw/original/CellStyleDataRules-source.wxf`
+- `validation/results/current/raw/original/cellStyleDataRules.json`
+- `validation/results/current/raw/original/cellStyleDataRules.wxf`
 - `validation/results/current/raw/original/inputDataForRICH.json`
 - `validation/results/current/raw/original/inputDataForRICH.wxf`
 - `validation/results/current/raw/original/physicsGeneral.json`
 - `validation/results/current/raw/original/physicsGeneral.wxf`
-- `validation/results/current/raw/original/RICH-source.json`
-- `validation/results/current/raw/original/RICH-source.wxf`
+- `validation/results/current/raw/original/RICH.json`
+- `validation/results/current/raw/original/RICH.wxf`
 - `validation/results/current/raw/original/statDataAnal.json`
 - `validation/results/current/raw/original/statDataAnal.wxf`
 - `validation/results/current/raw/restructured/base.json`
 - `validation/results/current/raw/restructured/base.wxf`
-- `validation/results/current/raw/restructured/CellStyleDataRules-source.json`
-- `validation/results/current/raw/restructured/CellStyleDataRules-source.wxf`
+- `validation/results/current/raw/restructured/cellStyleDataRules.json`
+- `validation/results/current/raw/restructured/cellStyleDataRules.wxf`
 - `validation/results/current/raw/restructured/inputDataForRICH.json`
 - `validation/results/current/raw/restructured/inputDataForRICH.wxf`
 - `validation/results/current/raw/restructured/physicsGeneral.json`
 - `validation/results/current/raw/restructured/physicsGeneral.wxf`
-- `validation/results/current/raw/restructured/RICH-source.json`
-- `validation/results/current/raw/restructured/RICH-source.wxf`
+- `validation/results/current/raw/restructured/RICH.json`
+- `validation/results/current/raw/restructured/RICH.wxf`
 - `validation/results/current/raw/restructured/statDataAnal.json`
 - `validation/results/current/raw/restructured/statDataAnal.wxf`
 - `validation/results/current/evaluated-notebooks/original/base.m`
 - `validation/results/current/evaluated-notebooks/original/base.nb`
 - `validation/results/current/evaluated-notebooks/original/calculator.m`
 - `validation/results/current/evaluated-notebooks/original/calculator.nb`
-- `validation/results/current/evaluated-notebooks/original/CellStyleDataRules-source.m`
-- `validation/results/current/evaluated-notebooks/original/CellStyleDataRules-source.nb`
+- `validation/results/current/evaluated-notebooks/original/cellStyleDataRules.m`
+- `validation/results/current/evaluated-notebooks/original/cellStyleDataRules.nb`
 - `validation/results/current/evaluated-notebooks/original/inputDataForRICH.m`
 - `validation/results/current/evaluated-notebooks/original/inputDataForRICH.nb`
 - `validation/results/current/evaluated-notebooks/original/physicsGeneral.m`
 - `validation/results/current/evaluated-notebooks/original/physicsGeneral.nb`
-- `validation/results/current/evaluated-notebooks/original/RICH-source.m`
-- `validation/results/current/evaluated-notebooks/original/RICH-source.nb`
+- `validation/results/current/evaluated-notebooks/original/RICH.m`
+- `validation/results/current/evaluated-notebooks/original/RICH.nb`
 - `validation/results/current/evaluated-notebooks/original/statDataAnal.m`
 - `validation/results/current/evaluated-notebooks/original/statDataAnal.nb`
 - `validation/results/current/evaluated-notebooks/restructured/inputDataForRICH.m`

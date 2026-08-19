@@ -33,7 +33,7 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "legacy-original/CellStyleDataRules.nb",
+      "path": "legacy-original/cellStyleDataRules.nb",
       "size": 23269,
       "sha256": "ea4f93529d693903b21a6e737d8596e470829078be237074698ba968c57ef956"
     },
@@ -88,7 +88,7 @@
       "sha256": "5c9dbb3dc93951a9cdaccbe65febf0247929781f73775de29a488f30d9af7cc4"
     },
     {
-      "path": "notebooks/CellStyleDataRules.nb",
+      "path": "notebooks/cellStyleDataRules.nb",
       "size": 23269,
       "sha256": "ea4f93529d693903b21a6e737d8596e470829078be237074698ba968c57ef956"
     },
@@ -128,7 +128,7 @@
       "sha256": "f95b3782b939ad1b23d64f4f369067c0e62f1431e3404179144a5e15bbf7cb97"
     },
     {
-      "path": "src/CellStyleDataRules.wl",
+      "path": "src/cellStyleDataRules.wl",
       "size": 3563,
       "sha256": "66e019b2dc02bdef015746b4f303eaafbe5314e5c79a2aef83e9e3dc78059358"
     },

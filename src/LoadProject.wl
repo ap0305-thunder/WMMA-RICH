@@ -215,37 +215,37 @@ If[RICHFrontEndAvailableQ[], Print[RICHPathSettingsPanel[]]];
 
 $RICHProjectComponents = <|
   "base" -> {
-    "myNotebookInit.wl", "CellStyleDataRules.wl", "base.wl"
+    "myNotebookInit.wl", "cellStyleDataRules.wl", "base.wl"
   },
   "physicsGeneral" -> {
-    "myNotebookInit.wl", "CellStyleDataRules.wl", "base.wl",
+    "myNotebookInit.wl", "cellStyleDataRules.wl", "base.wl",
     "physicsGeneral.wl"
   },
   "statDataAnal" -> {
-    "myNotebookInit.wl", "CellStyleDataRules.wl", "base.wl",
+    "myNotebookInit.wl", "cellStyleDataRules.wl", "base.wl",
     "statDataAnal.wl"
   },
   "inputDataForRICH" -> {
-    "myNotebookInit.wl", "CellStyleDataRules.wl", "base.wl",
+    "myNotebookInit.wl", "cellStyleDataRules.wl", "base.wl",
     "inputDataForRICH.wl"
   },
-  "RICH-source" -> {
-    "myNotebookInit.wl", "myDockedCells.wl", "CellStyleDataRules.wl",
+  "RICH" -> {
+    "myNotebookInit.wl", "myDockedCells.wl", "cellStyleDataRules.wl",
     "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
     "inputDataForRICH.wl", "RICH.wl"
   },
   "calculator" -> {
-    "myNotebookInit.wl", "myDockedCells.wl", "CellStyleDataRules.wl",
+    "myNotebookInit.wl", "myDockedCells.wl", "cellStyleDataRules.wl",
     "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
     "inputDataForRICH.wl", "RICH.wl"
   },
   "optics" -> {
-    "myDockedCells.wl", "CellStyleDataRules.wl",
+    "myDockedCells.wl", "cellStyleDataRules.wl",
     "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
     "inputDataForRICH.wl", "RICH.wl", "optics.wl"
   },
-  "CellStyleDataRules-source" -> {
-    "CellStyleDataRules.wl"
+  "cellStyleDataRules" -> {
+    "cellStyleDataRules.wl"
   }
 |>;
 
@@ -275,7 +275,7 @@ LoadRICHFiles[files_List] := Module[
   If[! frontEndAvailable,
     requested = DeleteCases[
       requested,
-      "myDockedCells.wl" | "CellStyleDataRules.wl"
+      "myDockedCells.wl" | "cellStyleDataRules.wl"
     ]
   ];
   missing = Select[FileNameJoin[{src, #}] & /@ requested, Not@*FileExistsQ];
@@ -390,14 +390,14 @@ LoadRICHCase[case_String] := Module[{files},
   LoadRICHFiles[files]
 ];
 
-LoadRICHProject[] := LoadRICHCase["RICH-source"];
+LoadRICHProject[] := LoadRICHCase["RICH"];
 
 If[! TrueQ[Global`$RICHProjectSkipAutoLoad],
   RICHNotebookBootstrap[
     SelectFirst[
       ToExpression /@ Names["*`$RICHProjectCase"],
       StringQ,
-      "RICH-source"
+      "RICH"
     ]
   ]
 ];

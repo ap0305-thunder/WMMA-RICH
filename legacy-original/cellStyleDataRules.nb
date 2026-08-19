@@ -99,7 +99,7 @@ In[8]:=",ExpressionUUID->"298aead6-937d-cc43-b9ea-724102504076"],
 Cell[BoxData[
  RowBox[{
   RowBox[{
-  "Print", "[", "\"\< SETTING CELL STYLE DATA RULES - CellStyleDataRules \>\"",
+  "Print", "[", "\"\< SETTING CELL STYLE DATA RULES - cellStyleDataRules \>\"",
     "]"}], ";"}]], "Input",
  InitializationCell->True,
  CellLabel->

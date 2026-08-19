@@ -7,8 +7,8 @@ param(
         "statDataAnal",
         "inputDataForRICH",
         "calculator",
-        "RICH-source",
-        "CellStyleDataRules-source"
+        "RICH",
+        "cellStyleDataRules"
     ),
     [switch]$InPlace,
     [switch]$KeepWorkspace,
@@ -274,7 +274,7 @@ $stagedFiles = @()
 # never regenerate or rewrite them from the legacy notebooks.
 $generationLog = Join-Path $hostLogs "source-regeneration.log"
 $requiredSourcePaths = @(
-    "src\CellStyleDataRules.wl",
+    "src\cellStyleDataRules.wl",
     "src\base.wl",
     "src\physicsGeneral.wl",
     "src\statDataAnal.wl",
@@ -332,11 +332,11 @@ if ($calculatorSourceHash -cne $calculatorNativeHash) {
 ) | Set-Content -LiteralPath $generationLog -Encoding UTF8
 Write-LauncherLog -Path $launcherLog -Message "Native WL sources verified without modification."
 
-# base.nb expects CellStyleDataRules.m beside the original notebook.
-$baseDependencySource = Join-Path $runRoot "src\CellStyleDataRules.wl"
+# base.nb expects cellStyleDataRules.m beside the original notebook.
+$baseDependencySource = Join-Path $runRoot "src\cellStyleDataRules.wl"
 $baseDependencyDestinations = @(
-    (Join-Path $runRoot "legacy-original\CellStyleDataRules.m"),
-    (Join-Path $runRoot "notebooks\CellStyleDataRules.m")
+    (Join-Path $runRoot "legacy-original\cellStyleDataRules.m"),
+    (Join-Path $runRoot "notebooks\cellStyleDataRules.m")
 )
 if (Test-Path -LiteralPath $baseDependencySource) {
     foreach ($baseDependencyDestination in $baseDependencyDestinations) {
