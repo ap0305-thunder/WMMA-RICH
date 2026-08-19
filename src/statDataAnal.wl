@@ -4,14 +4,6 @@
 (*This package/notebook defines tools for statistical data analysis.*)
 
 
-(* ::Input::Initialization:: *)
-checkNewCreatedSymbols[]
-
-
-(* ::Input::Initialization:: *)
-(*$NewSymbol=Print["New symbol: ",#2,#1]&*)
-
-
 (* ::Title:: *)
 (*SETUP*)
 
@@ -26,7 +18,7 @@ packageBanner["LOADING statDataAnal"];
 
 
 (* ::Subtitle::Initialization:: *)
-(*(*(*INITIALIZATION*)*)*)
+(*(*(*(*INITIALIZATION*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -112,7 +104,7 @@ versionTAG="v.08-08-2026";
 
 
 (* ::Subtitle::Initialization:: *)
-(*(*(*PROBABILITY AND STATISTICS FUNCTIONS*)*)*)
+(*(*(*(*PROBABILITY AND STATISTICS FUNCTIONS*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -222,18 +214,49 @@ lgdFn[data_]:=Text[Style[ltxtFn[data][[#]],Bold,FontFamily->"Courier"],Scaled[{0
 
 
 (*\[HorizontalLine]\[HorizontalLine] unchanged \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]*)
-descriptiveStatisticsSimpleHisto[data_]:={Panel@Grid@Transpose@{{"Min","Max","Mean","Median","StdDev","Skew","Kurt"},
-Module[{sss=StandardDeviation[data]},
-z=N@Flatten[data];
-If[!VectorQ[z,NumericQ]||Length[z]==0,Return[$Failed]];
-{Min[z],Max[z],Mean[z],Median[z],sss,If[sss>0,Skewness[z],-1],If[sss>0,Kurtosis[z],-1]}
-]
-}
+
+descriptiveStatisticsSimpleHisto[data_] := {
+  Panel @ Grid @ Transpose @ {
+    {"Min", "Max", "Mean", "Median", "StdDev", "Skew", "Kurt"}
+    ,
+    Module[{sss = StandardDeviation[data]},
+      z = N @ Flatten[data];
+      If[!VectorQ[z, NumericQ] || Length[z] == 0,
+        Return[$Failed]
+      ];
+      {
+        Min[z]
+        ,
+        Max[z]
+        ,
+        Mean[z]
+        ,
+        Median[z]
+        ,
+        sss
+        ,
+        If[sss > 0,
+          Skewness[z]
+          ,
+          -1
+        ]
+        ,
+        If[sss > 0,
+          Kurtosis[z]
+          ,
+          -1
+        ]
+      }
+    ]
+  }
 };
 
-simpleHistogramWithStatistics[data_]:=GraphicsGrid[{{Histogram[data,ImageSize->Medium],descriptiveStatisticsSimpleHisto@data}}];
+simpleHistogramWithStatistics[data_] := GraphicsGrid[{{Histogram[data,
+   ImageSize -> Medium], descriptiveStatisticsSimpleHisto @ data}}];
 
-Protect[descriptiveStatistics,descriptivestatistics,tds,ltxt,lgd,descriptiveStatisticsSimpleHisto,simpleHistogramWithStatistics,tdsFn,ltxtFn,lgdFn];
+Protect[descriptiveStatistics, descriptivestatistics, tds, ltxt, lgd,
+   descriptiveStatisticsSimpleHisto, simpleHistogramWithStatistics, tdsFn,
+   ltxtFn, lgdFn];
 
 
 (* ::Input::Initialization:: *)
@@ -314,7 +337,7 @@ Protect[displayHistoStats];
 
 (* ::Input::Initialization:: *)
 data={7.05,2.49,16.09,21.3,19.21,14.88,16.41,0.19,9.71,10.18,8.81,2.93,18.11,22.2,9.79,14.74,4.54,16.76,8.46,24.9};
-Print[TableForm[{hdr,descriptivestatistics[data]},TableAlignments->Center]];
+(*Print[TableForm[{hdr,descriptivestatistics[data]},TableAlignments->Center]];*)
 (**)
 ClearAll[bootstrap];
 bootstrap[data_,numSamples_,func__]:=Module[{ests,qBootstrapResult},
@@ -331,18 +354,18 @@ Return[qBootstrapResult]
 numSim=1000;
 numBoo=100;
 (*Subscript[\[Alpha], 0]=.;Subscript[\[Beta], 0]=.;*)
-Mean[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]]]
+Mean[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]]];
 Subscript[\[Alpha], 0]=2;
 Subscript[\[Beta], 0]=30;
-Plot[PDF[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]],x],{x,0,Quantile[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]],0.9]}]
+Plot[PDF[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]],x],{x,0,Quantile[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]],0.9]}];
 gdata=BlockRandom[SeedRandom[1];RandomVariate[GammaDistribution[Subscript[\[Alpha], 0],Subscript[\[Beta], 0]],numSim]];
-Histogram[gdata]
+Histogram[gdata];
 (*FindDistributionParameters[gdata,GammaDistribution[\[Alpha],\[Beta]]];*)
 (*FindDistributionParameters[RandomChoice[gdata,Length[gdata]],GammaDistribution[\[Alpha],\[Beta]]];*)
-params:={\[Alpha],\[Beta]}/.FindDistributionParameters[RandomChoice[gdata,Length[gdata]],GammaDistribution[\[Alpha],\[Beta]]]
-ests=Table[params,{numBoo}]
-Map[Histogram,Transpose[ests]]
-Correlation[ests]//MatrixForm
+params:={\[Alpha],\[Beta]}/.FindDistributionParameters[RandomChoice[gdata,Length[gdata]],GammaDistribution[\[Alpha],\[Beta]]];
+ests=Table[params,{numBoo}];
+Map[Histogram,Transpose[ests]];
+Correlation[ests]//MatrixForm;
 
 
 
@@ -405,7 +428,7 @@ Show[Histogram[Flatten[z],nBins,PlotLabel->title]]
 
 
 (* ::Subsection::Initialization:: *)
-(*(*(*error propagation formulas*)*)*)
+(*(*(*(*error propagation formulas*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -451,7 +474,7 @@ errorProp[test,{{x,0.3,dx,0.005},{y,0.9,dy,0.1}}]
 
 
 (* ::Subtitle::Initialization:: *)
-(*(*(*END*)*)*)
+(*(*(*(*END*)*)*)*)
 
 
 (* ::Input::Initialization:: *)

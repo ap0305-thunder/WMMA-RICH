@@ -1699,7 +1699,7 @@ Cell["PHYSICS", "Subtitle",
 
 Cell[CellGroupData[{
 
-Cell["load PHYSICS-GENERAL FUNCTIONS", "Subsubtitle",
+Cell["load physicsGeneral FUNCTIONS", "Subsubtitle",
  InitializationCell->True,
  CellTags->"FUNCTIONS",ExpressionUUID->"f1e6153d-ef14-4ef1-9de6-44a4e87f1768"],
 
@@ -1724,7 +1724,7 @@ Cell[BoxData[
    RowBox[{"showContextInfo", "[", "]"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
-    "myNotebookInit`loadMyFile", "[", "\"\<physics-general.m\>\"", "]"}], 
+    "myNotebookInit`loadMyFile", "[", "\"\<physicsGeneral.m\>\"", "]"}], 
     ";"}], "\[IndentingNewLine]", 
    RowBox[{"showContextInfo", "[", "]"}], "\[IndentingNewLine]", 
    StyleBox[

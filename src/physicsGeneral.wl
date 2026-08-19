@@ -9,7 +9,7 @@
 
 
 (* ::Input::Initialization:: *)
-packageBanner["LOADING physics-general"];
+packageBanner["LOADING physicsGeneral"];
 bigBanner["--->>> might need some specific symbols defined elsewhere!"];
 
 
@@ -313,5 +313,5 @@ EndPackage[];
 endEvalPrintOut[];
 
 
-packageBanner["END physics-general"];
+packageBanner["END physicsGeneral"];
 

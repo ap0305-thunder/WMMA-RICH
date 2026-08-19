@@ -3,10 +3,10 @@ param(
     [string]$WolframExecutable,
     [string[]]$Cases = @(
         "base",
-        "physics-general",
+        "physicsGeneral",
         "statDataAnal",
         "inputDataForRICH",
-        "calculator-reboot",
+        "calculator",
         "RICH-source",
         "CellStyleDataRules-source"
     ),
@@ -276,12 +276,12 @@ $generationLog = Join-Path $hostLogs "source-regeneration.log"
 $requiredSourcePaths = @(
     "src\CellStyleDataRules.wl",
     "src\base.wl",
-    "src\physics-general.wl",
+    "src\physicsGeneral.wl",
     "src\statDataAnal.wl",
     "src\inputDataForRICH.wl",
     "src\RICH.wl",
-    "src\calculator-reboot.wl",
-    "validation\native-sources\calculator-reboot-native.wl",
+    "src\calculator.wl",
+    "validation\native-sources\calculator-native.wl",
     "validation\native-sources\optics-native.wl"
 )
 $missingRequiredSources = @(
@@ -299,7 +299,7 @@ if ($missingRequiredSources.Count -gt 0) {
 $opticsBuilder = Join-Path $runRoot "validation\BuildOpticsFromNative.ps1"
 & $opticsBuilder -ProjectRoot $runRoot -Check
 
-$calculatorSource = Join-Path $runRoot "src\calculator-reboot.wl"
+$calculatorSource = Join-Path $runRoot "src\calculator.wl"
 $calculatorText = [System.IO.File]::ReadAllText($calculatorSource)
 $calculatorMarker = "CALCULATOR BODY"
 $calculatorMarkerCount = ([regex]::Matches(
@@ -307,10 +307,10 @@ $calculatorMarkerCount = ([regex]::Matches(
     [regex]::Escape($calculatorMarker)
 )).Count
 if ($calculatorMarkerCount -ne 1) {
-    throw "Expected exactly one CALCULATOR BODY marker in src\calculator-reboot.wl; found $calculatorMarkerCount."
+    throw "Expected exactly one CALCULATOR BODY marker in src\calculator.wl; found $calculatorMarkerCount."
 }
 
-$calculatorNativeSource = Join-Path $runRoot "validation\native-sources\calculator-reboot-native.wl"
+$calculatorNativeSource = Join-Path $runRoot "validation\native-sources\calculator-native.wl"
 $calculatorSourceHash = (Get-FileHash `
     -LiteralPath $calculatorSource `
     -Algorithm SHA256
@@ -320,15 +320,15 @@ $calculatorNativeHash = (Get-FileHash `
     -Algorithm SHA256
 ).Hash
 if ($calculatorSourceHash -cne $calculatorNativeHash) {
-    throw "src\calculator-reboot.wl differs from validation\native-sources\calculator-reboot-native.wl."
+    throw "src\calculator.wl differs from validation\native-sources\calculator-native.wl."
 }
 
 @(
     "Native Wolfram Save As sources preserved; no regeneration performed.",
     "Verified source files: $($requiredSourcePaths -join ', ')",
     "Verified src\optics.wl is derived textually from the Wolfram Save As source.",
-    "Verified one CALCULATOR BODY marker in src\calculator-reboot.wl.",
-    "Verified src\calculator-reboot.wl matches validation\native-sources\calculator-reboot-native.wl."
+    "Verified one CALCULATOR BODY marker in src\calculator.wl.",
+    "Verified src\calculator.wl matches validation\native-sources\calculator-native.wl."
 ) | Set-Content -LiteralPath $generationLog -Encoding UTF8
 Write-LauncherLog -Path $launcherLog -Message "Native WL sources verified without modification."
 

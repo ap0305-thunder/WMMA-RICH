@@ -24,7 +24,7 @@ Cell[BoxData[{
 "\"\<*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\
 ||||||||||||||||||||||||||*\>\"", "]"}], ";"}], "\n", 
  RowBox[{
-  RowBox[{"Print", "[", "\"\<***--- physics-general ---***\>\"", "]"}], 
+  RowBox[{"Print", "[", "\"\<***--- physicsGeneral ---***\>\"", "]"}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -246,7 +246,7 @@ Cell[BoxData[{
 "\"\<*||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\
 ||||||||||||||||||||||||||*\>\"", "]"}], ";"}], "\n", 
  RowBox[{
-  RowBox[{"Print", "[", "\"\<***--- physics-general ---***\>\"", "]"}], 
+  RowBox[{"Print", "[", "\"\<***--- physicsGeneral ---***\>\"", "]"}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -259,7 +259,7 @@ VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV*\>\"", "]"}], ";"}], "\[IndentingNewLine]",
 "\"\<*========================================================================\
 ==========================*\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"Print", "[", "\"\<LOADING physics-general\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"Print", "[", "\"\<LOADING physicsGeneral\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
   "Print", "[", "\"\<--->>> might need some specific symbols defined \
@@ -1824,7 +1824,7 @@ WindowSize->{
   Scaled[1.]},
 WindowMargins->{{-5.5, Automatic}, {Automatic, -5.5}},
 WindowTitle->" ------- C:\\Users\\Ale\\My \
-Drive\\allRICHWMMA\\physics-general.nb",
+Drive\\allRICHWMMA\\physicsGeneral.nb",
 DockedCells->{
   Cell[
    BoxData[

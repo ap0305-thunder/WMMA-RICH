@@ -451,7 +451,7 @@ Print@ListPlot[{2,33,2,3,27},AxesLabel->labelNmVsEv];
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*(*(*(*load PHYSICS-GENERAL FUNCTIONS*)*)*)*)
+(*(*(*(*load physicsGeneral FUNCTIONS*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -464,7 +464,7 @@ showContextInfo[]
 If[
   ! TrueQ[Global`$RICHProjectManagedLoad],
   myNotebookInit`loadMyFile[
-    "physics-general.wl",
+    "physicsGeneral.wl",
     DirectoryName[$InputFileName]
   ]
 ];

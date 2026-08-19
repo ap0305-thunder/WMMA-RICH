@@ -165,8 +165,8 @@ installOne[path_String, projectCase_String, sectionCount_Integer] := Module[
 root = DirectoryName[DirectoryName[$InputFileName]];
 results = {
   installOne[
-    FileNameJoin[{root, "notebooks", "calculator-reboot.nb"}],
-    "calculator-reboot",
+    FileNameJoin[{root, "notebooks", "calculator.nb"}],
+    "calculator",
     1
   ],
   installOne[

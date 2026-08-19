@@ -48,7 +48,7 @@
       "sha256": "eab5a4a6c589f8475d32e05794e9e9602c8df2313aeafcd7660c1c8075066baa"
     },
     {
-      "path": "legacy-original/calculator-reboot.nb",
+      "path": "legacy-original/calculator.nb",
       "size": 1986509,
       "sha256": "94786473ff5c5133326c5fdb591c0302ff3267cdb680fb47640daad9afbffe17"
     },
@@ -73,7 +73,7 @@
       "sha256": "e76e343b0a460c66278990016ce9400a71bfa11729f7b656e123d0cef07baa0e"
     },
     {
-      "path": "legacy-original/physics-general.nb",
+      "path": "legacy-original/physicsGeneral.nb",
       "size": 82560,
       "sha256": "1701a477bde212ca544cc2565af25a0f025323b805b95b46c033b6d422cc66bc"
     },
@@ -98,7 +98,7 @@
       "sha256": "be1aca11af1f232efec72c55ba920b8a934878364a13b20f9335fae426b1c929"
     },
     {
-      "path": "notebooks/calculator-reboot.nb",
+      "path": "notebooks/calculator.nb",
       "size": 884775,
       "sha256": "50ae3f763e4b69cfa74ef8bc8dba9d4a5617ad8a26d4dccb61bd064600248446"
     },
@@ -113,7 +113,7 @@
       "sha256": "f553056f274c3f75203a11f19edadd8fad808f41cded659f93ec153662b51258"
     },
     {
-      "path": "notebooks/physics-general.nb",
+      "path": "notebooks/physicsGeneral.nb",
       "size": 15888,
       "sha256": "10bbe58fdb73cff3423ebde0011e69b606d958b164091fbf3e584d36cbde90d8"
     },
@@ -148,7 +148,7 @@
       "sha256": "a24336353189a5ac88f654b2c96a5b0a806aa29a3030322381cca25263321621"
     },
     {
-      "path": "src/calculator-reboot.wl",
+      "path": "src/calculator.wl",
       "size": 26286,
       "sha256": "ba43fb8c77aaa65be34f566e5c29bc346a031a0d6204ae4fc95a67331cdb0234"
     },
@@ -168,7 +168,7 @@
       "sha256": "0c6c160b19c6f939d446701b481e9568599ba9ed32c9cf12195442ac95818830"
     },
     {
-      "path": "src/physics-general.wl",
+      "path": "src/physicsGeneral.wl",
       "size": 14999,
       "sha256": "4312a6f68696cd6b8650bf72d679d12c644ce14a364a58560359b03f493bb284"
     },

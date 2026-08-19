@@ -29,7 +29,7 @@ projectCase[expression_Notebook] := FirstCase[
 
 root = DirectoryName[DirectoryName[$InputFileName]];
 paths = FileNameJoin[{root, "notebooks", # <> ".nb"}] & /@
-  {"optics", "calculator-reboot"};
+  {"optics", "calculator"};
 expressions = Quiet @ Check[Get /@ paths, $Failed];
 If[expressions === $Failed || ! MatchQ[expressions, {_Notebook, _Notebook}],
   fail["Could not parse both working notebooks."]
@@ -43,7 +43,7 @@ bodies = (First[#] /. Cell[content_, ___] :> content) & /@ cells;
 If[! SameQ @@ bodies,
   fail["The two universal bootstrap cell bodies are not structurally identical."]
 ];
-If[projectCase /@ expressions =!= {"optics", "calculator-reboot"},
+If[projectCase /@ expressions =!= {"optics", "calculator"},
   fail["Notebook project-case TaggingRules are missing or incorrect."]
 ];
 If[

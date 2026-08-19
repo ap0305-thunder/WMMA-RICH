@@ -10,10 +10,10 @@ value differences in every case. No Wolfram validation process remains active.
 | Case | Status | Original symbols | Restructured symbols | Missing | Definition differences | Value differences |
 |---|---:|---:|---:|---:|---:|---:|
 | base | PASS | 251 | 263 | 0 | 0 | 0 |
-| physics-general | PASS | 0 | 307 | 0 | 0 | 0 |
+| physicsGeneral | PASS | 0 | 307 | 0 | 0 | 0 |
 | statDataAnal | PASS | 178 | 312 | 0 | 0 | 0 |
 | inputDataForRICH | PASS | 117 | 438 | 0 | 0 | 0 |
-| calculator-reboot | PASS | 114 | 750 | 0 | 0 | 0 |
+| calculator | PASS | 114 | 750 | 0 | 0 | 0 |
 | RICH-source | PASS | 297 | 739 | 0 | 0 | 0 |
 | CellStyleDataRules-source | PASS | 0 | 10 | 0 | 0 | 0 |
 
@@ -130,14 +130,14 @@ validation process started by this session remains active.
   values and definitions can contain the disposable validation notebook object
   or its generated filename.
 - A comparison-only pass over the retained artifacts confirmed that the
-  defined-symbol filter is narrow: `physics-general` changed from FAIL to PASS,
+  defined-symbol filter is narrow: `physicsGeneral` changed from FAIL to PASS,
   while the genuine `statDataAnal` and `RICH-source` differences remained.
   That intermediate report showed 3 PASS and 4 FAIL, but it is not the final
   result because the old artifacts predate the new runtime-alias exclusions.
 
 ### Fresh evaluations completed
 
-- `physics-general`: original Success (0 defined symbols), restructured
+- `physicsGeneral`: original Success (0 defined symbols), restructured
   Success (836 defined symbols).
 - `statDataAnal`: original Success (181 defined symbols), restructured Success
   (836 defined symbols).
@@ -159,7 +159,7 @@ The disposable workspace is still:
 Resume with these evaluations, in this order:
 
 1. restructured `inputDataForRICH` (the original side is fresh),
-2. original and restructured `calculator-reboot`,
+2. original and restructured `calculator`,
 3. original and restructured `RICH-source`,
 4. original and restructured `CellStyleDataRules-source`,
 5. run `CompareBaselines.wls` for all seven cases.
@@ -188,11 +188,11 @@ started by this session remains active.
 - Ran all six remaining cases in the retained disposable workspace
   `%TEMP%\WolframRICHValidation-c1f6954141a04a4983d0d6bccbc8639c`.
   All twelve evaluations completed successfully, including both
-  `calculator-reboot` sides; the former multi-hour calculator blockage is gone.
+  `calculator` sides; the former multi-hour calculator blockage is gone.
 - The disposable all-case comparison currently reports:
   2 PASS (`base`, `CellStyleDataRules-source`) and 5 FAIL
-  (`physics-general`, `statDataAnal`, `inputDataForRICH`,
-  `calculator-reboot`, `RICH-source`). Its report is at
+  (`physicsGeneral`, `statDataAnal`, `inputDataForRICH`,
+  `calculator`, `RICH-source`). Its report is at
   `validation/results/current/VALIDATION_REPORT.md` inside that disposable
   workspace. The project’s installed report intentionally remains the verified
   base-only PASS result.
@@ -235,10 +235,10 @@ Overall strict status: **FAIL**
 | Case | Status | Original symbols | Restructured symbols | Missing | Definition differences | Value differences | Outputs identical |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | base | FAIL | 482 | 477 | 95 | 0 | 3 | yes |
-| physics-general | FAIL | 3 | 1075 | 3 | 0 | 0 | yes |
+| physicsGeneral | FAIL | 3 | 1075 | 3 | 0 | 0 | yes |
 | statDataAnal | FAIL | 386 | 1075 | 0 | 0 | 7 | no |
 | inputDataForRICH | FAIL | 264 | 1077 | 2 | 0 | 2 | no |
-| calculator-reboot | NOT RUN | 0 | 0 | 0 | 0 | 0 | no |
+| calculator | NOT RUN | 0 | 0 | 0 | 0 | 0 | no |
 | RICH-source | FAIL | 742 | 1075 | 0 | 3 | 4 | yes |
 | CellStyleDataRules-source | PASS | 0 | 1075 | 0 | 0 | 0 | yes |
 
@@ -253,10 +253,10 @@ Source regeneration succeeded for all seven notebook-derived files:
 |---|---:|---:|---:|
 | CellStyleDataRules.wl | 9 | 9 | 20 |
 | base.wl | 69 | 69 | 140 |
-| physics-general.wl | 16 | 16 | 34 |
+| physicsGeneral.wl | 16 | 16 | 34 |
 | statDataAnal.wl | 25 | 25 | 52 |
 | inputDataForRICH.wl | 112 | 112 | 226 |
-| calculator-reboot.wl | 38 | 38 | 78 |
+| calculator.wl | 38 | 38 | 78 |
 | RICH.wl | 62 | 62 | 126 |
 
 ## Remaining genuine differences
@@ -266,7 +266,7 @@ Source regeneration succeeded for all seven notebook-derived files:
   `base\`Private\``. Assigned values differ for
   `base\`Private\`searchForGivenNamesAndPrintRegExp`, `initialContexts`, and
   `myNotebookInit\`Private\`$LoadLog`.
-- `physics-general`: the restructured loader initializes the full project state
+- `physicsGeneral`: the restructured loader initializes the full project state
   (1,075 symbols) while the original captures only 3. The original-only symbols
   are `myNotebookInit\`cellStylesEditorPalette`,
   `myNotebookInit\`cellStylesScannerPalette`, and
@@ -278,7 +278,7 @@ Source regeneration succeeded for all seven notebook-derived files:
 - `inputDataForRICH`: original-only `rich\`goBack` and `rich\`pushHistory`;
   assigned values differ for `myNotebookInit\`Private\`$LoadLog` and
   `versionTAG`; notebook outputs/messages/prints also differ.
-- `calculator-reboot`: the original notebook eventually produced an artifact
+- `calculator`: the original notebook eventually produced an artifact
   only after approximately 43,769 seconds. The restructured notebook was
   terminated after the documented five-minute ceiling, so there is no paired
   readable result and no valid symbol comparison.
@@ -333,14 +333,14 @@ The final generated result set contains these 53 files:
 - `validation/results/current/manual-source-regeneration.log`
 - `validation/results/current/raw/original/base.json`
 - `validation/results/current/raw/original/base.wxf`
-- `validation/results/current/raw/original/calculator-reboot.json`
-- `validation/results/current/raw/original/calculator-reboot.wxf`
+- `validation/results/current/raw/original/calculator.json`
+- `validation/results/current/raw/original/calculator.wxf`
 - `validation/results/current/raw/original/CellStyleDataRules-source.json`
 - `validation/results/current/raw/original/CellStyleDataRules-source.wxf`
 - `validation/results/current/raw/original/inputDataForRICH.json`
 - `validation/results/current/raw/original/inputDataForRICH.wxf`
-- `validation/results/current/raw/original/physics-general.json`
-- `validation/results/current/raw/original/physics-general.wxf`
+- `validation/results/current/raw/original/physicsGeneral.json`
+- `validation/results/current/raw/original/physicsGeneral.wxf`
 - `validation/results/current/raw/original/RICH-source.json`
 - `validation/results/current/raw/original/RICH-source.wxf`
 - `validation/results/current/raw/original/statDataAnal.json`
@@ -351,30 +351,30 @@ The final generated result set contains these 53 files:
 - `validation/results/current/raw/restructured/CellStyleDataRules-source.wxf`
 - `validation/results/current/raw/restructured/inputDataForRICH.json`
 - `validation/results/current/raw/restructured/inputDataForRICH.wxf`
-- `validation/results/current/raw/restructured/physics-general.json`
-- `validation/results/current/raw/restructured/physics-general.wxf`
+- `validation/results/current/raw/restructured/physicsGeneral.json`
+- `validation/results/current/raw/restructured/physicsGeneral.wxf`
 - `validation/results/current/raw/restructured/RICH-source.json`
 - `validation/results/current/raw/restructured/RICH-source.wxf`
 - `validation/results/current/raw/restructured/statDataAnal.json`
 - `validation/results/current/raw/restructured/statDataAnal.wxf`
 - `validation/results/current/evaluated-notebooks/original/base.m`
 - `validation/results/current/evaluated-notebooks/original/base.nb`
-- `validation/results/current/evaluated-notebooks/original/calculator-reboot.m`
-- `validation/results/current/evaluated-notebooks/original/calculator-reboot.nb`
+- `validation/results/current/evaluated-notebooks/original/calculator.m`
+- `validation/results/current/evaluated-notebooks/original/calculator.nb`
 - `validation/results/current/evaluated-notebooks/original/CellStyleDataRules-source.m`
 - `validation/results/current/evaluated-notebooks/original/CellStyleDataRules-source.nb`
 - `validation/results/current/evaluated-notebooks/original/inputDataForRICH.m`
 - `validation/results/current/evaluated-notebooks/original/inputDataForRICH.nb`
-- `validation/results/current/evaluated-notebooks/original/physics-general.m`
-- `validation/results/current/evaluated-notebooks/original/physics-general.nb`
+- `validation/results/current/evaluated-notebooks/original/physicsGeneral.m`
+- `validation/results/current/evaluated-notebooks/original/physicsGeneral.nb`
 - `validation/results/current/evaluated-notebooks/original/RICH-source.m`
 - `validation/results/current/evaluated-notebooks/original/RICH-source.nb`
 - `validation/results/current/evaluated-notebooks/original/statDataAnal.m`
 - `validation/results/current/evaluated-notebooks/original/statDataAnal.nb`
 - `validation/results/current/evaluated-notebooks/restructured/inputDataForRICH.m`
 - `validation/results/current/evaluated-notebooks/restructured/inputDataForRICH.nb`
-- `validation/results/current/evaluated-notebooks/restructured/physics-general.m`
-- `validation/results/current/evaluated-notebooks/restructured/physics-general.nb`
+- `validation/results/current/evaluated-notebooks/restructured/physicsGeneral.m`
+- `validation/results/current/evaluated-notebooks/restructured/physicsGeneral.nb`
 - `validation/results/current/evaluated-notebooks/restructured/statDataAnal.m`
 - `validation/results/current/evaluated-notebooks/restructured/statDataAnal.nb`
 

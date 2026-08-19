@@ -18,10 +18,10 @@ original initialization-cell boundaries and structural notebook headers are
 shown as separate cells. Header cells are stored as comments and do not affect
 evaluation with `Get`.
 
-The working `calculator-reboot.nb` includes the complete `---... CALCULATOR BODY`
+The working `calculator.nb` includes the complete `---... CALCULATOR BODY`
 top-level group and excludes everything after it.
 
-The working `optics.nb` and `calculator-reboot.nb` use the same universal
+The working `optics.nb` and `calculator.nb` use the same universal
 `---... SETUP` initialization cell. The cell reads `"RICHProjectCase"` from
 the notebook's `TaggingRules`, resolves `src/LoadProject.wl` relative to the
 saved notebook, and calls `RICHNotebookBootstrap[case]`. The project case is

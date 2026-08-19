@@ -217,9 +217,9 @@ $RICHProjectComponents = <|
   "base" -> {
     "myNotebookInit.wl", "CellStyleDataRules.wl", "base.wl"
   },
-  "physics-general" -> {
+  "physicsGeneral" -> {
     "myNotebookInit.wl", "CellStyleDataRules.wl", "base.wl",
-    "physics-general.wl"
+    "physicsGeneral.wl"
   },
   "statDataAnal" -> {
     "myNotebookInit.wl", "CellStyleDataRules.wl", "base.wl",
@@ -231,17 +231,17 @@ $RICHProjectComponents = <|
   },
   "RICH-source" -> {
     "myNotebookInit.wl", "myDockedCells.wl", "CellStyleDataRules.wl",
-    "base.wl", "statDataAnal.wl", "physics-general.wl",
+    "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
     "inputDataForRICH.wl", "RICH.wl"
   },
-  "calculator-reboot" -> {
+  "calculator" -> {
     "myNotebookInit.wl", "myDockedCells.wl", "CellStyleDataRules.wl",
-    "base.wl", "statDataAnal.wl", "physics-general.wl",
+    "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
     "inputDataForRICH.wl", "RICH.wl"
   },
   "optics" -> {
     "myDockedCells.wl", "CellStyleDataRules.wl",
-    "base.wl", "statDataAnal.wl", "physics-general.wl",
+    "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
     "inputDataForRICH.wl", "RICH.wl", "optics.wl"
   },
   "CellStyleDataRules-source" -> {

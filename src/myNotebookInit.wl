@@ -97,7 +97,10 @@ timeStamp::usage = "timeStamp is a delayed symbol that returns the current local
 withHeartbeat::usage = "withHeartbeat[expr, seconds:60, label:\"calculation\"] evaluates expr while printing a timestamp and elapsed time at the requested interval, and always removes the heartbeat task when evaluation finishes or is aborted. It holds expr unevaluated until monitoring has started.";
 versionTAG::usage = "versionTAG is the package version String reported when myNotebookInit loads.";
 initialContexts::usage = "initialContexts is the de-duplicated list of contexts observed when myNotebookInit initializes; showContextInfo[] uses it as its baseline.";
-exportGraphicsToPDF::usage = "exportGraphicsToPDF[graphics, what:\"what\", type:\"type\", tag:\"tag\", dateTimeYesNo:True, baseOutputDir:Automatic] exports graphics as a PDF whose filename is assembled from what, type, tag, and an optional timestamp. Automatic uses the configured RICH output directory and the Export result is returned.";
+$exportGraphicsToPDFMode::usage = "$exportGraphicsToPDFMode controls exportGraphicsToPDF. \"Button\" (the default) prints a button that performs the export when clicked, \"Immediate\" exports at once, and \"Disabled\" only returns the resolved output filename.";
+exportGraphicsToPDF::usage = "exportGraphicsToPDF[graphics, what:\"what\", type:\"type\", tag:\"tag\", dateTimeYesNo:True, baseOutputDir:Automatic] resolves the PDF filename and then follows $exportGraphicsToPDFMode: \"Button\" prints an export button, \"Immediate\" exports at once, and \"Disabled\" performs no export. Automatic uses the configured RICH output directory.";
+exportGraphicsToPDF::badmode = "Unknown $exportGraphicsToPDFMode value `1`. Use \"Button\", \"Immediate\", or \"Disabled\".";
+exportGraphicsToPDF::exportfail = "Could not export PDF to `1`.";
 endEvalPrintOut::usage = "endEvalPrintOut[] prints an end-of-evaluation banner, timestamp, MSG/Message cells, context information, newly created Global` symbol names, and the external-load summary; it returns the result of summarizeLoads[].";
 summarizeLoads::usage = "summarizeLoads[] prints totals recorded explicitly by loadMyFile, loadNeeds, and trusted external loaders using recordExternalLoad, and returns the log as a Dataset. When the log is empty it prints a notice and returns Null.";
 loadSavedLog::usage = "loadSavedLog[path:Automatic] imports a saved load log into the package tracker and prints the number of entries. Automatic uses load_log.wdx in safeNotebookDirectory[]; a missing file returns $Failed, while success returns Null.";
@@ -307,6 +310,19 @@ configuredProjectDirectory[key_String, fallbackLeaf_String] := Module[
 ];
 
 
+If[! ValueQ[$exportGraphicsToPDFMode],
+  $exportGraphicsToPDFMode = "Button"];
+
+ClearAll[performGraphicsPDFExport];
+performGraphicsPDFExport[outputFile_String, graphics_] := Module[{result},
+  result = Check[Export[outputFile, graphics, "PDF"], $Failed];
+  If[result === $Failed,
+    Message[exportGraphicsToPDF::exportfail, outputFile],
+    Print["Exported PDF: ", result]
+  ];
+  result
+];
+
 ClearAll[exportGraphicsToPDF];
 exportGraphicsToPDF[
   graphics_,
@@ -315,7 +331,8 @@ exportGraphicsToPDF[
   tag_String    : "tag",
   dateTimeYesNo : (True | False) : True,
   baseOutputDir : (_String | Automatic) : Automatic
-] := Module[{what2, type2, tag2, timeStamp, outDir},
+] := Module[
+  {what2, type2, tag2, timeStamp, outDir, outputFile, savedGraphics},
 
   (* resolve output directory *)
   outDir = Replace[baseOutputDir,
@@ -337,10 +354,31 @@ exportGraphicsToPDF[
     tag != "" && !dateTimeYesNo, "-" <> tag
   ];
 
-  Export[
-    FileNameJoin[{outDir, what2 <> type2 <> tag2 <> ".pdf"}],
-    graphics,
-    "PDF"
+  outputFile = FileNameJoin[
+    {outDir, what2 <> type2 <> tag2 <> ".pdf"}];
+  savedGraphics = graphics;
+
+  Switch[$exportGraphicsToPDFMode,
+    "Immediate",
+      performGraphicsPDFExport[outputFile, savedGraphics],
+
+    "Button",
+      With[{file = outputFile, graphic = savedGraphics},
+        Print @ Button[
+          "Export PDF: " <> FileNameTake[file],
+          performGraphicsPDFExport[file, graphic],
+          Method -> "Queued",
+          ImageSize -> 300
+        ]
+      ];
+      outputFile,
+
+    "Disabled",
+      outputFile,
+
+    _,
+      Message[exportGraphicsToPDF::badmode, $exportGraphicsToPDFMode];
+      $Failed
   ]
 ];
 

@@ -124,15 +124,15 @@ Cell[BoxData[
          {"\<\"Output:\"\>", 
           DynamicBox[ToBoxes[
             $CellContext`RICHPathSetting["OutputDirectory"], StandardForm],
-           ImageSizeCache->{292.541015625, {1.76513671875, 5.63232421875}}]},
+           ImageSizeCache->{112.346923828125, {1.76513671875, 5.5517578125}}]},
          {"\<\"Backups:\"\>", 
           DynamicBox[ToBoxes[
             $CellContext`RICHPathSetting["BackupDirectory"], StandardForm],
-           ImageSizeCache->{297.4189453125, {1.76513671875, 5.63232421875}}]},
+           ImageSizeCache->{112.6728515625, {1.76513671875, 5.5517578125}}]},
          {"\<\"Temporary:\"\>", 
           DynamicBox[ToBoxes[
             $CellContext`RICHPathSetting["TemporaryDirectory"], StandardForm],
-           ImageSizeCache->{203.9794921875, {1.76513671875, 5.63232421875}}]}
+           ImageSizeCache->{124.48681640625, {1.76513671875, 5.5517578125}}]}
         },
         AutoDelete->False,
         GridBoxAlignment->{"Columns" -> {{Left}}},
@@ -194,10 +194,10 @@ Cell[BoxData[
      FrontEndObject[
       LinkObject["7h49h_shm", 3, 1]], 31, 
      "FrontEndObject[LinkObject[\"7h49h_shm\", 3, 1]]", "31", 
-     "\" ------- calculator-reboot\"", 
+     "\" ------- calculator\"", 
      "\"C:\\\\Users\\\\Ale\\\\OneDrive - \
 unige.it\\\\Documenti\\\\WolframMMAProjectRICH-Git-new\\\\notebooks\\\\\
-calculator-reboot.nb\""},
+calculator.nb\""},
     "NotebookObject"]}],
   SequenceForm[" InputNotebook                           ", 
    NotebookObject[
@@ -216,10 +216,10 @@ Cell[BoxData[
      FrontEndObject[
       LinkObject["7h49h_shm", 3, 1]], 31, 
      "FrontEndObject[LinkObject[\"7h49h_shm\", 3, 1]]", "31", 
-     "\" ------- calculator-reboot\"", 
+     "\" ------- calculator\"", 
      "\"C:\\\\Users\\\\Ale\\\\OneDrive - \
 unige.it\\\\Documenti\\\\WolframMMAProjectRICH-Git-new\\\\notebooks\\\\\
-calculator-reboot.nb\""},
+calculator.nb\""},
     "NotebookObject"]}],
   SequenceForm[" EvaluationNotebook                      ", 
    NotebookObject[
@@ -272,10 +272,10 @@ Cell[BoxData[
      FrontEndObject[
       LinkObject["7h49h_shm", 3, 1]], 31, 
      "FrontEndObject[LinkObject[\"7h49h_shm\", 3, 1]]", "31", 
-     "\" ------- calculator-reboot\"", 
+     "\" ------- calculator\"", 
      "\"C:\\\\Users\\\\Ale\\\\OneDrive - \
 unige.it\\\\Documenti\\\\WolframMMAProjectRICH-Git-new\\\\notebooks\\\\\
-calculator-reboot.nb\""},
+calculator.nb\""},
     "NotebookObject"]}],
   SequenceForm["  END  ", 
    NotebookObject[
@@ -1599,7 +1599,7 @@ general.wl\"\>", "\[InvisibleSpace]", "\<\"  [\"\>",
     "1"}],
   SequenceForm[
   "    ", "C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\physics-general.wl", 
+unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\physicsGeneral.wl", 
    "  [", "Get", "]  *", 1],
   Editable->False]], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
@@ -1673,7 +1673,7 @@ Cell[BoxData["\<\"*|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\
   "8/13/26 20:15:45 During evaluation of \
 In[2]:=",ExpressionUUID->"78090429-61bd-7a4b-8249-516bfb9885cc"],
 
-Cell[BoxData["\<\"***--- physics-general ---***\"\>"], "Print",
+Cell[BoxData["\<\"***--- physicsGeneral ---***\"\>"], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
  CellLabel->
   "8/13/26 20:15:45 During evaluation of \
@@ -1708,7 +1708,7 @@ Cell[BoxData["\<\"*|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\
   "8/13/26 20:15:45 During evaluation of \
 In[2]:=",ExpressionUUID->"f7b1dfd5-2977-9248-b55d-2f9a19abd0de"],
 
-Cell[BoxData["\<\"***--- physics-general ---***\"\>"], "Print",
+Cell[BoxData["\<\"***--- physicsGeneral ---***\"\>"], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
  CellLabel->
   "8/13/26 20:15:45 During evaluation of \
@@ -1729,7 +1729,7 @@ Cell[BoxData["\<\"*===========================================================\
   "8/13/26 20:15:45 During evaluation of \
 In[2]:=",ExpressionUUID->"1fbb47c7-4341-7b48-b307-ab8c3dadfd09"],
 
-Cell[BoxData["\<\"LOADING physics-general\"\>"], "Print",
+Cell[BoxData["\<\"LOADING physicsGeneral\"\>"], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
  CellLabel->
   "8/13/26 20:15:45 During evaluation of \
@@ -2185,7 +2185,7 @@ general.wl\"\>", "\[InvisibleSpace]", "\<\"  [\"\>",
     "2"}],
   SequenceForm[
   "    ", "C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\physics-general.wl", 
+unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\src\\physicsGeneral.wl", 
    "  [", "Get", "]  *", 2],
   Editable->False]], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
@@ -3080,8 +3080,8 @@ Cell[BoxData[
              ",", "\<\"Ale\"\>", ",", "\<\"OneDrive - unige.it\"\>", 
              ",", "\<\"Documenti\"\>", 
              ",", "\<\"WolframMMAProjectRICH-Git-new\"\>", 
-             ",", "\<\"notebooks\"\>"}], "}"}], 
-           ",", "\<\"calculator-reboot.nb\"\>", ",", 
+             ",", "\<\"notebooks\"\>"}], "}"}], ",", "\<\"calculator.nb\"\>", 
+           ",", 
            RowBox[{"CharacterEncoding", "\[Rule]", "\<\"UTF-8\"\>"}]}], 
           "]"}]}]},
        {
@@ -3089,7 +3089,7 @@ Cell[BoxData[
          "3.995632431458452`*^9"}]},
        {
         RowBox[{"\<\"WindowTitle\"\>", 
-         "\[Rule]", "\<\" ------- calculator-reboot\"\>"}]},
+         "\[Rule]", "\<\" ------- calculator\"\>"}]},
        {
         RowBox[{"\<\"MemoryModificationTime\"\>", "\[Rule]", 
          "3.995633749993824`*^9"}]},
@@ -3129,12 +3129,12 @@ Cell[BoxData[
     "FileName" -> 
      FrontEnd`FileName[{$RootDirectory, "C:", "Users", "Ale", 
         "OneDrive - unige.it", "Documenti", "WolframMMAProjectRICH-Git-new", 
-        "notebooks"}, "calculator-reboot.nb", CharacterEncoding -> "UTF-8"], 
+        "notebooks"}, "calculator.nb", CharacterEncoding -> "UTF-8"], 
      "FileModificationTime" -> 3.995632431458452*^9, "WindowTitle" -> 
-     " ------- calculator-reboot", "MemoryModificationTime" -> 
-     3.995633749993824*^9, "ModifiedInMemory" -> True, "StorageSystem" -> 
-     "Local", "DocumentType" -> "Notebook", "MIMEType" -> 
-     "application/vnd.wolfram.nb", "StyleDefinitions" -> {
+     " ------- calculator", "MemoryModificationTime" -> 3.995633749993824*^9, 
+     "ModifiedInMemory" -> True, "StorageSystem" -> "Local", "DocumentType" -> 
+     "Notebook", "MIMEType" -> "application/vnd.wolfram.nb", 
+     "StyleDefinitions" -> {
        NotebookObject[
         FrontEndObject[
          LinkObject["7h49h_shm", 3, 1]], 32]}, "ExpressionUUID" -> 
@@ -9481,12 +9481,11 @@ In[2]:=",ExpressionUUID->"e0c84319-ba2d-504a-9584-5a10927d7061"],
 Cell[BoxData[
  InterpretationBox[
   RowBox[{"\<\" \"\>", 
-   "\[InvisibleSpace]", "\<\"RICH notebook ready: calculator-reboot\"\>", 
+   "\[InvisibleSpace]", "\<\"RICH notebook ready: calculator\"\>", 
    "\[InvisibleSpace]", "\<\"  |  \"\>", 
    "\[InvisibleSpace]", "\<\"2026-08-13  20:15:57\"\>"}],
   SequenceForm[
-  " ", "RICH notebook ready: calculator-reboot", "  |  ", 
-   "2026-08-13  20:15:57"],
+  " ", "RICH notebook ready: calculator", "  |  ", "2026-08-13  20:15:57"],
   Editable->False]], "Print",
  CellTags->{"RICHUniversalBootstrap", "i:1"},
  CellLabel->
@@ -9531,16 +9530,18 @@ Cell[BoxData[{
     RowBox[{"{", 
      RowBox[{"\"\<myNotebookInit`\>\"", ",", "\"\<base`\>\"", 
       ",", "\"\<statDataAnal`\>\"", ",", "\"\<rich`\>\""}], "}"}]}], "]"}], 
+  "\n", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", "\"\< loading calculator \>\"", "]"}], 
   "\[IndentingNewLine]", 
   RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{
-  RowBox[{"Print", "[", "\"\< loading calculator \>\"", "]"}], "\n", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
   RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], " ", 
   RowBox[{"(*", " ", 
-   RowBox[{"Begin", " ", "Private", " ", "Context"}], " ", "*)"}], " ", "\n", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+   RowBox[{"Begin", " ", "Private", " ", "Context"}], " ", "*)"}], " ", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"showContextInfo", "[", "]"}], "\[IndentingNewLine]", 
   RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
@@ -9556,8 +9557,8 @@ Cell[BoxData[{
   "\[IndentingNewLine]", 
   RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"showContextInfo", "[", "]"}], "\n", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+  RowBox[{"showContextInfo", "[", "]"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"Print", "@", 
    RowBox[{"Cells", "[", 
@@ -10304,7 +10305,7 @@ Cell[BoxData[
       RowBox[{
       "1.0013682", ",", "1.0004729", ",", "1.0004373", ",", "1.4552925", ",", 
        "1.0302885"}], "}"}]}], ";"}], "\n", 
-   RowBox[{"(*", "*)"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
@@ -10316,7 +10317,7 @@ Cell[BoxData[
      RowBox[{"DETECTOR", " ", "SETUP"}], " ", "//", " ", 
      RowBox[{
      "TO", " ", "BE", " ", "CHECKED", " ", "LATER", " ", "FOR", " ", 
-      "SPECIFIC", " ", "APPLICATIONS"}]}], "*)"}], "\[IndentingNewLine]", 
+      "SPECIFIC", " ", "APPLICATIONS"}]}], "*)"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
@@ -10438,7 +10439,7 @@ Cell[BoxData[
        RowBox[{"\"\<physicsGeneral`\>\"", "->", "\"\<base`\>\""}], ",", 
        RowBox[{"\"\<statDataAnal`\>\"", "->", "\"\<base`\>\""}], ",", 
        RowBox[{"\"\<base`\>\"", "->", "\"\<myNotebookInit`\>\""}]}], "}"}]}], 
-    ";"}], "\[IndentingNewLine]", "\n", 
+    ";"}], "\n", "\[IndentingNewLine]", 
    RowBox[{"Graph", "[", 
     RowBox[{"dependencies", ",", 
      RowBox[{"VertexLabels", "->", 
@@ -10556,7 +10557,7 @@ Cell[BoxData[
          RowBox[{"calcRICHYield", ",", "#"}], "]"}], "&"}], ",", 
        RowBox[{"{", 
         RowBox[{"params1", ",", "params2"}], "}"}]}], "]"}]}], 
-    "\[IndentingNewLine]", "*)"}], "\[IndentingNewLine]", "\n", 
+    "\[IndentingNewLine]", "*)"}], "\n", "\[IndentingNewLine]", 
    "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"(*", " ", "TEST", "*)"}], 
@@ -10597,7 +10598,8 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"SetAttributes", "[", 
-    RowBox[{"runRICHOrAbort", ",", "HoldFirst"}], "]"}], ";"}], "\n"}], "\[IndentingNewLine]", 
+    RowBox[{"runRICHOrAbort", ",", "HoldFirst"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"runRICHOrAbort", "[", 
@@ -11689,14 +11691,14 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"ClearAll", "[", 
     RowBox[{"symbolReport", ",", "symbolReportStrict"}], "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"ClearAll", "[", "printFullSymbolSummary", "]"}], ";"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"SetAttributes", "[", 
     RowBox[{"printFullSymbolSummary", ",", "HoldFirst"}], "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -11718,13 +11720,14 @@ Cell[BoxData[{
             RowBox[{
             "#1", ",", "\"\<:\\n\>\"", ",", "#2", ",", "\"\<\\n\>\""}], "]"}],
             "&"}], ")"}], ",", "def"}], "]"}], ";"}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"ClearAll", "[", "fullDefinitionText", "]"}], ";"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"SetAttributes", "[", 
-    RowBox[{"fullDefinitionText", ",", "HoldFirst"}], "]"}], ";"}], "\n"}], "\[IndentingNewLine]", 
+    RowBox[{"fullDefinitionText", ",", "HoldFirst"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -11739,7 +11742,8 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"SetAttributes", "[", 
-    RowBox[{"allDefinitions", ",", "HoldFirst"}], "]"}], ";"}], "\n"}], "\[IndentingNewLine]", 
+    RowBox[{"allDefinitions", ",", "HoldFirst"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -11778,7 +11782,8 @@ Cell[BoxData[{
            RowBox[{
             RowBox[{"SymbolName", "[", "s", "]"}], "<>", "\"\<::\>\"", 
             "<>", "\"\<*\>\""}], "]"}], ",", 
-          RowBox[{"{", "}"}]}], "]"}]}]}]}], "]"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+          RowBox[{"{", "}"}]}], "]"}]}]}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{"ClearAll", "[", "x", "]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -12779,8 +12784,8 @@ Cell[BoxData[
   RowBox[{"(*", 
    RowBox[{
    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
-     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", 
-    "===", "===", "===", "===", "=="}], "*)"}], "\[IndentingNewLine]", 
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+     "===", "===", "===", "=="}], "*)"}], "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
    RowBox[{
     RowBox[{"BASIC", " ", "INPUT", " ", "DATA", " ", 
@@ -13099,12 +13104,12 @@ Cell[BoxData[{
    RowBox[{
    "(*", "*******************************************************************************************************************************)"}\
 ],
-   Background->RGBColor[0.88, 1, 0.88]], "\[IndentingNewLine]", 
+   Background->RGBColor[0.88, 1, 0.88]], "\n", 
   StyleBox[
    RowBox[{
    "(*", "*******************************************************************************************************************************)"}\
 ],
-   Background->RGBColor[0.88, 1, 0.88]], "\n", 
+   Background->RGBColor[0.88, 1, 0.88]], "\[IndentingNewLine]", 
   StyleBox[
    RowBox[{"(*", 
     RowBox[{"upg", "-", "1"}], "*)"}],
@@ -13113,12 +13118,12 @@ Cell[BoxData[{
    RowBox[{
    "(*", "*******************************************************************************************************************************)"}\
 ],
-   Background->RGBColor[0.88, 1, 0.88]], "\[IndentingNewLine]", 
+   Background->RGBColor[0.88, 1, 0.88]], "\n", 
   StyleBox[
    RowBox[{
    "(*", "*******************************************************************************************************************************)"}\
 ],
-   Background->RGBColor[0.88, 1, 0.88]], "\n", 
+   Background->RGBColor[0.88, 1, 0.88]], "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{
     RowBox[{"\[Lambda]MinRef", "=", "200"}], ";"}], "*)"}], 
@@ -13183,7 +13188,7 @@ Cell[BoxData[{
    RowBox[{"my", " ", "numbers"}], "*)"}], 
   RowBox[{"(*", 
    RowBox[{"foc", ":", 
-    RowBox[{"all", " ", "acceptance"}]}], "*)"}], "\n", 
+    RowBox[{"all", " ", "acceptance"}]}], "*)"}], "\[IndentingNewLine]", 
   StyleBox[
    RowBox[{"(*", 
     RowBox[{
@@ -13192,7 +13197,7 @@ Cell[BoxData[{
        RowBox[{"{", 
         RowBox[{"sigmaSnglPhAsymptUpg1R1L", ",", "sigmaSnglPhAsymptUpg1R1H"}],
          "}"}], "]"}]}], ";"}], "*)"}],
-   FontColor->RGBColor[1, 0, 1]]}], "\[IndentingNewLine]", 
+   FontColor->RGBColor[1, 0, 1]]}], "\n", 
  RowBox[{
   RowBox[{"sigmaSnglPhAsymptUpg1R1LTot", ":=", 
    RowBox[{"sumInQuadr", "[", "sigmaSnglPhAsymptUpg1R1L", "]"}]}], ";"}], "\[IndentingNewLine]", 
@@ -14253,8 +14258,8 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"sigmaSnglPhTotAsymptUpg2R2Hmapmt", ":=", 
-   RowBox[{"sumInQuadr", "[", "sigmaSnglPhAsymptUpg2R2Hmapmt", "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
+   RowBox[{"sumInQuadr", "[", "sigmaSnglPhAsymptUpg2R2Hmapmt", "]"}]}], ";"}],
+ "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"sigmaChrRngAsymptUpg2R2Lmapmt", ":=", 
    RowBox[{"sigmaSnglPhTotAsymptUpg2R2Lmapmt", "/", 
@@ -14749,12 +14754,12 @@ Cell[BoxData[
     RowBox[{
     "bigBanner", 
      "[", "\"\< PROBLEM IS TO EXTEND IN THE TRANSVERSE DIRECTION THE PDA... \
-\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+\>\"", "]"}], ";"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
-      "===", "===", "===", "=="}], "*)"}], "\n", 
+      "===", "===", "===", "=="}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"ANGULAR", " ", "ACCEPTANCE", " ", "R1"}], "*)"}], 
    "\[IndentingNewLine]", 
@@ -15506,8 +15511,7 @@ Cell[BoxData[
         RowBox[{"@", "#$"}], "%", " ", "to", " ", 
         RowBox[{"check", "/", "change"}]}]}], " ", "//", " ", 
       RowBox[{"solid", "-", "state"}]}], ",", " ", "large", ",", " ", 
-     RowBox[{"MPPC", " ", "and", " ", "SIPM"}]}], "*)"}], 
-   "\[IndentingNewLine]", 
+     RowBox[{"MPPC", " ", "and", " ", "SIPM"}]}], "*)"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"scaleFactDNIR1", "=", "scaleFactDNIRef"}], ";"}], "*)"}], 
@@ -15533,7 +15537,8 @@ Cell[BoxData[
     RowBox[{"!", 
      RowBox[{
       RowBox[{"@", "#$"}], "%", " ", "to", " ", 
-      RowBox[{"check", "/", "change"}]}]}], " ", "*)"}], "\n", 
+      RowBox[{"check", "/", "change"}]}]}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"scaleFactTimeBinRefR1", "=", "scaleFactTimeBinRef"}], ";"}], 
@@ -15587,7 +15592,9 @@ Cell[BoxData[
     RowBox[{
      RowBox[{"from", " ", "\\", "pm"}], " ", "25", "mrad"}], "*)"}], 
    RowBox[{"(*", 
-    RowBox[{"1489", "mm"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"1489", "mm"}], "*)"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontColor->RGBColor[1, 0.5, 0]], 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"areaPDAFromNominalGeoAcceptR1Upg2", ":=", 
@@ -15607,9 +15614,7 @@ Cell[BoxData[
           RowBox[{"Times", ",", 
            RowBox[{"Differences", "@", "alphaLongR1Upg1"}], ",", 
            RowBox[{"Differences", "@", "alphaShrtR1Upg1"}]}], "]"}]}], "/", 
-        SuperscriptBox["thisPixAngSize", "2"]}]}]}], ";"}], "*)"}], 
-   StyleBox["\[IndentingNewLine]",
-    FontColor->RGBColor[1, 0.5, 0]], 
+        SuperscriptBox["thisPixAngSize", "2"]}]}]}], ";"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{"(*", "*)"}]}]}]], "Input",
  CellTags->{"i:3", "i:4"},
  CellLabel->
@@ -16025,7 +16030,7 @@ Cell[BoxData[
         RowBox[{"@", "#$"}], "%", " ", "to", " ", 
         RowBox[{"check", "/", "change"}]}]}], " ", "//", " ", 
       RowBox[{"PK", "-", "based"}]}], ",", " ", "low", ",", " ", 
-     RowBox[{"PMT", " ", "and", " ", "MCP"}]}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"PMT", " ", "and", " ", "MCP"}]}], "*)"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"intensityDarkNoisSSR2", "=", 
@@ -16039,7 +16044,8 @@ Cell[BoxData[
         RowBox[{"@", "#$"}], "%", " ", "to", " ", 
         RowBox[{"check", "/", "change"}]}]}], " ", "//", " ", 
       RowBox[{"solid", "-", "state"}]}], ",", " ", "large", ",", " ", 
-     RowBox[{"MPPC", " ", "and", " ", "SIPM"}]}], "*)"}], "\n", 
+     RowBox[{"MPPC", " ", "and", " ", "SIPM"}]}], "*)"}], 
+   "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"scaleFactDNIR2", "=", "scaleFactDNIRef"}], ";"}], "*)"}], 
@@ -16077,8 +16083,7 @@ Cell[BoxData[
     RowBox[{"!", 
      RowBox[{
       RowBox[{"@", "#$"}], "%", " ", "to", " ", 
-      RowBox[{"check", "/", "change"}]}]}], " ", "*)"}], 
-   "\[IndentingNewLine]", 
+      RowBox[{"check", "/", "change"}]}]}], " ", "*)"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"scaleFactOthersRefR2", "=", "scaleFactOthersRef"}], ";"}], 
@@ -16088,7 +16093,7 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"@", "#$"}], "%", " ", "to", " ", 
       RowBox[{"check", "/", "change"}]}]}], " ", "*)"}], "\n", 
-   RowBox[{"(*", "*)"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"alphaLongR2Upg1LinSiz", "=", 
      RowBox[{"createMMet", "@", "672.0"}]}], ";"}], 
@@ -16122,7 +16127,7 @@ Cell[BoxData[
     RowBox[{
      RowBox[{
       RowBox[{"1356", "mm"}], "-", "circa"}], "//", 
-     RowBox[{"56.5", "*", "12", "*", "2"}]}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"56.5", "*", "12", "*", "2"}]}], "*)"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"areaPDAFromNominalGeoAcceptFromNominalGeoAcceptR2Upg2", ":=", 
@@ -16141,7 +16146,7 @@ Cell[BoxData[
           RowBox[{"Times", ",", 
            RowBox[{"Differences", "@", "alphaLongR2Upg2"}], ",", 
            RowBox[{"Differences", "@", "alphaShrtR2Upg2"}]}], "]"}]}], "/", 
-        RowBox[{"thisPixAngSize", "^", "2"}]}]}]}], ";"}], "*)"}], "\n", 
+        RowBox[{"thisPixAngSize", "^", "2"}]}]}]}], ";"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{"(*", "*)"}]}]}]], "Input",
  CellTags->{"i:3", "i:4"},
  CellLabel->
@@ -16300,12 +16305,11 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"superClearSet", "[", "\[Lambda]Ref", "]"}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{"superClearSet", "[", "theRefrIndexRefVal", "]"}], ";"}], 
-   "\[IndentingNewLine]", 
+    RowBox[{"superClearSet", "[", "theRefrIndexRefVal", "]"}], ";"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"superClearSet", "[", "theRefrIndexMedian", "]"}], ";"}], "*)"}],
-    "\n", 
+    "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"superClearSet", "[", "theRefrIndex", "]"}], ";"}], "*)"}], 
@@ -16347,8 +16351,7 @@ Cell[BoxData[
       RowBox[{
       "idWhichDetSetup", ",", "\[Lambda]Ref", ",", " ", "theRefrIndexRefVal", 
        ",", " ", "theRefrIndexMedian", ",", "refrIndex", ",", " ", "n0", ",", 
-       " ", "n1", ",", " ", "n2"}], "]"}], ";"}], "*)"}], 
-   "\[IndentingNewLine]", 
+       " ", "n1", ",", " ", "n2"}], "]"}], ";"}], "*)"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"ClearAll", "[", 
@@ -16363,7 +16366,7 @@ Cell[BoxData[
       RowBox[{"theWavLenMedian", "[", 
        RowBox[{"[", "idWhichDetSetup", "]"}], "]"}]}], ";"}], "*)"}], 
    RowBox[{"(*", 
-    RowBox[{"unused", " ", "here"}], "*)"}], "\n", 
+    RowBox[{"unused", " ", "here"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"theRefrIndexMedian", ":=", 
      RowBox[{"nRefrAtTheWavLenMedian", "[", 
@@ -16409,13 +16412,12 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"printD", "@", 
      RowBox[{"NumberForm", "[", 
-      RowBox[{"n0", ",", "16"}], "]"}]}], ";"}], "\n", 
+      RowBox[{"n0", ",", "16"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{
       RowBox[{"refrIndex", "[", "\[Lambda]_", "]"}], ":=", 
-      RowBox[{"nRefrC4F10", "[", "\[Lambda]", "]"}]}], ";"}], "*)"}], 
-   "\[IndentingNewLine]", 
+      RowBox[{"nRefrC4F10", "[", "\[Lambda]", "]"}]}], ";"}], "*)"}], "\n", 
    RowBox[{"(*", "*)"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
@@ -16521,7 +16523,8 @@ Cell[BoxData[{
       RowBox[{"1", "/", "10"}], ",", 
       RowBox[{"5", "/", "10"}], ",", 
       RowBox[{"9", "/", "10"}], ",", 
-      RowBox[{"99", "/", "100"}], ",", "\[Nu]"}], "}"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+      RowBox[{"99", "/", "100"}], ",", "\[Nu]"}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"listOfSols", "=", 
@@ -16535,7 +16538,7 @@ Cell[BoxData[{
            RowBox[{"numRelPhoNoConditions", "==", "#"}], "&&", 
            "assumptions"}], ",", "\[Gamma]", ",", "Reals"}], "]"}], "&"}], "/@",
         "fractionsOfNumbers"}], ",", "1"}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", "\[IndentingNewLine]", 
   "\[IndentingNewLine]", 
   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
   RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
@@ -16611,8 +16614,8 @@ Cell[BoxData[{
     RowBox[{"GridLines", "->", "Automatic"}], ",", 
     RowBox[{"PlotRange", "->", 
      RowBox[{"{", 
-      RowBox[{"0", ",", "99"}], "}"}]}]}], "]"}], "\n", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+      RowBox[{"0", ",", "99"}], "}"}]}]}], "]"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"numSteps", "=", "37"}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
@@ -16627,8 +16630,8 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"gammaMax", "=", "9999999"}], ";"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\n", 
+   RowBox[{"gammaMax", "=", "9999999"}], ";"}], "\n", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Print", "[", 
    RowBox[{"ListPlot", "[", 
@@ -16713,9 +16716,8 @@ Cell[BoxData[{
      RowBox[{"n_", ",", "\[Gamma]_"}], "]"}], "=", 
     RowBox[{
      RowBox[{"f", "/.", "\[VeryThinSpace]", "sol"}], "/.", 
-     RowBox[{"gammaGiven", "->", "\[Gamma]"}]}]}], ";"}], 
-  "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\n", 
+     RowBox[{"gammaGiven", "->", "\[Gamma]"}]}]}], ";"}], "\n", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"theGammaThr", ":=", 
    RowBox[{
@@ -16947,8 +16949,8 @@ Cell[BoxData[{
         RowBox[{"PlotRange", "->", 
          RowBox[{"{", 
           RowBox[{"1", ",", "All"}], "}"}]}]}], "]"}]}], ";"}]}], 
-   "\[IndentingNewLine]", "]"}], "\n", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"Protect", "[", 
    RowBox[{
@@ -19068,8 +19070,9 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"Print", "@", 
     RowBox[{"Column", "@", 
-     RowBox[{"DownValues", "@", "ssbnName"}]}]}], ";"}], "\n", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+     RowBox[{"DownValues", "@", "ssbnName"}]}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{"headerDoCalcSignificance", "=", 
   RowBox[{"{", "\[IndentingNewLine]", 
    RowBox[{"\"\<===========================================================\>\
@@ -20954,7 +20957,7 @@ Cell[BoxData[{
        RowBox[{"[", "1", "]"}], "]"}], "\[IndentingNewLine]", ",", 
       "\[IndentingNewLine]", "True", "\[IndentingNewLine]", ",", 
       "\[IndentingNewLine]", "x"}], "\[IndentingNewLine]", "]"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]"}], "Input",
+  "\[IndentingNewLine]"}], "\n"}], "Input",
  CellLabel->
   "8/12/26 19:06:08 \
 In[741]:=",ExpressionUUID->"10ab73cd-a542-0c42-a419-e951962a6234"],
@@ -22559,7 +22562,7 @@ Cell[BoxData[
           RowBox[{"theExperimentConfig", ",", "doSetExperimentKeys"}], 
           "]"}]}], ";", "\[IndentingNewLine]", 
         RowBox[{"doSetExperiment", "@@", "args"}]}]}], "]"}]}], ";"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\n", 
    RowBox[{"(*", " ", 
     RowBox[{
      RowBox[{
@@ -22572,7 +22575,7 @@ Cell[BoxData[
       "uncomment", " ", "and", " ", "adapt", " ", "to", " ", "your", " ", 
        "symbols"}], "===", "===", "===", "===", "===", "===", "===", "===", "===",
        "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", 
-      "==="}]}], "*)"}], "\n", 
+      "==="}]}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{"baseR2H", "=", 
     RowBox[{"{", 
      RowBox[{
@@ -22721,13 +22724,13 @@ Cell[BoxData[
    RowBox[{"(*", 
     RowBox[{"to", " ", "be", " ", "moved", " ", "very", " ", "earlier"}], 
     "*)"}], "\[IndentingNewLine]", 
-   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}], 
+   StyleBox["\[IndentingNewLine]",
+    Background->RGBColor[0.87, 0.94, 1]], 
    RowBox[{"(*", 
     RowBox[{
     "focal", " ", "length", " ", "scaling", " ", "factors", " ", "and", " ", 
-     "tags"}], "*)"}], 
-   StyleBox["\[IndentingNewLine]",
-    Background->RGBColor[0.87, 0.94, 1]], 
+     "tags"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{"Table", "[", 
     RowBox[{
      RowBox[{"Sqrt", "[", "k", "]"}], ",", 
@@ -25804,7 +25807,8 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"SetAttributes", "[", 
-    RowBox[{"checkedStageResult", ",", "HoldFirst"}], "]"}], ";"}], "\n"}], "\[IndentingNewLine]", 
+    RowBox[{"checkedStageResult", ",", "HoldFirst"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{"checkedStageResult", "[", 
    RowBox[{
@@ -25877,7 +25881,7 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"ClearAll", "[", 
     RowBox[{"finiteRealQ", ",", "momentumThresholdFromScan"}], "]"}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -25893,7 +25897,7 @@ Cell[BoxData[{
       RowBox[{"PossibleZeroQ", "[", 
        RowBox[{"Im", "[", 
         RowBox[{"N", "[", "value", "]"}], "]"}], "]"}], "]"}]}]}], ";"}], 
-  "\n", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{"momentumThresholdFromScan", "[", 
    RowBox[{"scan_", ",", 
@@ -27014,8 +27018,7 @@ Cell[BoxData[
        RowBox[{"\"\<R1H-upg2-lappd\>\"", ","}], "*)"}], 
       RowBox[{"(*", "BROKEN", "*)"}], "\[IndentingNewLine]", "}"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{"Protect", "[", "experimentTags", "]"}], ";"}], 
-   "\[IndentingNewLine]", 
+    RowBox[{"Protect", "[", "experimentTags", "]"}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"sortedExperimentTags", "=", 
      RowBox[{"Sort", "[", "experimentTags", "]"}]}], ";"}], "\[IndentingNewLine]", 
@@ -27074,7 +27077,7 @@ Cell[BoxData[{
      RowBox[{"{", 
       RowBox[{"i", ",", "1", ",", 
        RowBox[{"Length", "[", "experimentTags", "]"}]}], "}"}]}], 
-    "\[IndentingNewLine]", "]"}], ";"}], "\n", 
+    "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{
     RowBox[{"Do", "[", 
@@ -27085,7 +27088,7 @@ Cell[BoxData[{
       RowBox[{"{", 
        RowBox[{"i", ",", "1", ",", 
         RowBox[{"Length", "[", "experimentTags", "]"}]}], "}"}]}], "]"}], 
-    ";"}], "*)"}]}], "\[IndentingNewLine]", 
+    ";"}], "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"(*", "*)"}]}]}], "Input",
  CellTags->{"i:3", "i:4"},
@@ -27534,11 +27537,11 @@ Cell[BoxData[
          "\[IndentingNewLine]", "\"\<dniInPixInGatTimVisCnt\>\"", ",", 
          "\[IndentingNewLine]", "\"\<dniInRingAsymptInGatTimTruCnt\>\"", ",", 
          "\[IndentingNewLine]", "\"\<dniInRingInGatTim\>\""}], 
-        "\[IndentingNewLine]", "}"}]}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", "}"}]}]}], "]"}], ";"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
     "SELECT", " ", "OUTPUT", " ", "CELL", " ", "AND", 
-     " ", "\"\<SAVE SELECTION AS\>\""}], "*)"}], "\n", 
+     " ", "\"\<SAVE SELECTION AS\>\""}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{"showSelectedOutputEntriesByColumn", "[", 
     RowBox[{"Sort", "@", 
      RowBox[{"DeleteDuplicates", "@", 
@@ -30119,13 +30122,13 @@ Cell[BoxData[
        RowBox[{"UnitConvert", "[", 
         RowBox[{"#", ",", "\"\<SI\>\""}], "]"}]}], "&"}], "*)"}], ";"}], "\[IndentingNewLine]", 
    RowBox[{"$Post", ";"}], "\[IndentingNewLine]", 
-   RowBox[{"$PrePrint", ";"}], "\[IndentingNewLine]", 
+   RowBox[{"$PrePrint", ";"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
     "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**",
       "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", 
      "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**",
-      "**", "**", "**"}], "********)"}], "\n", 
+      "**", "**", "**"}], "********)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Print", "[", 
      RowBox[{"\"\<INPUT: sigma                                                \
@@ -30234,11 +30237,10 @@ Cell[BoxData[
     RowBox[{"Print", "[", 
      RowBox[{"\"\<INPUT: detectorLength                                       \
   : \>\"", ",", " ", 
-      RowBox[{"UnitSimplify", "@", "detectorLength"}]}], "]"}], ";"}], 
-   "\[IndentingNewLine]", 
+      RowBox[{"UnitSimplify", "@", "detectorLength"}]}], "]"}], ";"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
-     RowBox[{"Print", "[", "\"\<\\n\>\"", "]"}], ";"}], "*)"}], "\n", 
+     RowBox[{"Print", "[", "\"\<\\n\>\"", "]"}], ";"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Print", "[", 
      RowBox[{"\"\<photIncdRatePulseOn                                    : \>\
@@ -30260,10 +30262,10 @@ Cell[BoxData[
      RowBox[{"\"\<photIncdTotaPerPulse                                   : \>\
 \"", ",", " ", 
       RowBox[{"UnitSimplify", "@", "photIncdTotaPerPulse"}]}], "]"}], ";"}], 
-   "\[IndentingNewLine]", 
+   "\n", 
    RowBox[{"(*", 
     RowBox[{
-     RowBox[{"Print", "[", "\"\<\\n\>\"", "]"}], ";"}], "*)"}], "\n", 
+     RowBox[{"Print", "[", "\"\<\\n\>\"", "]"}], ";"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Print", "[", 
      RowBox[{"\"\<photScttRateDensityPulseOn                             : \>\
@@ -31472,7 +31474,7 @@ Cell[BoxData[{
              RowBox[{"xc", "[", "t", "]"}], ",", 
              RowBox[{"yc", "[", "t", "]"}], ",", 
              RowBox[{"zc", "[", "t", "]"}]}], "}"}]}], "]"}], "/", "speedR"}],
-         ")"}]}], ")"}], "//.", "data"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+         ")"}]}], ")"}], "//.", "data"}]}], ";"}], "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"f", "[", 
@@ -33302,12 +33304,12 @@ Cell[BoxData[
        RowBox[{"AxesLabel", "->", 
         RowBox[{"{", 
          RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], "}"}]}]}],
-       "]"}]}], ";"}], "\n", 
+       "]"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{"(*", " ", 
     RowBox[{
      RowBox[{"ViewPoint", "\[Rule]", 
       RowBox[{"Above", " ", ":", " ", "LookAtTheBCO"}]}], " ", "//", " ", 
-     "myStandardView"}], " ", "*)"}], "\[IndentingNewLine]", 
+     "myStandardView"}], " ", "*)"}], "\n", 
    RowBox[{"Show", "[", "     ", 
     RowBox[{
      RowBox[{"{", "\[IndentingNewLine]", 
@@ -33421,8 +33423,7 @@ Cell[BoxData[{
    RowBox[{
     RowBox[{"Options", "[", "circleFromPoints", "]"}], "=", 
     RowBox[{"{", 
-     RowBox[{"arc", "->", "False"}], "}"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+     RowBox[{"arc", "->", "False"}], "}"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"circleFromPoints", "[", 
    RowBox[{
@@ -35314,8 +35315,8 @@ Cell[BoxData[
         RowBox[{"func", "[", "\[ScriptN]", "]"}]}]}], "}"}], ",", 
      RowBox[{"{", 
       RowBox[{"\[ScriptN]", ",", "1", ",", "maxRefrIndex"}], "}"}], ",", 
-     RowBox[{"GridLines", "->", "Automatic"}]}], "]"}], "\n", 
-   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"GridLines", "->", "Automatic"}]}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}], "\n", 
    RowBox[{"ClearAll", "[", 
     RowBox[{"func", ",", "funcSeries"}], "]"}], "\[IndentingNewLine]", 
    RowBox[{
@@ -35639,7 +35640,7 @@ Cell[BoxData[{
    "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"deltaRelMasses", "=", 
-   RowBox[{"deltaMasses", "/", "\[Mu]m"}]}], "\[IndentingNewLine]", 
+   RowBox[{"deltaMasses", "/", "\[Mu]m"}]}], "\n", 
   RowBox[{"(*", 
    RowBox[{"Simplify", "[", 
     RowBox[{
@@ -35648,7 +35649,7 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"deltaMasses", "==", "\[CapitalDelta]M"}], ",", "p", ",", 
         "Reals"}], "]"}]}], ",", "$genericParametersConditions"}], "]"}], 
-   "*)"}]}], "\n", 
+   "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Simplify", "[", 
    RowBox[{"(*", 
@@ -35658,7 +35659,7 @@ Cell[BoxData[{
      RowBox[{
       RowBox[{"deltaRelMasses", "==", 
        SubscriptBox["n", "\[Sigma]"]}], ",", "p", ",", "Reals"}], "]"}], ",", 
-    "$genericParametersConditions"}], "]"}], "\[IndentingNewLine]", 
+    "$genericParametersConditions"}], "]"}], "\n", 
   RowBox[{"(*", 
    RowBox[{"deltaMasses1", "=", 
     RowBox[{
@@ -35694,7 +35695,7 @@ Cell[BoxData[{
       RowBox[{"(", 
        RowBox[{"\[Theta]a", "-", "\[Theta]b"}], ")"}], "->", 
       RowBox[{"-", "\[CapitalDelta]\[CapitalTheta]"}]}]}]}], 
-   "*)"}]}], "\n"}], "Input",
+   "*)"}]}], "\[IndentingNewLine]"}], "Input",
  CellTags->{"i:3", "i:4"},
  CellLabel->
   "7/24/25 19:56:44 \
@@ -35727,9 +35728,8 @@ Cell[BoxData[
     RowBox[{"/.", 
      RowBox[{"\[CapitalTheta]ab", "->", 
       RowBox[{"ArcCos", "[", 
-       RowBox[{"1", "/", "\[ScriptN]"}], "]"}]}]}], "*)"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{"(*", "*)"}], "\n", 
+       RowBox[{"1", "/", "\[ScriptN]"}], "]"}]}]}], "*)"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Protect", "[", 
      RowBox[{
@@ -36327,7 +36327,7 @@ Cell[BoxData[
       RowBox[{"Simplify", "[", 
        RowBox[{
         SuperscriptBox["mm", "2"], "*", "relErrMassSq"}], "]"}]}], "]"}], 
-    ";"}], "\n", "\[IndentingNewLine]", 
+    ";"}], "\[IndentingNewLine]", "\n", 
    RowBox[{
     RowBox[{"conditions", "=", 
      RowBox[{"{", 
@@ -37867,7 +37867,7 @@ Cell[BoxData[
       "FullSimplify"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"printD", "@", "deltaTheMass"}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}], "\n", 
    RowBox[{"(*", 
     RowBox[{"deltaTheMass", "=", 
      RowBox[{"Simplify", "[", 
@@ -37880,7 +37880,7 @@ Cell[BoxData[
            RowBox[{"m", "^", "2"}], "+", 
            RowBox[{"p", "^", "2"}]}], "]"}], "/", 
          RowBox[{"(", 
-          RowBox[{"p", " ", "\[ScriptN]"}], ")"}]}]}]}], "]"}]}], "*)"}], "\n", 
+          RowBox[{"p", " ", "\[ScriptN]"}], ")"}]}]}]}], "]"}]}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"sol", "=", 
      RowBox[{"First", "@", 
@@ -38986,7 +38986,7 @@ Cell[BoxData[
       RowBox[{"(", 
        RowBox[{
         RowBox[{"n", "[", "\[Lambda]", "]"}], "*", "\[Beta]"}], ")"}]}], 
-     "]"}]}], "\[IndentingNewLine]", "\n", 
+     "]"}]}], "\n", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Normal", "[", 
      RowBox[{"Series", "[", 
@@ -39205,10 +39205,10 @@ Cell[BoxData[{
      RowBox[{"//.", "dataErrors"}]}], ";"}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"pMaxPlot", "=", "130"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"pMaxPlot", "=", "130"}], ";"}], "\n", 
   RowBox[{"(*", 
    RowBox[{
-    RowBox[{"n0", "=", "1.00132`"}], ";"}], "*)"}]}], "\n", 
+    RowBox[{"n0", "=", "1.00132`"}], ";"}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"\[Delta]n0", "=", 
    RowBox[{"1.0", "*", 
@@ -39686,8 +39686,8 @@ Cell[BoxData[
      RowBox[{
      "theMassUncertaintyRaw", ",", "mm", ",", "nn", ",", "\[Delta]nn", ",", 
       "pp", ",", "\[Delta]pp", ",", "\[Delta]\[Theta]\[Theta]", ",", 
-      "f\[Sigma]\[Sigma]"}], "]"}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{"(*", "*)"}], "\n", 
+      "f\[Sigma]\[Sigma]"}], "]"}], ";"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Unprotect", "[", "theMassUncertainty", "]"}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
@@ -40708,8 +40708,8 @@ Cell[BoxData[
          "]"}], ";"}]}], "\[IndentingNewLine]", 
       RowBox[{"(*", 
        RowBox[{"Return", "[", "pl", "]"}], "*)"}], "\[IndentingNewLine]", 
-      "]"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{"(*", "*)"}], "\n", 
+      "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Protect", "[", "plotAllErrors", "]"}], ";"}], 
    "\[IndentingNewLine]", 
@@ -40724,11 +40724,11 @@ Cell[BoxData[
    RowBox[{"(*", 
     RowBox[{"plotAllErrors", "[", 
      RowBox[{"\"\<Pro\>\"", ",", "n0", ",", "1", ",", "1", ",", "1"}], "]"}], 
-    "*)"}], "\[IndentingNewLine]", 
+    "*)"}], "\n", 
    RowBox[{"(*", 
     RowBox[{"plotAllErrors", "[", 
      RowBox[{"\"\<Kao\>\"", ",", "n0", ",", "1", ",", "1", ",", "1"}], "]"}], 
-    "*)"}], "\n", 
+    "*)"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"plotAllErrors", "[", 
      RowBox[{"\"\<Kao\>\"", ",", "n0", ",", "0.1", ",", "1", ",", "1"}], 
@@ -40764,8 +40764,8 @@ Cell[BoxData[{
   RowBox[{"exportGraphicsToPDF", "[", 
    RowBox[{
    "%", ",", "\"\<Pro\>\"", ",", "\"\<MassUncertainty\>\"", ",", "thisTag", ",",
-     "dateTimeTag"}], "]"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\n", 
+     "dateTimeTag"}], "]"}], "\n", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"plotAllErrors", "[", 
   RowBox[{"\"\<Pio\>\"", ",", "n0", ",", "1", ",", "1", ",", "0.5"}], "]"}], "\[IndentingNewLine]", 
  RowBox[{"exportGraphicsToPDF", "[", 
@@ -41723,9 +41723,8 @@ Cell[BoxData[
     RowBox[{"Protect", "[", 
      RowBox[{
      "theMassUncertainty\[Delta]n", ",", "theMassUncertainty\[Delta]p", ",", 
-      "theMassUncertainty\[Delta]\[Theta]"}], "]"}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{"(*", "*)"}], "\n", 
+      "theMassUncertainty\[Delta]\[Theta]"}], "]"}], ";"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"theMassUncertainty", "[", 
@@ -43627,15 +43626,15 @@ Cell[BoxData[{
   "TableForm"}], "\[IndentingNewLine]", 
  RowBox[{"searchForGivenNamesAndPrint", "[", "\"\<*Beta*\>\"", "]"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"searchForGivenNamesAndPrint", "[", "\"\<*beta*\>\"", "]"}], 
-  "\[IndentingNewLine]", "\n", 
+  RowBox[{"searchForGivenNamesAndPrint", "[", "\"\<*beta*\>\"", "]"}], "\n", 
+  "\[IndentingNewLine]", 
   RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"Unprotect", "[", 
-    RowBox[{"gammaMax", ",", "theBetaForGammaMax"}], "]"}], ";"}], "\n", 
-  "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+    RowBox[{"gammaMax", ",", "theBetaForGammaMax"}], "]"}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"superClearSet", "[", "betaMinMaxRich1", "]"}], ";"}], "\n", 
  RowBox[{
@@ -43649,10 +43648,11 @@ Cell[BoxData[{
    RowBox[{"superClearSet", "[", "betaMinMinRich2", "]"}], ";"}], "\n", 
   RowBox[{"(*", 
    RowBox[{
-    RowBox[{"superClearSet", "[", "theBeta", "]"}], ";"}], "*)"}], "\n", 
+    RowBox[{"superClearSet", "[", "theBeta", "]"}], ";"}], "*)"}], 
+  "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{
-    RowBox[{"superClearSet", "[", "theBetaList", "]"}], ";"}], "*)"}]}], "\[IndentingNewLine]", 
+    RowBox[{"superClearSet", "[", "theBetaList", "]"}], ";"}], "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"superClearSet", "[", "theBetaForGammaMax", "]"}], ";"}], "\n", 
  RowBox[{
@@ -43945,7 +43945,7 @@ Cell[BoxData[{
      RowBox[{"a", ",", "b", ",", "cValue", ",", 
       SubscriptBox["\[Lambda]", "1"], ",", "\[Lambda]MinRef", ",", 
       SubscriptBox["\[Lambda]", "2"], ",", "\[Lambda]MaxRef"}], "]"}], ";"}], 
-   "*)"}], "\[IndentingNewLine]", 
+   "*)"}], "\n", 
   RowBox[{"(*", " ", 
    RowBox[{
     RowBox[{
@@ -43960,7 +43960,7 @@ Cell[BoxData[{
     RowBox[{"use", " ", 
      SuperscriptBox["c", "2"], " ", "instead", " ", "of", " ", "c", " ", "to",
       " ", "make", " ", "sure", " ", "it", " ", "is", " ", "positive"}]}], 
-   " ", "*)"}]}], "\n", 
+   " ", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"theRuleB", ":=", 
   RowBox[{"b", "->", 
    RowBox[{"Sqrt", "[", 
@@ -44002,8 +44002,8 @@ Cell[BoxData[
          SuperscriptBox["\[Beta]", "2"]}], ")"}]}]}]}], ";"}], 
    RowBox[{"(*", " ", 
     RowBox[{"\[Epsilon]", "->", 
-     RowBox[{"n", "-", "1"}]}], " ", "*)"}], "\[IndentingNewLine]", 
-   RowBox[{"(*", "*)"}], "\n", 
+     RowBox[{"n", "-", "1"}]}], " ", "*)"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
    RowBox[{"sinSqTheta", "=", 
     RowBox[{
      RowBox[{"Series", "[", 
@@ -44105,8 +44105,9 @@ Cell[BoxData[
        "but", " ", "in", " ", "LHCb", " ", "RICH", " ", "we", " ", "use", " ",
          "one", " ", 
         RowBox[{
-         RowBox[{"pole", "!!"}], "!"}]}]}]}]}], " ", "*)"}], "\n", 
-   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"pole", "!!"}], "!"}]}]}]}]}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}], "\n", 
    RowBox[{
     RowBox[{
      RowBox[{"theta", "[", 
@@ -44318,8 +44319,9 @@ Cell[BoxData[
     RowBox[{"exportGraphicsToPDF", "[", 
      RowBox[{
      "plBeta", ",", "\"\<chromatic-uncertainty-versus-beta\>\"", 
-      ",", "\"\<\>\"", ",", "\"\<\>\"", ",", "False"}], "]"}], ";"}], "\n", 
-   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+      ",", "\"\<\>\"", ",", "\"\<\>\"", ",", "False"}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}], "\n", 
    RowBox[{
     RowBox[{"plGamma", "=", 
      RowBox[{"Plot", "[", 
@@ -44484,9 +44486,8 @@ range)\>\""}], ",", "\[IndentingNewLine]",
       RowBox[{"\[Lambda]", ",", "a", ",", "b", ",", "\[Beta]"}], "]"}], "/", 
      SuperscriptBox["\[Lambda]", "2"]}], "]"}], "\[IndentingNewLine]", 
    RowBox[{"yieldLambdaIdeal", "[", 
-    RowBox[{"\[Lambda]", ",", "a", ",", "b", ",", "\[Beta]"}], "]"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{"(*", "*)"}], "\n", 
+    RowBox[{"\[Lambda]", ",", "a", ",", "b", ",", "\[Beta]"}], "]"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Protect", "[", 
      RowBox[{
@@ -46524,7 +46525,7 @@ Cell[BoxData[{
     RowBox[{
     "theLambda", ",", "theLambdaDeriv", ",", "the\[Lambda]1", ",", 
      "the\[Lambda]2"}], "]"}], ";"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}], "\n", 
   RowBox[{"(*", 
    RowBox[{
     RowBox[{
@@ -46541,7 +46542,7 @@ Cell[BoxData[{
      "below", " ", "which", " ", "is", " ", "is", " ", "zero", " ", 
      RowBox[{"and", "/", "or"}], " ", "you", " ", "cut", " ", 
      RowBox[{"arbitrarily", "."}]}]}], "\[IndentingNewLine]", "*)"}], "\n", 
-  RowBox[{"(*", "*)"}]}], "\n", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"WithCleanup", "[", "\[IndentingNewLine]", 
    RowBox[{
@@ -46582,8 +46583,8 @@ Cell[BoxData[{
         RowBox[{"\[Theta]", ",", "a", ",", "b", ",", "\[Beta]"}], "]"}], "//.",
         "theRichData"}], "/.", " ", 
       RowBox[{"\[Beta]", " ", "->", "1"}]}], "]"}], "]"}], ";"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}], "\n", 
+  "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{"redefine", " ", "with", " ", 
     RowBox[{"limits", "?"}]}], "*)"}]}], "\[IndentingNewLine]", 
@@ -46618,8 +46619,9 @@ Cell[BoxData[{
        RowBox[{"theLambda", "[", 
         RowBox[{"\[Theta]", ",", "a", ",", "b", ",", "\[Beta]"}], "]"}], "//.",
         "theRichData"}], "/.", " ", 
-      RowBox[{"\[Beta]", " ", "->", "1"}]}], "]"}], "]"}], ";"}], "\n", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+      RowBox[{"\[Beta]", " ", "->", "1"}]}], "]"}], "]"}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"Print", "@", 
    RowBox[{"Plot", "[", 
@@ -46656,8 +46658,8 @@ Cell[BoxData[{
             ")"}]}]}], "}"}]}], "}"}]}], ",", "\[IndentingNewLine]", 
      RowBox[{"PlotLabels", "\[Rule]", "\"\<Expressions\>\""}], ",", 
      RowBox[{"ImageSize", "->", "Full"}]}], "\[IndentingNewLine]", "]"}]}], 
-  "\n", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"theLambda", "[", 
@@ -47162,8 +47164,8 @@ Cell[BoxData[{
         SuperscriptBox["\[Lambda]", "k"]}], ",", 
        RowBox[{"{", 
         RowBox[{"k", ",", "0", ",", "interpolationDegree"}], "}"}]}], 
-      "]"}]}]}], ";"}], "\n", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+      "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"ruleInterpolation", "=", 
    RowBox[{"MapThread", "[", 
@@ -47208,7 +47210,7 @@ Cell[BoxData[{
         RowBox[{
         "the\[Lambda]1Extend", "<=", "\[Lambda]", "<=", 
          "the\[Lambda]2Extend"}]}], "\[IndentingNewLine]", "}"}], "}"}], ",", 
-     "\[IndentingNewLine]", "0"}], "]"}]}], "\[IndentingNewLine]", "\n"}], "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", "0"}], "]"}]}], "\n", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"pl0", "=", 
@@ -47264,7 +47266,7 @@ Cell[BoxData[{
    RowBox[{"pl1", ",", "\"\<pde-interpolated\>\"", ",", "\"\<\>\"", ",", 
     RowBox[{"\"\<intDeg\>\"", "<>", 
      RowBox[{"ToString", "[", "interpolationDegree", "]"}]}], ",", "False"}], 
-   "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]", "\n", 
+   "]"}], "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", 
   RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Protect", "[", 
@@ -47640,8 +47642,7 @@ Cell[BoxData[{
             RowBox[{"t", "->", "lambda"}]}]}], "]"}]}], "}"}], ",", 
        RowBox[{"{", 
         RowBox[{"lambda", ",", "700", ",", "800", ",", 
-         RowBox[{"+", "5"}]}], "}"}]}], "]"}]}], ";"}], "*)"}], 
-  "\[IndentingNewLine]", 
+         RowBox[{"+", "5"}]}], "}"}]}], "]"}]}], ";"}], "*)"}], "\n", 
   RowBox[{"(*", 
    RowBox[{
     RowBox[{"additionalPoints", "=", 
@@ -47657,7 +47658,7 @@ Cell[BoxData[{
        RowBox[{"{", 
         RowBox[{
         "lambda", ",", "the\[Lambda]Min", ",", "the\[Lambda]Max", ",", "5"}], 
-        "}"}]}], "]"}]}], ";"}], "*)"}]}], "\n", 
+        "}"}]}], "]"}]}], ";"}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"additionalPoints", "=", 
    RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
@@ -50248,8 +50249,8 @@ Cell[BoxData[
    RowBox[{"exportGraphicsToPDF", "[", 
     RowBox[{
     "pl", ",", "\"\<chroma-evolution-fit-interpolated\>\"", ",", 
-     "thisExperiment", ",", "\"\<\>\"", ",", "False"}], "]"}], 
-   "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     "thisExperiment", ",", "\"\<\>\"", ",", "False"}], "]"}], "\n", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{"ClearAll", "[", 
     RowBox[{
     "sigmaTotSnglPhEvolutionWithGamma", ",", 
@@ -51306,8 +51307,8 @@ Cell[BoxData[
          RowBox[{"N", "@", 
           RowBox[{"{", 
            RowBox[{"xd", ",", "yd"}], "}"}]}], "]"}]}]}], 
-      "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{"(*", "*)"}], "\n"}]}]], "Input",
+      "\[IndentingNewLine]", "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]"}]}]], "Input",
  CellTags->{
   "i:3", "i:4"},ExpressionUUID->"f03342db-b4d3-4608-950a-2b3d49bdd882"],
 
@@ -51946,7 +51947,7 @@ Cell[BoxData[
       RowBox[{"{", 
        RowBox[{
        "256", ",", "128", ",", "64", ",", "32", ",", "16", ",", "8", ",", "4",
-         ",", "2", ",", "1"}], "}"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+         ",", "2", ",", "1"}], "}"}]}], "]"}], ";"}], "\n", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"doExecRadiusScans", "[", 
@@ -51955,7 +51956,7 @@ Cell[BoxData[
    RowBox[{"(*", 
     RowBox[{"doExecRadiusScans", "[", 
      RowBox[{"{", 
-      RowBox[{"10", ",", "100"}], "}"}], "]"}], "*)"}], "\n", 
+      RowBox[{"10", ",", "100"}], "}"}], "]"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Print", "[", 
      RowBox[{"\"\< allResNumb \>\"", ",", 
@@ -53493,9 +53494,8 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"sb2", ":=", 
    RowBox[{"numChrPhotons", "/", 
-    RowBox[{"Sqrt", "[", "numInFiducialAreaInTimeBin", "]"}]}]}], 
-  "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\n", 
+    RowBox[{"Sqrt", "[", "numInFiducialAreaInTimeBin", "]"}]}]}], "\n", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"niceVarPrint", "[", "mmToMRad", "]"}], "\[IndentingNewLine]", 
  RowBox[{"niceVarPrint", "[", "MRadToMm", "]"}], "\[IndentingNewLine]", 
  RowBox[{"niceVarPrint", "[", "focLen", "]"}], "\[IndentingNewLine]", 
@@ -53655,8 +53655,8 @@ Cell[BoxData[{
   RowBox[{"refTemp", "=", "273.16"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"refPres", "=", "1013.25"}], ";"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\n"}], "Input",
+   RowBox[{"refPres", "=", "1013.25"}], ";"}], "\n", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]"}], "Input",
  CellTags->{
   "i:3", "i:4"},ExpressionUUID->"6cb68cf5-d3bd-4f47-837e-74caf6657dee"],
 
@@ -53911,7 +53911,7 @@ Cell[BoxData[{
      RowBox[{"{", 
       RowBox[{"Automatic", ",", 
        RowBox[{"refrIndexReducedList", "*", "1000"}]}], "}"}]}], "*)"}], 
-   "]"}], "\n"}], "\[IndentingNewLine]", 
+   "]"}], "\[IndentingNewLine]"}], "\n", 
  RowBox[{"am", "=", 
   RowBox[{"gasRefrIndexCorrectionFactorFunction", "[", 
    RowBox[{"refPres", ",", 
@@ -54411,7 +54411,7 @@ Cell[BoxData[{
    RowBox[{"(", 
     RowBox[{
      RowBox[{"2", " ", "*", "r"}], "+", "\[Delta]r"}], ")"}]}]}], "\[IndentingNewLine]", 
- RowBox[{"bckgPerMmSqInTimeBinRef", "\[IndentingNewLine]"}], "\n", 
+ RowBox[{"bckgPerMmSqInTimeBinRef", "\n"}], "\[IndentingNewLine]", 
  RowBox[{"radiusChr", "*", "pixToMm"}], "\[IndentingNewLine]", 
  RowBox[{"bandHalfRadiusChr", "*", "pixToMm"}], "\[IndentingNewLine]", 
  RowBox[{"fiducialArea", "[", 
@@ -58269,11 +58269,12 @@ Cell[BoxData[
        RowBox[{
         RowBox[{"n", ">=", "1"}], "&&"}], "*)"}], 
       RowBox[{
-       RowBox[{"n", "*", "\[Beta]"}], ">", "1"}]}], "}"}]}], "\n", 
+       RowBox[{"n", "*", "\[Beta]"}], ">", "1"}]}], "}"}]}], 
+   "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"NOT", " ", 
      RowBox[{"WORKING", "?", " ", "WHY"}], 
-     RowBox[{"??", "?"}]}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"??", "?"}]}], "*)"}], "\n", 
    RowBox[{"FullSimplify", "[", 
     RowBox[{
      RowBox[{"Normal", "@", 
@@ -59382,10 +59383,10 @@ Cell[BoxData[
   RowBox[{
    RowBox[{
     RowBox[{"sourceNB", "=", 
-     RowBox[{"EvaluationNotebook", "[", "]"}]}], ";"}], "\n", 
+     RowBox[{"EvaluationNotebook", "[", "]"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"Get", " ", "the", " ", "FULL", " ", "notebook", " ", "content"}],
-     "*)"}], "\[IndentingNewLine]", 
+     "*)"}], "\n", 
    RowBox[{
     RowBox[{"nbContent", "=", 
      RowBox[{"NotebookGet", "[", "sourceNB", "]"}]}], ";"}], 
@@ -59398,20 +59399,20 @@ Cell[BoxData[
       RowBox[{"nbContent", ",", 
        RowBox[{"Cell", "[", 
         RowBox[{"_", ",", "\"\<Text\>\"", ",", "___"}], "]"}], ",", 
-       "Infinity"}], "]"}]}], ";"}], "\n", 
+       "Infinity"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"Debug", ":", 
      RowBox[{"check", " ", "how", " ", "many", " ", "were", " ", "found"}]}], 
-    "*)"}], "\[IndentingNewLine]", 
+    "*)"}], "\n", 
    RowBox[{
     RowBox[{"Print", "[", 
      RowBox[{"\"\<Found \>\"", ",", 
       RowBox[{"Length", "[", "textCells", "]"}], ",", "\"\< Text cells\>\""}],
-      "]"}], ";"}], "\n", 
+      "]"}], ";"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
     "Create", " ", "a", " ", "new", " ", "notebook", " ", "with", " ", "only",
-      " ", "those", " ", "cells"}], "*)"}], "\[IndentingNewLine]", 
+      " ", "those", " ", "cells"}], "*)"}], "\n", 
    RowBox[{"If", "[", 
     RowBox[{
      RowBox[{
@@ -59481,8 +59482,8 @@ WindowSize->{
   Scaled[
    Rational[3, 4]], 
   Scaled[1.]},
-WindowMargins->{{-5.5, Automatic}, {Automatic, -5.5}},
-WindowTitle->" ------- calculator-reboot",
+WindowMargins->{{-4.5, Automatic}, {Automatic, 0}},
+WindowTitle->" ------- calculator",
 WindowStatusArea->"",
 DockedCells->{
   Cell[
@@ -59687,7 +59688,7 @@ PrintingOptions->{"Magnification"->0.75,
 "PaperSize"->{Automatic, Automatic}},
 PrivateNotebookOptions->{"FileOutlineCache"->False,
 "SafeFileOpen"->"IgnoreCache"},
-TaggingRules-><|"Salvaged" -> True, "RICHProjectCase" -> "calculator-reboot"|>,
+TaggingRules-><|"Salvaged" -> True, "RICHProjectCase" -> "calculator"|>,
 OutputSizeLimit->1000000,
 CellProlog:>SelectionMove[
   EvaluationCell[], All, Cell],

@@ -23,16 +23,16 @@ Validation`$ValidationCases = <|
     |>
   |>,
 
-  "physics-general" -> <|
+  "physicsGeneral" -> <|
     "CompareNotebookSideEffects" -> False,
     "Original" -> <|
       "Type" -> "Notebook",
-      "Path" -> {"legacy-original", "physics-general.nb"},
+      "Path" -> {"legacy-original", "physicsGeneral.nb"},
       "EvaluationMode" -> "InitializationOnly"
     |>,
     "Restructured" -> <|
       "Type" -> "Notebook",
-      "Path" -> {"notebooks", "physics-general.nb"},
+      "Path" -> {"notebooks", "physicsGeneral.nb"},
       "EvaluationMode" -> "InitializationOnly"
     |>
   |>,
@@ -70,7 +70,7 @@ Validation`$ValidationCases = <|
     |>
   |>,
 
-  "calculator-reboot" -> <|
+  "calculator" -> <|
     "CompareNotebookSideEffects" -> False,
     (* These aliases intentionally describe the notebook currently being
        evaluated, so the legacy and restructured paths cannot be identical. *)
@@ -79,7 +79,7 @@ Validation`$ValidationCases = <|
     },
     "Original" -> <|
       "Type" -> "Notebook",
-      "Path" -> {"legacy-original", "calculator-reboot.nb"},
+      "Path" -> {"legacy-original", "calculator.nb"},
       "CutoffMarker" -> "CALCULATOR BODY",
       "DropCellsContaining" -> {"LHCb-optics.m"},
       "EvaluationMode" -> "InitializationOnly",
@@ -87,7 +87,7 @@ Validation`$ValidationCases = <|
     |>,
     "Restructured" -> <|
       "Type" -> "Notebook",
-      "Path" -> {"notebooks", "calculator-reboot.nb"},
+      "Path" -> {"notebooks", "calculator.nb"},
       "CutoffMarker" -> "CALCULATOR BODY",
       "EvaluationMode" -> "InitializationOnly",
       "TimeConstraintSeconds" -> 300
@@ -203,7 +203,7 @@ Validation`$ValidationOptions = <|
     "^Validation`.*",
     "killStop",
 
-    (* Intentional interactive extension for calculator-reboot: these public
+    (* Intentional interactive extension for calculator: these public
        helpers and their private task state have no legacy-notebook analogue. *)
     "^(startHeartbeat|stopHeartbeat|withHeartbeat|myNotebookInit`(startHeartbeat|stopHeartbeat|withHeartbeat))$",
     "^myNotebookInit`Private`(\\$heartbeat.*|removeHeartbeatTask)$",
