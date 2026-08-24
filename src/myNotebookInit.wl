@@ -1,42 +1,87 @@
-(* ::Package::"Tags"-><|"NoVariables" -> <|"Module" -> <|Enabled -> False|>|>|>:: *)
+(* ::Package:: *)
+
+(* ===== RICH managed source =====
+   Name: myNotebookInit
+   Role: infrastructure
+   Context: myNotebookInit`
+   Version symbol: myNotebookInit`versionTAG
+*)
+myNotebookInit`versionTAG = "v.08-08-2026";
 
 BeginPackage["myNotebookInit`"];
-versionTAG = "v.08-08-2026";
 
 (* ===== Public API (lowercase-first) ===== *)
 
-
-
-prettyPrintedCellStyleNumber::usage = "prettyPrintedCellStyleNumber prints counts for common cell styles and the total number of cells in the current notebook; it requires a notebook front end.";
-cellStylesEditorPalette::usage = "cellStylesEditorPalette creates and returns the interactive Cell Style Editor palette for the current input notebook. Temporary preview backgrounds are restored when the preview is cleared or the palette closes.";
-cellStylesScannerPalette::usage = "cellStylesScannerPalette creates and returns the interactive Cell Style Scanner palette for the current input notebook. It scans by style or exact Boolean cell property and restores its temporary highlight when the scan changes or the palette closes.";
-manageMyStyleNotebook::usage = "manageMyStyleNotebook[] checks for myStyle.nb in the user's front-end StyleSheets directory and, if absent, copies the canonical stylesheet there from the project root. It prints the outcome and requires a saved notebook front end.";
-checkProtection::usage = "checkProtection[symbol] returns an Association describing the held symbol's name, context, and Protected state. checkProtection[{symbols...}] operates elementwise. Invalid input produces a message and returns $Failed.";
-clearAllProtected::usage = "clearAllProtected[symbol] unprotects and ClearAll-clears one non-System symbol, returning Null. A list of symbols is handled elementwise. It holds its argument and refuses System symbols; invalid input returns $Failed.";
-setProtection::usage = "setProtection[symbol, state] protects or unprotects a held non-System symbol when state is True or False and returns an Association describing the change. A list of symbols is handled elementwise; invalid input or a System` symbol returns $Failed.";
 applySettings::usage = "applySettings[name] or applySettings[{names...}] applies named notebook/front-end setting blocks from availableSettings[] and returns True after scanning the requests. Unknown names are printed and skipped.";
 availableSettings::usage = "availableSettings[] returns the list of names accepted by applySettings and removeSettings.";
 bannerLine::usage = "bannerLine[char:\"-\", width:98] returns char repeated width times (at least once) as a String and does not print.";
 bigBanner::usage = "bigBanner[msg:\"\", char:\"=\", width:98] prints two banner lines above and below an optional message and returns msg.";
-packageBanner::usage = "packageBanner";
-
 cellsByStyle::usage = "cellsByStyle[styles] returns CellObject expressions from the evaluation notebook whose current CellStyle is a member of the supplied list of style names.";
+cellStylesEditorPalette::usage = "cellStylesEditorPalette creates and returns the interactive Cell Style Editor palette for the current input notebook. Temporary preview backgrounds are restored when the preview is cleared or the palette closes.";
+cellStylesScannerPalette::usage = "cellStylesScannerPalette creates and returns the interactive Cell Style Scanner palette for the current input notebook. It scans by style or exact Boolean cell property and restores its temporary highlight when the scan changes or the palette closes.";
 checkNewCreatedSymbols::usage = "checkNewCreatedSymbols[pattern:\"Global`*\"] returns symbol-name Strings newly matching pattern since the previous call. The first call initializes the private snapshot and returns {}.";
+checkProtection::usage = "checkProtection[symbol] returns an Association describing the held symbol's name, context, and Protected state. checkProtection[{symbols...}] operates elementwise. Invalid input produces a message and returns $Failed.";
+clearAllProtected::usage = "clearAllProtected[symbol] unprotects and ClearAll-clears one non-System symbol, returning Null. A list of symbols is handled elementwise. It holds its argument and refuses System symbols; invalid input returns $Failed.";
+clearLoadLog::usage = "clearLoadLog[] empties the package's external-load log, prints confirmation, and returns Null.";
 deleteAllEmptyCellsInNotebook::usage = "deleteAllEmptyCellsInNotebook deletes non-generated cells in the current notebook whose content is empty or whitespace-only. It is a delayed symbol, not a function call, and requires a notebook front end.";
+endEvalPrintOut::usage = "endEvalPrintOut[] prints an end-of-evaluation banner, timestamp, MSG/Message cells, context information, newly created Global` symbol names, and the external-load summary; it returns the result of summarizeLoads[].";
 ensureNotebookSaved::usage = "ensureNotebookSaved[] returns the expanded full path of the current saved notebook. If no notebook front end is available, the notebook is unsaved, or its file does not exist, it emits a message and returns $Failed.";
+exportGraphicsToPDF::usage = "exportGraphicsToPDF[graphics, what:\"what\", type:\"type\", tag:\"tag\", dateTimeYesNo:True, baseOutputDir:Automatic] resolves the PDF filename and then follows $exportGraphicsToPDFMode: \"Button\" prints an export button, \"Immediate\" exports at once, and \"Disabled\" performs no export. Automatic uses the configured RICH output directory.";
+$exportGraphicsToPDFMode::usage = "$exportGraphicsToPDFMode controls exportGraphicsToPDF. \"Button\" (the default) prints a button that performs the export when clicked, \"Immediate\" exports at once, and \"Disabled\" only returns the resolved output filename.";
+goBack::usage = "goBack[] selects and removes the most recently recorded CellObject from the RICH docked-toolbar navigation history. It returns the selected CellObject, or $Failed when the history is empty.";
+initialContexts::usage = "initialContexts is the de-duplicated list of contexts observed when myNotebookInit initializes; showContextInfo[] uses it as its baseline.";
+installDockedCells::usage = "installDockedCells[notebook:Automatic] installs the RICH navigation and evaluation toolbar in a notebook. Automatic uses EvaluationNotebook[]. It requires a notebook front end and returns the target NotebookObject, or $Failed on failure.";
 killStop::usage = "killStop prints a stop banner and the current MSG/Message cells, then requests EvaluatorAbort through the front end. It is a delayed symbol and is not a reliable headless kernel control-flow mechanism.";
 listInitializationCells::usage = "listInitializationCells[] returns InputForm Strings for Input or Code cells marked as initialization cells in the evaluation notebook.";
-loadMyFile::usage = StringJoin[
-  "loadMyFile[file, dir:Automatic] loads dir/file exclusively when dir is an ",
-  "explicit directory String. With Automatic it tries Directory[]/file and then ",
-  "the evaluation notebook directory/file. It evaluates the resolved file with ",
-  "Get and returns its full path on success. Messages emitted by Get remain ",
-  "visible but do not by themselves cause failure. A missing file, aborted Get, ",
-  "or Get result of $Failed emits a detailed loadMyFile message, prints ",
-  "diagnostics, and returns $Failed; definitions created before a failure are ",
-  "not rolled back."
-];
+loadMyFile::usage = "loadMyFile[file, dir:Automatic] loads dir/file exclusively when dir is an explicit directory String. With Automatic it tries Directory[]/file and then the evaluation notebook directory/file. It evaluates the resolved file with Get and returns its full path on success. Messages emitted by Get remain visible but do not by themselves cause failure. A missing file, aborted Get, or Get result of $Failed emits a detailed loadMyFile message, prints diagnostics, and returns $Failed; definitions created before a failure are not rolled back.";
+loadNeeds::usage = "loadNeeds[context, file:Automatic] records an explicit package request and calls the unmodified System`Needs. With Automatic it uses Needs[context]; with a file String it uses Needs[context, file]. Ordinary messages remain visible. An aborted call or result of $Failed/$Aborted returns $Failed.";
+loadSavedLog::usage = "loadSavedLog[path:Automatic] imports a saved load log into the package tracker and prints the number of entries. Automatic uses load_log.wdx in safeNotebookDirectory[]; a missing file returns $Failed, while success returns Null.";
+manageMyStyleNotebook::usage = "manageMyStyleNotebook[] checks for myStyle.nb in the user's front-end StyleSheets directory and, if absent, copies the canonical stylesheet there from the project root. It prints the outcome and requires a saved notebook front end.";
+markInputCellsAsInitialization::usage = "markInputCellsAsInitialization[tf:True] sets InitializationCell -> tf on every Input-style cell in the evaluation notebook and returns the number of affected cells; tf must be True or False.";
+midBanner::usage = "midBanner[msg:\"\", char:\"-\", width:98] prints one banner line above and below an optional message and returns msg.";
+miniBanner::usage = "miniBanner[msg:\"\", char:\"=\", width:98] prints one banner line above and below an optional starred message and returns msg.";
+nb::usage = "nb[] returns EvaluationNotebook[] and therefore requires a notebook front end for useful operation.";
+nbFileBaseName::usage = "nbFileBaseName is a delayed compatibility alias for safeNotebookBaseName[].";
+nbFileDirectory::usage = "nbFileDirectory is a delayed compatibility alias for safeNotebookDirectory[].";
+nbFileName::usage = "nbFileName is a delayed compatibility alias for safeNotebookFileName[].";
+notebookPathInfo::usage = "notebookPathInfo[] returns an Association with keys \"FileName\", \"Directory\", and \"BaseName\" for the evaluation notebook, using the safe notebook-path fallbacks.";
+packageBanner::usage = "packageBanner";
+prettyPrintedCellStyleNumber::usage = "prettyPrintedCellStyleNumber prints counts for common cell styles and the total number of cells in the current notebook; it requires a notebook front end.";
+printA::usage = "printA[symbol] holds symbol, prints its unqualified name and evaluated value, and returns Null.";
+printD::usage = "printD[expr] is a HoldAll alias for showIt[expr]; it evaluates expr once, prints the held expression and value, and returns the value.";
+printMsgCell::usage = "printMsgCell[text] sends a red MSG-style cell containing text to the current front end and returns the FrontEndExecute result; text must be a String.";
+pushHistory::usage = "pushHistory[] records the currently selected cell for the RICH docked-toolbar Back button and returns that CellObject, or $Failed when no cell is selected.";
+recordExternalLoad::usage = "recordExternalLoad[type, target] records one load performed by trusted external loader code without calling Get or Needs. Both arguments must be strings; success returns Null.";
+removeDockedCells::usage = "removeDockedCells[notebook:Automatic] removes the RICH toolbar from a notebook. Automatic uses EvaluationNotebook[]. It requires a notebook front end and returns the target NotebookObject, or $Failed on failure.";
+removeSettings::usage = "removeSettings[name] or removeSettings[{names...}] applies the registered remove action for each named setting block and returns True after scanning the requests. Some settings, such as setDirectoryToNotebook, have no undo action.";
+reportCellStyleInventory::usage = "reportCellStyleInventory[] prints a dynamically generated count of every cell style in the evaluation notebook and the total cell count. It returns an Association containing \"Counts\" and \"TotalCells\"; without a notebook front end it returns $Failed.";
+reportMessageCellList::usage = "reportMessageCellList[] prints an indexed list of all Message- and MSG-style CellObject expressions in the evaluation notebook and returns the CellObject list. Without a notebook front end it returns $Failed.";
+reportNotebookPaths::usage = "reportNotebookPaths[] prints the evaluation notebook object, filename, directory, and base name, and returns those values as an Association. An unsaved notebook is reported with Missing values; without a notebook front end it returns $Failed.";
+safeNotebookBaseName::usage = "safeNotebookBaseName[] returns FileBaseName of the evaluation notebook when its filename is a String, otherwise \"UnsavedNotebook\".";
+safeNotebookDirectory::usage = "safeNotebookDirectory[] returns DirectoryName of the evaluation notebook when its filename is a String, otherwise $HomeDirectory.";
+safeNotebookFileName::usage = "safeNotebookFileName[] quietly returns NotebookFileName[EvaluationNotebook[]]; for an unsaved or unavailable notebook the front end's failure result is returned.";
+saveAsPdfAllOutputCells::usage = "saveAsPdfAllOutputCells[dir:Automatic, imageSize:Scaled[.8]] exports every Output cell in the evaluation notebook to sequentially named PDF files and returns their full paths. Automatic uses the configured RICH output/notebook-cells directory.";
+saveAsPngAllOutputCells::usage = "saveAsPngAllOutputCells[dir:Automatic, imageSize:Scaled[.8]] exports every Output cell in the evaluation notebook to sequentially named PNG files and returns their full paths. Automatic uses the configured RICH output/notebook-cells directory.";
+saveLoadLog::usage = "saveLoadLog[path:Automatic] exports the package's external-load log and prints the resolved path. Automatic uses load_log.wdx in safeNotebookDirectory[]; the current implementation returns Null after a successful print.";
+saveNotebookTextCopy::usage = "saveNotebookTextCopy[suffix:\"-output\", ext:\"txt\"] exports NotebookGet[EvaluationNotebook[]] as Text beside the saved notebook and returns the output path, or $Failed when the notebook is not saved.";
+saveVersionedCopy::usage = "saveVersionedCopy[tag:\"\", whereDir:Automatic] saves one validated EvaluationNotebook[] to its original path, copies that saved .nb file to a timestamped destination, and exports Text from NotebookGet of the same NotebookObject. Automatic uses the configured RICH backup directory. It never uses InputNotebook[] or renames the active notebook. Success returns <|\"Notebook\" -> nbPath, \"Text\" -> textPath|>; failure returns $Failed.";
+selectInitializationCells::usage = "selectInitializationCells[] visits each initialization cell with NotebookLocate and SelectCell, then returns the corresponding CellObject list. Because selections are made sequentially, the last visited cell is the final front-end selection.";
+setProtection::usage = "setProtection[symbol, state] protects or unprotects a held non-System symbol when state is True or False and returns an Association describing the change. A list of symbols is handled elementwise; invalid input or a System` symbol returns $Failed.";
+showContextInfo::usage = "showContextInfo[] prints current context diagnostics and returns an Association containing $Context, $ContextPath, lowercase loaded packages, recently created lowercase contexts, and loaded lowercase packages absent from $ContextPath.";
+showDiagnostics::usage = "showDiagnostics[mode:\"full\"] prints notebook/session diagnostics and returns True. Supported modes are \"minimal\", \"session\", \"cells\", \"frontend\", and \"full\"; an invalid mode emits a message and returns $Failed.";
+showIt::usage = "showIt[expr] has attribute HoldAll, evaluates expr once, prints the held expression with its value, and returns that value.";
+smallBanner::usage = "smallBanner[msg:\"\", char:\"-\", width:98] prints msg when it is nonempty; otherwise it prints a line made from char and width. It returns msg.";
+startHeartbeat::usage = "startHeartbeat[seconds:60, label:\"calculation\"] starts a lightweight preemptive task that prints the local timestamp and elapsed time every specified number of seconds. Starting a new heartbeat replaces any existing heartbeat.";
+stopHeartbeat::usage = "stopHeartbeat[] removes the active heartbeat task, prints its final elapsed time, and returns Null. It is safe to call when no heartbeat is active.";
+summarizeLoads::usage = "summarizeLoads[] prints totals and an indexed list of calls in recording order for loadMyFile, loadNeeds, and trusted external loaders using recordExternalLoad, and returns the log as a Dataset. When the log is empty it prints a notice and returns Null.";
+superClearSet::usage = "superClearSet[symbol, short:True, value:\"n/a\", pad:21, numDigits:3, resetMonitoring:False] holds symbol, clears its definitions, assigns value, and installs Experimental`ValueFunction monitoring. With resetMonitoring -> True it removes monitoring only. This is destructive and accepts one symbol at a time.";
+timeBanner::usage = "timeBanner[msg:\"\", char:\"-\", width:98] prints a timestamped banner and returns <|\"Message\" -> msg, \"Timestamp\" -> string|>.";
+timeStamp::usage = "timeStamp is a delayed symbol that returns the current local date and time as a compact String of the form -DYYMMDDTHHMMSS.";
+validStylesheetReport::usage = "validStylesheetReport[file] reads file with Get and returns an Association describing whether it is a Notebook expression and likely stylesheet, including StyleData counts, parent-style presence, ordinary Input cells, a Salvaged tag, and problem descriptions.";
+myNotebookInit`versionTAG::usage = "versionTAG is the package version String reported when myNotebookInit loads.";
+withHeartbeat::usage = "withHeartbeat[expr, seconds:60, label:\"calculation\"] evaluates expr while printing a timestamp and elapsed time at the requested interval, and always removes the heartbeat task when evaluation finishes or is aborted. It holds expr unevaluated until monitoring has started.";
 
+(* ===== Public messages ===== *)
 loadMyFile::nofile = StringJoin[
   "Cannot find requested file `1`. ",
   "Directory mode: `2`; ",
@@ -61,54 +106,9 @@ loadMyFile::getabort = StringJoin[
   "reference directory: `4`. ",
   "Initialization may be incomplete."
 ];
-loadNeeds::usage = "loadNeeds[context, file:Automatic] records an explicit package request and calls the unmodified System`Needs. With Automatic it uses Needs[context]; with a file String it uses Needs[context, file]. Ordinary messages remain visible. An aborted call or result of $Failed/$Aborted returns $Failed.";
-recordExternalLoad::usage = "recordExternalLoad[type, target] records one load performed by trusted external loader code without calling Get or Needs. Both arguments must be strings; success returns Null.";
-markInputCellsAsInitialization::usage = "markInputCellsAsInitialization[tf:True] sets InitializationCell -> tf on every Input-style cell in the evaluation notebook and returns the number of affected cells; tf must be True or False.";
-midBanner::usage = "midBanner[msg:\"\", char:\"-\", width:98] prints one banner line above and below an optional message and returns msg.";
-miniBanner::usage = "miniBanner[msg:\"\", char:\"=\", width:98] prints one banner line above and below an optional starred message and returns msg.";
-nb::usage = "nb[] returns EvaluationNotebook[] and therefore requires a notebook front end for useful operation.";
-nbFileBaseName::usage = "nbFileBaseName is a delayed compatibility alias for safeNotebookBaseName[].";
-nbFileDirectory::usage = "nbFileDirectory is a delayed compatibility alias for safeNotebookDirectory[].";
-nbFileName::usage = "nbFileName is a delayed compatibility alias for safeNotebookFileName[].";
-notebookPathInfo::usage = "notebookPathInfo[] returns an Association with keys \"FileName\", \"Directory\", and \"BaseName\" for the evaluation notebook, using the safe notebook-path fallbacks.";
-reportNotebookPaths::usage = "reportNotebookPaths[] prints the evaluation notebook object, filename, directory, and base name, and returns those values as an Association. An unsaved notebook is reported with Missing values; without a notebook front end it returns $Failed.";
-reportCellStyleInventory::usage = "reportCellStyleInventory[] prints a dynamically generated count of every cell style in the evaluation notebook and the total cell count. It returns an Association containing \"Counts\" and \"TotalCells\"; without a notebook front end it returns $Failed.";
-reportMessageCellList::usage = "reportMessageCellList[] prints an indexed list of all Message- and MSG-style CellObject expressions in the evaluation notebook and returns the CellObject list. Without a notebook front end it returns $Failed.";
-printA::usage = "printA[symbol] holds symbol, prints its unqualified name and evaluated value, and returns Null.";
-printD::usage = "printD[expr] is a HoldAll alias for showIt[expr]; it evaluates expr once, prints the held expression and value, and returns the value.";
-removeSettings::usage = "removeSettings[name] or removeSettings[{names...}] applies the registered remove action for each named setting block and returns True after scanning the requests. Some settings, such as setDirectoryToNotebook, have no undo action.";
-safeNotebookBaseName::usage = "safeNotebookBaseName[] returns FileBaseName of the evaluation notebook when its filename is a String, otherwise \"UnsavedNotebook\".";
-safeNotebookDirectory::usage = "safeNotebookDirectory[] returns DirectoryName of the evaluation notebook when its filename is a String, otherwise $HomeDirectory.";
-safeNotebookFileName::usage = "safeNotebookFileName[] quietly returns NotebookFileName[EvaluationNotebook[]]; for an unsaved or unavailable notebook the front end's failure result is returned.";
-saveAsPdfAllOutputCells::usage = "saveAsPdfAllOutputCells[dir:Automatic, imageSize:Scaled[.8]] exports every Output cell in the evaluation notebook to sequentially named PDF files and returns their full paths. Automatic uses the configured RICH output/notebook-cells directory.";
-saveAsPngAllOutputCells::usage = "saveAsPngAllOutputCells[dir:Automatic, imageSize:Scaled[.8]] exports every Output cell in the evaluation notebook to sequentially named PNG files and returns their full paths. Automatic uses the configured RICH output/notebook-cells directory.";
-saveNotebookTextCopy::usage = "saveNotebookTextCopy[suffix:\"-output\", ext:\"txt\"] exports NotebookGet[EvaluationNotebook[]] as Text beside the saved notebook and returns the output path, or $Failed when the notebook is not saved.";
-saveVersionedCopy::usage = "saveVersionedCopy[tag:\"\", whereDir:Automatic] saves one validated EvaluationNotebook[] to its original path, copies that saved .nb file to a timestamped destination, and exports Text from NotebookGet of the same NotebookObject. Automatic uses the configured RICH backup directory. It never uses InputNotebook[] or renames the active notebook. Success returns <|\"Notebook\" -> nbPath, \"Text\" -> textPath|>; failure returns $Failed.";
-selectInitializationCells::usage = "selectInitializationCells[] visits each initialization cell with NotebookLocate and SelectCell, then returns the corresponding CellObject list. Because selections are made sequentially, the last visited cell is the final front-end selection.";
-showContextInfo::usage = "showContextInfo[] prints current context diagnostics and returns an Association containing $Context, $ContextPath, lowercase loaded packages, recently created lowercase contexts, and loaded lowercase packages absent from $ContextPath.";
-showDiagnostics::usage = "showDiagnostics[mode:\"full\"] prints notebook/session diagnostics and returns True. Supported modes are \"minimal\", \"session\", \"cells\", \"frontend\", and \"full\"; an invalid mode emits a message and returns $Failed.";
-showIt::usage = "showIt[expr] has attribute HoldAll, evaluates expr once, prints the held expression with its value, and returns that value.";
-smallBanner::usage = "smallBanner[msg:\"\", char:\"-\", width:98] prints msg when it is nonempty; otherwise it prints a line made from char and width. It returns msg.";
-superClearSet::usage = "superClearSet[symbol, short:True, value:\"n/a\", pad:21, numDigits:3, resetMonitoring:False] holds symbol, clears its definitions, assigns value, and installs Experimental`ValueFunction monitoring. With resetMonitoring -> True it removes monitoring only. This is destructive and accepts one symbol at a time.";
-startHeartbeat::usage = "startHeartbeat[seconds:60, label:\"calculation\"] starts a lightweight preemptive task that prints the local timestamp and elapsed time every specified number of seconds. Starting a new heartbeat replaces any existing heartbeat.";
-stopHeartbeat::usage = "stopHeartbeat[] removes the active heartbeat task, prints its final elapsed time, and returns Null. It is safe to call when no heartbeat is active.";
-timeBanner::usage = "timeBanner[msg:\"\", char:\"-\", width:98] prints a timestamped banner and returns <|\"Message\" -> msg, \"Timestamp\" -> string|>.";
-timeStamp::usage = "timeStamp is a delayed symbol that returns the current local date and time as a compact String of the form -DYYMMDDTHHMMSS.";
-withHeartbeat::usage = "withHeartbeat[expr, seconds:60, label:\"calculation\"] evaluates expr while printing a timestamp and elapsed time at the requested interval, and always removes the heartbeat task when evaluation finishes or is aborted. It holds expr unevaluated until monitoring has started.";
-versionTAG::usage = "versionTAG is the package version String reported when myNotebookInit loads.";
-initialContexts::usage = "initialContexts is the de-duplicated list of contexts observed when myNotebookInit initializes; showContextInfo[] uses it as its baseline.";
-$exportGraphicsToPDFMode::usage = "$exportGraphicsToPDFMode controls exportGraphicsToPDF. \"Button\" (the default) prints a button that performs the export when clicked, \"Immediate\" exports at once, and \"Disabled\" only returns the resolved output filename.";
-exportGraphicsToPDF::usage = "exportGraphicsToPDF[graphics, what:\"what\", type:\"type\", tag:\"tag\", dateTimeYesNo:True, baseOutputDir:Automatic] resolves the PDF filename and then follows $exportGraphicsToPDFMode: \"Button\" prints an export button, \"Immediate\" exports at once, and \"Disabled\" performs no export. Automatic uses the configured RICH output directory.";
+
 exportGraphicsToPDF::badmode = "Unknown $exportGraphicsToPDFMode value `1`. Use \"Button\", \"Immediate\", or \"Disabled\".";
 exportGraphicsToPDF::exportfail = "Could not export PDF to `1`.";
-endEvalPrintOut::usage = "endEvalPrintOut[] prints an end-of-evaluation banner, timestamp, MSG/Message cells, context information, newly created Global` symbol names, and the external-load summary; it returns the result of summarizeLoads[].";
-summarizeLoads::usage = "summarizeLoads[] prints totals recorded explicitly by loadMyFile, loadNeeds, and trusted external loaders using recordExternalLoad, and returns the log as a Dataset. When the log is empty it prints a notice and returns Null.";
-loadSavedLog::usage = "loadSavedLog[path:Automatic] imports a saved load log into the package tracker and prints the number of entries. Automatic uses load_log.wdx in safeNotebookDirectory[]; a missing file returns $Failed, while success returns Null.";
-clearLoadLog::usage = "clearLoadLog[] empties the package's external-load log, prints confirmation, and returns Null.";
-saveLoadLog::usage = "saveLoadLog[path:Automatic] exports the package's external-load log and prints the resolved path. Automatic uses load_log.wdx in safeNotebookDirectory[]; the current implementation returns Null after a successful print.";
-validStylesheetReport::usage = "validStylesheetReport[file] reads file with Get and returns an Association describing whether it is a Notebook expression and likely stylesheet, including StyleData counts, parent-style presence, ordinary Input cells, a Salvaged tag, and problem descriptions.";
-printMsgCell::usage = "printMsgCell[text] sends a red MSG-style cell containing text to the current front end and returns the FrontEndExecute result; text must be a String.";
-
 
 Begin["`Private`"];
 
@@ -125,7 +125,7 @@ If[!TrueQ[$myNotebookInitLoaded],
 
 If[! TrueQ[$myNotebookInitLoaded],
   Print["============================================================"];
-  Print[" myNotebookInit  loaded  |  Version: ", versionTAG];
+  Print[" myNotebookInit  loaded  |  Version: ", myNotebookInit`versionTAG];
   Print[" Kernel: ", $Version];
   Print[" Context: ", $Context];
   Print["============================================================"];
@@ -242,9 +242,10 @@ Print["  Total calls : ",Length[$LoadLog]];
 (*Use Counts directly on raw list\[LongDash]no Dataset keys issues*)byType=Counts[$LoadLog[[All,"Type"]]];
 Print["  By type:"];
 KeyValueMap[Print["    ",#1," -> ",#2," call(s)"]&,byType];
-(*Tally {target,type} pairs directly\[LongDash]no association key unpacking*)rows=ReverseSortBy[Tally[{#["Target"],#["Type"]}&/@$LoadLog],Last];
-Print["\n  Calls per target (sorted by frequency):"];
-Scan[Print["    ",#[[1,1]],"  [",#[[1,2]],"]  *",#[[2]]]&,rows];
+(* Preserve the append order of $LoadLog and show every call separately. *)
+rows=MapIndexed[{First[#2],#1["Target"],#1["Type"]}&,$LoadLog];
+Print["\n  Calls (in call order):"];
+Scan[Print["    ",#[[1]],". ",#[[2]],"  [",#[[3]],"]"]&,rows];
 Print["\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501"];
 Print["\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501\:2501"];
 ds   (*Dataset renders nicely in the notebook output*)
@@ -2638,6 +2639,127 @@ cellStylesScannerPalette :=
   ];
 
 
+(* Optional RICH docked-cell toolbar. Loading myNotebookInit does not install
+   it; top-level notebook bootstraps call installDockedCells explicitly. *)
+ClearAll[
+  resolveDockedCellsNotebook, dockedCellsLabel, dockedCellsToolbar,
+  dockedCellsNavigationHistory,
+  installDockedCells, removeDockedCells, pushHistory, goBack
+];
+
+dockedCellsNavigationHistory = {};
+
+installDockedCells::nofe =
+  "A notebook front end and a valid target NotebookObject are required.";
+installDockedCells::setfail = "Could not install docked cells in `1`.";
+removeDockedCells::nofe = installDockedCells::nofe;
+removeDockedCells::setfail = "Could not remove docked cells from `1`.";
+
+resolveDockedCellsNotebook[Automatic] := If[
+  TrueQ[$Notebooks],
+  Quiet @ Check[EvaluationNotebook[], $Failed],
+  $Failed
+];
+resolveDockedCellsNotebook[target_NotebookObject] := target;
+resolveDockedCellsNotebook[_] := $Failed;
+
+dockedCellsLabel[text_String, color_, background_] := Style[
+  text, 10, FontColor -> color, Bold, Background -> background
+];
+
+dockedCellsToolbar[] := Cell[
+  BoxData @ ToBoxes @ ButtonBar[
+    {
+      dockedCellsLabel["Evl Cel", RGBColor[0, 2/3, 0], RGBColor[0.88, 1, 0.88]] :>
+        FrontEndTokenExecute["EvaluateCells"],
+      dockedCellsLabel["GTo Evl", RGBColor[0, 2/3, 0], RGBColor[0.88, 1, 0.88]] :>
+        FrontEndTokenExecute["FindEvaluatingCell"],
+      dockedCellsLabel["Sel All", RGBColor[0, 2/3, 0], RGBColor[0.88, 1, 0.88]] :>
+        FrontEndTokenExecute["SelectAll"],
+      dockedCellsLabel["Clo Sel", RGBColor[0, 2/3, 0], RGBColor[0.88, 1, 0.88]] :>
+        FrontEndTokenExecute["SelectionCloseAllGroups"],
+      dockedCellsLabel["Opn Sel", RGBColor[0, 2/3, 0], RGBColor[0.88, 1, 0.88]] :>
+        FrontEndTokenExecute["SelectionOpenAllGroups"],
+      dockedCellsLabel["Cel Grp", RGBColor[0, 2/3, 0], RGBColor[0.88, 1, 0.88]] :>
+        FrontEndTokenExecute["CellGroup"],
+      dockedCellsLabel["Sav", RGBColor[0, 2/3, 0], RGBColor[0.88, 1, 0.88]] :>
+        FrontEndTokenExecute["Save"],
+      dockedCellsLabel["Scan", RGBColor[0, 0.4, 0.8], RGBColor[0.88, 0.94, 1]] :>
+        myNotebookInit`cellStylesScannerPalette,
+      dockedCellsLabel["Edit", RGBColor[0, 0.4, 0.8], RGBColor[0.88, 0.94, 1]] :>
+        myNotebookInit`cellStylesEditorPalette,
+      dockedCellsLabel["Mark", RGBColor[0, 0.4, 0.8], RGBColor[0.88, 0.94, 1]] :>
+        myNotebookInit`pushHistory[],
+      dockedCellsLabel["Back", RGBColor[0, 0.4, 0.8], RGBColor[0.88, 0.94, 1]] :>
+        myNotebookInit`goBack[],
+      dockedCellsLabel["Evl Ini", RGBColor[1, 0.5, 0], RGBColor[1, 0.9, 0.8]] :>
+        FrontEndTokenExecute["EvaluateInitialization"],
+      dockedCellsLabel["Evl Ntb", RGBColor[1, 0.5, 0], RGBColor[1, 0.9, 0.8]] :>
+        FrontEndTokenExecute["EvaluateNotebook"],
+      dockedCellsLabel["Del Out", RGBColor[1, 0.5, 0], RGBColor[1, 0.9, 0.8]] :>
+        FrontEndTokenExecute["DeleteGeneratedCells"],
+      dockedCellsLabel["Cel Mrg", RGBColor[1, 0.5, 0], RGBColor[1, 0.9, 0.8]] :>
+        FrontEndTokenExecute["CellMerge"],
+      dockedCellsLabel["Abort", RGBColor[1, 0, 0], RGBColor[1, 0.85, 0.85]] :>
+        FrontEndTokenExecute["EvaluatorAbort"],
+      dockedCellsLabel["Quit", RGBColor[1, 0, 0], RGBColor[1, 0.85, 0.85]] :>
+        FrontEndTokenExecute["EvaluatorQuit"]
+    },
+    FrameMargins -> 1,
+    Appearance -> {Automatic}
+  ],
+  "DockedCell",
+  Background -> RGBColor[1, 0.992, 0.866]
+];
+
+installDockedCells[notebook_:Automatic] := Module[{target, result},
+  target = resolveDockedCellsNotebook[notebook];
+  If[target === $Failed,
+    Message[installDockedCells::nofe];
+    Return[$Failed]
+  ];
+  result = Quiet @ Check[
+    SetOptions[target, DockedCells -> {dockedCellsToolbar[]}],
+    $Failed
+  ];
+  If[result === $Failed,
+    Message[installDockedCells::setfail, target];
+    Return[$Failed]
+  ];
+  target
+];
+
+removeDockedCells[notebook_:Automatic] := Module[{target, result},
+  target = resolveDockedCellsNotebook[notebook];
+  If[target === $Failed,
+    Message[removeDockedCells::nofe];
+    Return[$Failed]
+  ];
+  result = Quiet @ Check[SetOptions[target, DockedCells -> {}], $Failed];
+  If[result === $Failed,
+    Message[removeDockedCells::setfail, target];
+    Return[$Failed]
+  ];
+  target
+];
+
+pushHistory[] := Module[{selected, cell},
+  selected = Quiet @ Check[SelectedCells[EvaluationNotebook[]], {}];
+  If[selected === {}, Return[$Failed]];
+  cell = First[selected];
+  AppendTo[dockedCellsNavigationHistory, cell];
+  cell
+];
+
+goBack[] := Module[{cell},
+  If[dockedCellsNavigationHistory === {}, Return[$Failed]];
+  cell = Last[dockedCellsNavigationHistory];
+  dockedCellsNavigationHistory = Most[dockedCellsNavigationHistory];
+  Quiet @ Check[SelectionMove[cell, All, Cell], Return[$Failed]];
+  cell
+];
+
+
 (* ::Code::Initialization::"Tags"-><|"NoVariables" -> <|"Module" -> <||>|>|>:: *)
 ClearAll[prettyPrintedCellStyleNumber];
 prettyPrintedCellStyleNumber:=Module[{},
@@ -2663,3 +2785,7 @@ Print["                       Total Number of Cells ->                          
 End[];
 
 EndPackage[];
+
+myNotebookInit`endEvalPrintOut[];
+
+myNotebookInit`packageBanner["END myNotebookInit"];

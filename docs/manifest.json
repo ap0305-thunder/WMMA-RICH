@@ -53,6 +53,16 @@
       "sha256": "94786473ff5c5133326c5fdb591c0302ff3267cdb680fb47640daad9afbffe17"
     },
     {
+      "path": "legacy-original/geometricalOptics.m",
+      "size": 38503,
+      "sha256": "36e131298d95d09bbdf01d626affda9e6e735093a6d0212b6b357cb584745bdb"
+    },
+    {
+      "path": "legacy-original/geometricalOptics.nb",
+      "size": 1253085,
+      "sha256": "de6704e82318a52de1e44f47013d3fe03d0b07e6d660817bdac459b6924a3a96"
+    },
+    {
       "path": "legacy-original/inputDataForRICH.nb",
       "size": 7035051,
       "sha256": "320f1c65eb3bf99e2c4587b78b1cd9c4e91ed71b93ebbb4bacfe019ea7d21688"
@@ -103,9 +113,19 @@
       "sha256": "50ae3f763e4b69cfa74ef8bc8dba9d4a5617ad8a26d4dccb61bd064600248446"
     },
     {
+      "path": "notebooks/geometricalOptics.nb",
+      "size": 1127368,
+      "sha256": "a75ae4e32177a5d15c1109c023e18a7b30febb8dea853957f53f762e50664078"
+    },
+    {
       "path": "notebooks/inputDataForRICH.nb",
       "size": 6624062,
       "sha256": "e9fd52b0f055ad226f5324077b2ac555b77307e4652c035232823cf5f3e953da"
+    },
+    {
+      "path": "notebooks/RICH.nb",
+      "size": 25238,
+      "sha256": "2e6383791bb4b96c2416de1d1e6ebed7f833e37f3b14a4d0c1c7cb32f4542071"
     },
     {
       "path": "myStyle.nb",
@@ -153,14 +173,14 @@
       "sha256": "ba43fb8c77aaa65be34f566e5c29bc346a031a0d6204ae4fc95a67331cdb0234"
     },
     {
+      "path": "src/geometricalOptics.wl",
+      "size": 20521,
+      "sha256": "16a26d6b9c1a6393cae30819191d0d647c839071bfacd36d52561a1b7709e405"
+    },
+    {
       "path": "src/inputDataForRICH.wl",
       "size": 102869,
       "sha256": "f1b2d7ab7f80a29d80945fc7d9d06715b70e02cf8de85599f3955abe368d70d3"
-    },
-    {
-      "path": "src/myDockedCells.wl",
-      "size": 18902,
-      "sha256": "03e1f42f7bb67f39b663a2e67471bb7360fba7a96ff576956e6a9f0e04585f8f"
     },
     {
       "path": "src/myNotebookInit.wl",

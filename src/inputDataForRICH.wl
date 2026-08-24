@@ -1,5 +1,13 @@
 (* ::Package:: *)
 
+(* ===== RICH managed source =====
+   Name: inputDataForRICH
+   Role: package-bootstrap
+   Context: inputDataForRICH`
+   Version symbol: inputDataForRICH`Private`versionTAG
+*)
+inputDataForRICH`Private`versionTAG = "v.08-08-2026";
+
 (* ::Text:: *)
 (*This package/notebook loads all RICH data. *)
 (*It needs a substantial cleanup.*)
@@ -98,7 +106,6 @@ BeginPackage[
 ];
 
 Begin["`Private`"]
-versionTAG="v.08-08-2026";
 End[];
 
 
@@ -124,7 +131,7 @@ Unprotect[LAPPDTMEnergyData,MAPMT22EnergyData,MPPCHPKEnergyData,SIPMFBKEnergyDat
 (**)
 If[$Notebooks,
 bigBanner["$Notebooks == True"];
-(*(*Once[*)myNotebookInit`loadMyFile["myDockedCells.wl"(*,$dirSWRoot*)](*,"Notebook"]*);*)
+(*myNotebookInit`installDockedCells[];*)
 (*Once[*)
 If[
   ! TrueQ[Global`$RICHProjectManagedLoad],
@@ -1486,8 +1493,7 @@ debugDoVerbose[tagDataPlot=""];
 EndPackage[];
 
 
-endEvalPrintOut[];
-
-
 (* ::Input::Initialization:: *)
-packageBanner["END inputDataForRICH"];
+myNotebookInit`endEvalPrintOut[];
+
+myNotebookInit`packageBanner["END inputDataForRICH"];

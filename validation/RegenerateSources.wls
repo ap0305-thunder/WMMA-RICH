@@ -15,8 +15,148 @@ ClearAll[
   compoundExpressionLineToSemicolons, compoundExpressionsToSemicolonText,
   directContextSymbolNames, usageSymbolNames, packageUsageSymbolNames,
   dependencyContextOwners, reassignDependencyContexts,
-  repairGeneratedSourceText,
+  managedSourceMetadata, canonicalSourceHeader, canonicalManagedSourceText,
+  canonicalLifecycleFooter, repairGeneratedSourceText,
   generatedFileExpressionCount, regenerateOne, main
+];
+
+managedSourceMetadata[] := <|
+  "myNotebookInit.wl" -> <|
+    "Name" -> "myNotebookInit", "Role" -> "infrastructure",
+    "Context" -> "myNotebookInit`",
+    "VersionSymbol" -> "myNotebookInit`versionTAG",
+    "Version" -> "v.08-08-2026"
+  |>,
+  "cellStyleDataRules.wl" -> <|
+    "Name" -> "cellStyleDataRules", "Role" -> "package-bootstrap",
+    "Context" -> "Global` (notebook style rules)",
+    "VersionSymbol" -> "cellStyleDataRules`Private`versionTAG",
+    "Version" -> "v.20-08-2026"
+  |>,
+  "base.wl" -> <|
+    "Name" -> "base", "Role" -> "package-bootstrap",
+    "Context" -> "base`", "VersionSymbol" -> "base`Private`versionTAG",
+    "Version" -> "v.08-08-2026"
+  |>,
+  "statDataAnal.wl" -> <|
+    "Name" -> "statDataAnal", "Role" -> "package-bootstrap",
+    "Context" -> "statDataAnal`",
+    "VersionSymbol" -> "statDataAnal`Private`versionTAG",
+    "Version" -> "v.08-08-2026"
+  |>,
+  "physicsGeneral.wl" -> <|
+    "Name" -> "physicsGeneral", "Role" -> "package-bootstrap",
+    "Context" -> "physicsGeneral`",
+    "VersionSymbol" -> "physicsGeneral`Private`versionTAG",
+    "Version" -> "v.08-08-2026"
+  |>,
+  "inputDataForRICH.wl" -> <|
+    "Name" -> "inputDataForRICH", "Role" -> "package-bootstrap",
+    "Context" -> "inputDataForRICH`",
+    "VersionSymbol" -> "inputDataForRICH`Private`versionTAG",
+    "Version" -> "v.08-08-2026"
+  |>,
+  "RICH.wl" -> <|
+    "Name" -> "RICH", "Role" -> "package-bootstrap",
+    "Context" -> "rich`", "VersionSymbol" -> "rich`Private`versionTAG",
+    "Version" -> "v.08-08-2026"
+  |>,
+  "calculator.wl" -> <|
+    "Name" -> "calculator", "Role" -> "interactive-top-level",
+    "Context" -> "calculator`",
+    "VersionSymbol" -> "calculator`Private`versionTAG",
+    "Version" -> "v.08-08-2026"
+  |>,
+  "optics.wl" -> <|
+    "Name" -> "optics", "Role" -> "interactive-top-level",
+    "Context" -> "Global` (legacy Optica-compatible source)",
+    "VersionSymbol" -> "optics`Private`versionTAG",
+    "Version" -> "v_16-06-2026"
+  |>,
+  "geometricalOptics.wl" -> <|
+    "Name" -> "geometricalOptics", "Role" -> "interactive-top-level",
+    "Context" -> "geometricalOptics`",
+    "VersionSymbol" -> "geometricalOptics`Private`versionTAG",
+    "Version" -> "v.16-01-2025"
+  |>
+|>;
+
+canonicalSourceHeader[text_String, fileName_String] := Module[
+  {metadata, body, versionSymbol, header},
+  metadata = Lookup[
+    managedSourceMetadata[], fileName, Missing["NotManagedSource"]
+  ];
+  If[MissingQ[metadata], Return[text]];
+  versionSymbol = metadata["VersionSymbol"];
+  body = StringReplace[text, {
+    RegularExpression[
+      "\\A\\(\\* ::Package::[^\\r\\n]*\\r?\\n(?:\\r?\\n)?"
+    ] -> "",
+    RegularExpression[
+      "\\A[ \\t\\r\\n]*\\(\\* ===== RICH managed source =====[\\s\\S]*?\\*\\)[ \\t\\r\\n]*"
+    ] -> "",
+    RegularExpression[
+      "(?m)^[ \\t]*(?:\\Q" <> versionSymbol <>
+        "\\E|versionTAG)[ \\t]*=[ \\t]*\"[^\"]*\";?[ \\t]*(?:\\r?\\n)?"
+    ] -> ""
+  }];
+  body = StringReplace[body, RegularExpression["\\A\\s+"] -> ""];
+  header = StringRiffle[{
+    "(* ::Package:: *)",
+    "",
+    "(* ===== RICH managed source =====",
+    "   Name: " <> metadata["Name"],
+    "   Role: " <> metadata["Role"],
+    "   Context: " <> metadata["Context"],
+    "   Version symbol: " <> versionSymbol,
+    "*)",
+    versionSymbol <> " = \"" <> metadata["Version"] <> "\";",
+    ""
+  }, "\n"];
+  header <> body
+];
+
+canonicalManagedSourceText[text_String, fileName_String] :=
+  canonicalLifecycleFooter[canonicalSourceHeader[text, fileName], fileName];
+
+canonicalLifecycleFooter[text_String, fileName_String] := Module[
+  {label, normalizedText, footer},
+  label = Lookup[
+    <|
+      "myNotebookInit.wl" -> "myNotebookInit",
+      "cellStyleDataRules.wl" -> "cellStyleDataRules",
+      "base.wl" -> "base",
+      "statDataAnal.wl" -> "statDataAnal",
+      "physicsGeneral.wl" -> "physicsGeneral",
+      "inputDataForRICH.wl" -> "inputDataForRICH",
+      "RICH.wl" -> "rich",
+      "calculator.wl" -> "calculator",
+      "optics.wl" -> "optics",
+      "geometricalOptics.wl" -> "geometricalOptics"
+    |>,
+    fileName,
+    Missing["NotManagedSource"]
+  ];
+  If[MissingQ[label], Return[text]];
+  normalizedText = StringReplace[text, {
+    RegularExpression[
+      "(?m)^([ \\t]*)End\\[\\](?!;)([ \\t]*(?:\\(\\*.*\\*\\))?[ \\t]*)$"
+    ] -> "$1End[];$2",
+    RegularExpression[
+      "(?m)^([ \\t]*)EndPackage\\[\\](?!;)([ \\t]*(?:\\(\\*.*\\*\\))?[ \\t]*)$"
+    ] -> "$1EndPackage[];$2",
+    RegularExpression[
+      "(?m)^[ \\t]*(?:myNotebookInit`)?endEvalPrintOut\\[\\];?[ \\t]*(?:\\r?\\n)?"
+    ] -> "",
+    RegularExpression[
+      "(?m)^[ \\t]*(?:myNotebookInit`)?packageBanner\\[\"END [^\"]+\"\\];?[ \\t]*(?:\\r?\\n)?"
+    ] -> ""
+  }];
+  footer =
+    "myNotebookInit`endEvalPrintOut[];\n\n" <>
+    "myNotebookInit`packageBanner[\"END " <> label <> "\"];";
+  StringReplace[normalizedText, RegularExpression["\\s*$"] -> ""] <>
+    "\n\n" <> footer <> "\n"
 ];
 
 flushOutput[] := Scan[(Quiet@Check[Flush[#], Null]) &, Flatten[{$Output}]];
@@ -627,7 +767,8 @@ reassignDependencyContexts[text_String, destinationPath_String] := Module[
    bare killStop references through myNotebookInit`; make that ownership
    explicit in the generated package. *)
 repairGeneratedSourceText[text_String, destinationPath_String] := Module[
-  {fileName, repairedText, oldEnergy, newEnergy, oldWavelength, newWavelength},
+  {fileName, repairedText, versionContext, oldEnergy, newEnergy, oldWavelength,
+   newWavelength},
   fileName = FileNameTake[destinationPath];
   repairedText = StringReplace[
     If[
@@ -648,8 +789,31 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
     "myNotebookInit`loadMyFile[\"cellStyleDataRules.m\"]" ->
       "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"cellStyleDataRules.wl\", DirectoryName[$InputFileName]]]",
     "myNotebookInit`loadMyFile[\"cellStyleDataRules.wl\"]" ->
-      "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"cellStyleDataRules.wl\", DirectoryName[$InputFileName]]]"
+      "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"cellStyleDataRules.wl\", DirectoryName[$InputFileName]]]",
+    "myNotebookInit`loadMyFile[\"myDockedCells.wl\"(*,$dirSWRoot*)]" ->
+      "myNotebookInit`installDockedCells[]",
+    "myNotebookInit`loadMyFile[\"myDockedCells.wl\"]" ->
+      "myNotebookInit`installDockedCells[]",
+    "Get[\"C:\\\\Users\\\\Ale\\\\My Drive\\\\allRICHWMMA\\\\myDockedCells.wl\"]" ->
+      "myNotebookInit`installDockedCells[];"
   }];
+  versionContext = Switch[fileName,
+    "base.wl", "base`Private`",
+    "statDataAnal.wl", "statDataAnal`Private`",
+    "RICH.wl", "rich`Private`",
+    "physicsGeneral.wl", "physicsGeneral`Private`",
+    "inputDataForRICH.wl", "inputDataForRICH`Private`",
+    "calculator.wl", "calculator`Private`",
+    _, None
+  ];
+  If[StringQ[versionContext],
+    repairedText = StringReplace[
+      repairedText,
+      RegularExpression[
+        "(^|[^\\p{L}\\p{N}$`])versionTAG(?=\\s*=)"
+      ] -> "$1" <> versionContext <> "versionTAG"
+    ]
+  ];
   If[fileName === "cellStyleDataRules.wl",
     repairedText = StringReplace[
       repairedText,
@@ -660,11 +824,19 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
     ];
   ];
   If[fileName === "calculator.wl",
-    Return @ StringReplace[repairedText, {
+    Return @ canonicalManagedSourceText[StringReplace[repairedText, {
+      RegularExpression[
+        "navHistory\\s*=\\s*\\{\\};\\s*" <>
+        "pushHistory\\[\\]\\s*:=\\s*AppendTo\\[navHistory,\\s*" <>
+        "First\\s*@\\s*SelectedCells\\s*@\\s*EvaluationNotebook\\[\\]\\s*\\];\\s*" <>
+        "goBack\\[\\]\\s*:=\\s*If\\[navHistory\\s*=!=\\s*\\{\\},\\s*" <>
+        "SelectionMove\\[Last\\[navHistory\\],\\s*All,\\s*Cell\\];\\s*" <>
+        "\\(\\*\\s*navHistory\\s*=\\s*Most\\[navHistory\\];\\s*\\*\\)\\s*" <>
+        "\\];"
+      ] ->
+        "(* Docked-cell navigation is owned by myNotebookInit` and installed below. *)",
       "loadMyFile[\"myDockedCells.wl\"]" ->
-        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"myDockedCells.wl\", DirectoryName[$InputFileName]]]",
-      "myNotebookInit`loadMyFile[\"myDockedCells.wl\"]" ->
-        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"myDockedCells.wl\", DirectoryName[$InputFileName]]]",
+        "If[!TrueQ[Global`$RICHProjectManagedLoad],myNotebookInit`installDockedCells[]]",
       "myNotebookInit`loadMyFile[\"RICH.m\", NotebookDirectory[]]" ->
         "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\", DirectoryName[$InputFileName]]]",
       "myNotebookInit`loadMyFile[\"RICH.m\",NotebookDirectory[]]" ->
@@ -687,16 +859,14 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
         "$dirSW:=Global`RICHProjectPath[\"src\"];",
       "$dirOut=\"C:\\\\TEMP\\\\\";" ->
         "$dirOut:=Global`RICHPathSetting[\"OutputDirectory\"];"
-    }]
+    }], fileName]
   ];
   If[fileName === "optics.wl",
-    Return @ StringReplace[repairedText, {
+    Return @ canonicalManagedSourceText[StringReplace[repairedText, {
       "FileNameJoin[List[Global`dir, \"myNotebookInit.wl\"]]" ->
         "If[StringQ[Global`$RICHProjectRoot], Global`RICHProjectPath[\"src\", \"myNotebookInit.wl\"], FileNameJoin[List[Global`dir, \"myNotebookInit.wl\"]]]",
       "Get[Global`pkg]" ->
         "If[TrueQ[Global`$RICHProjectManagedLoad], Null, Get[Global`pkg]]",
-      "myNotebookInit`loadMyFile[\"myDockedCells.wl\"]" ->
-        "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"myDockedCells.wl\", DirectoryName[$InputFileName]]]",
       "myNotebookInit`loadMyFile[\"RICH.m\", NotebookDirectory[]]" ->
         "If[TrueQ[Global`$RICHProjectManagedLoad], Null, myNotebookInit`loadMyFile[\"RICH.wl\", DirectoryName[$InputFileName]]]",
       "Set[Global`$dirBackup, \"C:\\\\Users\\\\Ale\\\\My Drive\\\\Mathematica\"]" ->
@@ -713,9 +883,12 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
         "Export all Output cells to PNG (configured output)",
       "Export all Output cells to PDF (notebook dir)" ->
         "Export all Output cells to PDF (configured output)"
-    }]
+    }], fileName]
   ];
-  If[fileName =!= "RICH.wl", Return[repairedText]];
+  If[
+    fileName =!= "RICH.wl",
+    Return[canonicalManagedSourceText[repairedText, fileName]]
+  ];
   repairedText = StringReplace[
     repairedText,
     RegularExpression[
@@ -740,7 +913,7 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
     "Print[\" loading rich \"]" ->
       "Print[\" loading rich \"]\nIf[!StringQ[rich`title],rich`title=\" \"];"
   }];
-  StringReplace[repairedText, {
+  canonicalManagedSourceText[StringReplace[repairedText, {
     "myNotebookInit`loadMyFile[\"base.wl\"]" ->
       "If[TrueQ[Global`$RICHProjectManagedLoad], 1, myNotebookInit`loadMyFile[\"base.wl\", DirectoryName[$InputFileName]]]",
     "myNotebookInit`loadMyFile[\"statDataAnal.wl\"]" ->
@@ -749,7 +922,7 @@ repairGeneratedSourceText[text_String, destinationPath_String] := Module[
       "If[TrueQ[Global`$RICHProjectManagedLoad], 1, myNotebookInit`loadMyFile[\"physicsGeneral.wl\", DirectoryName[$InputFileName]]]",
     "myNotebookInit`loadMyFile[\"inputDataForRICH.wl\"]" ->
       "If[TrueQ[Global`$RICHProjectManagedLoad], 1, myNotebookInit`loadMyFile[\"inputDataForRICH.wl\", DirectoryName[$InputFileName]]]"
-  }]
+  }], fileName]
 ];
 
 (* Parse every generated expression without evaluating it. Read[..., Hold[Expression]]
@@ -939,8 +1112,8 @@ main[] := Module[
     {}
   ];
 
-  (* optics.wl is deliberately absent: it is derived textually from the
-     Wolfram Save As source by BuildOpticsFromNative.ps1. *)
+  (* The two optics sources are deliberately absent: they are derived textually
+     from Wolfram Save As sources by BuildTopLevelSourceFromNative.ps1. *)
   mappings = {
     <|"Key" -> "cellStyleDataRules", "Source" -> {"legacy-original", "cellStyleDataRules.nb"}, "Destination" -> {"src", "cellStyleDataRules.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "base", "Source" -> {"legacy-original", "base.nb"}, "Destination" -> {"src", "base.wl"}, "Cutoff" -> None|>,

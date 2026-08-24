@@ -21,6 +21,47 @@ Set-ExecutionPolicy -Scope Process Bypass
 .\validation\RunValidation.ps1 -Cases base -ProcessTimeoutSeconds 240 -KeepWorkspace
 ```
 
+## geometricalOptics top-level case
+
+The `geometricalOptics` case compares the supplied legacy notebook with the
+working notebook that uses the universal bootstrap. Its package source is a
+deterministic textual selection from the Wolfram Save As baseline. Run it with
+the longer timeout required by the existing RICH dependency chain:
+
+```powershell
+.\validation\RunValidation.ps1 `
+  -Cases geometricalOptics `
+  -ProcessTimeoutSeconds 900 `
+  -KeepWorkspace
+```
+
+Check the two textually derived top-level sources without evaluating them:
+
+```powershell
+.\validation\BuildTopLevelSourceFromNative.ps1 -Case optics -Check
+.\validation\BuildTopLevelSourceFromNative.ps1 -Case geometricalOptics -Check
+```
+
+Normalize or verify the alphabetized, single-line public usage declarations in
+`myNotebookInit.wl` with:
+
+```powershell
+.\validation\NormalizeUsageDeclarations.ps1
+.\validation\NormalizeUsageDeclarations.ps1 -Check
+```
+
+The universal-bootstrap structural check verifies the canonical source headers
+and footers, the identical three-cell opening of all nine managed notebooks,
+and the absence of extra executable initialization in the six
+package-bootstrap notebooks. It also verifies that the retired
+`src/myDockedCells.wl` file is absent from every project profile, that the
+merged `myNotebookInit`` toolbar API exists, and that its navigation callbacks
+remain package-qualified:
+
+```powershell
+wolfram.exe -script validation\CheckUniversalBootstrap.wls
+```
+
 Use `wolframscript.exe`, `wolfram.exe`, or `WolframKernel.exe`, not `Mathematica.exe` or `WolframDesktop.exe`:
 
 ```powershell

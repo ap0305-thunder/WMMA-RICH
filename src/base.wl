@@ -1,4 +1,12 @@
-(* ::Package::"Tags"-><|"NoVariables" -> <|"Module" -> <|Enabled -> False|>|>, "PrefixPlus" -> <|Enabled -> False|>|>:: *)
+(* ::Package:: *)
+
+(* ===== RICH managed source =====
+   Name: base
+   Role: package-bootstrap
+   Context: base`
+   Version symbol: base`Private`versionTAG
+*)
+base`Private`versionTAG = "v.08-08-2026";
 
 (* ::Text::Initialization:: *)
 (*(*(*(*This package/notebook defines several tools of Mathematica/Wolfram which I find useful and/or use later.*)*)*)*)
@@ -148,7 +156,6 @@ window::usage="window";
 (* ::Input::Initialization:: *)
 Begin["`Private`"] 
 (* Begin Private Context *) 
-versionTAG="v.08-08-2026"
 (*ResourceFunction["NotebookOutlineMenu"][EvaluationNotebook[],"Table Of Contents",{"Title","Subtitle","Subsubtitle"}]*)
 (* End Private Context *)
 
@@ -918,15 +925,14 @@ Names[RegularExpression["System`....."]]
 
 
 (* ::Input::Initialization:: *)
-End[] 
-EndPackage[]
+End[];
+EndPackage[];
 
 
 (* ::Input::Initialization:: *)
 If[$Notebooks,Cells[CellStyle->{"MSG","Message"}]];
 
 
-endEvalPrintOut[];
+myNotebookInit`endEvalPrintOut[];
 
-
-packageBanner["END base"];
+myNotebookInit`packageBanner["END base"];

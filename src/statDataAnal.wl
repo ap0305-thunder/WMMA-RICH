@@ -1,5 +1,13 @@
 (* ::Package:: *)
 
+(* ===== RICH managed source =====
+   Name: statDataAnal
+   Role: package-bootstrap
+   Context: statDataAnal`
+   Version symbol: statDataAnal`Private`versionTAG
+*)
+statDataAnal`Private`versionTAG = "v.08-08-2026";
+
 (* ::Text:: *)
 (*This package/notebook defines tools for statistical data analysis.*)
 
@@ -95,7 +103,6 @@ lgdFn::usage =
   "lgdFn[data] returns the statistics legend for data.";
 
 Begin["`Private`"]; (* Begin Private Context *)
-versionTAG="v.08-08-2026";
 (**)
 
 
@@ -480,7 +487,7 @@ errorProp[test,{{x,0.3,dx,0.005},{y,0.9,dy,0.1}}]
 (* ::Input::Initialization:: *)
 End[]; (* End Private Context *)
 
-EndPackage[]
+EndPackage[];
 
 
 (* ::Input::Initialization:: *)
@@ -488,8 +495,7 @@ EndPackage[]
 
 
 (* ::Input::Initialization:: *)
-endEvalPrintOut[];
+myNotebookInit`endEvalPrintOut[];
 
-
-packageBanner["END statDataAnal"];
+myNotebookInit`packageBanner["END statDataAnal"];
 

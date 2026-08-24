@@ -1,0 +1,371 @@
+Notebook[{Cell["RICH project notebook: RICH. Role: package-bootstrap. Runtime \
+source: src/RICH.wl.", "Text", Background -> RGBColor[0.92, 0.97, 1.], 
+   CellTags -> {"RICHNotebookHeader"}], Cell["---... SETUP", "Title", 
+   InitializationCell -> False, Background -> RGBColor[0.88, 1, 0.88], 
+   CellTags -> {"RICHNotebookSetup"}], 
+  Cell[BoxData[RowBox[{"Module", "[", 
+      RowBox[{RowBox[{"{", RowBox[{"notebook", ",", "notebookDirectory", ",", 
+            "projectCase", ",", "loader", ",", "loadResult"}], "}"}], ",", 
+        RowBox[{RowBox[{"notebook", "=", RowBox[{"EvaluationNotebook", "[", 
+              "]"}]}], ";", RowBox[{"projectCase", "=", 
+            RowBox[{"CurrentValue", "[", RowBox[{"notebook", ",", 
+                RowBox[{"{", RowBox[{"TaggingRules", ",", 
+                    "\"RICHProjectCase\""}], "}"}]}], "]"}]}], ";", 
+          RowBox[{"notebookDirectory", "=", RowBox[{"Quiet", "[", 
+              RowBox[{"Check", "[", RowBox[{RowBox[{"NotebookDirectory", "[", 
+                    "notebook", "]"}], ",", "$Failed"}], "]"}], "]"}]}], ";", 
+          RowBox[{"If", "[", RowBox[{RowBox[{"!", RowBox[{"StringQ", "[", 
+                  "notebookDirectory", "]"}]}], ",", RowBox[{RowBox[
+                 {"Print", "[", RowBox[{"\"RICH bootstrap failed: save the \
+notebook inside the project's \"", ",", 
+                    "\"notebooks directory before evaluating initialization \
+cells.\""}], "]"}], ";", RowBox[{"Return", "[", "$Failed", "]"}]}]}], "]"}], 
+          ";", RowBox[{"loader", "=", RowBox[{"FileNameJoin", "[", 
+              RowBox[{"{", RowBox[{RowBox[{"ParentDirectory", "[", 
+                    "notebookDirectory", "]"}], ",", "\"src\"", ",", 
+                  "\"LoadProject.wl\""}], "}"}], "]"}]}], ";", 
+          RowBox[{"If", "[", RowBox[{RowBox[{"!", RowBox[{"FileExistsQ", "[", 
+                  "loader", "]"}]}], ",", RowBox[{RowBox[{"Print", "[", 
+                  RowBox[
+                   {
+                    "\"RICH bootstrap failed: project loader not found at \""\
+, ",", "loader"}], "]"}], ";", RowBox[{"Return", "[", "$Failed", "]"}]}]}], 
+            "]"}], ";", RowBox[{"loadResult", "=", RowBox[{"Block", "[", 
+              RowBox[{RowBox[{"{", RowBox[{"$RICHProjectSkipAutoLoad", "=", 
+                    "True"}], "}"}], ",", RowBox[{"Check", "[", RowBox[
+                   {RowBox[{"Get", "[", "loader", "]"}], ",", "$Failed"}], 
+                  "]"}]}], "]"}]}], ";", RowBox[{"If", "[", 
+            RowBox[{RowBox[{"loadResult", "===", "$Failed"}], ",", 
+              RowBox[{"Return", "[", "$Failed", "]"}]}], "]"}], ";", 
+          RowBox[{"RICHNotebookBootstrap", "[", "projectCase", "]"}]}]}], 
+      "]"}]], "Input", InitializationCell -> True, 
+   CellTags -> {"RICHUniversalBootstrap", "i:1"}], 
+  Cell["This package/notebook does all basic calculations for a RICH \
+detector.\nPrecision[x] gives a measure of the relative uncertainty in the \
+value of x . With absolute uncertainty dx, Precision[x] is - Log[10, dx/x] \
+.\nAccuracy[x] gives a measure of the absolute uncertainty in the value of x \
+. With uncertainty dx, Accuracy[x] is - Log[10, dx] .", "Text", 
+   InitializationCell -> True, CellChangeTimes -> {3.945862080410919*^9, 
+     3.982754736755783*^9}, ExpressionUUID -> 
+    "36952da5-1cd4-a54c-bf45-da418db4a163"], 
+  Cell[CellGroupData[{Cell["SETUP", "Title", InitializationCell -> True, 
+      ExpressionUUID -> "3fb74615-44b2-cd4e-92f3-6204cd1646ec"], 
+     Cell[CellGroupData[{Cell["SETUP", "Subtitle", InitializationCell -> 
+          True, ExpressionUUID -> "bd2dbd3f-5a5b-5244-8dc1-7de9584fe13b"], 
+        Cell[CellGroupData[{Cell["INIT", "Subsubtitle", ExpressionUUID -> 
+             "b8bd70b4-d36b-5b48-bd8b-03f9d765c5b1"]}, Closed]], 
+        Cell[CellGroupData[
+          {Cell["Additional general settings for any (complex) notebook", 
+            "Subsubtitle", InitializationCell -> True, CellTags -> 
+             "Notebook settings --- general settings for any notebook", 
+            ExpressionUUID -> "116b1f50-14b3-499e-8c6a-b86c6e29be2c"]}, 
+          Closed]]}, Closed]], Cell[CellGroupData[
+       {Cell[">>> START INITIALIZATION", "Subtitle", InitializationCell -> 
+          True, CellTags -> {"INIT", "i:3", "i:4"}, ExpressionUUID -> 
+          "c02cf13a-82a2-fe44-84eb-81bf8d1c8674"], 
+        Cell[CellGroupData[{Cell["INIT", "Subsubtitle", InitializationCell -> 
+             True, ExpressionUUID -> 
+             "6fd97028-aff4-434d-8cb7-fc3dcfbbeffb"]}, Closed]], 
+        Cell[CellGroupData[{Cell["notes to remember", "Subsubtitle", 
+            InitializationCell -> True, ExpressionUUID -> 
+             "80f1dee9-a9c6-664e-b21a-9a554f1d7b1e"], Cell[".............Need\
+s versus Get\n<<name reads in a file, evaluating each expression in it, and \
+returning the last one.\n(<< is shorthand for \
+Get.)\nNeeds[\[OpenCurlyDoubleQuote]context`\[CloseCurlyDoubleQuote]] loads \
+an appropriate file if the specified context is not already in \
+$Packages.\nNeeds is normally appropriate for making sure that a package has \
+been loaded, but when you need to force the package to reload you want Get. \
+\nGet can be used for loading several different formats containing data or \
+definitions, in addition to formal packages. See this answer for an overview \
+of such methods.\nA related function that deserves mentioning is \
+DeclarePackage. While Get does a hard load and Needs does a soft one, \
+DeclarePackage does a delayed load.\nBut there is another big difference: \
+Needs insists on a correct package format and will complain when the .m file \
+doesn\[CloseCurlyQuote]t correctly create a context which matches the file \
+name and path. Get will instead load every file with correct Mathematica \
+InputForm syntax. That means that you can e.g. use Put and Get to save and \
+load arbitrary mathematica expressions to file, which would not be possible \
+with Needs. \n", "Text", InitializationCell -> True, ExpressionUUID -> 
+             "9bdacafb-5d27-a749-933c-085c7418f36a"]}, Closed]], 
+        Cell[CellGroupData[{Cell["have a look at this notebook", 
+            "Subsubtitle", InitializationCell -> True, ExpressionUUID -> 
+             "dffd7542-af91-1546-98f5-c643eff24c53"]}, Closed]], 
+        Cell[CellGroupData[{Cell["MY LIBRARIES", "Subsubtitle", 
+            InitializationCell -> True, CellTags -> "MY LIBRARY", 
+            ExpressionUUID -> "4a2bd824-e748-4fc5-904b-854e26e2c87f"]}, 
+          Closed]]}, Closed]], Cell["<<< END ALL INTIALIZATION", "Subtitle", 
+      InitializationCell -> True, CellTags -> {"<<< END INTIALIZATION", 
+        "i:3", "i:4"}, ExpressionUUID -> 
+       "de6900ca-ec04-224e-acab-2607bb57c1c4"]}, Closed]], 
+  Cell[CellGroupData[{Cell["RICH", "Title", InitializationCell -> True, 
+      ExpressionUUID -> "6f855bd9-ea0e-4917-a270-b207dc7dd6ff"], 
+     Cell[CellGroupData[{Cell[">>> INIT PACKAGE", "Subtitle", 
+         InitializationCell -> True, CellTags -> {"INIT", "i:3", "i:4"}, 
+         ExpressionUUID -> "2bec81d7-1342-9047-8a21-6ac02b0ad817"]}, 
+       Closed]], Cell[CellGroupData[{Cell[">>> INIT PACKAGE INITIALIZATION", 
+         "Subtitle", InitializationCell -> True, CellTags -> 
+          {"INIT", "i:3", "i:4"}, ExpressionUUID -> 
+          "aaba5d59-629c-674f-a09c-5b515d7774e7"], 
+        Cell[CellGroupData[{Cell["GENERAL DEFINITIONS FOR THIS NOTEBOOK", 
+            "Subsubtitle", InitializationCell -> True, CellTags -> 
+             "GENERAL DEFINITIONS", ExpressionUUID -> 
+             "8c4a5953-a810-4269-8911-9fb0adbfcbb2"], 
+           Cell[CellGroupData[{Cell["MISCELLANEA DEFINITIONS", "Section", 
+               InitializationCell -> True, ExpressionUUID -> 
+                "d6d11429-38bd-b246-ac2e-878316d9e673"]}, Closed]]}, 
+          Closed]], Cell[CellGroupData[
+          {Cell["GENERAL OPTIONS FOR THIS NOTEBOOK", "Subsubtitle", 
+            InitializationCell -> True, CellTags -> "OPTIONS", 
+            ExpressionUUID -> "0d357cea-2d70-4765-a107-2fcb01c23926"], 
+           Cell[CellGroupData[{Cell["MISCELLANEA OPTIONS", "Section", 
+               InitializationCell -> True, ExpressionUUID -> 
+                "1a829fb1-ccb1-5341-9c6a-5917ccb347ca"]}, Closed]]}, 
+          Closed]]}, Closed]], Cell[CellGroupData[
+       {Cell["PHYSICS", "Subtitle", InitializationCell -> True, 
+         CellTags -> "PHYSICS", ExpressionUUID -> 
+          "e9559816-eebb-4733-b7dd-77bad3a89a43"], 
+        Cell[CellGroupData[{Cell["load physicsGeneral FUNCTIONS", 
+            "Subsubtitle", InitializationCell -> True, CellTags -> 
+             "FUNCTIONS", ExpressionUUID -> 
+             "f1e6153d-ef14-4ef1-9de6-44a4e87f1768"]}, Closed]]}, Closed]], 
+     Cell[CellGroupData[{Cell["INPUT DATA FOR RICH", "Subtitle", 
+         InitializationCell -> True, ExpressionUUID -> 
+          "d9f9b550-d3d5-a040-bb7a-6c737391121f"], 
+        Cell[CellGroupData[{Cell["load INPUT DATA FOR RICH", "Subsubtitle", 
+            InitializationCell -> True, ExpressionUUID -> 
+             "bd5e4e28-7d2c-2c41-8e1c-ba759d56a0d6"]}, Closed]]}, Closed]], 
+     Cell[CellGroupData[{Cell["RICH", "Subtitle", InitializationCell -> True, 
+         CellTags -> "OPTICS FUNCTIONS", ExpressionUUID -> 
+          "747e5911-c042-4520-989a-4756d0363bed"], 
+        Cell[CellGroupData[{Cell["RICH PHYSICS DETECTOR FUNCTIONS", 
+            "Subsubtitle", InitializationCell -> True, ExpressionUUID -> 
+             "d644b60d-72a7-4da0-bdb6-9f7b95ae45ad"], 
+           Cell[CellGroupData[{Cell["Define efficiencies", "Section", 
+               InitializationCell -> True, ExpressionUUID -> 
+                "8bcd323a-016a-ce42-8894-4dda32d2c479"]}, Closed]], 
+           Cell[CellGroupData[{Cell["Efficiency debug printout", "Section", 
+               InitializationCell -> True, ExpressionUUID -> 
+                "7e3e6e01-cf9a-d34e-ba09-eac0e6070125"]}, Closed]], 
+           Cell[CellGroupData[{Cell["Plot Cherenkov angle chromatic limits", 
+               "Section", InitializationCell -> True, ExpressionUUID -> 
+                "20483706-f8a1-0b45-b602-ba72cb9ffece"]}, Closed]], 
+           Cell[CellGroupData[{Cell["generatePhotonEnergy", "Section", 
+               InitializationCell -> True, ExpressionUUID -> 
+                "c458bc41-dff2-4b4d-ae39-4be9f7f5b7f1"]}, Closed]], 
+           Cell[CellGroupData[{Cell["YIELD", "Section", InitializationCell -> 
+                True, ExpressionUUID -> 
+                "c0f8852d-eee7-5a48-a2a5-c907d6a28c04"], Cell[CellGroupData[
+                {Cell["INIT", "Subsection", InitializationCell -> True, 
+                  ExpressionUUID -> "e64e3d71-b5dd-e648-ab92-06ef50fc1787"]}, 
+                Closed]], Cell[CellGroupData[{Cell["calcRICHYield", 
+                  "Subsection", InitializationCell -> True, ExpressionUUID -> 
+                   "d3caa43e-4dc5-204f-a376-5294ea7d5696"]}, Closed]], 
+              Cell[CellGroupData[{Cell["calcDetectedPhotons", "Subsection", 
+                  InitializationCell -> True, ExpressionUUID -> 
+                   "bad94686-2b08-5b44-84c0-68532c572eb2"]}, Closed]]}, 
+             Closed]]}, Closed]], Cell[CellGroupData[
+          {Cell["CALC all detector data", "Subsubtitle", 
+            InitializationCell -> True, ExpressionUUID -> 
+             "735d0c28-3151-41ae-970e-42bd3aa15922"]}, Closed]], 
+        Cell[CellGroupData[{Cell["examples (non-evaluatable cells)", 
+            "Subsubtitle", InitializationCell -> True, CellTags -> 
+             "examples", CellLabel -> "6/16/24 15:28:00 In[251]:=", 
+            ExpressionUUID -> "d3cf0701-06ef-4b9d-9f58-adda82ef7546"]}, 
+          Closed]], Cell["OPTIONS FOR THIS RUN", "Subsubtitle", 
+         InitializationCell -> True, CellTags -> "OPTIONS", 
+         ExpressionUUID -> "2138be62-00c7-485a-a70e-4db136863fdc"], 
+        Cell[CellGroupData[{Cell["PREAMBLE", "Subsubtitle", 
+            InitializationCell -> True, ExpressionUUID -> 
+             "9f975ee8-f9a2-450e-a5e3-7c92cafedbb8"]}, Closed]]}, Closed]], 
+     Cell[CellGroupData[{Cell["<<< END PACKAGE INTIALIZATION", "Subtitle", 
+         InitializationCell -> True, CellTags -> {"<<< END INTIALIZATION", 
+           "i:3", "i:4"}, ExpressionUUID -> 
+          "098923e9-d749-8043-8d19-3cac2411b3ac"]}, Closed]], 
+     Cell[CellGroupData[{Cell["CODE", "Subtitle", InitializationCell -> True, 
+         ExpressionUUID -> "b7e8ace0-95b2-1143-82ce-7ac90a9a0839"], 
+        Cell["bla \nbla", "Text", InitializationCell -> True, 
+         ExpressionUUID -> "b9d8ab0f-f923-4b47-9359-4a9f332f09d7"]}, 
+       Closed]], Cell[CellGroupData[{Cell["<<< END PACKAGE", "Subtitle", 
+         InitializationCell -> True, CellTags -> {"<<< END INTIALIZATION", 
+           "i:3", "i:4"}, ExpressionUUID -> 
+          "77356ca9-493b-154f-b853-e5027797dfec"]}, Closed]]}, Closed]]}, 
+ AutoGeneratedPackage -> Automatic, WindowToolbars -> "MultipurposeBar", 
+ InitializationCellEvaluation -> False, InitializationCellWarning -> False, 
+ WindowSize -> {949, 466.5}, WindowMargins -> 
+  {{0, Automatic}, {Automatic, 0}}, WindowTitle -> 
+  " ------- C:\\Users\\Ale\\My Drive\\allRICHWMMA\\RICH.nb", 
+ DockedCells -> 
+  {Cell[BoxData[TagBox[GridBox[
+       {{ItemBox[TemplateBox[{TemplateBox[{10}, "Spacer1"], 
+            StyleBox["\"\"", 8, Bold, FontFamily -> "Helvetica", 
+             StripOnInput -> False], StyleBox["\"\"", 8, Bold, 
+             FontFamily -> "Helvetica", StripOnInput -> False]}, 
+           "RowWithSeparator"], Alignment -> Left, StripOnInput -> False], 
+         ItemBox[InterpretationBox[GridBox[{{ButtonBox[StyleBox[
+                "\"Evl Cel\"", 10, FontColor -> RGBColor[0, Rational[2, 3], 
+                  0], Bold, Background -> RGBColor[0.88, 1, 0.88], 
+                StripOnInput -> False], ButtonFunction :> 
+                FrontEndTokenExecute["EvaluateCells"], FrameMargins -> 3, 
+               Appearance -> {"AbuttingRight"}, Evaluator -> Automatic, 
+               Method -> "Preemptive"], ButtonBox[StyleBox["\"GTo Evl Cel\"", 
+                10, FontColor -> RGBColor[0, Rational[2, 3], 0], Bold, 
+                Background -> RGBColor[0.88, 1, 0.88], StripOnInput -> 
+                 False], ButtonFunction :> FrontEndTokenExecute[
+                 "FindEvaluatingCell"], FrameMargins -> 3, Appearance -> 
+                {"AbuttingLeftRight"}, Evaluator -> Automatic, Method -> 
+                "Preemptive"], ButtonBox[StyleBox["\"Sel All\"", 10, 
+                FontColor -> RGBColor[0, Rational[2, 3], 0], Bold, 
+                Background -> RGBColor[0.88, 1, 0.88], StripOnInput -> 
+                 False], ButtonFunction :> FrontEndTokenExecute["SelectAll"], 
+               FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+               Evaluator -> Automatic, Method -> "Preemptive"], 
+              ButtonBox[StyleBox["\"Clo All Sel\"", 10, FontColor -> 
+                 RGBColor[0, Rational[2, 3], 0], Bold, Background -> 
+                 RGBColor[0.88, 1, 0.88], StripOnInput -> False], 
+               ButtonFunction :> FrontEndTokenExecute[
+                 "SelectionCloseAllGroups"], FrameMargins -> 3, Appearance -> 
+                {"AbuttingLeftRight"}, Evaluator -> Automatic, Method -> 
+                "Preemptive"], ButtonBox[StyleBox["\"Opn All Sel\"", 10, 
+                FontColor -> RGBColor[0, Rational[2, 3], 0], Bold, 
+                Background -> RGBColor[0.88, 1, 0.88], StripOnInput -> 
+                 False], ButtonFunction :> FrontEndTokenExecute[
+                 "SelectionOpenAllGroups"], FrameMargins -> 3, Appearance -> 
+                {"AbuttingLeftRight"}, Evaluator -> Automatic, Method -> 
+                "Preemptive"], ButtonBox[StyleBox["\"Cel Grp\"", 10, 
+                FontColor -> RGBColor[0, Rational[2, 3], 0], Bold, 
+                Background -> RGBColor[0.88, 1, 0.88], StripOnInput -> 
+                 False], ButtonFunction :> FrontEndTokenExecute["CellGroup"], 
+               FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+               Evaluator -> Automatic, Method -> "Preemptive"], 
+              ButtonBox[StyleBox["\"Sav\"", 10, FontColor -> RGBColor[0, 
+                  Rational[2, 3], 0], Bold, Background -> RGBColor[0.88, 1, 
+                  0.88], StripOnInput -> False], ButtonFunction :> 
+                FrontEndTokenExecute["Save"], FrameMargins -> 3, 
+               Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+               Method -> "Preemptive"], ButtonBox[StyleBox["\"Evl Ini Cel\"", 
+                10, FontColor -> RGBColor[1, 0.5, 0], Bold, Background -> 
+                 RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+               ButtonFunction :> FrontEndTokenExecute[
+                 "EvaluateInitialization"], FrameMargins -> 3, Appearance -> 
+                {"AbuttingLeftRight"}, Evaluator -> Automatic, Method -> 
+                "Preemptive"], ButtonBox[StyleBox["\"Evl Ntb\"", 10, 
+                FontColor -> RGBColor[1, 0.5, 0], Bold, Background -> 
+                 RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+               ButtonFunction :> FrontEndTokenExecute["EvaluateNotebook"], 
+               FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+               Evaluator -> Automatic, Method -> "Preemptive"], 
+              ButtonBox[StyleBox["\"Del All Out\"", 10, FontColor -> 
+                 RGBColor[1, 0.5, 0], Bold, Background -> RGBColor[1, 0.9, 
+                  0.8], StripOnInput -> False], ButtonFunction :> 
+                FrontEndTokenExecute["DeleteGeneratedCells"], FrameMargins -> 
+                3, Appearance -> {"AbuttingLeftRight"}, Evaluator -> 
+                Automatic, Method -> "Preemptive"], ButtonBox[StyleBox[
+                "\"Cel Mrg\"", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+                Background -> RGBColor[1, 0.9, 0.8], StripOnInput -> False], 
+               ButtonFunction :> FrontEndTokenExecute["CellMerge"], 
+               FrameMargins -> 3, Appearance -> {"AbuttingLeftRight"}, 
+               Evaluator -> Automatic, Method -> "Preemptive"], 
+              ButtonBox[StyleBox["\"Abort\"", 10, FontColor -> RGBColor[1, 0, 
+                  0], Bold, Background -> RGBColor[1, 0.85, 0.85], 
+                StripOnInput -> False], ButtonFunction :> 
+                FrontEndTokenExecute["EvaluatorAbort"], FrameMargins -> 3, 
+               Appearance -> {"AbuttingLeftRight"}, Evaluator -> Automatic, 
+               Method -> "Preemptive"], ButtonBox[StyleBox["\"Quit\"", 10, 
+                FontColor -> RGBColor[1, 0, 0], Bold, Background -> 
+                 RGBColor[1, 0.85, 0.85], StripOnInput -> False], 
+               ButtonFunction :> FrontEndTokenExecute["EvaluatorQuit"], 
+               FrameMargins -> 3, Appearance -> {"AbuttingLeft"}, 
+               Evaluator -> Automatic, Method -> "Preemptive"]}}, 
+            AutoDelete -> False, GridBoxItemSize -> 
+             {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+            ColumnSpacings -> 0], ButtonBar[{Style["Evl Cel", 10, 
+               FontColor -> RGBColor[0, Rational[2, 3], 0], Bold, 
+               Background -> RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute[
+               "EvaluateCells"], Style["GTo Evl Cel", 10, FontColor -> 
+                RGBColor[0, Rational[2, 3], 0], Bold, Background -> 
+                RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute[
+               "FindEvaluatingCell"], Style["Sel All", 10, FontColor -> 
+                RGBColor[0, Rational[2, 3], 0], Bold, Background -> 
+                RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute[
+               "SelectAll"], Style["Clo All Sel", 10, FontColor -> 
+                RGBColor[0, Rational[2, 3], 0], Bold, Background -> 
+                RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute[
+               "SelectionCloseAllGroups"], Style["Opn All Sel", 10, 
+               FontColor -> RGBColor[0, Rational[2, 3], 0], Bold, 
+               Background -> RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute[
+               "SelectionOpenAllGroups"], Style["Cel Grp", 10, FontColor -> 
+                RGBColor[0, Rational[2, 3], 0], Bold, Background -> 
+                RGBColor[0.88, 1, 0.88]] :> FrontEndTokenExecute[
+               "CellGroup"], Style["Sav", 10, FontColor -> RGBColor[0, 
+                 Rational[2, 3], 0], Bold, Background -> RGBColor[0.88, 1, 
+                 0.88]] :> FrontEndTokenExecute["Save"], 
+             Style["Evl Ini Cel", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8]] :> FrontEndTokenExecute[
+               "EvaluateInitialization"], Style["Evl Ntb", 10, FontColor -> 
+                RGBColor[1, 0.5, 0], Bold, Background -> RGBColor[1, 0.9, 
+                 0.8]] :> FrontEndTokenExecute["EvaluateNotebook"], 
+             Style["Del All Out", 10, FontColor -> RGBColor[1, 0.5, 0], Bold, 
+               Background -> RGBColor[1, 0.9, 0.8]] :> FrontEndTokenExecute[
+               "DeleteGeneratedCells"], Style["Cel Mrg", 10, FontColor -> 
+                RGBColor[1, 0.5, 0], Bold, Background -> RGBColor[1, 0.9, 
+                 0.8]] :> FrontEndTokenExecute["CellMerge"], 
+             Style["Abort", 10, FontColor -> RGBColor[1, 0, 0], Bold, 
+               Background -> RGBColor[1, 0.85, 0.85]] :> FrontEndTokenExecute[
+               "EvaluatorAbort"], Style["Quit", 10, FontColor -> 
+                RGBColor[1, 0, 0], Bold, Background -> RGBColor[1, 0.85, 
+                 0.85]] :> FrontEndTokenExecute["EvaluatorQuit"]}, 
+            FrameMargins -> 3, Appearance -> {Automatic}]], 
+          Alignment -> Right, StripOnInput -> False]}}, AutoDelete -> False, 
+       GridBoxItemSize -> {"Columns" -> {Scaled[0.3], Scaled[0.7]}}], 
+      "Grid"]], "DockedCell", Background -> RGBColor[1, 0.992, 0.866]]}, 
+ PrivateNotebookOptions -> {"FileOutlineCache" -> False, 
+   "SafeFileOpen" -> "IgnoreCache"}, OutputSizeLimit -> 1000000, 
+ CellProlog :> SelectionMove[EvaluationCell[], All, Cell], 
+ CellEpilog :> SelectionMove[EvaluationNotebook[], Next, Cell], 
+ DynamicUpdating -> True, ShowCellLabel -> False, 
+ CodeAssistOptions -> {"CodeToolsOptions" -> 
+    <|"CodeInspect" -> <|"Tags" -> <|"SuspiciousBox" -> 
+          <|Enabled -> False|>|>|>|>}, AutoMultiplicationSymbol -> True, 
+ "NotebookPersistence" -> <|"Hashes/Once/FqeNo654-3D" -> 
+    <|"HeldValue" -> Hold[Hold[Null]], "CreationDate" -> 
+      3.9591522306820386`17.350177189996305*^9, "Creator" -> "Ale", 
+     "ModificationDate" -> 3.9591522306820386`17.350177189996305*^9, 
+     "LanguageVersion" -> 14.2, "ValuePreprocessingFunction" -> Identity|>, 
+   "Hashes/Once/cqqe5xUmvK" -> 
+    <|"HeldValue" -> 
+      Hold[Hold[
+        "C:\\Users\\Ale\\My Drive\\allRICHWMMA\\cellStyleDataRules.m"]], 
+     "CreationDate" -> 3.9802555915410537`17.352485950286866*^9, 
+     "Creator" -> "Ale", "ModificationDate" -> 
+      3.9802555915410537`17.352485950286866*^9, "LanguageVersion" -> 14.3, 
+     "ValuePreprocessingFunction" -> Identity|>|>, Magnification -> 3/4, 
+ Background -> RGBColor[0.88, 1, 0.88], FrontEndVersion -> 
+  "14.3 for Microsoft Windows (64-bit) (July 8, 2025)", 
+ StyleDefinitions -> Notebook[
+   {Cell[StyleData[StyleDefinitions -> "myStyle.nb"]], 
+    Cell[StyleData["Title"], CellGroupingRules -> {"SectionGrouping", 0}, 
+     FontSize -> 28], Cell[StyleData["Subtitle"], CellGroupingRules -> 
+      {"SectionGrouping", 10}, FontSize -> 26], 
+    Cell[StyleData["Subsubtitle"], CellGroupingRules -> 
+      {"SectionGrouping", 20}, FontSize -> 24], Cell[StyleData["Chapter"], 
+     CellGroupingRules -> {"SectionGrouping", 30}, FontSize -> 22], 
+    Cell[StyleData["Section"], CellGroupingRules -> {"SectionGrouping", 40}, 
+     FontSize -> 20], Cell[StyleData["Subsection"], 
+     CellGroupingRules -> {"SectionGrouping", 50}, FontSize -> 18], 
+    Cell[StyleData["Subsubsection"], CellGroupingRules -> 
+      {"SectionGrouping", 60}, FontSize -> 16], Cell[StyleData["Code"], 
+     CellGroupingRules -> {"SectionGrouping", 90}, FontSize -> 14], 
+    Cell[StyleData["Input"], CellGroupingRules -> {"SectionGrouping", 90}, 
+     FontSize -> 14], Cell[StyleData["Text"], CellGroupingRules -> 
+      {"SectionGrouping", 90}, FontSize -> 12], Cell[StyleData["Output"], 
+     CellGroupingRules -> {"SectionGrouping", 90}, FontSize -> 14], 
+    Cell[StyleData["Message"], CellGroupingRules -> {"SectionGrouping", 92}, 
+     FontSize -> 12], Cell[StyleData["ExampleText"], 
+     CellGroupingRules -> {"SectionGrouping", 91}, FontSize -> 12]}, 
+   Visible -> False, FrontEndVersion -> 
+    "14.3 for Microsoft Windows (64-bit) (July 8, 2025)", 
+   StyleDefinitions -> "Default.nb"], ExpressionUUID -> 
+  "ffdb89b7-30c1-e34d-b3e4-3abadbf4f2af", 
+ TaggingRules -> <|"Salvaged" -> True, "RICHProjectCase" -> "RICH", 
+   "RICHNotebookRole" -> "package-bootstrap", "RICHSourceFile" -> 
+    "src\\RICH.wl"|>]

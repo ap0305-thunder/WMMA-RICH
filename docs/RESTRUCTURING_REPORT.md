@@ -2,18 +2,22 @@
 
 ## Applied changes
 
-- Preserved the supplied archive verbatim in `legacy-original/`.
+- Preserved supplied notebook content in `legacy-original/`, apart from the
+  project-wide filename/symbol capitalization normalization.
 - Created working notebooks in `notebooks/` and textual source files in `src/`.
-- Removed extracted initialization Input/Code cells from the supporting working notebooks and inserted loader cells. `calculator.nb` retains its calculator-specific initialization after the replaced leading setup. `optics.nb` has no duplicate initialization code.
+- Removed extracted initialization Input/Code cells from the supporting working notebooks and inserted loader cells. Top-level notebooks retain their interactive sections without duplicate package initialization code.
 - Retained style notebooks beside working notebooks because the styles use relative filenames.
 - Kept `calculator.nb` only through the complete `---... CALCULATOR BODY` group; later top-level groups were excluded.
-- Replaced the leading setup in both `optics.nb` and `calculator.nb` with one structurally identical universal bootstrap cell. Each notebook stores only its case name in `TaggingRules`; `RICHNotebookBootstrap` owns shared settings and dependency loading.
+- Standardized all nine working notebooks on one three-cell opening: a tagged role/source header, a tagged setup title, and one structurally identical universal bootstrap. Case, role, and source filename live in `TaggingRules`; `RICHNotebookBootstrap` owns shared settings and dependency loading. The restored `notebooks/RICH.nb` is a package-bootstrap notebook, not a toolbar/top-level case.
 - Preserved `optics.nb` from `OPTICAL SYSTEM DESIGN` onward for interactive work. The former `---... OPTICS` initialization remains extracted in `src/optics.wl` and is loaded by the universal case bootstrap.
+- Preserved `geometricalOptics.nb` from `THIS NOTEBOOK` onward. Its 30-cell legacy setup and 33-cell package section were replaced by the universal bootstrap; the package section is derived textually as `src/geometricalOptics.wl`.
+- Merged the former `src/myDockedCells.wl` script into `myNotebookInit.wl` as the optional `installDockedCells[]` API. Only the three top-level notebook cases—`calculator`, `optics`, and `geometricalOptics`—install it explicitly; `RICH` and the other package-bootstrap notebooks remain free of docked-cell side effects.
+- Standardized every notebook-backed runtime source on one opening metadata block (name, role, context, and context-owned `versionTAG`) and one qualified lifecycle footer. The source builders enforce both boundaries without modifying the native Wolfram Save As baselines.
 
 ## Universal bootstrap review
 
-The legacy setup comparison found 22 initialization code cells in optics and
-24 in calculator, with only 6 exact cell bodies in common. The merged
+The legacy setup comparison found 22 initialization code cells in optics, 24
+in calculator, and 30 in geometricalOptics. The merged
 bootstrap retains portable loader discovery, common notebook and plotting
 defaults, explicit load tracking, shared dependencies, and run timestamps.
 Hard-coded user paths, duplicated package loads, automatic installation of a
@@ -42,6 +46,7 @@ clear symbols in `System``.
 | `RICH.nb` | 62 | 0 | `src/RICH.wl` |
 | `calculator.nb` | 38 | 1 | `src/calculator.wl` |
 | `optics.nb` (`---... OPTICS` Title section only) | 59 | 0 | `src/optics.wl` |
+| `geometricalOptics.nb` (`---... geometricalOptics` Title section only) | 33 | 0 | `src/geometricalOptics.wl` |
 | `cellStyleDataRules.nb` | 9 | 0 | `src/cellStyleDataRules.wl` |
 
 ## Behavioural validation
@@ -55,7 +60,8 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 The launcher uses a temporary copy of the project by default, runs every original/restructured case in a separate Wolfram process, enforces the calculator-body cutoff, removes the obsolete `LHCb-optics.m` cell only from the temporary original calculator copy, and writes `validation/results/current/VALIDATION_REPORT.md`.
 
-The installed report generated on 2026-08-01 is **PASS** for all seven cases:
+The installed report generated on 2026-08-01 predates the geometricalOptics
+addition and is **PASS** for its original seven cases:
 
 - 7 PASS, 0 WARNING, 0 FAIL, 0 NOT RUN;
 - zero missing canonical symbols;

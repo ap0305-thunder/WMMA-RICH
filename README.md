@@ -6,7 +6,7 @@
 - `backups/`: versioned notebook and text copies
 - `tests/`: smoke-test scaffold
 - `validation/`: clean-kernel original/restructured behavioural comparison
-- `legacy-original/`: every supplied file, unchanged
+- `legacy-original/`: supplied archival files, with project-wide naming normalization only
 - `docs/RESTRUCTURING_REPORT.md`: scope, limitations and validation procedure
 
 The sole working copy of the project stylesheet is `myStyle.nb` in the project
@@ -21,21 +21,43 @@ evaluation with `Get`.
 The working `calculator.nb` includes the complete `---... CALCULATOR BODY`
 top-level group and excludes everything after it.
 
-The working `optics.nb` and `calculator.nb` use the same universal
-`---... SETUP` initialization cell. The cell reads `"RICHProjectCase"` from
-the notebook's `TaggingRules`, resolves `src/LoadProject.wl` relative to the
-saved notebook, and calls `RICHNotebookBootstrap[case]`. The project case is
-therefore notebook metadata rather than a second notebook-specific loader
-cell. `src/optics.wl` remains the sole executable copy of the extracted optics
+All nine managed notebooks begin with the same three-cell structure: a tagged
+role/source header, a tagged `---... SETUP` title, and the structurally
+identical universal initialization cell. The cell reads `"RICHProjectCase"`
+from the notebook's `TaggingRules`, resolves `src/LoadProject.wl` relative to
+the saved notebook, and calls `RICHNotebookBootstrap[case]`. The three
+interactive top-level notebooks are `optics.nb`, `calculator.nb`, and
+`geometricalOptics.nb`; the other six—including `RICH.nb`—are
+package-bootstrap notebooks with no additional executable initialization
+cells. `src/optics.wl` remains the sole executable copy of the extracted optics
 initialization; content beginning at `OPTICAL SYSTEM DESIGN` remains
-interactive in `optics.nb`.
+interactive in `optics.nb`. Likewise, `src/geometricalOptics.wl` contains only
+the extracted `---... geometricalOptics` initialization section, while content
+beginning at `THIS NOTEBOOK` remains interactive in `geometricalOptics.nb`.
 
 `RICHNotebookBootstrap` loads `myNotebookInit.wl` once, applies the common
 notebook/window/style settings, loads the selected dependency chain, applies
-the plotting defaults shared by the legacy optics and calculator setup blocks,
+the plotting defaults shared by the legacy top-level setup blocks,
 and initializes the backward-compatible run timestamp symbols. It does not
 install global `Get`/`Needs` hooks or restore machine-specific paths from the
 legacy calculator setup.
+
+The former `src/myDockedCells.wl` side-effect script is merged into
+`myNotebookInit.wl`. Its toolbar is an optional API rather than a package-load
+side effect: `RICHNotebookBootstrap` calls `installDockedCells[]` only for the
+three top-level cases: `calculator`, `optics`, and `geometricalOptics`.
+Navigation history is private to `myNotebookInit`` and toolbar callbacks are
+explicitly package-qualified.
+
+Every managed notebook source ends with the same explicitly owned lifecycle
+footer: ``myNotebookInit`endEvalPrintOut[]`` followed by
+``myNotebookInit`packageBanner["END ..."]``. This keeps source endings parallel
+and prevents post-`EndPackage[]` calls from resolving in ``Global` ``.
+
+Every managed notebook source also begins with a canonical metadata header
+that declares its name, architectural role, working context, and one
+context-owned `versionTAG`. Native Wolfram Save As files remain unchanged;
+both source-generation paths add and validate this runtime header.
 
 `LoadRICHFiles` explicitly records every component path in the
 `myNotebookInit` load tracker through `recordExternalLoad`; this includes the
@@ -48,6 +70,14 @@ To reinstall or verify the shared cell after editing a notebook, run:
 ```powershell
 wolfram.exe -script validation\InstallUniversalBootstrap.wls
 wolfram.exe -script validation\CheckUniversalBootstrap.wls
+```
+
+The two optics-related runtime sources are deterministic textual derivations of
+their Wolfram Save As baselines. Rebuild or check either source with:
+
+```powershell
+.\validation\BuildTopLevelSourceFromNative.ps1 -Case optics
+.\validation\BuildTopLevelSourceFromNative.ps1 -Case geometricalOptics -Check
 ```
 
 ## Portable project paths

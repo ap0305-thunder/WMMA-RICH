@@ -475,3 +475,45 @@ notebooks that retained legacy absolute metadata now store
 Both modified notebook expressions passed syntax/option checks. A fresh source
 regeneration and complete clean-kernel comparison again produced 7 PASS,
 0 WARNING, 0 FAIL, and 0 NOT RUN.
+
+## geometricalOptics top-level integration — 2026-08-19
+
+The supplied `legacy-original/geometricalOptics.nb` contains 30 setup
+initialization cells, a 33-cell `---... geometricalOptics` package section,
+and an interactive `THIS NOTEBOOK` section. The working notebook replaces the
+first two sections with the canonical universal bootstrap and retains the
+interactive section. `src/geometricalOptics.wl` is derived textually from the
+matching Title section in the native Wolfram Save As source.
+
+The three top-level notebook bootstrap bodies now pass strict structural
+identity checks. The new package also passes an isolated managed-load test.
+The full dependency-chain smoke test reached the existing `physicsGeneral`
+load but exceeded its initial five-minute diagnostic limit before the new
+package was reached; the validation launcher now defaults to a 900-second hard
+process timeout and includes `geometricalOptics` as an eighth case.
+
+## Docked-cell integration — 2026-08-20
+
+The standalone `src/myDockedCells.wl` side-effect script was merged into
+`myNotebookInit.wl`. The package now owns `installDockedCells[]`,
+`removeDockedCells[]`, `pushHistory[]`, and `goBack[]`; its navigation history
+and toolbar renderer remain private. `RICHNotebookBootstrap` installs the
+toolbar only for the calculator, optics, and geometricalOptics top-level
+cases; RICH is a package-bootstrap case. Project profiles no longer load the
+retired source file.
+
+Managed notebook sources now share one canonical lifecycle footer: the
+qualified ``myNotebookInit`endEvalPrintOut[]`` call followed by the qualified
+package end banner. The source generators and structural validation enforce
+the same ending so regeneration cannot restore the former inconsistencies.
+
+The corresponding openings are now uniform as well. All notebook-backed
+runtime sources begin with name, role, context, and a single context-owned
+`versionTAG`. All nine working notebooks begin with a tagged metadata cell,
+the tagged setup title, and the identical universal bootstrap. `RICH.nb` was
+restored under `notebooks/` as a package-bootstrap notebook; only calculator,
+optics, and geometricalOptics retain the interactive top-level role.
+
+The 68 public ``myNotebookInit` `` usage declarations are now one declaration per
+line and sorted alphabetically by unqualified symbol name. A deterministic
+normalizer and the Wolfram structural check enforce that organization.

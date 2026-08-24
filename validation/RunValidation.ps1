@@ -7,12 +7,13 @@ param(
         "statDataAnal",
         "inputDataForRICH",
         "calculator",
+        "geometricalOptics",
         "RICH",
         "cellStyleDataRules"
     ),
     [switch]$InPlace,
     [switch]$KeepWorkspace,
-    [int]$ProcessTimeoutSeconds = 300
+    [int]$ProcessTimeoutSeconds = 900
 )
 
 $ErrorActionPreference = "Stop"
@@ -281,8 +282,10 @@ $requiredSourcePaths = @(
     "src\inputDataForRICH.wl",
     "src\RICH.wl",
     "src\calculator.wl",
+    "src\geometricalOptics.wl",
     "validation\native-sources\calculator-native.wl",
-    "validation\native-sources\optics-native.wl"
+    "validation\native-sources\optics-native.wl",
+    "validation\native-sources\geometricalOptics-native.wl"
 )
 $missingRequiredSources = @(
     foreach ($relativeSourcePath in $requiredSourcePaths) {
@@ -296,8 +299,9 @@ if ($missingRequiredSources.Count -gt 0) {
     throw "Missing required source files: $($missingRequiredSources -join ', ')"
 }
 
-$opticsBuilder = Join-Path $runRoot "validation\BuildOpticsFromNative.ps1"
-& $opticsBuilder -ProjectRoot $runRoot -Check
+$topLevelSourceBuilder = Join-Path $runRoot "validation\BuildTopLevelSourceFromNative.ps1"
+& $topLevelSourceBuilder -ProjectRoot $runRoot -Case optics -Check
+& $topLevelSourceBuilder -ProjectRoot $runRoot -Case geometricalOptics -Check
 
 $calculatorSource = Join-Path $runRoot "src\calculator.wl"
 $calculatorText = [System.IO.File]::ReadAllText($calculatorSource)
@@ -326,7 +330,7 @@ if ($calculatorSourceHash -cne $calculatorNativeHash) {
 @(
     "Native Wolfram Save As sources preserved; no regeneration performed.",
     "Verified source files: $($requiredSourcePaths -join ', ')",
-    "Verified src\optics.wl is derived textually from the Wolfram Save As source.",
+    "Verified src\optics.wl and src\geometricalOptics.wl are derived textually from their Wolfram Save As sources.",
     "Verified one CALCULATOR BODY marker in src\calculator.wl.",
     "Verified src\calculator.wl matches validation\native-sources\calculator-native.wl."
 ) | Set-Content -LiteralPath $generationLog -Encoding UTF8
@@ -344,6 +348,32 @@ if (Test-Path -LiteralPath $baseDependencySource) {
             Copy-Item -LiteralPath $baseDependencySource -Destination $baseDependencyDestination
             $stagedFiles += $baseDependencyDestination
             Write-LauncherLog -Path $launcherLog -Message ("Temporarily staged: " + $baseDependencyDestination)
+        }
+    }
+}
+
+# The original geometricalOptics notebook loads its historical package chain
+# from beside the notebook. Stage portable source equivalents only in the
+# disposable validation workspace, and remove them in the existing finally block.
+if ($Cases -contains "geometricalOptics") {
+    $geometricalOriginalDependencies = @(
+        @("src\cellStyleDataRules.wl", "legacy-original\cellStyleDataRules.wl"),
+        @("src\base.wl", "legacy-original\base.wl"),
+        @("src\statDataAnal.wl", "legacy-original\statDataAnal.wl"),
+        @("src\physicsGeneral.wl", "legacy-original\physicsGeneral.wl"),
+        @("src\inputDataForRICH.wl", "legacy-original\inputDataForRICH.wl"),
+        @("src\RICH.wl", "legacy-original\RICH.m")
+    )
+    foreach ($dependency in $geometricalOriginalDependencies) {
+        $dependencySource = Join-Path $runRoot $dependency[0]
+        $dependencyDestination = Join-Path $runRoot $dependency[1]
+        if (-not (Test-Path -LiteralPath $dependencyDestination)) {
+            Copy-Item -LiteralPath $dependencySource -Destination $dependencyDestination
+            $stagedFiles += $dependencyDestination
+            Write-LauncherLog -Path $launcherLog -Message (
+                "Temporarily staged geometricalOptics dependency: " +
+                $dependencyDestination
+            )
         }
     }
 }

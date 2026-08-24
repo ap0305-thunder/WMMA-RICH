@@ -94,6 +94,25 @@ Validation`$ValidationCases = <|
     |>
   |>,
 
+  "geometricalOptics" -> <|
+    "CompareNotebookSideEffects" -> False,
+    "IgnoreSymbolRegularExpressions" -> {
+      "^(nbFileBaseName|nbFileDirectory|myNotebookInit`nbFileBaseName|myNotebookInit`nbFileDirectory)$"
+    },
+    "Original" -> <|
+      "Type" -> "Notebook",
+      "Path" -> {"legacy-original", "geometricalOptics.nb"},
+      "EvaluationMode" -> "InitializationOnly",
+      "TimeConstraintSeconds" -> 600
+    |>,
+    "Restructured" -> <|
+      "Type" -> "Notebook",
+      "Path" -> {"notebooks", "geometricalOptics.nb"},
+      "EvaluationMode" -> "InitializationOnly",
+      "TimeConstraintSeconds" -> 600
+    |>
+  |>,
+
   "RICH" -> <|
     "CompareNotebookSideEffects" -> False,
     (* Notebook parsing created the complete public RICH symbol set in
@@ -163,7 +182,8 @@ Validation`$ValidationOptions = <|
     "base`", "base`Private`",
     "statDataAnal`", "statDataAnal`Private`",
     "rich`", "rich`Private`",
-    "calculator`", "calculator`Private`"
+    "calculator`", "calculator`Private`",
+    "geometricalOptics`", "geometricalOptics`Private`"
   },
 
   (* The original notebooks pre-create these unqualified symbols in Global`
@@ -178,11 +198,11 @@ Validation`$ValidationOptions = <|
       "deleteAllEmptyCellsInNotebook",
       "endEvalPrintOut", "ensureNotebookSaved", "exportGraphicsToPDF",
       "initialContexts", "listInitializationCells", "loadMyFile",
-      "killStop", "loadNeeds", "loadSavedLog", "manageMyStyleNotebook",
+      "goBack", "killStop", "loadNeeds", "loadSavedLog", "manageMyStyleNotebook",
       "markInputCellsAsInitialization", "midBanner", "miniBanner", "nb",
       "nbFileBaseName", "nbFileDirectory", "nbFileName", "nb$",
       "notebookPathInfo", "prettyPrintedCellStyleNumber", "printA", "printD", "printMsgCell",
-      "recordExternalLoad",
+      "pushHistory", "recordExternalLoad",
       "removeSettings", "safeNotebookBaseName", "safeNotebookDirectory",
       "safeNotebookFileName", "saveAsPdfAllOutputCells",
       "saveAsPngAllOutputCells", "saveLoadLog", "saveNotebookTextCopy",
@@ -191,8 +211,7 @@ Validation`$ValidationOptions = <|
       "superClearSet", "timeBanner", "timeStamp",
       "timeStamp$", "validStylesheetReport", "checkNewCreatedSymbols",
       "showContextInfo"
-    },
-    "base`" -> {"versionTAG"}
+    }
   |>,
 
   (* Automatically generated symbols are intentionally excluded because their
@@ -213,6 +232,13 @@ Validation`$ValidationOptions = <|
     "^(cellStylesEditorPalette|cellStylesScannerPalette|myNotebookInit`(cellStylesEditorPalette|cellStylesScannerPalette))$",
     "^myNotebookInit`Private`(explicitCellBackground|restoreCellBackgrounds|cellOptionValueQ)$",
 
+    (* The former myDockedCells.wl side-effect script is now an optional
+       myNotebookInit API. Installation/removal and its private rendering
+       helpers have no direct legacy symbol equivalent. *)
+    "^(installDockedCells|removeDockedCells|myNotebookInit`(installDockedCells|removeDockedCells))$",
+    "^(navHistory|Global`navHistory|myNotebookInit`Private`dockedCellsNavigationHistory)$",
+    "^myNotebookInit`Private`(resolveDockedCellsNotebook|dockedCellsLabel|dockedCellsToolbar)$",
+
     (* Runtime bookkeeping depends on timestamps, load order, and the exact
        validation notebook. It is diagnostic state, not project behaviour. *)
     "^(initialContexts|Global`initialContexts|myNotebookInit`initialContexts)$",
@@ -225,10 +251,10 @@ Validation`$ValidationOptions = <|
        NotebookObject or its generated filename, not project behavior. *)
     "^(nb|nbFileName|myNotebookInit`nb|myNotebookInit`nbFileName)$",
 
-    (* The legacy Global`versionTAG conflates myNotebookInit` usage metadata
-       with base`'s assigned version. The packaged project correctly keeps
-       those as two distinct symbols, so no one-to-one alias is valid. *)
-    "^versionTAG$"
+    (* Legacy notebooks reuse one unqualified versionTAG. Runtime packages
+       keep independent tags in their owning contexts, so no one-to-one alias
+       is valid and this diagnostic metadata is excluded from equivalence. *)
+    "versionTAG$"
   },
 
   "OutputPreviewCharacters" -> 240,

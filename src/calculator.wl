@@ -1,4 +1,12 @@
-(* ::Package::"Tags"-><|"PrefixPlus" -> <|Enabled -> False|>, "NoVariables" -> <|"Module" -> <|Enabled -> False|>|>, "SuspiciousBox" -> <|Enabled -> False|>|>:: *)
+(* ::Package:: *)
+
+(* ===== RICH managed source =====
+   Name: calculator
+   Role: interactive-top-level
+   Context: calculator`
+   Version symbol: calculator`Private`versionTAG
+*)
+calculator`Private`versionTAG = "v.08-08-2026";
 
 (* ::Text::Initialization:: *)
 (*This package/notebook does calculations of performance for a RICH detector.*)
@@ -17,14 +25,7 @@
 
 
 (* ::Input::Initialization:: *)
-navHistory = {};
-pushHistory[] := AppendTo[navHistory,
-    First @ SelectedCells @ EvaluationNotebook[]
-];
-goBack[] := If[navHistory =!= {},
-    SelectionMove[Last[navHistory], All, Cell];
-(*    navHistory = Most[navHistory];*)
-];
+(* Docked-cell navigation is owned by myNotebookInit` and installed below. *)
 
 
 (* ::Input::Initialization:: *)
@@ -147,7 +148,7 @@ myNotebookInit`loadSessionInit[];
 myNotebookInit`manageMyStyleNotebook[];
 myNotebookInit`applyStyleSheetIfPresent["myStyle.nb"];
 (**)
-loadMyFile["myDockedCells.wl"]
+If[!TrueQ[Global`$RICHProjectManagedLoad],myNotebookInit`installDockedCells[]]
 
 
 (* ::Input::Initialization:: *)
@@ -346,15 +347,14 @@ Begin["`Private`"] (* Begin Private Context *)
 (**)
 showContextInfo[]
 (**)
-versionTAG="v.08-08-2026";
 (**)
-End[] (* End Private Context *)
+End[]; (* End Private Context *)
 (**)
 showContextInfo[]
 (**)
 Print@Cells[CellStyle->{"MSG","Message"}]
 (**)
-EndPackage[]
+EndPackage[];
 
 
 (* ::Subtitle::Initialization:: *)
@@ -12187,3 +12187,8 @@ Plot[{momentumCherenkovThreshold[m,n]/m},{n,1.0001,1.0027},PlotRange->All,PlotLe
 
 (* ::Input:: *)
 (*cellStylesScannerPalette*)
+
+
+myNotebookInit`endEvalPrintOut[];
+
+myNotebookInit`packageBanner["END calculator"];

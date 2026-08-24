@@ -1,6 +1,7 @@
 (* Project loader for WolframMMAProjectRICH-Git. *)
 ClearAll[
   $RICHProjectRoot, $RICHProjectStyleDefinitions, $RICHProjectComponents,
+  richDockedCellCases,
   $RICHPathSettings, $RICHPathConfigFile,
   RICHProjectPath, RICHDefaultPathSettings, RICHNormalizePathSettings,
   RICHLoadPathSettings, RICHSavePathSettings, RICHSetPathSettings,
@@ -230,24 +231,33 @@ $RICHProjectComponents = <|
     "inputDataForRICH.wl"
   },
   "RICH" -> {
-    "myNotebookInit.wl", "myDockedCells.wl", "cellStyleDataRules.wl",
+    "myNotebookInit.wl", "cellStyleDataRules.wl",
     "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
     "inputDataForRICH.wl", "RICH.wl"
   },
   "calculator" -> {
-    "myNotebookInit.wl", "myDockedCells.wl", "cellStyleDataRules.wl",
+    "myNotebookInit.wl", "cellStyleDataRules.wl",
     "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
     "inputDataForRICH.wl", "RICH.wl"
   },
   "optics" -> {
-    "myDockedCells.wl", "cellStyleDataRules.wl",
+    "cellStyleDataRules.wl",
     "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
     "inputDataForRICH.wl", "RICH.wl", "optics.wl"
+  },
+  "geometricalOptics" -> {
+    "cellStyleDataRules.wl",
+    "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
+    "inputDataForRICH.wl", "RICH.wl", "geometricalOptics.wl"
   },
   "cellStyleDataRules" -> {
     "cellStyleDataRules.wl"
   }
 |>;
+
+richDockedCellCases = {
+  "calculator", "optics", "geometricalOptics"
+};
 
 $RICHNotebookDefaultSettings = {
   "visual", "window", "title", "privateNotebookOptions",
@@ -270,13 +280,11 @@ LoadRICHFiles[files_List] := Module[
     DeleteCases[files, "myNotebookInit.wl"],
     files
   ];
-  (* Docked cells and cell-style rules are Front End concerns and fail in
-     standalone kernels even on installations where $Notebooks is True. *)
+  (* Cell-style rules are a Front End concern and fail in standalone kernels
+     even on installations where $Notebooks is True. Docked cells are now an
+     optional myNotebookInit API installed by RICHNotebookBootstrap. *)
   If[! frontEndAvailable,
-    requested = DeleteCases[
-      requested,
-      "myDockedCells.wl" | "cellStyleDataRules.wl"
-    ]
+    requested = DeleteCases[requested, "cellStyleDataRules.wl"]
   ];
   missing = Select[FileNameJoin[{src, #}] & /@ requested, Not@*FileExistsQ];
   If[missing =!= {}, Print["Project load aborted. Missing files:", Column[missing]]; Return[$Failed]];
@@ -346,6 +354,11 @@ RICHNotebookBootstrap[case_String] := Module[{loaded},
 
   loaded = LoadRICHCase[case];
   If[loaded =!= True, Return[$Failed]];
+
+  If[
+    RICHFrontEndAvailableQ[] && MemberQ[richDockedCellCases, case],
+    If[myNotebookInit`installDockedCells[] === $Failed, Return[$Failed]]
+  ];
 
   (* These defaults were common to the legacy optics and calculator setup
      blocks. Apply them only for interactive notebooks, after dependencies

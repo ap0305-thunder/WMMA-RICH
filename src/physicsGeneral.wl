@@ -1,5 +1,13 @@
 (* ::Package:: *)
 
+(* ===== RICH managed source =====
+   Name: physicsGeneral
+   Role: package-bootstrap
+   Context: physicsGeneral`
+   Version symbol: physicsGeneral`Private`versionTAG
+*)
+physicsGeneral`Private`versionTAG = "v.08-08-2026";
+
 (* ::Text:: *)
 (*This package/notebook defines general physics tools.*)
 
@@ -17,7 +25,7 @@ bigBanner["--->>> might need some specific symbols defined elsewhere!"];
 (*If[$Notebooks,
 Get["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\myNotebookInit.wl"];
 Get["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\myStyle.m"];
-Get["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\myDockedCells.wl"]
+myNotebookInit`installDockedCells[];
 ];*)
 
 
@@ -67,7 +75,6 @@ BeginPackage[
 ];
 
 Begin["`Private`"];
-versionTAG="v.08-08-2026";
 End[];
 
 
@@ -310,8 +317,7 @@ EndPackage[];
 
 
 (* ::Input::Initialization:: *)
-endEvalPrintOut[];
+myNotebookInit`endEvalPrintOut[];
 
-
-packageBanner["END physicsGeneral"];
+myNotebookInit`packageBanner["END physicsGeneral"];
 

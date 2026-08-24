@@ -1,4 +1,12 @@
-(* ::Package::"Tags"-><|"SuspiciousBox" -> <|Enabled -> False|>|>:: *)
+(* ::Package:: *)
+
+(* ===== RICH managed source =====
+   Name: RICH
+   Role: package-bootstrap
+   Context: rich`
+   Version symbol: rich`Private`versionTAG
+*)
+rich`Private`versionTAG = "v.08-08-2026";
 
 (* ::Text::Initialization:: *)
 (*(*(*(*This package/notebook does all basic calculations for a RICH detector.*)*)*)*)
@@ -284,8 +292,7 @@ Print[" loading rich "]
 If[!StringQ[rich`title],rich`title=" "];
 (**)
 Begin["`Private`"](* Begin Private Context *) 
-versionTAG="v.08-08-2026"
-End[] (* End Private Context *)
+End[]; (* End Private Context *)
 (**)
 checkNewCreatedSymbols[]
 showContextInfo[]
@@ -2163,11 +2170,10 @@ showContextInfo[]
 
 
 (* ::Input::Initialization:: *)
-EndPackage[]
+EndPackage[];
 
 
-endEvalPrintOut[]
+myNotebookInit`endEvalPrintOut[];
 
-
-packageBanner["END rich"];
+myNotebookInit`packageBanner["END rich"];
 
