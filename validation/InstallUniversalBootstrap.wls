@@ -4,7 +4,8 @@
 
 ClearAll[
   topLevelTitleItemQ, notebookHeaderCell, setupCell, bootstrapCell,
-  mergeTaggingRules, replaceLeadingTitleSections,
+  mergeTaggingRules, removeTopLevelTitleSectionContaining,
+  replaceLeadingTitleSections,
   stripPackageInitializationItem, normalizePackageNotebook,
   installOne, installPackageOne
 ];
@@ -34,6 +35,40 @@ topLevelTitleItemQ[
   Cell[CellGroupData[{Cell[_, "Title", ___], ___}, ___], ___]
 ] := True;
 topLevelTitleItemQ[_] := False;
+
+removeTopLevelTitleSectionContaining[
+  expression_Notebook,
+  marker_String
+] := expression /. Notebook[cells_List, options___] :> Module[
+  {titlePositions, matchingSections, ranges, removalIndices},
+  titlePositions = Flatten @ Position[topLevelTitleItemQ /@ cells, True, {1}];
+  matchingSections = Select[
+    Range[Length[titlePositions]],
+    StringContainsQ[
+      ToString[
+        cells[[titlePositions[[#]]]],
+        InputForm,
+        PageWidth -> Infinity
+      ],
+      marker
+    ] &
+  ];
+  If[matchingSections === {}, Return[Notebook[cells, options]]];
+  ranges = Function[section,
+    With[{
+      start = titlePositions[[section]],
+      finish = If[
+        section < Length[titlePositions],
+        titlePositions[[section + 1]] - 1,
+        Length[cells]
+      ]
+    },
+      Range[start, finish]
+    ]
+  ] /@ matchingSections;
+  removalIndices = DeleteDuplicates @ Flatten[ranges];
+  Notebook[Delete[cells, List /@ removalIndices], options]
+];
 
 bootstrapCell[] := Module[{held, boxes},
   held = HoldComplete[
@@ -245,12 +280,19 @@ installOne[
   path_String,
   projectCase_String,
   role_String,
-  sectionCount_Integer
+  sectionCount_Integer,
+  removeSectionMarker_: None
 ] := Module[
   {original, updated, verified, verifiedCase},
   Print["Installing universal bootstrap: ", path, " -> ", projectCase];
   original = Quiet @ Check[Get[path], $Failed];
   If[original === $Failed, Return[$Failed]];
+  If[StringQ[removeSectionMarker],
+    original = removeTopLevelTitleSectionContaining[
+      original,
+      removeSectionMarker
+    ]
+  ];
   updated = replaceLeadingTitleSections[
     original, projectCase, role, sectionCount
   ];
@@ -323,7 +365,8 @@ results = {
     FileNameJoin[{root, "notebooks", "calculator.nb"}],
     "calculator",
     "interactive-top-level",
-    1
+    1,
+    "CALCULATOR INIT"
   ],
   installOne[
     FileNameJoin[{root, "notebooks", "optics.nb"}],

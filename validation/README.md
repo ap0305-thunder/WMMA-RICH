@@ -35,12 +35,22 @@ the longer timeout required by the existing RICH dependency chain:
   -KeepWorkspace
 ```
 
-Check the two textually derived top-level sources without evaluating them:
+Check the three textually derived top-level sources without evaluating them:
 
 ```powershell
+.\validation\BuildTopLevelSourceFromNative.ps1 -Case calculator -Check
 .\validation\BuildTopLevelSourceFromNative.ps1 -Case optics -Check
 .\validation\BuildTopLevelSourceFromNative.ps1 -Case geometricalOptics -Check
 ```
+
+## Calculator runtime split
+
+`src/calculator.wl` is the deterministic runtime derivation of the native
+`SETUP` and `CALCULATOR` title sections only. It stops before `CALCULATOR BODY`,
+removes the legacy protected `Get`/`Needs` hooks, and suppresses obsolete
+direct dependency/bootstrap loads during managed project loading.
+`notebooks/calculator.nb` contains the universal bootstrap followed by
+`CALCULATOR BODY` and every later interactive section.
 
 Normalize or verify the alphabetized, single-line public usage declarations in
 `myNotebookInit.wl` with:

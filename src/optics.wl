@@ -13,12 +13,14 @@ optics`Private`versionTAG = "v_16-06-2026";
    Wolfram expressions are neither parsed nor reserialized. Five explicit
    logical-disjunction heads from the notebook are rewritten as ||. *)
 
+
+
 (* ::Title::Initialization:: *)
-(*---... OPTICS*)
+(*(*(*---... OPTICS*)*)*)
 
 
 (* ::Subtitle::Initialization:: *)
-(*INIT BASE*)
+(*(*(*INIT BASE*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -31,7 +33,7 @@ bigBanner[" loading optica "];
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*EllipseFit*)
+(*(*(*EllipseFit*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -115,7 +117,7 @@ EllipseFit::none="EllipseFit was unable to find an ellipse to approximate the da
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*GENERAL DEFINITIONS FOR THIS NOTEBOOK*)
+(*(*(*GENERAL DEFINITIONS FOR THIS NOTEBOOK*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -144,19 +146,19 @@ names2=Delete[names1,namesListPos];
 
 
 (* ::Section::Initialization:: *)
-(*MISCELLANEA DEFINITIONS*)
+(*(*(*MISCELLANEA DEFINITIONS*)*)*)
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*GENERAL OPTIONS FOR THIS NOTEBOOK*)
+(*(*(*GENERAL OPTIONS FOR THIS NOTEBOOK*)*)*)
 
 
 (* ::Section::Initialization:: *)
-(*MISCELLANEA OPTIONS*)
+(*(*(*MISCELLANEA OPTIONS*)*)*)
 
 
 (* ::Subtitle::Initialization:: *)
-(*OPTICA setup*)
+(*(*(*OPTICA setup*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -237,6 +239,20 @@ printD@Column@Contexts["*Optica*"];
 $ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaEM`OpticaEM`"];
 $ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaTools`"];
 Print@Column@$ContextPath,
+
+15.0,
+bigBanner[" MATHEMATICA VERSION 15.0: OK for OpticaEM ! "];
+bigBanner[" ACTIVATING OpticaEM "];
+Once[Needs["OpticaEM`OpticaEM`"],"KernelSession"];
+Print[$OpticaHome];
+Print[$OpticaVersion];
+Print[$OpticaBuildDate];
+Print[TableForm[Names["$Optica*"]]];
+Print@Column@$ContextPath;
+printD@Column@Contexts["*Optica*"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaEM`OpticaEM`"];
+$ContextPath =DeleteDuplicates@Prepend[$ContextPath,"OpticaTools`"];
+Print@Column@$ContextPath,
 _,
 bigBanner[" WRONG MATHEMATICA VERSION ??? "];
 bigBanner[" NOT ACTIVATING OPTICA - NORMAL MATHEMATICA STUFF OK "]
@@ -245,11 +261,11 @@ bigBanner[" NOT ACTIVATING OPTICA - NORMAL MATHEMATICA STUFF OK "]
 
 
 (* ::Section::Initialization:: *)
-(*Optica HELP*)
+(*(*(*Optica HELP*)*)*)
 
 
 (* ::Subsection::Initialization:: *)
-(*open OpticaEM main help page*)
+(*(*(*open OpticaEM main help page*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -261,7 +277,7 @@ FileNameJoin[{StringDrop[$OpticaHome,-8],"OpticaDocumentation","Documentation","
 
 
 (* ::Subsection::Initialization:: *)
-(*detailed Optica HELP*)
+(*(*(*detailed Optica HELP*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -280,11 +296,11 @@ FarFieldFunctions
 
 
 (* ::Subtitle::Initialization:: *)
-(*MISCELLANEOUS RICH FUNCTIONS - OPTICS/ANA/SIM*)
+(*(*(*MISCELLANEOUS RICH FUNCTIONS - OPTICS/ANA/SIM*)*)*)
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*general*)
+(*(*(*general*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -350,7 +366,7 @@ Print["   Average Magnification    (mm/mrad) - meaningful for single trace ",nf3
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*ANALITICAL GEOMETRY*)
+(*(*(*ANALITICAL GEOMETRY*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -449,7 +465,6 @@ circumference[z0_,y0_,radius_,z_,y_]:=(z-z0)^2+(y-y0)^2-radius^2;
 
 
 (* ::Input::Initialization:: *)
-
 tiltAroundVertexMatrix[\[Alpha]_]={{Cos[\[Alpha]],-Sin[\[Alpha]]},{Sin[\[Alpha]],Cos[\[Alpha]]}};
 
 
@@ -463,7 +478,7 @@ Return[centerMir]
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*SPECIFIC GEOMETRY OF RICH (NEED REFRESHING)*)
+(*(*(*SPECIFIC GEOMETRY OF RICH (NEED REFRESHING)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -629,7 +644,7 @@ Print[" PD-PLANE width :     ",nf1[sizeTrnsvrsScreen]," ----- PD-PLANE ThrdDim :
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*Quartic solution to back - tracing*)
+(*(*(*Quartic solution to back - tracing*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -651,7 +666,7 @@ resY[p_,q_,d_,radius_]=N[Y/.solY/.solX,wp];
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*SIMULATION/ANALYSIS/TRACING*)
+(*(*(*SIMULATION/ANALYSIS/TRACING*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -676,7 +691,6 @@ Print[Graphics[Point[angle],GridLines->Automatic,Axes->True]];];
 
 
 (* ::Input::Initialization:: *)
-
 (*--------------------------------------------------------------------------------*)
 localTrackUnitVectors[trackDir_]:=Module[{w,theTrackDir},
 theTrackDir=Normalize[trackDir];
@@ -880,7 +894,6 @@ Return[CustomRays[{{RayStart,rStart},{RayTilt,photonDir},{WaveLength,N[rWaveLeng
 
 
 (* ::Input::Initialization:: *)
-
 (*--------------------------------------------------------------------------------*)
 doExecBackTracingSimul[method_,poisson_,pixel_,chromaticity_,theZeta_]:=Module[{backTracingSimulResults,resTThrdDim,resTTrnsvrs,resNTot,resNDet},
 (*================================================================================================*)
@@ -1386,7 +1399,7 @@ Print["systemResults    ",systemResults//ColumnForm]];
 
 
 (* ::Subsubtitle::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
-(*Light sources for OPTICA*)
+(*(*(*Light sources for OPTICA*)*)*)
 
 
 (* ::Input::Initialization::"Tags"-><|"UnusedVariable" -> <|"Module" -> <||>|>|>:: *)
@@ -1546,7 +1559,7 @@ numPhoInAzimuth,startSrc,endSrc,twist,wl+k/1000,id](*Add a tiny 0.1 wl to every 
 (*--------------------------------------------------------------------------------*)
 ClearAll[getTrackGeometry];
 getTrackGeometry[theta0Y_,theta0X_,localDebugPrintFlag_:False,opticalsystem_:myOptics]:=Module[
-{rStartTrack,thetaX,thetaY,rStrTra,rEndTra,rOnTheFS,rOnTheFS2D,numHits,opticalSystemLHCbRICHTheTrack},
+{rStartTrack,thetaX,thetaY,rStrTra,rEndTra,rOnTheFS,rOnTheFS2D,numHits,opticalSystemLHCbRICHTheTrack,uvL,uvH},
 (**)
 getTrackGeometry::noPointOnFS= "WARNING on track geometry - no point on the FS (might be ok)";
 (**)
@@ -1567,11 +1580,20 @@ use PropagateSystem with careful seq/non-seq; it will be fast as it is one photo
 tracedTrack:=PropagateSystem[opticalSystemLHCbRICHTheTrack,SequentialTrace->True,DefaultStyle->{AbsoluteThickness[5],AbsolutePointSize[5]}];
 (**)
 allHits=Flatten[ReadRays[tracedTrack]];
+
+
+(*
+uvL=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSL];
+uvH=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSH];
+*)
+
 If[localDebugPrintFlag==True,
 Print[" straight track from : ",rStartTrack];
 Print[" thetaX = ",thetaX];
 Print[" thetaY = ",thetaY];
 Print[" Number of calculated virtual hits from the track ",numHits=Length@allHits];
+
+
 rayDump[tracedTrack];
 Print@AnalyzeSystem[tracedTrack]
 ];
@@ -1594,9 +1616,19 @@ Print[" myTrack                     = ",myTrack];
 Print[" rStartTrack                 = ",rStartTrack," must be rStrTra==rStartTrack "];
 Print[" rStrTra                     = ",rStrTra," must be rStrTra==rStartTrack "];
 Print[" rEndTra (first segment)     = ",rEndTra];
+Print[" rEndTra (first segment)     = ",rEndTra];
 Print[" rOnTheFS (FS point)         = ",rOnTheFS];
-Print[" rOnTheFS2D (FS point)       = ",rOnTheFS2D]
+Print[" rOnTheFSL2D (FS point)       = ",uvL=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSL]];
+Print[" rOnTheFSH2D (FS point)       = ",uvH=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSH]];
+Print[" rOnTheFS2D (FS point)       = ",rOnTheFS2D];
 ];
+
+Print[" rOnTheFSL2D (FS point)       = ",uvL=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSL]];
+Print[" rOnTheFSH2D (FS point)       = ",uvH=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSH]];Print[" rOnTheFS2D (FS point)       = ",rOnTheFS2D];
+If[rOnTheFS2D!=First@Join[uvL,uvH],Print[" guai "];
+Print[" rOnTheFSL2D (FS point)       = ",uvL];
+Print[" rOnTheFSH2D (FS point)       = ",uvH];,Print[" pronti "]];
+
 Return[{rStrTra,rEndTra,rOnTheFS,rOnTheFS2D}]
 ];
 
@@ -1630,7 +1662,7 @@ decodeTrackId[%];
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*pixels*)
+(*(*(*pixels*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -1670,11 +1702,11 @@ Return[tracedPointsFSDigitized]
 
 
 (* ::Subtitle::Initialization:: *)
-(*OPTICS DEFINITIONS - many historical as of 2024 - but don't delete as some may be called by others*)
+(*(*(*OPTICS DEFINITIONS - many historical as of 2024 - but don't delete as some may be called by others*)*)*)
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*general*)
+(*(*(*general*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -1731,11 +1763,11 @@ Return[]
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*calc - calc the p points*)
+(*(*(*calc - calc the p points*)*)*)
 
 
 (* ::Section::Initialization:: *)
-(*Geometry of Rich1 according to DW survey*)
+(*(*(*Geometry of Rich1 according to DW survey*)*)*)
 
 
 (* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>:: *)
@@ -1776,7 +1808,7 @@ Return[]
 
 
 (* ::Section::Initialization:: *)
-(*Geometry of Rich1 according to LHCb - 2004 - 121*)
+(*(*(*Geometry of Rich1 according to LHCb - 2004 - 121*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -1822,7 +1854,7 @@ Return[]
 
 
 (* ::Section::Initialization:: *)
-(*Geometry of Rich2 according to LHCb - 2002 - 009*)
+(*(*(*Geometry of Rich2 according to LHCb - 2002 - 009*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -1877,7 +1909,7 @@ Return[]
 
 
 (* ::Section::Initialization:: *)
-protected code
+(*(*protected code*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -1936,7 +1968,6 @@ Return[]
 
 
 (* ::Input::Initialization:: *)
-
 (*--------------------------------------------------------------------------------------------------------*)
 setData2022Rich1:=Module[{},
 (*--------------------------------------------------------------------------------------------------------*)
@@ -2102,7 +2133,7 @@ Return[]
 
 
 (* ::Subsubtitle::Initialization:: *)
-(*OLD layout but good but no more useful*)
+(*(*(*OLD layout but good but no more useful*)*)*)
 
 
 (* ::Section:: *)
@@ -2332,7 +2363,7 @@ Return[]
 
 
 (* ::Subtitle::Initialization:: *)
-(*END BASE*)
+(*(*(*END BASE*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -2347,7 +2378,6 @@ Return[]
 
 
 (* ::Input::Initialization:: *)
-
 myNotebookInit`endEvalPrintOut[];
 
 myNotebookInit`packageBanner["END optics"];

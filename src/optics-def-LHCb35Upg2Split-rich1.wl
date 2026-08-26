@@ -1,49 +1,58 @@
 (* ::Package:: *)
 
 (* ::Subsection::Initialization:: *)
-(*(*(*(*(*(* SPLIT OPTICS for RICH=1 *)*)*)*)*)*)
+(*(*(*(*(*(*(*(*(* SPLIT OPTICS for RICH=1 *)*)*)*)*)*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
-(*--------------------------------------------------------------------------------------------------------*)
-bigBanner[" loading optics : "<>ToString[whichOptics]<>" for RICH : "<>ToString[iRICH]];
-(*--------------------------------------------------------------------------------------------------------*)
+(**************************************************************************************************)
+
+bigBanner[" loading optics : "<>ToString[whichOptics]<>"-"<>ToString[opticsVersion]<>" for RICH : "<>ToString[iRICH]];
 doResetAllVariables[];
 setExternalParameters[];
-(**************************************************************************************************)
-If[(whichOptics=="LHCb35Upg2Split")&&(iRICH==1),
-(**************************************************************************************************)
 debugThisOptics=False;
 fullBackMirror=True;
-(*Clear[apertPriMirL,apertPriMirH];*)
-miniBanner["TO ADD THE QUARTZ PLATE"];
+(**************************************************************************************************)(**************************************************************************************************)
+checkNewCreatedSymbols[];
+miniBanner["TO ADD CONSISTENTlY THE QUARTZ PLATE"];
 miniBanner["\n",
-"  component # 1 ==>>  ","PRI-MIR","\n",
-"  component # 2 ==>>  ","SEC-MIR","\n",
-(*"  component # 3 ==>>  ","TER-MIR","\n",*)
-(*"  component # TBD ==>>  ","QUA-PLA","\n",*)
-"  component # 3 ==>>  ","PD","\n",
-"  component # 4 ==>>  ","BOX"
+"  component #  ==>>  ","PRI-MIR","\n",
+"  component #  ==>>  ","SEC-MIR","\n",
+"  component #  ==>>  ","TER-MIR","\n",
+"  component #  ==>>  ","QUA-PLA","\n",
+"  component #  ==>>  ","PD","\n",
+"  component #  ==>>  ","BOX"
 ];
+
+
+(* ::Input::Initialization:: *)
 (**)
-(*=========================================================================*)
-(**)
-(* Se aumento b, si sparpaglia in orizzontale; riferito a rich1 ???!@#$% NO? *)
-(* Se abbasso c, si avvicina il piano focale ???!@#$% NO? *)
-(**)
-(*=========================================================================*)
-(* !@#$% to move ALL DATA SETTING BELOW to setData *)
 (*=========================================================================*)
 (**)
 (*p4z=1075+50;*) (*needed here ???*)
+(*=======================================================================*)
+(*helpers consistent with tuple order {z,x,y}*)
+(*=======================================================================*)
+azL=0 Degree;
+(*LOW in z-x plane*)
+azH=90 Degree;(*HIGH in z-y plane*)
+tiltVectorFromAzimuth[az_,tilt_]:=Normalize[{Cos[tilt],Sin[tilt] Cos[az],Sin[tilt] Sin[az]}];
+shiftAlongTilt[{z_,x_,y_},d_,az_,tilt_]:=N[{z,x,y}+d*tiltVectorFromAzimuth[az,tilt]];
+
+
+
+
+
+(*=======================================================================*)
+(**)
+(*=======================================================================*)
+
+
 (**)
 (*=========================================================================*)
 (* SIZE TRNSVRS DIM *)
 (*=========================================================================*)
 (*sizeTrnsvrsPriMir=0;*)
-
-
-
 sizeTrnsvrsPriMirL=265.;
 sizeTrnsvrsPriMirH=700.;
 (**)
@@ -75,13 +84,26 @@ sizeThrdDimScreenL:=sizeThrdDimScreen0;
 sizeThrdDimScreenH:=sizeThrdDimScreen0;
 sizeThrdDimScreenT:=sizeThrdDimScreen0;
 (**)
-(*=========================================================================*)
-(* TILT *)
-(*=========================================================================*)
+
+(*=======================================================================*)
+(*roll*)
+(*=======================================================================*)
+rollPriMirL=0 Degree;
+rollPriMirH=0 Degree;
+rollSecMirL=0 Degree;
+rollSecMirH=0 Degree;
+rollScreenL=0 Degree;
+rollScreenH=0 Degree;
+
+
+
+(*=======================================================================*)
+(*tilt*)
+(*=======================================================================*)
 tiltPriMirLDegree=0.;
 tiltPriMirL:=tiltPriMirLDegree Degree; (* to radian *)
 tiltPriMirHDegree=-7.0;
-tiltPriMirH=tiltPriMirHDegree Degree;(* to radian *)
+tiltPriMirH:=tiltPriMirHDegree Degree;(* to radian *)
 (**)
 tiltSecMirLDegree=26.;
 tiltSecMirL:=tiltSecMirLDegree Degree;(* to radian *)
@@ -99,54 +121,118 @@ tiltScreenT:=tiltScreenTDegree Degree;
 (**)
 (*=========================================================================*)
 (* ABSCISSA AND ORDINATE *)
+(*positions in physical axes,stored as z,x,y*)
 (*=========================================================================*)
 (**)
 zPriMirL=2030.;
 xPriMirL=0.;
+yPriMirL=0;
+
+
+
 zPriMirH=2100.;
 xPriMirH=0.;
+yPriMirH=0;
+
+
 zSecMirL=1063.;
 xSecMirL=211.;
+ySecMirL=0;
 zSecMirH=1060.;
 xSecMirH=668.;
+ySecMirH=663;
+
+
+
+
 (**)
 
-zScreenL=2119.;
-xScreenL=1427.;
-zScreenH=1459.;
-xScreenH=1293.;
+zScreenL0=2119.;
+xScreenL0=1427.;
+yScreenL0=0;
+
+
+zScreenH0=1459.;
+xScreenH0=1293.;
+yScreenH0=0;
+
 (**)
-centerPriMirL={0.,0.};(*needed to define as a 2D pair*)
-centerPriMirH={0.,0.};(*needed to define as a 2D pair*)
-centerPriMirLRefl={0.,0.};(*needed to define as a 2D pair*)
-centerPriMirHRefl={0.,0.};(*needed to define as a 2D pair*)
-(**)
+
+(*=========================================================================*)
+(*optional top plane*)
+(*=========================================================================*)
+If[!ValueQ[zScreenT0],zScreenT0=2065];
+If[!ValueQ[xScreenT0],xScreenT0=0];
+If[!ValueQ[yScreenT0],yScreenT0=1500];
+theShiftOfThePDAL=-20;
+theShiftOfThePDAH=-1;
+If[!ValueQ[theShiftOfThePDAT],theShiftOfThePDAT=0];
+{zScreenL,xScreenL,yScreenL}=shiftAlongTilt[{zScreenL0,xScreenL0,yScreenL0},theShiftOfThePDAL,azL,tiltScreenL];
+{zScreenH,xScreenH,yScreenH}=shiftAlongTilt[{zScreenH0,xScreenH0,yScreenH0},theShiftOfThePDAH,azH,tiltScreenH];
+{zScreenT,xScreenT,yScreenT}=shiftAlongTilt[{zScreenT0,xScreenT0,yScreenT0},theShiftOfThePDAT,azH,tiltScreenT];
+
+
+
+
+
+(*=========================================================================*)
+(*edges (needed here????*)
+(*=========================================================================*)
+
 edgeParaFSNear={0.,0.};
 edgeParaFSAway={0.,0.};
 edgeParaFSNearRefl={0.,0.};
 edgeParaFSAwayRefl={0.,0.};
 thetaMinPriMirL=0.0;
 (**)
-(*=========================================================================*)
-(*RADII*)
-(*=========================================================================*)
-radiusSecMir=0.;
+
+
+
+
+
+
+
+
+
+(*=======================================================================*)
+(*radii*)
+(*=======================================================================*)
+
+
+
+centerPriMirL={0.,0.};(*needed to define as a 2D pair*)
+centerPriMirH={0.,0.};(*needed to define as a 2D pair*)
+centerPriMirLRefl={0.,0.};(*needed to define as a 2D pair*)
+centerPriMirHRefl={0.,0.};(*needed to define as a 2D pair*)
+(**)
+
+
+radiusSecMir=0.0;
 radiusSecMirL:=radiusSecMir;
 radiusSecMirH:=radiusSecMir;
 radiusRefToday=3650.;
-(*deltaRadiusL=0;BETTER TO AVOID...*)
-(*deltaRadiusH=0;BETTER TO AVOID...*)
+deltaRadiusPriMirL=0;(*BETTER TO AVOID...*)
+deltaRadiusPriMirH=0;(*BETTER TO AVOID...*)
+
 radiusPriMirL:=radiusRefToday*N[Sqrt[2.0]];
 radiusPriMirH:=radiusRefToday;
-(**)
-(*=========================================================================*)
-(* APERTURES *)
-(*=========================================================================*)
-delta2PriMirHTrnsvrs=0.(*100.*);
-delta2PriMirHThrdDim=10.(*50.*);
-sizeTrnsvrsPriMirH2:=(*300*)sizeTrnsvrsPriMirH;
+
+
+
+(*=======================================================================*)
+(*apertures*)
+(*=======================================================================*)
+
+delta2PriMirHTrnsvrs=0.;
+delta2PriMirHThrdDim=10.;
+sizeTrnsvrsPriMirH2:=sizeTrnsvrsPriMirH;
 delta1PriMirHTrnsvrs:=2.*sizeTrnsvrsPriMirH2/3;
 delta1PriMirHThrdDim:=2.*sizeThrdDimPriMirH/3;
+
+
+
+
+
 (**)
 (*=========================================================================*)
 (*SHIFT THE PDA*)(* ??? WRONG IMPLEMENTATION: TO FIX*)
@@ -173,7 +259,7 @@ shiftThePDAH[d_]={N[zScreenH+d*Cos[tiltScreenH]],N[xScreenH+d*Sin[tiltScreenH]]}
 (*=========================================================================*)
 (*=========================================================================*)
 (**)
-{zc0L,xc0L,yc0L}:={-radiusPriMirL(*-deltaRadiusL*),0.,0.};(* The base surface vertex passes by the origin; then it is moved by Move *)
+{zc0L,xc0L,yc0L}:={-radiusPriMirL-deltaRadiusPriMirL,0.,0.};(* The base surface vertex passes by the origin; then it is moved by Move *)
 {a1,b1,c1}={1.,1.,1.};
 Print[Plot3D[ellipse3D[a1,b1,c1,radiusPriMirL,rt,r3,zc0L,xc0L,yc0L],
 {rt,-bigBox/10.,+bigBox/10.},{r3,-bigBox/10.,+bigBox/10.},
@@ -207,7 +293,7 @@ LabelPositions->{{0.,0.,0.}}],
 (**)
 (*=========================================================================*)
 (**)
-{zc0H,xc0H,yc0H}:={-radiusPriMirH(*-deltaRadiusH*),0.,0.};(* The base surface vertex passes by the origin; then it is moved by Move *)
+{zc0H,xc0H,yc0H}:={-radiusPriMirH-deltaRadiusPriMirH,0.,0.};(* The base surface vertex passes by the origin; then it is moved by Move *)
 {a2,b2,c2}={1.,1.,1.};
 Print[Plot3D[ellipse3D[a2,b2,c2,radiusPriMirH,rt,r3,zc0H,xc0H,yc0H],
 {rt,-bigBox/10.,+bigBox/10.},{r3,-bigBox/10.,+bigBox/10.},AspectRatio->Automatic,Axes->True,AxesLabel->Automatic]];
@@ -475,4 +561,5 @@ doCalcPlaneSidewiseCoords[zScreenH,xScreenH,tiltScreenH,sizeTrnsvrsScreenH,sizeT
 (**)
 (**)
 (**)
-];
+
+checkNewCreatedSymbols[];

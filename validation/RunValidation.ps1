@@ -300,39 +300,37 @@ if ($missingRequiredSources.Count -gt 0) {
 }
 
 $topLevelSourceBuilder = Join-Path $runRoot "validation\BuildTopLevelSourceFromNative.ps1"
+& $topLevelSourceBuilder -ProjectRoot $runRoot -Case calculator -Check
 & $topLevelSourceBuilder -ProjectRoot $runRoot -Case optics -Check
 & $topLevelSourceBuilder -ProjectRoot $runRoot -Case geometricalOptics -Check
 
 $calculatorSource = Join-Path $runRoot "src\calculator.wl"
 $calculatorText = [System.IO.File]::ReadAllText($calculatorSource)
-$calculatorMarker = "CALCULATOR BODY"
+$calculatorMarker = "(*---... CALCULATOR BODY*)"
 $calculatorMarkerCount = ([regex]::Matches(
     $calculatorText,
     [regex]::Escape($calculatorMarker)
 )).Count
-if ($calculatorMarkerCount -ne 1) {
-    throw "Expected exactly one CALCULATOR BODY marker in src\calculator.wl; found $calculatorMarkerCount."
+if ($calculatorMarkerCount -ne 0) {
+    throw "src\calculator.wl must stop before CALCULATOR BODY; found $calculatorMarkerCount body marker(s)."
 }
 
 $calculatorNativeSource = Join-Path $runRoot "validation\native-sources\calculator-native.wl"
-$calculatorSourceHash = (Get-FileHash `
-    -LiteralPath $calculatorSource `
-    -Algorithm SHA256
-).Hash
-$calculatorNativeHash = (Get-FileHash `
-    -LiteralPath $calculatorNativeSource `
-    -Algorithm SHA256
-).Hash
-if ($calculatorSourceHash -cne $calculatorNativeHash) {
-    throw "src\calculator.wl differs from validation\native-sources\calculator-native.wl."
+$calculatorNativeText = [System.IO.File]::ReadAllText($calculatorNativeSource)
+$calculatorNativeMarkerCount = ([regex]::Matches(
+    $calculatorNativeText,
+    [regex]::Escape($calculatorMarker)
+)).Count
+if ($calculatorNativeMarkerCount -ne 1) {
+    throw "Expected the native calculator baseline to contain one CALCULATOR BODY marker; found $calculatorNativeMarkerCount."
 }
 
 @(
     "Native Wolfram Save As sources preserved; no regeneration performed.",
     "Verified source files: $($requiredSourcePaths -join ', ')",
-    "Verified src\optics.wl and src\geometricalOptics.wl are derived textually from their Wolfram Save As sources.",
-    "Verified one CALCULATOR BODY marker in src\calculator.wl.",
-    "Verified src\calculator.wl matches validation\native-sources\calculator-native.wl."
+    "Verified src\calculator.wl, src\optics.wl, and src\geometricalOptics.wl are derived textually from their Wolfram Save As sources.",
+    "Verified src\calculator.wl stops before CALCULATOR BODY.",
+    "Verified the native calculator baseline retains CALCULATOR BODY for comparison."
 ) | Set-Content -LiteralPath $generationLog -Encoding UTF8
 Write-LauncherLog -Path $launcherLog -Message "Native WL sources verified without modification."
 

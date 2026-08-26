@@ -7,7 +7,9 @@
 - Created working notebooks in `notebooks/` and textual source files in `src/`.
 - Removed extracted initialization Input/Code cells from the supporting working notebooks and inserted loader cells. Top-level notebooks retain their interactive sections without duplicate package initialization code.
 - Retained style notebooks beside working notebooks because the styles use relative filenames.
-- Kept `calculator.nb` only through the complete `---... CALCULATOR BODY` group; later top-level groups were excluded.
+- Kept `calculator.nb` from `---... CALCULATOR BODY` through every later
+  top-level section. Calculator-specific initialization is generated into
+  `src/calculator.wl` and loaded by the calculator project profile.
 - Standardized all nine working notebooks on one three-cell opening: a tagged role/source header, a tagged setup title, and one structurally identical universal bootstrap. Case, role, and source filename live in `TaggingRules`; `RICHNotebookBootstrap` owns shared settings and dependency loading. The restored `notebooks/RICH.nb` is a package-bootstrap notebook, not a toolbar/top-level case.
 - Preserved `optics.nb` from `OPTICAL SYSTEM DESIGN` onward for interactive work. The former `---... OPTICS` initialization remains extracted in `src/optics.wl` and is loaded by the universal case bootstrap.
 - Preserved `geometricalOptics.nb` from `THIS NOTEBOOK` onward. Its 30-cell legacy setup and 33-cell package section were replaced by the universal bootstrap; the package section is derived textually as `src/geometricalOptics.wl`.
@@ -44,7 +46,7 @@ clear symbols in `System``.
 | `statDataAnal.nb` | 25 | 0 | `src/statDataAnal.wl` |
 | `inputDataForRICH.nb` | 112 | 0 | `src/inputDataForRICH.wl` |
 | `RICH.nb` | 62 | 0 | `src/RICH.wl` |
-| `calculator.nb` | 38 | 1 | `src/calculator.wl` |
+| `calculator.nb` (legacy `SETUP` and `CALCULATOR` sections) | 37 | 1 | `src/calculator.wl` |
 | `optics.nb` (`---... OPTICS` Title section only) | 59 | 0 | `src/optics.wl` |
 | `geometricalOptics.nb` (`---... geometricalOptics` Title section only) | 33 | 0 | `src/geometricalOptics.wl` |
 | `cellStyleDataRules.nb` | 9 | 0 | `src/cellStyleDataRules.wl` |
@@ -58,7 +60,7 @@ Set-ExecutionPolicy -Scope Process Bypass
 .\validation\RunValidation.ps1
 ```
 
-The launcher uses a temporary copy of the project by default, runs every original/restructured case in a separate Wolfram process, enforces the calculator-body cutoff, removes the obsolete `LHCb-optics.m` cell only from the temporary original calculator copy, and writes `validation/results/current/VALIDATION_REPORT.md`.
+The launcher uses a temporary copy of the project by default, runs every original/restructured case in a separate Wolfram process, verifies that the calculator runtime source stops before `CALCULATOR BODY`, removes the obsolete `LHCb-optics.m` cell only from the temporary original calculator copy, and writes `validation/results/current/VALIDATION_REPORT.md`.
 
 The installed report generated on 2026-08-01 predates the geometricalOptics
 addition and is **PASS** for its original seven cases:

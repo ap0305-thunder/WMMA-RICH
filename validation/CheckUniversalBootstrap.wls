@@ -189,6 +189,30 @@ If[
       StringRiffle[invalidSourceEndings, ", "]
   ]
 ];
+calculatorSourceText = Import[
+  FileNameJoin[{root, "src", "calculator.wl"}],
+  "Text"
+];
+If[
+  StringContainsQ[calculatorSourceText, "(*---... CALCULATOR BODY*)"] ||
+    ! StringContainsQ[calculatorSourceText, "(*---... CALCULATOR*)"],
+  fail[
+    "calculator.wl must contain calculator initialization and stop before " <>
+      "CALCULATOR BODY."
+  ]
+];
+If[
+  AnyTrue[
+    {
+      "Unprotect[Get]", "Unprotect[Needs]", "myDockedCells.wl",
+      "loadMyFile[\"RICH.m\""
+    },
+    StringContainsQ[calculatorSourceText, #] &
+  ],
+  fail[
+    "calculator.wl retained an unsafe or obsolete legacy setup hook."
+  ]
+];
 unterminatedContextClosures = Select[
   Keys[sourceEndLabels],
   Function[fileName,
@@ -273,6 +297,36 @@ If[
   Length /@ packageInitializationCells =!= ConstantArray[1, 6],
   fail["A package-bootstrap notebook contains executable initialization beyond the universal bootstrap."]
 ];
+interactiveInitializationCells = Cases[
+    #,
+    Cell[_, ("Input" | "Code"), cellOptions___] /;
+      ! FreeQ[{cellOptions}, InitializationCell -> True],
+    Infinity
+  ] & /@ Take[expressions, 3];
+If[
+  Length /@ interactiveInitializationCells =!= ConstantArray[1, 3],
+  fail[
+    "An interactive top-level notebook contains executable initialization " <>
+      "beyond the universal bootstrap."
+  ]
+];
+calculatorNotebookText = ToString[
+  First[expressions],
+  InputForm,
+  PageWidth -> Infinity
+];
+If[
+  StringContainsQ[calculatorNotebookText, "CALCULATOR INIT"] ||
+    ! StringContainsQ[calculatorNotebookText, "CALCULATOR BODY"] ||
+    ! StringContainsQ[
+      calculatorNotebookText,
+      "UNFINISHED - WORK IN PROGRESS"
+    ],
+  fail[
+    "calculator.nb must omit calculator initialization while retaining " <>
+      "CALCULATOR BODY and every later top-level section."
+  ]
+];
 If[
   ! FreeQ[expressions, "RICHProjectEarlyLoad"] ||
     ! FreeQ[expressions, "RICHOpticsInitialization"],
@@ -300,6 +354,11 @@ If[Quiet @ Check[RICHBootstrap[], $Failed] =!= True,
 ];
 If[! MemberQ[$Packages, "myNotebookInit`"],
   fail["RICHBootstrap[] did not load myNotebookInit`."]
+];
+If[
+  Last @ Lookup[$RICHProjectComponents, "calculator", {}] =!=
+    "calculator.wl",
+  fail["The calculator loader profile does not end with calculator.wl."]
 ];
 If[
   ! And @@ (NameQ /@ {

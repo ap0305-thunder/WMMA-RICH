@@ -18,8 +18,11 @@ original initialization-cell boundaries and structural notebook headers are
 shown as separate cells. Header cells are stored as comments and do not affect
 evaluation with `Get`.
 
-The working `calculator.nb` includes the complete `---... CALCULATOR BODY`
-top-level group and excludes everything after it.
+The working `calculator.nb` contains the complete `---... CALCULATOR BODY`
+section and every later section, but no duplicated calculator initialization.
+`src/calculator.wl` contains the legacy setup and `---... CALCULATOR`
+initialization sections and stops before `CALCULATOR BODY`; the calculator
+loader profile evaluates that source explicitly.
 
 All nine managed notebooks begin with the same three-cell structure: a tagged
 role/source header, a tagged `---... SETUP` title, and the structurally
@@ -72,10 +75,11 @@ wolfram.exe -script validation\InstallUniversalBootstrap.wls
 wolfram.exe -script validation\CheckUniversalBootstrap.wls
 ```
 
-The two optics-related runtime sources are deterministic textual derivations of
-their Wolfram Save As baselines. Rebuild or check either source with:
+The three interactive runtime sources are deterministic textual derivations of
+their Wolfram Save As baselines. Rebuild or check a source with:
 
 ```powershell
+.\validation\BuildTopLevelSourceFromNative.ps1 -Case calculator -Check
 .\validation\BuildTopLevelSourceFromNative.ps1 -Case optics
 .\validation\BuildTopLevelSourceFromNative.ps1 -Case geometricalOptics -Check
 ```

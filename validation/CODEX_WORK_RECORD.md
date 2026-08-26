@@ -517,3 +517,42 @@ optics, and geometricalOptics retain the interactive top-level role.
 The 68 public ``myNotebookInit` `` usage declarations are now one declaration per
 line and sorted alphabetically by unqualified symbol name. A deterministic
 normalizer and the Wolfram structural check enforce that organization.
+
+## Calculator runtime/notebook split — 2026-08-24
+
+The calculator now follows the same source/notebook ownership boundary as the
+other interactive top-level cases. `src/calculator.wl` is derived textually
+from the first two native title sections (`SETUP` and `CALCULATOR`) and stops
+before `CALCULATOR BODY`. Its managed derivation removes the obsolete global
+`Get`/`Needs` hooks and duplicate notebook bootstrap/load-tracker code. The
+calculator loader profile evaluates this runtime source after the shared RICH
+dependencies.
+
+`notebooks/calculator.nb` now contains one executable initialization cell—the
+universal bootstrap—followed by `CALCULATOR BODY` and every later top-level
+section. Expression-level comparison against the pre-split backup confirmed
+that both the body and `UNFINISHED - WORK IN PROGRESS` groups were preserved
+exactly.
+
+The deterministic calculator-source check and the complete universal
+bootstrap structural check pass. A calculator behavioral-comparison attempt
+was stopped after the legacy/original notebook remained before its first
+evaluation progress message for more than five minutes; stdout contained only
+the runner and target lines and stderr remained empty. Behavioral equivalence
+therefore remains pending rather than failed.
+
+## Deferred TODO — calculator Global-context protection — 2026-08-26
+
+- **Status:** deferred; do later.
+- **Location:** `notebooks/calculator.nb`, cell expression UUID
+  `98fb37d2-9c1a-574f-a1dd-28db21cd6a77`.
+- **Current behavior:** the interactive cell evaluates
+  `Protect["Global`*Ref"]`, which can protect unrelated session symbols whose
+  names end in `Ref`.
+- **Required follow-up:** replace the broad Global-context pattern with an
+  explicit calculator-owned symbol list, preserving the intended reference
+  symbols without mutating unrelated notebook or session state.
+- **Completion check:** evaluate the revised cell in a clean managed calculator
+  session and verify that the intended calculator reference symbols are
+  protected while an unrelated temporary `Global` symbol ending in `Ref`
+  remains unprotected.

@@ -1121,7 +1121,12 @@ main[] := Module[
     <|"Key" -> "statDataAnal", "Source" -> {"legacy-original", "statDataAnal.nb"}, "Destination" -> {"src", "statDataAnal.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "inputDataForRICH", "Source" -> {"legacy-original", "inputDataForRICH.nb"}, "Destination" -> {"src", "inputDataForRICH.wl"}, "Cutoff" -> None|>,
     <|"Key" -> "RICH", "Source" -> {"legacy-original", "RICH.nb"}, "Destination" -> {"src", "RICH.wl"}, "Cutoff" -> None|>,
-    <|"Key" -> "calculator", "Source" -> {"legacy-original", "calculator.nb"}, "Destination" -> {"src", "calculator.wl"}, "Cutoff" -> "CALCULATOR BODY"|>
+    <|
+      "Key" -> "calculator",
+      "Source" -> {"legacy-original", "calculator.nb"},
+      "Destination" -> {"src", "calculator.wl"},
+      "Cutoff" -> <|"FirstTitleSections" -> 2|>
+    |>
   };
 
   needsAllSources = requestedCases === {} || AnyTrue[requestedCases, # =!= "base" &];

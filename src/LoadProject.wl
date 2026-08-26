@@ -238,7 +238,7 @@ $RICHProjectComponents = <|
   "calculator" -> {
     "myNotebookInit.wl", "cellStyleDataRules.wl",
     "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
-    "inputDataForRICH.wl", "RICH.wl"
+    "inputDataForRICH.wl", "RICH.wl", "calculator.wl"
   },
   "optics" -> {
     "cellStyleDataRules.wl",
