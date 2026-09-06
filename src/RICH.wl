@@ -2166,6 +2166,38 @@ showContextInfo[]
 
 
 (* ::Subtitle::Initialization:: *)
+(*RADIATOR-DEPENDENT CHERENKOV QUANTITIES*)
+
+
+(* ::Text::Initialization:: *)
+(*Moved here from physicsGeneral`. Unlike the general Cherenkov section there,*)
+(*which takes the refractive index as an argument, these read the radiator index*)
+(*(theRefrIndex) or the RICH under study (thisRefrIndex), so they belong in this layer.*)
+
+
+(* ::Input::Initialization:: *)
+Unprotect[chrnkvAngle,chrnkvAngleGeneral,thisThetaChr,thisNumRelChr,tC,tCAllPart,tpl];
+ClearAll[chrnkvAngle,chrnkvAngleGeneral,thisThetaChr,thisNumRelChr,tC,tCAllPart,tpl];
+
+chrnkvAngle[m_,p_,\[Lambda]_]:=Module[{rich`Private`z},
+rich`Private`z=1/(betaPart[m,p]*theRefrIndex[\[Lambda]]); (* It has to be positive *)
+rich`Private`z=Map[Min[#,+1]&,rich`Private`z]; (* z is non negative *)
+Return[Chop[ArcCos[rich`Private`z]]]
+];
+chrnkvAngleGeneral[m_,p_,\[Epsilon]_]:=ArcCot[D[\[Epsilon]*Tan[ArcCos[1/(betaPart[m,p]*theRefrIndex[\[Lambda][\[Epsilon]]])]],\[Epsilon]]];
+
+(* this... = n pre-fixed; function of gamma; now it becomes mrad; add unit of measure *)
+thisThetaChr[\[Gamma]_,n_:thisRefrIndex]:=Quantity[1000*thetaChr[beta[\[Gamma]],n],"Milliradians"];
+thisNumRelChr[\[Gamma]_,n_:thisRefrIndex]:=numRelPho[beta[\[Gamma]],n];
+
+tC[\[Beta]_,theE_]:=1000*thetaC[\[Beta],theRefrIndex[\[Lambda][theE]]];
+tCAllPart[p_,theE_]:=Module[{},Table[1000*thetaC[betaPart[thePartMasses[[j]],p],theRefrIndex[\[Lambda][theE]]],{j,1,5}]];
+tpl[mass_,mom_,\[Lambda]_]:=1000*thetaC[betaPart[mass,mom],theRefrIndex[\[Lambda]]];
+
+Protect[chrnkvAngle,chrnkvAngleGeneral,thisThetaChr,thisNumRelChr,tC,tCAllPart,tpl];
+
+
+(* ::Subtitle::Initialization:: *)
 (*(*(*(*<<< END PACKAGE*)*)*)*)
 
 
