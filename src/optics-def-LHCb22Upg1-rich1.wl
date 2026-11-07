@@ -5,42 +5,112 @@
 
 
 (* ::Input::Initialization:: *)
-(*--------------------------------------------------------------------------------------------------------*)
-bigBanner[" loading optics : "<>ToString[whichOptics]<>" for RICH : "<>ToString[iRICH]];
-(*--------------------------------------------------------------------------------------------------------*)
-doResetAllVariables[]; 
- setExternalParameters[];
+(**************************************************************************************************)
 
-
+bigBanner[" loading optics : "<>ToString[whichOptics]<>"-"<>ToString[opticsVersion]<>" for RICH : "<>ToString[iRICH]];
+doResetAllVariables[];
+setExternalParameters[];
+(**************************************************************************************************)(**************************************************************************************************)
+checkNewCreatedSymbols[];
+miniBanner["\n",
+"  component #  ==>>  ","PRI-MIR","\n",
+"  component #  ==>>  ","SEC-MIR","\n",
+"  component #  ==>>  ","QUA-PLA","\n",
+"  component #  ==>>  ","PD","\n",
+"  component #  ==>>  ","BOX"
+];
 
 
 (* ::Input::Initialization:: *)
-(**************************************************************************************************)
 (**)
-Print[" loading optics ",whichOptics,"  for  ",iRICH];
+(*=========================================================================*)
+(* GEOMETRY OF THE BUILT RICH1 (LS2/RUN3, 2022) - FROZEN *)
+(* written explicitly from setData2022Rich1 and setBoundaryParametersOLD (src/optics.wl), same values *)
+(* New vertical Rich1 - final official version presented on 17-06-2013 *)
+(* Fine-Tuned from RICH1-Optical-Layout-EDMS-1390002-v2-CF160401-1050.pdf on Oct. 14th, 2020 *)
+(*=========================================================================*)
 (**)
-If[(whichOptics=="LHCb22Upg1")&&(iRICH==1)
-(**************************************************************************************************),
-(*bigBanner[" \n\n\n POSSIBLY ADD  SECOND SET OF NEARLY FAKE MIRRORS TO HAVE THE SAME COMPONENTS AS FOR THE SPLIT OPTICS \n\n\n "];*)
-bigBanner[
-"  component # TBD ==>>  ","PRI-MIR","\n",
-"  component # TBD ==>>  ","SEC-MIR","\n",
-(*"  component # TBD ==>>  ","TER-MIR","\n",*)
-"  component # TBD ==>>  ","QUA-PLA","\n",
-"  component # TBD ==>>  ","PD","\n",
-"  component # TBD ==>>  ","BOX"];
+(*=========================================================================*)
+(* BOUNDARY AND ACCEPTANCE *)
+(*=========================================================================*)
+theSensorPitch=1;(* mm *)
+pixelSize=3;
+minZ=985.0;
+maxZ=2170.0;
+zBoxMin=985;
+zBoxMax=2245;
+(*+/- 300 mrad acceptance real-HOR*)
+thrdDimAcc=0.300;
+trnsvrsAcc=0.250;
+minAcc=0.025;
+thrdDimMinAcc=minAcc;
+trnsvrsMinAcc=minAcc;
+maxYAcc:=trnsvrsAcc;(*X<->Y swapped between the two riches*)
+maxXAcc:=thrdDimAcc;(*X<->Y swapped between the two riches*)
+minThetaTrsvrsTrack=0.050;
+(*use 1000mm path length*)
+thetaMinSecMir=trnsvrsAcc;
+theThetaMinSecMir=thetaMinSecMir;(*duplicate info... why ? cleanup*)
 (**)
-(*set default,update later possibly*)
+(*=========================================================================*)
+(* SIZE TRNSVRS DIM *)
+(*=========================================================================*)
+sizeTrnsvrsPriMir=650.;(* IT IS INPUT! *)
+sizeTrnsvrsSecMir=883.;
+sizeTrnsvrsScreen=621.5+200;
 (**)
-Print[" debug "];
-(**************************************************************************************************)(*!@#$% TAPULLO write here instead of setData2022Rich1NewToCheck:TO FIX//see setData2022Rich1NewToCheck*)
-setData2022Rich1;
+(*=========================================================================*)
+(* SIZE THIRD DIM *)
+(*=========================================================================*)
+sizeThrdDimPriMir=1500.0;
+sizeThrdDimSecMir=1489.0;
+sizeThrdDimScreen=1500.0;
+(**)
+(*=========================================================================*)
+(* TILT *)
+(*=========================================================================*)
+tiltPriMir=+170.3Degree;
+tiltSecMir=0.25656*180/Pi Degree;
+tiltScreen=(90-0.561996*180/Pi)Degree;
+(**)
+(*=========================================================================*)
+(* ABSCISSA AND ORDINATE *)
+(*=========================================================================*)
+p2z=2145.001;(*primary mirror: zPriMirMax, input of calcSphericalPrimaryMirror*)
+p4z=1099.242;(*secondary mirror: zSecMirMin, input of calcFlatSecMirFromLowerAngle (execDoCalc)*)
+zScreen=1641.417;
+xScreen=1407.716;
+(**)
+(*=========================================================================*)
+(* RADII *)
+(*=========================================================================*)
+radiusPriMir=3650;
+radiusSecMir=0.0;
+thetaMinPriMir=0.0;
+(**)
+(*=========================================================================*)
+(* PHOTODETECTOR DEPTH *)
+(*=========================================================================*)
+PDADepth=300;(* Rough Estimate // Graphics Only *)
 (**)
 thickSecMir=0;(*ok for rich, zero dielectric substrate*)(*it screams if thickness is in SphericalMirror*)
 thickPriMir=0;(*ok for rich, zero dielectric substrate*)(*it screams if thickness is in SphericalMirror*)
 (**)
+(*=========================================================================*)
+(* NO MORE CHANGES OF PARAMETERS AFTER HERE *)
+(*=========================================================================*)
+(**)
 calcSphericalPrimaryMirror[sizeTrnsvrsPriMir,tiltPriMir,radiusPriMir,thetaMinPriMir,p2z];
 (**)
+(*=========================================================================*)
+(* DERIVED GEOMETRY (secondary mirror position, paraxial focal surface, reflections) *)
+(*=========================================================================*)
+(*FIX 2026-11-07: execDoCalc moved after calcSphericalPrimaryMirror, which computes the centerPriMir it uses (in setData2022Rich1/2 it ran before: undefined or stale centre)*)
+execDoCalc;
+(**)
+(*=========================================================================*)
+(* PRIMARY MIRROR *)
+(*=========================================================================*)
 priMirror=Move[SphericalMirror[
 {radiusPriMirVar,-radiusPriMir},
 {sizeTrnsvrsPriMir,sizeThrdDimPriMir},
@@ -52,6 +122,9 @@ FrontSurface->True
 {{zPriMirVar,zVrtxPriMir},{xPriMirVar,xVrtxPriMir}},{tiltPriMirVar,180+tiltPriMir/Degree}
 ];
 (**)
+(*=========================================================================*)
+(* SECONDARY MIRROR *)
+(*=========================================================================*)
 secMirror=Move[SphericalMirror[
 {radiusSecMirVar,radiusSecMir},
 {sizeTrnsvrsSecMir,sizeThrdDimSecMir},
@@ -62,6 +135,9 @@ FrontSurface->True
 ],(*FlatSubstrate->False gives errors inside my routines???*)
 {{zSecMirVar,zSecMir},{xSecMirVar,xSecMir}},{tiltSecMirVar,180+tiltSecMir/Degree}];
 (**)
+(*=========================================================================*)
+(* QUARTZ PLATE *)
+(*=========================================================================*)
 (*QUARTZ PLATE//TO FIX/check (wavlen model)*)
 Print["Optical Medium data \n",TableForm@Transpose@SearchData[OpticalMedium->"F_SILICA"]];
 testQuartzPlate=False;
@@ -90,9 +166,78 @@ DesignWaveLength->0.350],
 ];
 (*Transmittance\[Rule]0.5,Reflectance\[Rule]0.5,CurvatureDirection\[Rule]Back,SwitchDirectionOnReflection\[Rule]True*)
 (**)
+(*=========================================================================*)
+(* PHOTODETECTOR PLANE *)
+(*=========================================================================*)
 thePDA=Move[Screen[
 {sizeTrnsvrsScreen,sizeThrdDimScreen},
 "THE-PDA-NOW",
 Transmittance->0],
-{{zScreenVar,zScreen},{xScreenVar,xScreen}},{tiltScreenVar,tiltScreen/Degree}]
+{{zScreenVar,zScreen},{xScreenVar,xScreen}},{tiltScreenVar,tiltScreen/Degree}];
+(**)
+(*=========================================================================*)
+(* COMPONENT NUMBERING (same as the NON-SPLIT INIT cell of optics.nb) *)
+(*=========================================================================*)
+(* Sequential tracking follows the numbering here.... *)
+(* If you use Resonate the component numbering changes!!! some functions may stop working *)
+(* Boundary is the last one *)
+(*=========================================================================*)
+(**)
+printD@resonate;
+Unprotect[onThePriMirror,onTheSecMirror,onTheTerMirror,onTheQuartzPlateFron,onTheQuartzPlateBack,onTheFS,onTheBox];
+If[resonate==True
+(*=========================================================================*)
+,
+(*==================================================================================================*)
+(* resonate == True *)
+priMirrorNumber=1;
+secMirrorNumber=1;
+quartzPlateNumber=1;
+focalSurfaceNumber=2;
+boxNumber=3;
+terMirrorNumber=0;
+priMirrorSurfNumber=1;
+secMirrorSurfNumber=2;
+quartzPlateSurfNumberFron=3;
+quartzPlateSurfNumberBack=4;
+focalSurfaceSurfNumber=1;
+terMirrorSurfNumber=0;
+(**)
+myOptics:={Resonate[{priMirror,secMirror,quartzPlate}],thePDA}(* with PDA in resonate.. strange traces appear *)
+,
+(*==================================================================================================*)
+(* resonate == False *)
+priMirrorNumber=1;
+secMirrorNumber=2;
+quartzPlateNumber=3;
+focalSurfaceNumber=4;
+boxNumber=5;
+terMirrorNumber=0;
+priMirrorSurfNumber=1;
+secMirrorSurfNumber=1;
+quartzPlateSurfNumberFron=1;
+quartzPlateSurfNumberBack=2;
+focalSurfaceSurfNumber=1;
+terMirrorSurfNumber=0;
+(**)
+myOptics:={priMirror,secMirror,quartzPlate,thePDA}
 ];
+(**)
+(* Do not use surface here!!! for composite components I am looking for different surfaces *)
+(* It means, just put the component when resonate, it will have different surface numbers... Here default, later redefine for resonate *)
+(**)
+onThePriMirror:={ComponentNumber->priMirrorNumber,SurfaceNumber->priMirrorSurfNumber};
+onTheSecMirror:={ComponentNumber->secMirrorNumber,SurfaceNumber->secMirrorSurfNumber};
+onTheTerMirror:={ComponentNumber->terMirrorNumber,SurfaceNumber->terMirrorSurfNumber};
+onTheQuartzPlateFron:={ComponentNumber->quartzPlateNumber,SurfaceNumber->quartzPlateSurfNumberFron};
+onTheQuartzPlateBack:={ComponentNumber->quartzPlateNumber,SurfaceNumber->quartzPlateSurfNumberBack};
+onTheFS:={ComponentNumber->focalSurfaceNumber,SurfaceNumber->focalSurfaceSurfNumber};
+onTheBox:={ComponentNumber->boxNumber};
+(**)
+theTrackOrigin:={ComponentNumber->priMirrorNumber,SurfaceNumber->1};
+(**)
+Protect[onThePriMirror,onTheSecMirror,onTheTerMirror,onTheQuartzPlateFron,onTheQuartzPlateBack,onTheFS,onTheBox];
+(**)
+(**)
+
+checkNewCreatedSymbols[];
