@@ -1488,6 +1488,9 @@ rOFS=y[[3]];
 rMid:=(rEnt+rEnd)/2;
 AppendTo[trackAngles,{thetaY,thetaX}];
 AppendTo[trackImprintOnTheFS,rOFS];
+(*FIX 2026-11-07: keep the 2D track footprint on the PDA (surface coordinates), keyed by track id: ring centre used by doEvalOpticsPerformance for the non-split optics*)
+If[!AssociationQ[trackImprintOnTheFS2D],trackImprintOnTheFS2D=<||>];
+AssociateTo[trackImprintOnTheFS2D,Round[id]->y[[4]]];
 AppendTo[trackPathLength,Norm[rEnt-rEnd]];
 AppendTo[trackMidPath,rMid];
 AppendTo[allREnd,rEnd];
@@ -1582,16 +1585,21 @@ Print[" rStrTra                     = ",rStrTra," must be rStrTra==rStartTrack "
 Print[" rEndTra (first segment)     = ",rEndTra];
 Print[" rEndTra (first segment)     = ",rEndTra];
 Print[" rOnTheFS (FS point)         = ",rOnTheFS];
+If[whichOptics=="LHCb35Upg2Split",(*FIX 2026-11-07: L/H only for the split optics*)
 Print[" rOnTheFSL2D (FS point)       = ",uvL=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSL]];
 Print[" rOnTheFSH2D (FS point)       = ",uvH=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSH]];
+];
 Print[" rOnTheFS2D (FS point)       = ",rOnTheFS2D];
 ];
 
+(*FIX 2026-11-07: the L/H check below exists only for the split optics (onTheFSL/onTheFSH are not defined otherwise)*)
+If[whichOptics=="LHCb35Upg2Split",
 Print[" rOnTheFSL2D (FS point)       = ",uvL=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSL]];
 Print[" rOnTheFSH2D (FS point)       = ",uvH=ReadRays[tracedTrack,SurfaceCoordinates,onTheFSH]];Print[" rOnTheFS2D (FS point)       = ",rOnTheFS2D];
 If[rOnTheFS2D!=First@Join[uvL,uvH],Print[" guai "];
 Print[" rOnTheFSL2D (FS point)       = ",uvL];
 Print[" rOnTheFSH2D (FS point)       = ",uvH];,Print[" pronti "]];
+];
 
 Return[{rStrTra,rEndTra,rOnTheFS,rOnTheFS2D}]
 ];

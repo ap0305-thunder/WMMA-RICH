@@ -591,10 +591,11 @@ superClearSet[
       "       after  ", xVar
     ];
 
+    (* FIX 2026-11-08: Experimental`ValueFunction passes (old,new) on an assignment but only (old) when the symbol is cleared: #2 gave Function::slotn *)
     If[short === True,
 
       Experimental`ValueFunction[xVar] :=
-        Print[" !!! ", v, " : ", #1, " -->> ", #2] &,
+        Print[" !!! ", v, " : ", #1, " -->> ", If[Length[{##}] > 1, {##}[[2]], "(cleared)"]] &,
 
       Experimental`ValueFunction[xVar] :=
         Print[
@@ -606,7 +607,7 @@ superClearSet[
             " value before : ",
           PaddedForm[#1, {Round[pad/3], numDigits}],
           " -->> value after : ",
-          PaddedForm[#2, {Round[pad/3], numDigits}]
+          If[Length[{##}] > 1, PaddedForm[{##}[[2]], {Round[pad/3], numDigits}], "(cleared)"]
         ] &
     ];
   ];

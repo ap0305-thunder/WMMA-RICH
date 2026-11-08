@@ -1,0 +1,32 @@
+--- notebooks/calculator--2026-10-30--1439-save.nb
++++ notebooks/calculator.nb
+@@ -540718,21 +540718,21 @@
+     RowBox[{"n", "->", "thisRefrIndex"}]}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"theGammaOverThr", ":=", 
+-   RowBox[{"gammaOverThr", "/.", 
+-    RowBox[{"n", "->", "thisRefrIndex"}]}]}], ";"}], "\[IndentingNewLine]", 
++   RowBox[{"Normal", "[", RowBox[{"gammaOverThr", "/.", 
++    RowBox[{"n", "->", "thisRefrIndex"}]}], "]"}]}], ";", RowBox[{"(*", RowBox[{"FIX", " ", "2026-10-30", ":", " ", "Normal", " ", "drops", " ", "the", " ", "condition", " ", RowBox[{"0", "<", "\[Nu]", "<", "1"}], " ", "that", " ", "Solve", " ", "attaches", " ", RowBox[{"(", RowBox[{"Table", " ", "bounds", " ", "need", " ", "a", " ", "number"}], ")"}]}], "*)"}]}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"theGamma1", ":=", 
+-   RowBox[{"gamma1", "/.", 
+-    RowBox[{"n", "->", "thisRefrIndex"}]}]}], ";"}], "\[IndentingNewLine]", 
++   RowBox[{"Normal", "[", RowBox[{"gamma1", "/.", 
++    RowBox[{"n", "->", "thisRefrIndex"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"theGammaHalf", ":=", 
+-   RowBox[{"gammaHalf", "/.", 
+-    RowBox[{"n", "->", "thisRefrIndex"}]}]}], ";"}], "\[IndentingNewLine]", 
++   RowBox[{"Normal", "[", RowBox[{"gammaHalf", "/.", 
++    RowBox[{"n", "->", "thisRefrIndex"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"theGamma9", ":=", 
+-    RowBox[{"gamma9", "/.", 
+-     RowBox[{"n", "->", "thisRefrIndex"}]}]}], ";"}], "\[IndentingNewLine]", 
++    RowBox[{"Normal", "[", RowBox[{"gamma9", "/.", 
++     RowBox[{"n", "->", "thisRefrIndex"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"printD", "[", "theGammaThr", "]"}], ";"}], "\[IndentingNewLine]", 

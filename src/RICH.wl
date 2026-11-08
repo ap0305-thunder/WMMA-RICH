@@ -826,7 +826,7 @@ SetAttributes[{showItTemp,printTempD,debugPrintTempD},HoldAll];
 (**************************************************************************************************)
 Clear[calcRICHYield];
 calcRICHYield[rad_,tmp\[Lambda]1_,tmp\[Lambda]2_,whichRICH_:0,sensor_:"ZERO",length_:0,numToGenerate_:1000,debug$calcRICHYield_:True,thisNumOfQuantiles_:11]:=Module[{refrIndex,velPhase,velGroup,
-\[ScriptCapitalE],\[CapitalLambda],rich`Private`s,wp,a,b,
+\[ScriptCapitalE],\[CapitalLambda],rich`Private`s,wp,(*a,b: replaced by \[FormalA],\[FormalB] - FIX 2026-11-08*)
 (*wavLenMedian,wavLenMean,integralSpectrum,*)(* keep as general... TBI *)
 theWhichRICH,theRad,theSensor,
 dispersionRefrIndexPhsWavLen,dispersionRefrIndexGrpWavLen,
@@ -1038,16 +1038,17 @@ Print[" refrIndex[\[Lambda]]   = ",nf[refrIndex[\[Lambda]],12,8]];
 miniBanner["refractive index business - determine one-pole Sellmeier parameters"];
 (*--------------------------------------------------------------------------------*)
 
-thisRichRefrIndexParams=First@NSolve[(refrIndex[\[Lambda]]  ==1+a/(1/b^2-1/\[Lambda]^2)/.\[Lambda]->\[Lambda]MinRef)&&(refrIndex[\[Lambda]]  ==1+a/(1/b^2-1/\[Lambda]^2)/.\[Lambda]->\[Lambda]MaxRef),{a,b}];
+(*FIX 2026-11-08: one-pole Sellmeier parameters solved with the formal symbols \[FormalA], \[FormalB] instead of a, b: plain a, b became public symbols of rich` and caused a::shdw / b::shdw warnings*)
+thisRichRefrIndexParams=First@NSolve[(refrIndex[\[Lambda]]  ==1+\[FormalA]/(1/\[FormalB]^2-1/\[Lambda]^2)/.\[Lambda]->\[Lambda]MinRef)&&(refrIndex[\[Lambda]]  ==1+\[FormalA]/(1/\[FormalB]^2-1/\[Lambda]^2)/.\[Lambda]->\[Lambda]MaxRef),{\[FormalA],\[FormalB]}];
 printD@thisRichRefrIndexParams;
 If[
-(refrIndex[\[Lambda]]  ==1+a/(1/b^2-1/\[Lambda]^2)/.thisRichRefrIndexParams/.\[Lambda]->(\[Lambda]MinRef+\[Lambda]MaxRef)/2)==True,
+(refrIndex[\[Lambda]]  ==1+\[FormalA]/(1/\[FormalB]^2-1/\[Lambda]^2)/.thisRichRefrIndexParams/.\[Lambda]->(\[Lambda]MinRef+\[Lambda]MaxRef)/2)==True,
 Print["parameters confirmed : thisRichRefrIndexParams = ",thisRichRefrIndexParams];
 
 ,
 Print["parameters NOT confirmed : thisRichRefrIndexParams - possibly more than one pole Sellemeier ???? "];
 ];
-Print[" must be all True to within numerical rounding --- ",Table[refrIndex[\[Lambda]]  ==1+a/(1/b^2-1/\[Lambda]^2)/.thisRichRefrIndexParams,{\[Lambda],\[Lambda]MinRef,\[Lambda]MaxRef,100}]];
+Print[" must be all True to within numerical rounding --- ",Table[refrIndex[\[Lambda]]  ==1+\[FormalA]/(1/\[FormalB]^2-1/\[Lambda]^2)/.thisRichRefrIndexParams,{\[Lambda],\[Lambda]MinRef,\[Lambda]MaxRef,100}]];
 
 
 

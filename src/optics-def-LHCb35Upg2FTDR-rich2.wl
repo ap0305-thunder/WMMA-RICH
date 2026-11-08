@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Subsection::Initialization:: *)
-(*(*(*(*(*(*(* FTDR OPTICS for RICH=2 *)*)*)*)*)*)*)
+(*(*(*(*(*(*(*(* FTDR OPTICS for RICH=2 *)*)*)*)*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -12,10 +12,14 @@ doResetAllVariables[];
 setExternalParameters[];
 (**************************************************************************************************)(**************************************************************************************************)
 checkNewCreatedSymbols[];
-miniBanner["TO ADD THE QUARTZ PLATE"];
+(*=========================================================================*)
+(* SWITCHES *)
+(*=========================================================================*)
+useQuartzPlate=False;(*no quartz plate in this optics yet (TO ADD THE QUARTZ PLATE)*)
 miniBanner["\n",
 "  component #  ==>>  ","PRI-MIR","\n",
 "  component #  ==>>  ","SEC-MIR","\n",
+If[useQuartzPlate,Sequence["  component #  ==>>  ","QUA-PLA","\n"],Sequence[]],
 "  component #  ==>>  ","PD","\n",
 "  component #  ==>>  ","BOX"
 ];
@@ -24,20 +28,42 @@ miniBanner["\n",
 (* ::Input::Initialization:: *)
 (**)
 (*=========================================================================*)
+(* NON-SPLIT OPTICS TEMPLATE (2026-11-08): the same sections and conventions in every non-split optics-def file *)
+(* - the tilts are the Optica rotations given to Move: input in degrees (tilt...Degree), tilt... in radians *)
+(* - the primary mirror is placed by calcSphericalPrimaryMirror from its size, tilt, radius, thetaMinPriMir and p2z *)
+(* - the secondary mirror and the photodetector plane are placed by their centres {z,x} *)
+(* - the derived geometry (secondary-mirror edges and normal, paraxial focal surface, reflected points) is computed by the same block in every file *)
+(* - the quartz plate is included when useQuartzPlate==True *)
+(* - TO DO (later): one resonate==True strategy for all the non-split optics; until then the resonate==True branch of the numbering is specific to each file *)
+(*=========================================================================*)
 (**)
-(*zBoxMin=9678.0;(*10 cm shift with respect to old version 9578*)
+(*=========================================================================*)
+(* GEOMETRY OF THE FTDR (Upgrade II) RICH2 - design *)
+(*=========================================================================*)
+(**)
+(*=========================================================================*)
+(* BOUNDARY AND ACCEPTANCE *)
+(*=========================================================================*)
+(*the values in this section are those of the RICH2 of LHCb 2002-009 (the same as in optics-def-LHCb22Upg1-rich2.wl): checked, they are valid also for the FTDR RICH2 (2026-11-08)*)
+theSensorPitch=1;(* mm *)
+pixelSize=3;
+minZ=9450;(*ok with LHCb-PUB-2016-XXX EDMS 1685891 13th May 2016*)
+maxZ=11900;(*ok with LHCb-PUB-2016-XXX EDMS 1685891 13th May 2016*)
+zBoxMin=9578.0;
 zBoxMax=11705.0;
-thirdDimAcc=100/1000.0;
-trnsvrsAcc=120/1000.0;*)
-(**)
-(* Se aumento b, si sparpaglia in orizzontale; riferito a rich1 ???!@#$% NO? *)
-(* Se abbasso c, si avvicina il piano focale ???!@#$% NO? *)
-(**)
-(*=========================================================================*)
-(* !@#$% to move ALL DATA SETTING BELOW to setData *)
-(*=========================================================================*)
-(**)
-(*p4z=1075+50;*) (*needed here ???*)
+(*+/- 120 mrad acceptance real-HOR*)
+thrdDimAcc=100/1000.0;
+trnsvrsAcc=120/1000.0;
+minAcc=15.0/1000.0;maxXAcc:=trnsvrsAcc;(*X<->Y swapped between the two riches*)
+maxYAcc:=thrdDimAcc;(*X<->Y swapped between the two riches*)
+
+minThetaTrsvrsTrack=0.030;
+(*use 2000mm path length*)
+l000z=(11245-9450);
+l000:=l000z;
+l120z=(11705-9450);
+l120:=l120z/Cos[.12];
+halfOpenAngle=0.0313*(180/\[Pi]);
 (**)
 (*=========================================================================*)
 (* SIZE TRNSVRS DIM *)
@@ -54,67 +80,82 @@ sizeThrdDimSecMir=2200.;
 sizeThrdDimScreen=1500.;
 (**)
 (*=========================================================================*)
-(* TILT *)
+(* TILT (Optica rotations, in degrees) *)
 (*=========================================================================*)
-tiltPriMirLDegree=-0.01;
-tiltPriMir:=tiltPriMirLDegree Degree; (* to radian *)
+tiltPriMirDegree=-0.01;
+tiltSecMirDegree=31(*20*);
+tiltScreenDegree=64.5;
 (**)
-tiltSecMirLDegree =31(*20*);
-tiltSecMirL:=tiltSecMirLDegree Degree;(* to radian *)
-tiltSecMir:=tiltSecMirL;
-(**)
-tiltScreen =64.5 Degree;
-(**)
-tiltScreenTDegree=125.0;
-tiltScreenT:=tiltScreenTDegree Degree;
+tiltPriMir=tiltPriMirDegree Degree;
+tiltSecMir=tiltSecMirDegree Degree;
+tiltScreen=tiltScreenDegree Degree;
 (**)
 (*=========================================================================*)
 (* ABSCISSA AND ORDINATE *)
 (*=========================================================================*)
-(**)
-zPriMir=11508.9;
-xPriMir=0;(*3270.0*)
-(**)
-zSecMir =10000(*9729.8*);
+p2z=11705;(*primary mirror: z of the far end of the mirror chord (zPriMirMax), input of calcSphericalPrimaryMirror*)
+(*zPriMir=11508.9; xPriMir=0;(*3270.0*): not inputs, computed by calcSphericalPrimaryMirror*)
+zSecMir=10000(*9729.8*);(*secondary-mirror centre*)
 xSecMir=860;
-(**)
-zScreen=11250(*11550, 11700*);
-zScreenL:=zScreen;
+zScreen=11250(*11550, 11700*);(*photodetector-plane centre*)
 xScreen=3825(*4000*) (*4230*);
-xScreenL:=xScreen;
-(**)
-(*=========================================================================*)
-(* EDGES AND REFERENCE POINTS *)
-(*=========================================================================*)
-centerPriMirRefl={0,0};
-edgeParaFSNear={0,0};
-edgeParaFSAway={0,0};
-edgeParaFSNearRefl={0,0};
-edgeParaFSAwayRefl={0,0};
-thetaMinPriMir=0.0;
 (**)
 (*=========================================================================*)
 (* RADII *)
 (*=========================================================================*)
+radiusPriMir=10000;(*radiusRefToday*N[Sqrt@2];*)(*was radiusPriMir=radiusRefToday=8600, then redefined as radiusPriMir:=10000: 10000 is the value in use*)
 radiusSecMir=0.0;
-radiusSecMirL:=radiusSecMir;
-radiusSecMirH:=radiusSecMir;
-radiusRefToday=8600;
-radiusPriMir=radiusRefToday;
-deltaRadiusL=100;
-deltaRadiusH=0;
-radiusPriMir:=10000;(*radiusRefToday*N[Sqrt@2];*)(*NB: this delayed definition is the one in use*)
+thetaMinPriMir=0.0;
 (**)
-(*thickSecMir=0;(*ok for rich, zero dielectric substrate*)(*it screams if thickness is in SphericalMirror*)
-thickPriMir=0;(*ok for rich, zero dielectric substrate*)(*it screams if thickness is in SphericalMirror*)*)
+thickSecMir=0;(*ok for rich, zero dielectric substrate*)(*it screams if thickness is in SphericalMirror*)
+thickPriMir=0;(*ok for rich, zero dielectric substrate*)(*it screams if thickness is in SphericalMirror*)
 (**)
-p2z=11705;
+(*=========================================================================*)
+(* QUARTZ PLATE PARAMETERS (used only if useQuartzPlate) *)
+(*=========================================================================*)
+(*not used: useQuartzPlate==False*)
+(**)
+(*=========================================================================*)
+(* PHOTODETECTOR DEPTH *)
+(*=========================================================================*)
+(*PDADepth: not set for this optics*)
+(**)
+(*=========================================================================*)
+(* EXPERIMENTS (inactive): ellipsoidal/custom primary mirror // REMOVED *)
+(*=========================================================================*)
 (**)
 (*=========================================================================*)
 (* NO MORE CHANGES OF PARAMETERS AFTER HERE *)
 (*=========================================================================*)
 (**)
 calcSphericalPrimaryMirror[sizeTrnsvrsPriMir,tiltPriMir,radiusPriMir,thetaMinPriMir,p2z];
+(**)
+(*=========================================================================*)
+(* DERIVED GEOMETRY (common block): secondary-mirror edges and normal, paraxial focal surface, reflected points *)
+(*=========================================================================*)
+(*replaces execDoCalc (used up to 2026-11-07 by LHCb22Upg1 only), which placed the secondary mirror from p4z and theThetaMinSecMir*)
+centerPriMirRefl={0,0};
+edgeParaFSNear={0,0};
+edgeParaFSAway={0,0};
+edgeParaFSNearRefl={0,0};
+edgeParaFSAwayRefl={0,0};
+(**)
+secMirEdges=doCalcPlaneSidewiseCoords[zSecMir,xSecMir,tiltSecMir,sizeTrnsvrsSecMir,sizeThrdDimSecMir];(*edges ordered by increasing z*)
+{{zSecMirMin,xSecMirMin},{zSecMirCen,xSecMirCen},{zSecMirMax,xSecMirMax}}=secMirEdges[[1]];
+secMirNorm3D=Normalize[{-(xSecMirMax-xSecMirMin),+(zSecMirMax-zSecMirMin),0}];(*secondary-mirror normal, used by the back-tracing*)
+(**)
+(*angle between the primary-mirror axis and the beam line, from the Optica rotation (only printed through betaVrtx)*)
+calcFS[centerPriMir[[1]],centerPriMir[[2]],radiusPriMir,Abs[Mod[tiltPriMir,2\[Pi],-\[Pi]]]];
+(**)
+reflect0[centerPriMir[[1]],centerPriMir[[2]],dirVect[zSecMirMin-zSecMirMax,xSecMirMin-xSecMirMax],zSecMir,xSecMir];
+centerPriMirRefl[[1]]=reflectedPoint[[1]];
+centerPriMirRefl[[2]]=reflectedPoint[[2]];
+reflect0[edgeParaFSNear[[1]],edgeParaFSNear[[2]],dirVect[zSecMirMin-zSecMirMax,xSecMirMin-xSecMirMax],zSecMir,xSecMir];
+edgeParaFSNearRefl[[1]]=reflectedPoint[[1]];
+edgeParaFSNearRefl[[2]]=reflectedPoint[[2]];
+reflect0[edgeParaFSAway[[1]],edgeParaFSAway[[2]],dirVect[zSecMirMin-zSecMirMax,xSecMirMin-xSecMirMax],zSecMir,xSecMir];
+edgeParaFSAwayRefl[[1]]=reflectedPoint[[1]];
+edgeParaFSAwayRefl[[2]]=reflectedPoint[[2]];
 (**)
 (*=========================================================================*)
 (* PRIMARY MIRROR *)
@@ -129,48 +170,6 @@ FrontSurface->True
 ],(*FlatSubstrate->False gives errors inside my routines???*)
 {{zPriMirVar,zVrtxPriMir},{xPriMirVar,xVrtxPriMir}},{tiltPriMirVar,tiltPriMir/Degree}
 ];
-(**)
-{x01,y01,z01}:={-radiusPriMir-deltaRadiusL,0,0};(* The base surface vertex passes by the origin; then it is moved by Move *)
-{a1,b1,c1}={1,1,1};
-Print[Plot3D[ellipse3D[a1,b1,c1,radiusPriMir,rt,r3,x01,y01,z01],
-{rt,-bigBox/10,+bigBox/10},{r3,-bigBox/10,+bigBox/10},
-AspectRatio->Automatic,Axes->True,AxesLabel->Automatic]
-];
-(**)
-(*=========================================================================*)
-(*
-(*========= paraboloid (1) ========*)
-ClearAll[a,b,c,rad,x,y,z,x0,y0,z0];
-rrr=radius;
-{x01,y01,z01}={-rrr,0,0};(* The base surface vertex passes by the origin; then it is moved by Move *)
-solutionE=Solve[((x-x0)/a)^2+((y-y0)/b)^2+((z-z0)/c)^2\[Equal]rad^2,x];
-ellipse3D[a_,b_,c_,rad_,y_,z_,x0_,y0_,z0_]=x/.solutionE[[2]];
-*)
-(*
-(*========= paraboloid (2) ========*)
-CustomMirror[Function[Evaluate[ellipse3D[rrr,1,1,rrr,#1,#2,rrr^2,y01,z01]]]
-*)
-(*=========================================================================*)
-(**)
-(*BE CAREFUL NOT TO HAVE DUPLICATE POINTS IN THE APERTURE!!!*)
-(*OPTICA joins the first and last point of the aperture*)
-apertPriMirL:={
-{0,-sizeThrdDimPriMir},
-{+sizeTrnsvrsPriMirL,-sizeThrdDimPriMir},
-{+sizeTrnsvrsPriMirL,+sizeThrdDimPriMir},
-{0,+sizeThrdDimPriMir}
-};
-If[Length@apertPriMirL!=Length@DeleteDuplicates@apertPriMirL,miniBanner["STOP"];killStop];
-(*priMirror=Move[
-CustomMirror[Function[Evaluate[ellipse3D[a1,b1,c1,radiusPriMir,#1,#2,x01,y01,z01]]],
-apertPriMirL,
-"PRI-MIR-NOW",
-SurfaceRayIntersections\[Rule]Symbol,
-LabelPositions\[Rule]{{0,0,0}}],
-(*{zPriMir,xPriMir}, tiltPriMir/Degree];*)
-{{zPriMirLVar,zPriMir},
-{xPriMirLVar,xPriMir}},
-{tiltPriMirLVar,tiltPriMir/Degree}];*)
 (**)
 (*=========================================================================*)
 (* SECONDARY MIRROR *)
@@ -187,23 +186,12 @@ FrontSurface->True
 ];
 (**)
 (*=========================================================================*)
-(* QUARTZ PLATE (not used in this optics) *)
+(* QUARTZ PLATE (only if useQuartzPlate) *)
 (*=========================================================================*)
+If[useQuartzPlate,
 (*QUARTZ PLATE//TO FIX/check (wavlen model)*)
-(*Print["Optical Medium data \n",TableForm@Transpose@SearchData[OpticalMedium->"F_SILICA"]];
-testQuartzPlate=False;
+Print["Optical Medium data \n",TableForm@Transpose@SearchData[OpticalMedium->"F_SILICA"]];
 quartzPlateDist:={zQuartzPlateDist,xQuartzPlateDist};
-tiltQuartzPlate=0;
-If[testQuartzPlate==True
-,
-distanceQuartzPlateFromPD=-300;
-quartzPlateThick=8;
-tiltScreenAddToQuartzPlateDegrees=25
-,
-distanceQuartzPlateFromPD=-200;
-quartzPlateThick=8;
-tiltScreenAddToQuartzPlateDegrees=0
-];
 {zQuartzPlateDist,xQuartzPlateDist}=
 distanceQuartzPlateFromPD*{Cos[tiltScreen],Sin[tiltScreen]}+{zScreen,xScreen};(*set delayed does not work*)
 quartzPlate=Move[PlanoConvexLens[
@@ -214,7 +202,8 @@ Transmittance->100,
 OpticalMedium->"F_SILICA",
 DesignWaveLength->0.350],
 {{zQuartzPlateDistVar,zQuartzPlateDist},{xQuartzPlateDistVar,xQuartzPlateDist}},{tiltQuartzPlateVar,tiltScreenAddToQuartzPlateDegrees+tiltScreen/Degree}(*here tiltScreen!*)
-];*)
+];
+];
 (*Transmittance\[Rule]0.5,Reflectance\[Rule]0.5,CurvatureDirection\[Rule]Back,SwitchDirectionOnReflection\[Rule]True*)
 (**)
 (*=========================================================================*)
@@ -224,12 +213,14 @@ thePDA=Move[Screen[
 {sizeTrnsvrsScreen,sizeThrdDimScreen},
 "THE-PDA-NOW",
 Transmittance->0],
-{{zScreenVar,zScreen},{xScreenVar,xScreen}},{tiltScreenVar,tiltScreen/Degree}
-];
+{{zScreenVar,zScreen},{xScreenVar,xScreen}},{tiltScreenVar,tiltScreen/Degree}];
 (**)
 (*=========================================================================*)
 (* COMPONENT NUMBERING *)
 (*=========================================================================*)
+(* Sequential tracking follows the numbering here.... *)
+(* If you use Resonate the component numbering changes!!! some functions may stop working *)
+(* Boundary is the last one *)
 (**)
 printD@resonate;
 Unprotect[onThePriMirror,onTheSecMirror,onTheTerMirror,onTheQuartzPlateFron,onTheQuartzPlateBack,onTheFS,onTheBox];
@@ -238,6 +229,7 @@ If[resonate==True
 ,
 (*==================================================================================================*)
 (* resonate == True *)
+(* TO DO (later): ONE resonate==True strategy for all the non-split optics (LHCb22Upg1 resonates {pri,sec,quartz} together, FTDR resonates each component); until then this branch is specific to this file *)
 priMirrorNumber=1;
 secMirrorNumber=2;
 terMirrorNumber=0;
@@ -279,20 +271,21 @@ Resonate[{thePDA(*,thePDAT*)},"PD"]
 (*]*)
 ,
 (*==================================================================================================*)
-(* resonate == False *)
-(*FIX 2026-11-07: myOptics below has 3 components + the boundary box; the numbers were 1/3/5/7 (copied from the 6-component SPLIT optics) and the onThe* selectors were not defined*)
+(* resonate == False: the same for every non-split optics *)
 priMirrorNumber=1;
-secMirrorNumber=2;(*was 3*)
+secMirrorNumber=2;
+quartzPlateNumber=If[useQuartzPlate,3,0];
+focalSurfaceNumber=If[useQuartzPlate,4,3];
+boxNumber=focalSurfaceNumber+1;
 terMirrorNumber=0;
-focalSurfaceNumber=3;(*was 5*)
-boxNumber=4;(*was 7*)
-quartzPlateNumber=0;(*no quartz plate in this optics*)
 priMirrorSurfNumber=1;
 secMirrorSurfNumber=1;
-quartzPlateSurfNumberFron=0;
-quartzPlateSurfNumberBack=0;
+quartzPlateSurfNumberFron=If[useQuartzPlate,1,0];
+quartzPlateSurfNumberBack=If[useQuartzPlate,2,0];
 focalSurfaceSurfNumber=1;
 terMirrorSurfNumber=0;
+(**)
+myOptics:=Join[{priMirror,secMirror},If[useQuartzPlate,{quartzPlate},{}],{thePDA}];
 (**)
 onThePriMirror:={ComponentNumber->priMirrorNumber,SurfaceNumber->priMirrorSurfNumber};
 onTheSecMirror:={ComponentNumber->secMirrorNumber,SurfaceNumber->secMirrorSurfNumber};
@@ -303,14 +296,9 @@ onTheFS:={ComponentNumber->focalSurfaceNumber,SurfaceNumber->focalSurfaceSurfNum
 onTheBox:={ComponentNumber->boxNumber};
 (**)
 theTrackOrigin:={ComponentNumber->priMirrorNumber,SurfaceNumber->1};
-(**)
-myOptics:={priMirror,secMirror, thePDA}
 ];
 (**)
 Protect[onThePriMirror,onTheSecMirror,onTheTerMirror,onTheQuartzPlateFron,onTheQuartzPlateBack,onTheFS,onTheBox];
-(**)
-Print[myOptics];
-(**)
 (**)
 
 checkNewCreatedSymbols[];

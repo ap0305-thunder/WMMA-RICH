@@ -627,7 +627,7 @@ roundDigits[z_,d_:0.001]:=MapAt[Round[#,d]&,z,Position[NumericQ[#]&/@z,True]];
 
 (* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>:: *)
 numFormat[x_,n_:10,theExp_:10]:=NumberForm[x,{n,3},
-ExponentFunction->(If[-theExp<#<+theExp,Null,#]&),NumberSigns->(If[x!=0,{"-","+"},{"",""}])];
+ExponentFunction->(If[-theExp<#<+theExp,Null,#]&),NumberSigns->(If[TrueQ[x!=0],{"-","+"},{"",""}])];
 SetAttributes[numFormat,Listable];
 
 
@@ -653,8 +653,9 @@ ClearAll[nf,nfpm];
 nf[x_,sp_:8,dg_:3,theExp_:3]:=NumberForm[x,{sp,dg},
 ExponentFunction->(If[-theExp<#1<+theExp,Null,3 Quotient[#1,3]]&),NumberMultiplier->"*"];
 (*nfp: old name, to disappear*)
+(*FIX 2026-11-08: TrueQ in NumberSigns (here and in numFormat, numFormatPad, nfpmPad): for a non-numeric x (Indeterminate, a symbol) the If did not evaluate and NumberForm complained (NumberForm::nsgn)*)
 nfpm[x_,sp_:8,dg_:3,theExp_:3]:=NumberForm[x,{sp,dg},
-ExponentFunction->(If[-theExp<#1<+theExp,Null,3 Quotient[#1,3]]&),NumberMultiplier->"*",NumberSigns->(If[x!=0,{"-","+"},{" "," "}])];
+ExponentFunction->(If[-theExp<#1<+theExp,Null,3 Quotient[#1,3]]&),NumberMultiplier->"*",NumberSigns->(If[TrueQ[x!=0],{"-","+"},{" "," "}])];
 (*nfp[x_,sp_:8,dg_:3,theExp_:3]:=nfpm[x,sp,dg,theExp];*)(*deprecated*)
 SetAttributes[{nf,nfpm},Listable];
 Protect[nf,nfpm];
@@ -678,11 +679,11 @@ Protect[nfl,nfpml];
 
 (* ::Input::Initialization::"Tags"-><|"PrefixPlus" -> <||>|>:: *)
 numFormatPad[x_,n_:10,theExp_:10]:=PaddedForm[x,{n,3},
-ExponentFunction->(If[-theExp<#<+theExp,Null,#]&),NumberSigns->(If[x!=0,{"-","+"},{" "," "}])];
+ExponentFunction->(If[-theExp<#<+theExp,Null,#]&),NumberSigns->(If[TrueQ[x!=0],{"-","+"},{" "," "}])];
 nfPad[x_,sp_:8,dg_:3,theExp_:3]:=PaddedForm[x,{sp,dg},
 ExponentFunction->(If[-theExp<#1<+theExp,Null,3 Quotient[#1,3]]&),NumberMultiplier->"*"];
 nfpmPad[x_,sp_:8,dg_:3,theExp_:3]:=PaddedForm[x,{sp,dg},
-ExponentFunction->(If[-theExp<#1<+theExp,Null,3 Quotient[#1,3]]&),NumberMultiplier->"*",NumberSigns->(If[x!=0,{"-","+"},{" "," "}])];
+ExponentFunction->(If[-theExp<#1<+theExp,Null,3 Quotient[#1,3]]&),NumberMultiplier->"*",NumberSigns->(If[TrueQ[x!=0],{"-","+"},{" "," "}])];
 SetAttributes[numFormatPad,Listable];
 SetAttributes[nfPad,Listable];
 SetAttributes[nfpmPad,Listable];

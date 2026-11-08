@@ -1,0 +1,90 @@
+calculator--2026-10-27--1946-save.nb -> calculator.nb  (fix C1: chromatic model of doCalcSignificance; no silent gamma->infinity fallback, explicit switch useChromaticRatioOne)
+Intermediate version: calculator--2026-10-27--2002-save.nb (C1 without the switch).
+Cell sources rendered as Wolfram Language text; cell numbers refer to the new calculator.nb (one cell inserted after 136).
+
+==============================================================================
+CELL 131  doCalcSignificance
+==============================================================================
+--- original
++++ fixed
+@@ -8,5 +8,5 @@
+ modeFlag_:""
+ ]:=Module[{
+-numberOfSignalPhotonsAsympt,bckCnt,dniCnt,refrIndex,mRadToMm,radiusAt,
++chromaRatio,numberOfSignalPhotonsAsympt,bckCnt,dniCnt,refrIndex,mRadToMm,radiusAt,
+ sgnlVersusMomentum,ringAreaVersusMomentum,
+ totalBckgInRingAreaInGateTimeVersusMomentum,totalDarkInRingAreaInGateTimeVersusMomentum,
+@@ -26,4 +26,17 @@
+ },
+ debugPrintEnabledFlag=debug;
++(*FIX 2026-10-27 (C1): choice of the chromatic model.
++useChromaticRatioOne=True (cell after the guard below): TEMPORARY gamma -> infinity approximation, ratio=1.
++Otherwise the CHROMATICA model sigmaTotSnglPhEvolutionWithGammaRatio is required: if it is missing (or is the old ratio=1 fallback) the function stops with Failure["ChromaticModelMissing"].*)
++If[TrueQ[useChromaticRatioOne],
++chromaRatio=(1&),
++If[
++!NumericQ[N[sigmaTotSnglPhEvolutionWithGammaRatio[theGamma]/.q_Quantity:>QuantityMagnitude[q]]]||
++MemberQ[DownValues[sigmaTotSnglPhEvolutionWithGammaRatio],_:>1],
++Print["doCalcSignificance stopped: the chromatic model sigmaTotSnglPhEvolutionWithGammaRatio is not defined (or is the old ratio=1 fallback): evaluate the CHROMATICA model cell first, or set useChromaticRatioOne=True"];
++Return[Failure["ChromaticModelMissing",<|"MessageTemplate"->"sigmaTotSnglPhEvolutionWithGammaRatio is not defined: evaluate the CHROMATICA model cell first, or set useChromaticRatioOne=True.","Gamma"->theGamma|>]]
++];
++chromaRatio=sigmaTotSnglPhEvolutionWithGammaRatio
++];
+ (*FIX 2026-10-26 (B1): everything below is read from theExperiment*)
+ numberOfSignalPhotonsAsympt=theExperiment["numChrPho"];
+@@ -65,5 +78,5 @@
+ (**)
+ sgnlOld:= QuantityMagnitude[numberOfSignalPhotonsAsympt*thisNumRelChr[theGamma,refrIndex]];
+-sgnlVersusMomentum[\[Gamma]_]:=QuantityMagnitude[theExperiment["numChrPhoRaw"]*thisNumRelChr[\[Gamma],refrIndex]]*N@Erf[sigmaTotSnglPhEvolutionWithGammaRatio[\[Gamma]]*theExperiment["bandRadiusScaleFactor"]/Sqrt[2]];
++sgnlVersusMomentum[\[Gamma]_]:=QuantityMagnitude[theExperiment["numChrPhoRaw"]*thisNumRelChr[\[Gamma],refrIndex]]*N@Erf[chromaRatio[\[Gamma]]*theExperiment["bandRadiusScaleFactor"]/Sqrt[2]];
+ (**)
+ (*THE RECALCULATION OF AREA IS APPROXIMATE // SHOULD USE THE EXACT FORMULA*)
+@@ -72,5 +85,5 @@
+ theNumPixEquivInRingArea=ringAreaOld/((theExperiment["pixLinSize"]))^2;
+ theNumPixEquivOnRingCircumference=2*\[Pi]*theExperiment["radiusChrAsympt"]/theExperiment["pixLinSize"];
+-ringAreaVersusMomentum[\[Gamma]_]:=fiducialAreaOfTheRing[radiusAt[\[Gamma],refrIndex],sigmaTotSnglPhEvolutionWithGammaRatio[\[Gamma]]*theExperiment["bandTotalRadiusChrAsympt"]*mRadToMm];
++ringAreaVersusMomentum[\[Gamma]_]:=fiducialAreaOfTheRing[radiusAt[\[Gamma],refrIndex],chromaRatio[\[Gamma]]*theExperiment["bandTotalRadiusChrAsympt"]*mRadToMm];
+ (**)
+ (*intBck*ringAreaOld*theTimeBinRef !@#$% CONSERVATIVE: PHYS BACK IN BCO go in THE TIME-GATE *)
+
+==============================================================================
+CELL 135  doAllSignificancePlots
+==============================================================================
+--- original
++++ fixed
+@@ -14,5 +14,8 @@
+ (*=============================================================================*)
+ (*MANDATORY TO RUN IT*)
+-doCalcAllExperiment[tag,False,False];
++(*FIX 2026-10-27 (C1): stop if the experiment run fails (for example ChromaticModelMissing) instead of scanning a stale currentExperiment*)
++With[{runResult=doCalcAllExperiment[tag,False,False]},
++If[FailureQ[runResult],Print["doAllSignificancePlots stopped: ",runResult];Return[runResult]]
++];
+ (*=============================================================================*)
+ (**)
+
+==============================================================================
+CELL 136  chromatic-model guard
+==============================================================================
+--- original
++++ fixed
+@@ -28,6 +28,5 @@
+ ,
+ bigBanner["WARNING: sigmaTotSnglPhEvolutionWithGamma IS NOT DEFINED ==>> CHROMATICA "];
+-miniBanner[" only \[Gamma] -> \[Infinity] supported"];
+-sigmaTotSnglPhEvolutionWithGammaRatio[\[Gamma]_]=1;
+-printD@sigmaTotSnglPhEvolutionWithGammaRatio[\[Gamma]];
++(*FIX 2026-10-27 (C1): no automatic ratio=1 fallback; ratio=1 is chosen explicitly with useChromaticRatioOne=True (next cell)*)
++miniBanner[" doCalcSignificance stops unless useChromaticRatioOne=True (next cell)"];
+ ];
+
+==============================================================================
+NEW CELL 137  switch useChromaticRatioOne (inserted after the guard)
+==============================================================================
++(*FIX 2026-10-27 (C1): TEMPORARY choice for doCalcSignificance.
++True  -> ratio=1: gamma -> infinity approximation, the chromatic evolution of the single-photon resolution with gamma is ignored.
++False -> the CHROMATICA model (sigmaTotSnglPhEvolutionWithGammaRatio) is required; doCalcSignificance stops with Failure["ChromaticModelMissing"] if it is not defined.*)
++useChromaticRatioOne=True;
++If[TrueQ[useChromaticRatioOne],
++bigBanner["TEMPORARY: useChromaticRatioOne=True ==>> doCalcSignificance uses ratio=1 (gamma -> infinity approximation)"]
++];
