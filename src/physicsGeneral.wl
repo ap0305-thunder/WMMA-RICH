@@ -8,11 +8,13 @@
 *)
 physicsGeneral`Private`versionTAG = "v.08-08-2026";
 
+
+
 (* ::Text:: *)
 (*This package/notebook defines general physics tools.*)
 
 
-(* ::Subtitle:: *)
+(* ::Subtitle::Closed:: *)
 (*INIT*)
 
 
@@ -67,23 +69,22 @@ If[
 
 
 
-
 (* ::Input::Initialization:: *)
 BeginPackage[
   "physicsGeneral`",
   {"myNotebookInit`", "base`"}
 ];
 
-Begin["`Private`"];
-End[];
+(* ::Input::Initialization:: *)
+(* Public API. These two lines run in the PUBLIC physicsGeneral` context and are
+   what creates the exported symbols; the implementation below is private. *)
+Unprotect[bet,beta,betaCherenkovThreshold,betaInfinity,betaPart,betaParticleFromMassAndMomentum,betaPartThr,betThr,deltaMassSquare,energy,epsilonQuantum,gam,gamma,gammaCherenkovThreshold,gammaPart,gammaParticleFromMassAndMomentum,gamThr,m1,m2,m3,m4,m5,mass,masses,mEle,mKao,mMuo,momentum,momentumCherenkovThreshold,momentumFromMassAndBeta,momentumFromMassAndGamma,momentumPart,momentumThr,momThr,mPio,mPro,numPrecision,numRelPho,precisionify,theHadronMasses,theHighPrecision,thePartMasses,theParts,thetaC,thetaCherenkov,thetaChr,thetaChrTheMax,toMass];
 
+ClearAll[bet,beta,betaCherenkovThreshold,betaInfinity,betaPart,betaParticleFromMassAndMomentum,betaPartThr,betThr,deltaMassSquare,energy,epsilonQuantum,gam,gamma,gammaCherenkovThreshold,gammaPart,gammaParticleFromMassAndMomentum,gamThr,m1,m2,m3,m4,m5,mass,masses,mEle,mKao,mMuo,momentum,momentumCherenkovThreshold,momentumFromMassAndBeta,momentumFromMassAndGamma,momentumPart,momentumThr,momThr,mPio,mPro,numPrecision,numRelPho,precisionify,theHadronMasses,theHighPrecision,thePartMasses,theParts,thetaC,thetaCherenkov,thetaChr,thetaChrTheMax,toMass];
 
 
 (* ::Input::Initialization:: *)
-Unprotect[bet,beta,betaCherenkovThreshold,betaInfinity,betaPart,betaParticleFromMassAndMomentum,betaPartThr,betThr,chrnkvAngle,deltaMassSquare,energy,epsilonQuantum,gam,gamma,gammaCherenkovThreshold,gammaPart,gammaParticleFromMassAndMomentum,gamThr,m1,m2,m3,m4,m5,mass,masses,momentum,momentumCherenkovThreshold,momentumFromMassAndBeta,momentumFromMassAndGamma,momentumPart,momentumThr,momThr,numPrecision,numRelPho,precisionify,tC,tCAllPart,theHighPrecision,thePartMasses,theParts,thetaC,thetaChr,thetaChrTheMax,thisNumRelChr,thisThetaChr,toMass,tpl];
-
-ClearAll[bet,beta,betaCherenkovThreshold,betaInfinity,betaPart,betaParticleFromMassAndMomentum,betaPartThr,betThr,chrnkvAngle,deltaMassSquare,energy,epsilonQuantum,gam,gamma,gammaCherenkovThreshold,gammaPart,gammaParticleFromMassAndMomentum,gamThr,m1,m2,m3,m4,m5,mass,masses,momentum,momentumCherenkovThreshold,momentumFromMassAndBeta,momentumFromMassAndGamma,momentumPart,momentumThr,momThr,numPrecision,numRelPho,precisionify,tC,tCAllPart,theHighPrecision,thePartMasses,theParts,thetaC,thetaChr,thetaChrTheMax,thisNumRelChr,thisThetaChr,toMass,tpl];
-
+Begin["`Private`"]; (* Begin Private Context *)
 
 
 (* ::Input::Initialization:: *)
@@ -96,8 +97,8 @@ epsilonQuantum=1000*10^-theHighPrecision;
 
 
 
-(* ::Subtitle::Initialization:: *)
-(*(*(*MECHANICS*)*)*)
+(* ::Subtitle::Initialization::Closed:: *)
+(*(*(*(*(*MECHANICS*)*)*)*)*)
 
 
 (* ::Input::Initialization:: *)
@@ -138,7 +139,7 @@ Print[Precision[betaInfinity]];
 
 
 (* ::Subtitle:: *)
-(*RICH*)
+(*GENERAL CHERENKOV PHYSICS*)
 
 
 (* ::Input::Initialization:: *)
@@ -148,8 +149,7 @@ thetaChr[\[Beta]_,n_]:=If[(n>=1)&&(0<=\[Beta]<=1)&&((n*\[Beta])>1),ArcCos[1/(n*\
 *)
 
 
-Unprotect[thetaCherenkov,thetaC,thetaChr];
-ClearAll[thetaCherenkov,thetaC,thetaChr];
+
 SetAttributes[{thetaCherenkov,thetaC,thetaChr},Listable];
 
 (*NEW GENERAL*)
@@ -162,12 +162,7 @@ thetaChr[\[Beta]_,n_]:=thetaCherenkov[\[Beta],n];
 
 
 
-chrnkvAngle[m_,p_,\[Lambda]_]:=Module[{physicsGeneral`Private`z},
-physicsGeneral`Private`z=1/(betaPart[m,p]*theRefrIndex[\[Lambda]]); (* It has to be positive *)
-physicsGeneral`Private`z=Map[Min[#,+1]&,physicsGeneral`Private`z]; (* z is non negative *)
-Return[Chop[ArcCos[physicsGeneral`Private`z]]]
-];
-chrnkvAngleGeneral[m_,p_,\[Epsilon]_]:=ArcCot[D[\[Epsilon]*Tan[ArcCos[1/(betaPart[m,p]*theRefrIndex[\[Lambda][\[Epsilon]]])]],\[Epsilon]]];
+(* chrnkvAngle and chrnkvAngleGeneral moved to rich`: they depend on theRefrIndex *)
 
 
 
@@ -189,33 +184,38 @@ momThr[m_,n_]:=momentumCherenkovThreshold[m,n];
 
 thetaChrTheMax[n_]:=thetaChr[1,n];
 numRelPho[\[Beta]_,n_]:=If[(n>=1)&&(0<=\[Beta]<=1)&&((n*\[Beta])>1),Evaluate@FullSimplify[Sin[thetaChr[\[Beta],n]]^2/Sin[thetaChrTheMax[n]]^2],0];
-(* this... = n pre-fixed; function of gamma; now it becomes mrad; add unit of measure *)
-thisThetaChr[\[Gamma]_,n_:thisRefrIndex]:=Quantity[1000*thetaChr[beta[\[Gamma]],n],"Milliradians"];
-thisNumRelChr[\[Gamma]_,n_:thisRefrIndex]:=numRelPho[beta[\[Gamma]],n];
+(* thisThetaChr and thisNumRelChr moved to rich`: they default to thisRefrIndex *)
 (**)
+
+
+(* ::Input::Initialization:: *)
+(* tC, tCAllPart and tpl moved to rich`: they depend on theRefrIndex *)
+
+
+(* ::Subsubtitle:: *)
+(*TO DO*)
 
 
 (* ::Input::Initialization:: *)
 (**************************************************************************************************)
 (* General/generalized cherenkov angle formula *)
 (**************************************************************************************************)
-(*theRefrIndex[x_]:=1/(1+x/1000000000)*)
 (*
-k=n omega/c = 2Pi/lambda
-lambda=2 Pi c/ n / omega 
- omega =2 Pi c/ n/lambda
-theRefrIndex[\[Lambda]]=theRefrIndex[\[Lambda]]
+k=n*omega/c=2*Pi/lambda
+lambda=2*Pi*c/(n*omega)
+omega=2*Pi*c/(n*lambda)
 D[n[\[Omega]],\[Omega]]=D[n[\[Omega]],\[Lambda]]*D[\[Lambda],\[Omega]]
-*)
-(*
 g[m_,p_,\[Omega]_]:=
 Sqrt[(theRefrIndex[\[Lambda]0]*betaPart[m,p])^2-1]-(1/Sqrt[(theRefrIndex[\[Lambda]0]*betaPart[m,p])^2-1])*\[Omega]*theRefrIndex[\[Lambda]0]*(betaPart[m,p])^2*D[n[\[Omega]],\[Omega]];
-g[m,p,\[Omega]]
 Print[Sqrt[(theRefrIndex[\[Lambda]0]*betaPart[m,p])^2-1]-(1/Sqrt[(theRefrIndex[\[Lambda]0]*betaPart[m,p])^2-1])\[Omega]0*theRefrIndex[\[Lambda]0]];
-
+chrnkvAngleGeneral[m_,p_,\[Epsilon]_]:=ArcCot[D[\[Epsilon]*Tan[ArcCos[1/(betaPart[m,p]*theRefrIndex[\[Lambda][\[Epsilon]]])]],\[Epsilon]]];
 Print@Plot[chrnkvAngleGeneral[0.140,150,s]-Pi/2,{s,3,4}];
 Print@Plot[chrnkvAngle[0.140,150,\[Lambda][s]],{s,3,4}];
 *)
+
+
+(* ::Subtitle:: *)
+(*PARTICLE PHYSICS*)
 
 
 (* ::Input::Initialization:: *)
@@ -240,65 +240,12 @@ masses={m1,m2,m3,m4,m5}=thePartMasses;
 
 
 (* ::Input::Initialization:: *)
-Unprotect[mEle,mMuo,mPio,mKao,mPro,theHadronMasses]
-ClearAll[mEle,mMuo,mPio,mKao,mPro,theHadronMasses]
+
 theHadronMasses=thePartMasses[[3;;5]];
 {mEle,mMuo,mPio,mKao,mPro}=thePartMasses
 nf@N@Table[3^(k/3),{k,3,-3,-1}]
 nf[0.001*0.06*Table[3^(k/3),{k,3,-3,-1}]]
-Protect[mEle,mMuo,mPio,mKao,mPro,theHadronMasses]
 
-
-(* ::Input::Initialization:: *)
-tC[\[Beta]_,theE_]:=1000*thetaC[\[Beta],theRefrIndex[\[Lambda][theE]]];
-tCAllPart[p_,theE_]:=Module[{},Table[1000*thetaC[betaPart[thePartMasses[[j]],p],theRefrIndex[\[Lambda][theE]]],{j,1,5}]];
-tpl[mass_,mom_,\[Lambda]_]:=1000*thetaC[betaPart[mass,mom],theRefrIndex[\[Lambda]]];
-
-
-(* ::Input::Initialization:: *)
-(*OLD OK*)
-(*chrnkvAngle[m_,p_,\[Lambda]_]:=Module[{z},z=1/(betaPart[m,p]*theRefrIndex[\[Lambda]]);
-z=Map[Min[#,+1]&,z];
-Return[Chop[ArcCos[z]]]
-];*)
-
-
-(*chrnkvAngle[m_,p_,\[Lambda]_]:=Module[{z},
-z=1/(betaPart[m,p]*theRefrIndex[\[Lambda]]); (* It has to be positive *)
-z=Min[z,1]; (* z is non negative *)
-Return[Chop[ArcCos[z]]]
-];*)
-
-(*chrnkvAngle[m_,p_,\[Lambda]_]:=Module[{z},z=1/(betaPart[m,p]*theRefrIndex[\[Lambda]]);
-z=Min[#,1]&/@Flatten[{z}];
-Chop[ArcCos[z]]];*)
-
-
-(* ::Subsubtitle:: *)
-(*TO DO*)
-
-
-(* ::Input::Initialization:: *)
-(**************************************************************************************************)
-(* General/generalized cherenkov angle formula *)
-(**************************************************************************************************)
-(*theRefrIndex[x_]:=1/(1+x/1000000000)*)
-(*
-k=n omega/c = 2Pi/lambda
-lambda=2 Pi c/ n / omega 
- omega =2 Pi c/ n/lambda
-theRefrIndex[\[Lambda]]=theRefrIndex[\[Lambda]]
-D[n[\[Omega]],\[Omega]]=D[n[\[Omega]],\[Lambda]]*D[\[Lambda],\[Omega]]
-*)
-(*
-g[m_,p_,\[Omega]_]:=
-Sqrt[(theRefrIndex[\[Lambda]0]*betaPart[m,p])^2-1]-(1/Sqrt[(theRefrIndex[\[Lambda]0]*betaPart[m,p])^2-1])*\[Omega]*theRefrIndex[\[Lambda]0]*(betaPart[m,p])^2*D[n[\[Omega]],\[Omega]];
-g[m,p,\[Omega]]
-Print[Sqrt[(theRefrIndex[\[Lambda]0]*betaPart[m,p])^2-1]-(1/Sqrt[(theRefrIndex[\[Lambda]0]*betaPart[m,p])^2-1])\[Omega]0*theRefrIndex[\[Lambda]0]];
-chrnkvAngleGeneral[m_,p_,\[Epsilon]_]:=ArcCot[D[\[Epsilon]*Tan[ArcCos[1/(betaPart[m,p]*theRefrIndex[\[Lambda][\[Epsilon]]])]],\[Epsilon]]];
-Print@Plot[chrnkvAngleGeneral[0.140,150,s]-Pi/2,{s,3,4}];
-Print@Plot[chrnkvAngle[0.140,150,\[Lambda][s]],{s,3,4}];
-*)
 
 
 (* ::Subtitle:: *)
@@ -306,9 +253,13 @@ Print@Plot[chrnkvAngle[0.140,150,\[Lambda][s]],{s,3,4}];
 
 
 (* ::Input::Initialization:: *)
+End[]; (* End Private Context *)
+
+
+(* ::Input::Initialization:: *)
 (* !@#$% ??? Do not bulk protect still undefined variables inside := *)
 Protect[
-bet,beta,betaCherenkovThreshold,betaInfinity,betaPart,betaParticleFromMassAndMomentum,betaPartThr,betThr,chrnkvAngle,deltaMassSquare,energy,epsilonQuantum,gam,gamma,gammaCherenkovThreshold,gammaPart,gammaParticleFromMassAndMomentum,gamThr,m1,m2,m3,m4,m5,mass,masses,momentum,momentumCherenkovThreshold,momentumFromMassAndBeta,momentumFromMassAndGamma,momentumPart,momentumThr,momThr,numPrecision,numRelPho,precisionify,tC,tCAllPart,theHighPrecision,thePartMasses,theParts,thetaC,thetaChr,thetaChrTheMax,thisNumRelChr,thisThetaChr,toMass,tpl
+bet,beta,betaCherenkovThreshold,betaInfinity,betaPart,betaParticleFromMassAndMomentum,betaPartThr,betThr,deltaMassSquare,energy,epsilonQuantum,gam,gamma,gammaCherenkovThreshold,gammaPart,gammaParticleFromMassAndMomentum,gamThr,m1,m2,m3,m4,m5,mass,masses,mEle,mKao,mMuo,momentum,momentumCherenkovThreshold,momentumFromMassAndBeta,momentumFromMassAndGamma,momentumPart,momentumThr,momThr,mPio,mPro,numPrecision,numRelPho,precisionify,theHadronMasses,theHighPrecision,thePartMasses,theParts,thetaC,thetaCherenkov,thetaChr,thetaChrTheMax,toMass
 ];
 
 

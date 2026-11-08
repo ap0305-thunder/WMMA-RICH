@@ -1,0 +1,515 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     17575,        507]
+NotebookOptionsPosition[     14815,        460]
+NotebookOutlinePosition[     15239,        477]
+CellTagsIndexPosition[     15196,        474]
+WindowTitle->arc.nb
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["ARC barrel RICH", "Title",ExpressionUUID->"c82a0dcb-7077-d949-a552-ff8101133b08"],
+
+Cell["\<\
+Geometry and Optica ray tracing of the ARC barrel RICH, from \
+ARCGeometryData.wl (numbers extracted from the ARC XML and C++ constructor), \
+ARCBarrel.wl (pure Mathematica geometry, no Optica) and ARCBarrelOptica.wl \
+(Optica adapter, here adapted to OpticaEM). The three files must stay in the \
+same folder as this notebook. Units: mm, rad; Optica wavelengths in \
+micrometres. Use a fresh kernel (Evaluation > Quit Kernel) if optics.nb was \
+evaluated in the same kernel: the adapter adds its own refractive-index \
+models to ModelRefractiveIndex.\
+\>", "Text",ExpressionUUID->"78a6f92f-3ea9-0246-b5ad-d560c3e4f7ff"],
+
+Cell[CellGroupData[{
+
+Cell["Geometry (no Optica)", "Section",ExpressionUUID->"c221d4f6-1730-8f49-ac94-4c7a79426110"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Get", "[", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+      " ", "\"\<ARCBarrel.wl\>\""}], "}"}], "]"}], "]"}], ";"}]], "Input",
+ CellLabel->
+  "11/8/26 18:05:49 \
+In[1]:=",ExpressionUUID->"dc9aab83-2759-1c4f-bf6c-e191d92ea833"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"b1", " ", "=", " ", 
+    RowBox[{"ARCBarrel", "[", 
+     RowBox[{
+      RowBox[{"\"\<Row\>\"", " ", "->", " ", "1"}], ",", " ", 
+      RowBox[{"\"\<Phi\>\"", " ", "->", " ", "0"}]}], "]"}]}], ";"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"\"\<Row\>\"", " ", "->", " ", 
+     RowBox[{"2", " ", "or", " ", "\"\<Both\>\""}]}], ";", " ", 
+    RowBox[{"\"\<Phi\>\"", " ", "->", " ", 
+     RowBox[{
+     "Automatic", " ", "keeps", " ", "the", " ", "orientation", " ", "of", " ",
+       "the", " ", "source", " ", "files"}]}]}], " ", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{"Length", "[", 
+   RowBox[{"b1", "[", "\"\<Cells\>\"", "]"}], "]"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"17", " ", "cells"}], ";", " ", 
+    RowBox[{
+     RowBox[{"row", " ", "2"}], ":", " ", "16"}], ";", " ", 
+    RowBox[{"both", ":", " ", "33"}]}], " ", "*)"}]}]}], "Input",
+ CellLabel->
+  "11/8/26 18:05:49 \
+In[2]:=",ExpressionUUID->"51b6645a-08ff-224f-8bc4-e2373ae1526a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ARCBarrelTable", "[", "b1", "]"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"cell", " ", "positions"}], ",", " ", "eta", ",", " ", 
+    RowBox[{"mirror", " ", "radii", " ", "and", " ", "centres"}], ",", " ", 
+    RowBox[{"sensor", " ", "tilts"}], ",", " ", 
+    RowBox[{"global", " ", "mm"}]}], " ", "*)"}]}]], "Input",
+ CellLabel->
+  "11/8/26 18:05:50 \
+In[4]:=",ExpressionUUID->"b6e08add-e5b8-194d-95dd-7d4c7c7d4170"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ARCBarrelSection", "[", "b1", "]"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Z", "-", 
+     RowBox[{"R", " ", "section", " ", "of", " ", "one", " ", 
+      RowBox[{"row", ":", " ", 
+       RowBox[{"mirrors", " ", 
+        RowBox[{"(", "brown", ")"}]}]}]}]}], ",", " ", 
+    RowBox[{"sensors", " ", 
+     RowBox[{"(", "red", ")"}]}], ",", " ", 
+    RowBox[{"aerogel", " ", "plates", " ", 
+     RowBox[{"(", "orange", ")"}]}]}], " ", "*)"}]}]], "Input",
+ CellLabel->
+  "11/8/26 18:05:53 \
+In[5]:=",ExpressionUUID->"74c31f6b-0e4f-974c-994f-41a460bdb85c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ARCBarrelGraphics", "[", "b1", "]"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"3", "D", " ", "view"}], ",", " ", 
+    RowBox[{"a", " ", "few", " ", "seconds"}]}], " ", "*)"}]}]], "Input",
+ CellLabel->
+  "11/8/26 18:05:54 \
+In[6]:=",ExpressionUUID->"56e8e34a-053a-464a-98de-85f0b4ae8263"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"ARCIndex", "[", 
+     RowBox[{"\"\<Gas\>\"", ",", " ", "400."}], "]"}], ",", " ", 
+    RowBox[{"ARCIndex", "[", 
+     RowBox[{"\"\<Aerogel\>\"", ",", " ", "400."}], "]"}]}], "}"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"refractive", " ", "indices", " ", "at", " ", "400", " ", 
+     RowBox[{"nm", ":", " ", "1.0013268"}]}], ",", " ", "1.0309500"}], " ", 
+   "*)"}]}]], "Input",
+ CellLabel->
+  "11/8/26 18:05:59 \
+In[7]:=",ExpressionUUID->"c7a4ea60-3e84-1047-b95f-a67e98896bb1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Ray tracing with Optica (OpticaEM)", "Section",ExpressionUUID->"1a5d80c3-43b9-9d4e-82a3-2176ca6ef22d"],
+
+Cell["\<\
+Loads OpticaEM if not loaded yet. Run the two self-checks first: both must \
+succeed before tracing (the adapter installs its own intersection functions \
+on the Optica surfaces).\
+\>", "Text",ExpressionUUID->"9fbdb770-9f59-7c4a-ae8b-e92e20c768d5"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Get", "[", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+      " ", "\"\<ARCBarrelOptica.wl\>\""}], "}"}], "]"}], "]"}], 
+  ";"}]], "Input",
+ CellLabel->
+  "11/8/26 18:05:59 \
+In[8]:=",ExpressionUUID->"d1593f96-5bdd-a644-9a94-66008d5d98c8"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ARCOpticaClipSelfCheck", "[", "]"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{"must", " ", "be", " ", "True"}], " ", "*)"}]}]], "Input",
+ CellLabel->
+  "11/8/26 18:06:25 \
+In[9]:=",ExpressionUUID->"20ac528b-3360-514a-bf27-31492695e712"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ARCOpticaMediaSelfCheck", "[", "]"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "GasAccepted", " ", "and", " ", "AerogelAccepted", " ", "must", " ", "be",
+      " ", "True"}], ";", " ", 
+    RowBox[{
+    "indices", " ", "at", " ", "400", " ", "nm", " ", "about", " ", "1.0013", 
+     " ", "and", " ", "1.031"}]}], " ", "*)"}]}]], "Input",
+ CellLabel->
+  "11/8/26 18:06:25 \
+In[10]:=",ExpressionUUID->"e4c6f214-d062-b241-8cb1-3d3d44282402"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"sys", " ", "=", " ", 
+    RowBox[{"ARCOpticaSystem", "[", 
+     RowBox[{"b1", ",", " ", 
+      RowBox[{"\"\<FullBoundaryModel\>\"", " ", "->", " ", "False"}]}], 
+     "]"}]}], ";"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"inner", " ", "mirror", " ", "surfaces"}], ",", " ", 
+    RowBox[{"aerogel", " ", "and", " ", "cooling", " ", "faces"}], ",", " ", 
+    RowBox[{
+     RowBox[{"sensor", " ", "fronts"}], ";", " ", 
+     RowBox[{"True", " ", "=", " ", 
+      RowBox[{"all", " ", "solid", " ", "boundary", " ", "faces"}]}]}]}], " ",
+    "*)"}]}]], "Input",
+ CellLabel->
+  "11/8/26 18:06:25 \
+In[11]:=",ExpressionUUID->"a2ca8b4f-6e1e-f94b-ad84-5f4caa548691"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Example: Cherenkov cone from a track coming from the interaction point\
+\>", "Subsection",ExpressionUUID->"caf38e56-f4d9-a14b-aa87-dcc3939af3c9"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"c", " ", "=", " ", 
+    RowBox[{"SelectFirst", "[", 
+     RowBox[{
+      RowBox[{"b1", "[", "\"\<Cells\>\"", "]"}], ",", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"#", "[", "\"\<SignedNumber\>\"", "]"}], " ", "==", " ", 
+        "1"}], " ", "&"}]}], "]"}]}], ";"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{"central", " ", "cell", " ", "of", " ", "row", " ", "1"}], " ", 
+   "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"p", " ", "=", " ", 
+    RowBox[{"ARCToGlobal", "[", 
+     RowBox[{"c", ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"0.", ",", " ", "0.", ",", " ", "2000."}], "}"}]}], "]"}]}], 
+   ";"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"emission", " ", "point", " ", "in", " ", "the", " ", "gas"}], ",",
+     " ", 
+    RowBox[{"on", " ", "the", " ", "cell", " ", "axis", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"sensor", " ", "at", " ", "1940", " ", "mm"}], ",", " ", 
+       RowBox[{"mirror", " ", "at", " ", "about", " ", "2098", " ", "mm"}]}], 
+      ")"}]}]}], " ", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"thetaC", " ", "=", " ", 
+    RowBox[{"ArcCos", "[", 
+     RowBox[{"1", "/", 
+      RowBox[{"ARCIndex", "[", 
+       RowBox[{"\"\<Gas\>\"", ",", " ", "400."}], "]"}]}], "]"}]}], ";"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{"beta", " ", "=", " ", "1"}], " ", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{"rays", " ", "=", " ", 
+   RowBox[{"ARCOpticaRays", "[", 
+    RowBox[{"p", ",", " ", 
+     RowBox[{"ARCCherenkovCone", "[", 
+      RowBox[{
+       RowBox[{"Normalize", "[", "p", "]"}], ",", " ", "thetaC", ",", " ", 
+       "36"}], "]"}], ",", " ", "400.", ",", " ", "\"\<Gas\>\""}], "]"}]}], 
+  ";"}]}], "Input",
+ CellLabel->
+  "11/8/26 18:06:33 \
+In[12]:=",ExpressionUUID->"76d1f71a-83df-1b4a-9da4-698e8644f201"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"DrawSystem", "[", 
+   RowBox[{"{", 
+    RowBox[{"rays", ",", " ", "sys"}], "}"}], "]"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "traces", " ", "with", " ", "PropagateSystem", " ", "and", " ", "draws"}],
+     ";", " ", 
+    RowBox[{"do", " ", "not", " ", "use", " ", "TurboTrace"}]}], " ", 
+   "*)"}]}]], "Input",
+ CellLabel->
+  "11/8/26 18:06:33 \
+In[16]:=",ExpressionUUID->"0bb78d10-54e3-df4f-8cd2-6fa21288f089"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"traced", " ", "=", " ", 
+   RowBox[{"PropagateSystem", "[", 
+    RowBox[{"{", 
+     RowBox[{"rays", ",", " ", "sys"}], "}"}], "]"}]}], ";"}]], "Input",
+ CellLabel->
+  "11/8/26 18:07:54 \
+In[17]:=",ExpressionUUID->"afbd8c4b-5645-1848-aa0e-bccf03c3a14d"],
+
+Cell[BoxData["traced"], "Input",
+ CellLabel->
+  "11/8/26 18:07:56 \
+In[18]:=",ExpressionUUID->"e2860b1e-9ade-1a42-a5ee-f31274dc9d15"],
+
+Cell[BoxData["sys"], "Input",
+ CellLabel->
+  "11/8/26 18:08:03 \
+In[19]:=",ExpressionUUID->"734e5a14-d941-7f43-a686-f017829fb9d1"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"bc", "=", 
+    RowBox[{"Append", "[", 
+     RowBox[{"b1", ",", 
+      RowBox[{"\"\<Cells\>\"", "->", 
+       RowBox[{"{", "c", "}"}]}]}], "]"}]}], ";"}], "   ", 
+  RowBox[{"(*", 
+   RowBox[{"only", " ", "the", " ", "central", " ", "cell"}], "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{"sys1", "=", 
+   RowBox[{"ARCOpticaSystem", "[", 
+    RowBox[{"bc", ",", 
+     RowBox[{"\"\<FullBoundaryModel\>\"", "->", "False"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"traced", "=", 
+   RowBox[{"PropagateSystem", "[", 
+    RowBox[{"{", 
+     RowBox[{"rays", ",", "sys1"}], "}"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"pts", "[", "x_", "]"}], ":=", 
+   RowBox[{"Cases", "[", 
+    RowBox[{"x", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"_", "?", "NumericQ"}], ",", 
+       RowBox[{"_", "?", "NumericQ"}], ",", 
+       RowBox[{"_", "?", "NumericQ"}]}], "}"}], ",", "Infinity"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"seg", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"pts", "@", 
+       RowBox[{"ReadRays", "[", 
+        RowBox[{"traced", ",", "RayStart"}], "]"}]}], ",", 
+      RowBox[{"pts", "@", 
+       RowBox[{"ReadRays", "[", 
+        RowBox[{"traced", ",", "RayEnd"}], "]"}]}]}], "}"}], "]"}]}], ";"}], "\n", 
+ RowBox[{"Show", "[", 
+  RowBox[{
+   RowBox[{"ARCBarrelGraphics", "[", 
+    RowBox[{"bc", ",", 
+     RowBox[{"\"\<Aerogel\>\"", "->", "False"}]}], "]"}], ",", 
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{"{", 
+     RowBox[{"Blue", ",", 
+      RowBox[{"Line", "/@", "seg"}]}], "}"}], "]"}], ",", 
+   RowBox[{"PlotRange", "->", "All"}]}], "]"}]}], "Input",
+ CellLabel->
+  "11/8/26 18:08:10 \
+In[20]:=",ExpressionUUID->"88552ad2-de65-d44d-b530-6076586ef2f0"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"onSensor", "[", "p_", "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"d", "=", 
+       RowBox[{
+        RowBox[{"ARCToLocal", "[", 
+         RowBox[{"c", ",", "p"}], "]"}], "-", 
+        RowBox[{"c", "[", "\"\<SensorFront\>\"", "]"}]}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"d", ".", 
+        RowBox[{"c", "[", "\"\<PlaneE\>\"", "]"}]}], ",", 
+       RowBox[{"d", ".", 
+        RowBox[{"c", "[", "\"\<PlaneV\>\"", "]"}]}], ",", 
+       RowBox[{"d", ".", 
+        RowBox[{"c", "[", "\"\<PlaneN\>\"", "]"}]}]}], "}"}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"hits", "=", 
+   RowBox[{"Select", "[", 
+    RowBox[{
+     RowBox[{"onSensor", "/@", 
+      RowBox[{"pts", "@", 
+       RowBox[{"ReadRays", "[", 
+        RowBox[{"traced", ",", "RayEnd"}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"Abs", "[", 
+         RowBox[{"#", "[", 
+          RowBox[{"[", "3", "]"}], "]"}], "]"}], "<", "0.01"}], "&&", 
+       RowBox[{
+        RowBox[{"Max", "[", 
+         RowBox[{"Abs", "[", 
+          RowBox[{"#", "[", 
+           RowBox[{"[", 
+            RowBox[{";;", "2"}], "]"}], "]"}], "]"}], "]"}], "<=", "40"}]}], 
+      "&"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"Length", "[", "hits", "]"}], ",", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{
+     RowBox[{"hits", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", " ", 
+        RowBox[{";;", "2"}]}], "]"}], "]"}], ",", 
+     RowBox[{"AspectRatio", "->", "Automatic"}], ",", 
+     RowBox[{"Frame", "->", "True"}], ",", 
+     RowBox[{"FrameLabel", "->", 
+      RowBox[{"{", 
+       RowBox[{"\"\<sensor e (mm)\>\"", ",", "\"\<sensor v (mm)\>\""}], 
+       "}"}]}]}], "]"}]}], "}"}]}], "Input",
+ CellLabel->
+  "11/8/26 18:08:12 \
+In[26]:=",ExpressionUUID->"b69c0d5e-3168-934d-91df-85451b819962"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ends", "=", 
+   RowBox[{"pts", "@", 
+    RowBox[{"ReadRays", "[", 
+     RowBox[{"traced", ",", "RayEnd"}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{"aaa", "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Length", "[", "ends", "]"}], ",", 
+    RowBox[{"Tally", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Round", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"ARCToLocal", "[", 
+             RowBox[{"c", ",", "#"}], "]"}], "-", 
+            RowBox[{"c", "[", "\"\<SensorFront\>\"", "]"}]}], ")"}], ".", 
+          RowBox[{"c", "[", "\"\<PlaneN\>\"", "]"}]}], ",", "0.001"}], "]"}], 
+       "&"}], "/@", "ends"}], "]"}]}], "}"}]}]}], "Input",
+ CellLabel->
+  "11/8/26 18:08:12 \
+In[29]:=",ExpressionUUID->"78c828b3-a106-dc48-8f9e-bf5b4cc50aae"],
+
+Cell[BoxData[{
+ RowBox[{"aaa", "[", 
+  RowBox[{"[", "2", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", "%", "]"}]}], "Input",
+ CellLabel->
+  "11/8/26 18:08:12 \
+In[31]:=",ExpressionUUID->"1fc0358f-ab98-0c4c-919f-8e2579c984ad"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{960, 508},
+WindowMargins->{{-5.5, Automatic}, {Automatic, -5.5}},
+WindowTitle->"arc.nb",
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"5591f379-1a7d-3141-8ef1-d2c8d87341b2"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[596, 23, 87, 0, 92, "Title",ExpressionUUID->"c82a0dcb-7077-d949-a552-ff8101133b08"],
+Cell[686, 25, 630, 9, 74, "Text",ExpressionUUID->"78a6f92f-3ea9-0246-b5ad-d560c3e4f7ff"],
+Cell[CellGroupData[{
+Cell[1341, 38, 94, 0, 49, "Section",ExpressionUUID->"c221d4f6-1730-8f49-ac94-4c7a79426110"],
+Cell[1438, 40, 339, 10, 21, "Input",ExpressionUUID->"dc9aab83-2759-1c4f-bf6c-e191d92ea833"],
+Cell[1780, 52, 1008, 27, 49, "Input",ExpressionUUID->"51b6645a-08ff-224f-8bc4-e2373ae1526a"],
+Cell[2791, 81, 460, 11, 21, "Input",ExpressionUUID->"b6e08add-e5b8-194d-95dd-7d4c7c7d4170"],
+Cell[3254, 94, 594, 16, 21, "Input",ExpressionUUID->"74c31f6b-0e4f-974c-994f-41a460bdb85c"],
+Cell[3851, 112, 329, 9, 21, "Input",ExpressionUUID->"56e8e34a-053a-464a-98de-85f0b4ae8263"],
+Cell[4183, 123, 551, 15, 21, "Input",ExpressionUUID->"c7a4ea60-3e84-1047-b95f-a67e98896bb1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4771, 143, 108, 0, 49, "Section",ExpressionUUID->"1a5d80c3-43b9-9d4e-82a3-2176ca6ef22d"],
+Cell[4882, 145, 258, 4, 25, "Text",ExpressionUUID->"9fbdb770-9f59-7c4a-ae8b-e92e20c768d5"],
+Cell[5143, 151, 348, 11, 21, "Input",ExpressionUUID->"d1593f96-5bdd-a644-9a94-66008d5d98c8"],
+Cell[5494, 164, 264, 7, 21, "Input",ExpressionUUID->"20ac528b-3360-514a-bf27-31492695e712"],
+Cell[5761, 173, 484, 13, 21, "Input",ExpressionUUID->"e4c6f214-d062-b241-8cb1-3d3d44282402"],
+Cell[6248, 188, 713, 19, 21, "Input",ExpressionUUID->"a2ca8b4f-6e1e-f94b-ad84-5f4caa548691"],
+Cell[CellGroupData[{
+Cell[6986, 211, 155, 2, 39, "Subsection",ExpressionUUID->"caf38e56-f4d9-a14b-aa87-dcc3939af3c9"],
+Cell[7144, 215, 1815, 52, 63, "Input",ExpressionUUID->"76d1f71a-83df-1b4a-9da4-698e8644f201"],
+Cell[8962, 269, 461, 14, 21, "Input",ExpressionUUID->"0bb78d10-54e3-df4f-8cd2-6fa21288f089"],
+Cell[9426, 285, 287, 8, 21, "Input",ExpressionUUID->"afbd8c4b-5645-1848-aa0e-bccf03c3a14d"],
+Cell[9716, 295, 133, 3, 21, "Input",ExpressionUUID->"e2860b1e-9ade-1a42-a5ee-f31274dc9d15"],
+Cell[9852, 300, 130, 3, 21, "Input",ExpressionUUID->"734e5a14-d941-7f43-a686-f017829fb9d1"],
+Cell[9985, 305, 1783, 54, 92, "Input",ExpressionUUID->"88552ad2-de65-d44d-b530-6076586ef2f0"],
+Cell[11771, 361, 1919, 59, 49, "Input",ExpressionUUID->"b69c0d5e-3168-934d-91df-85451b819962"],
+Cell[13693, 422, 835, 25, 35, "Input",ExpressionUUID->"78c828b3-a106-dc48-8f9e-bf5b4cc50aae"],
+Cell[14531, 449, 244, 6, 35, "Input",ExpressionUUID->"1fc0358f-ab98-0c4c-919f-8e2579c984ad"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

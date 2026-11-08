@@ -826,7 +826,7 @@ SetAttributes[{showItTemp,printTempD,debugPrintTempD},HoldAll];
 (**************************************************************************************************)
 Clear[calcRICHYield];
 calcRICHYield[rad_,tmp\[Lambda]1_,tmp\[Lambda]2_,whichRICH_:0,sensor_:"ZERO",length_:0,numToGenerate_:1000,debug$calcRICHYield_:True,thisNumOfQuantiles_:11]:=Module[{refrIndex,velPhase,velGroup,
-\[ScriptCapitalE],\[CapitalLambda],rich`Private`s,wp,a,b,
+\[ScriptCapitalE],\[CapitalLambda],rich`Private`s,wp,(*a,b: replaced by \[FormalA],\[FormalB] - FIX 2026-11-08*)
 (*wavLenMedian,wavLenMean,integralSpectrum,*)(* keep as general... TBI *)
 theWhichRICH,theRad,theSensor,
 dispersionRefrIndexPhsWavLen,dispersionRefrIndexGrpWavLen,
@@ -1038,16 +1038,17 @@ Print[" refrIndex[\[Lambda]]   = ",nf[refrIndex[\[Lambda]],12,8]];
 miniBanner["refractive index business - determine one-pole Sellmeier parameters"];
 (*--------------------------------------------------------------------------------*)
 
-thisRichRefrIndexParams=First@NSolve[(refrIndex[\[Lambda]]  ==1+a/(1/b^2-1/\[Lambda]^2)/.\[Lambda]->\[Lambda]MinRef)&&(refrIndex[\[Lambda]]  ==1+a/(1/b^2-1/\[Lambda]^2)/.\[Lambda]->\[Lambda]MaxRef),{a,b}];
+(*FIX 2026-11-08: one-pole Sellmeier parameters solved with the formal symbols \[FormalA], \[FormalB] instead of a, b: plain a, b became public symbols of rich` and caused a::shdw / b::shdw warnings*)
+thisRichRefrIndexParams=First@NSolve[(refrIndex[\[Lambda]]  ==1+\[FormalA]/(1/\[FormalB]^2-1/\[Lambda]^2)/.\[Lambda]->\[Lambda]MinRef)&&(refrIndex[\[Lambda]]  ==1+\[FormalA]/(1/\[FormalB]^2-1/\[Lambda]^2)/.\[Lambda]->\[Lambda]MaxRef),{\[FormalA],\[FormalB]}];
 printD@thisRichRefrIndexParams;
 If[
-(refrIndex[\[Lambda]]  ==1+a/(1/b^2-1/\[Lambda]^2)/.thisRichRefrIndexParams/.\[Lambda]->(\[Lambda]MinRef+\[Lambda]MaxRef)/2)==True,
+(refrIndex[\[Lambda]]  ==1+\[FormalA]/(1/\[FormalB]^2-1/\[Lambda]^2)/.thisRichRefrIndexParams/.\[Lambda]->(\[Lambda]MinRef+\[Lambda]MaxRef)/2)==True,
 Print["parameters confirmed : thisRichRefrIndexParams = ",thisRichRefrIndexParams];
 
 ,
 Print["parameters NOT confirmed : thisRichRefrIndexParams - possibly more than one pole Sellemeier ???? "];
 ];
-Print[" must be all True to within numerical rounding --- ",Table[refrIndex[\[Lambda]]  ==1+a/(1/b^2-1/\[Lambda]^2)/.thisRichRefrIndexParams,{\[Lambda],\[Lambda]MinRef,\[Lambda]MaxRef,100}]];
+Print[" must be all True to within numerical rounding --- ",Table[refrIndex[\[Lambda]]  ==1+\[FormalA]/(1/\[FormalB]^2-1/\[Lambda]^2)/.thisRichRefrIndexParams,{\[Lambda],\[Lambda]MinRef,\[Lambda]MaxRef,100}]];
 
 
 
@@ -2163,6 +2164,38 @@ showContextInfo[]
 (* ::Text::Initialization:: *)
 (*(*(*(*bla *)*)*)*)
 (*(*(*(*bla*)*)*)*)
+
+
+(* ::Subtitle::Initialization:: *)
+(*RADIATOR-DEPENDENT CHERENKOV QUANTITIES*)
+
+
+(* ::Text::Initialization:: *)
+(*Moved here from physicsGeneral`. Unlike the general Cherenkov section there,*)
+(*which takes the refractive index as an argument, these read the radiator index*)
+(*(theRefrIndex) or the RICH under study (thisRefrIndex), so they belong in this layer.*)
+
+
+(* ::Input::Initialization:: *)
+Unprotect[chrnkvAngle,chrnkvAngleGeneral,thisThetaChr,thisNumRelChr,tC,tCAllPart,tpl];
+ClearAll[chrnkvAngle,chrnkvAngleGeneral,thisThetaChr,thisNumRelChr,tC,tCAllPart,tpl];
+
+chrnkvAngle[m_,p_,\[Lambda]_]:=Module[{rich`Private`z},
+rich`Private`z=1/(betaPart[m,p]*theRefrIndex[\[Lambda]]); (* It has to be positive *)
+rich`Private`z=Map[Min[#,+1]&,rich`Private`z]; (* z is non negative *)
+Return[Chop[ArcCos[rich`Private`z]]]
+];
+chrnkvAngleGeneral[m_,p_,\[Epsilon]_]:=ArcCot[D[\[Epsilon]*Tan[ArcCos[1/(betaPart[m,p]*theRefrIndex[\[Lambda][\[Epsilon]]])]],\[Epsilon]]];
+
+(* this... = n pre-fixed; function of gamma; now it becomes mrad; add unit of measure *)
+thisThetaChr[\[Gamma]_,n_:thisRefrIndex]:=Quantity[1000*thetaChr[beta[\[Gamma]],n],"Milliradians"];
+thisNumRelChr[\[Gamma]_,n_:thisRefrIndex]:=numRelPho[beta[\[Gamma]],n];
+
+tC[\[Beta]_,theE_]:=1000*thetaC[\[Beta],theRefrIndex[\[Lambda][theE]]];
+tCAllPart[p_,theE_]:=Module[{},Table[1000*thetaC[betaPart[thePartMasses[[j]],p],theRefrIndex[\[Lambda][theE]]],{j,1,5}]];
+tpl[mass_,mom_,\[Lambda]_]:=1000*thetaC[betaPart[mass,mom],theRefrIndex[\[Lambda]]];
+
+Protect[chrnkvAngle,chrnkvAngleGeneral,thisThetaChr,thisNumRelChr,tC,tCAllPart,tpl];
 
 
 (* ::Subtitle::Initialization:: *)

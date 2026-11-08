@@ -1,0 +1,531 @@
+calculator.nb -> calculator--2026-10-26-fixes.nb  (review fixes A1, A2, A3, B1)
+Cell sources rendered as Wolfram Language text; "L" = line of the cell in the original calculator.nb.
+
+==============================================================================
+NEW CELL (A2) inserted after the angular-precision cell (original L1718), before "Protect@@theTunedDetectorSymbols"
+==============================================================================
++(*FIX 2026-10-26 (review A2): R2L-upg2-f122-mapmt and R2L-upg2-f141-mapmt used the f=1x resolution lists (sigmaSnglPhAsymptUpg2R2Lmapmt).
++Dedicated lists with the pixel term at the longer focal length; CHR and FOC kept as in R2Lmapmt (FOC to be confirmed for the longer f).
++The names match the theTunedDetectorSymbols patterns, so they are unprotected/cleared/protected together with the others.*)
++sigmaSnglPhAsymptUpg2R2Lf122mapmt={0.28,0.14,pixelSizeErrInMRad[3.0,efl2*Sqrt[1.5]]}*10^(-3);(*R2L*)(*f=Sqrt[1.5]x*)(*MAPMT22*)(*TBC*)
++sigmaSnglPhAsymptUpg2R2Lf141mapmt={0.28,0.14,pixelSizeErrInMRad[3.0,efl2*Sqrt[2.0]]}*10^(-3);(*R2L*)(*f=Sqrt[2]x*)(*MAPMT22*)(*TBC*)
++(*number of photons: independent of the focal length*)
++numPhoUpg2R2Lf122mapmt:=numPhoUpg2R2Lmapmt;
++numPhoUpg2R2Lf141mapmt:=numPhoUpg2R2Lmapmt;
++(*tot*)
++sigmaSnglPhTotAsymptUpg2R2Lf122mapmt:=sumInQuadr[sigmaSnglPhAsymptUpg2R2Lf122mapmt];
++sigmaSnglPhTotAsymptUpg2R2Lf141mapmt:=sumInQuadr[sigmaSnglPhAsymptUpg2R2Lf141mapmt];
++(*ring*)
++sigmaChrRngAsymptUpg2R2Lf122mapmt:=sigmaSnglPhTotAsymptUpg2R2Lf122mapmt/Sqrt[numPhoUpg2R2Lf122mapmt];
++sigmaChrRngAsymptUpg2R2Lf141mapmt:=sigmaSnglPhTotAsymptUpg2R2Lf141mapmt/Sqrt[numPhoUpg2R2Lf141mapmt];
+
+==============================================================================
+CELL experimentSwitchCasesHeld (original L8706), A2: token changes only
+==============================================================================
+  case "R2L-upg2-f122-mapmt": sigmaSnglPhAsymptUpg2R2Lmapmt -> sigmaSnglPhAsymptUpg2R2Lf122mapmt, numPhoUpg2R2Lmapmt -> numPhoUpg2R2Lf122mapmt, sigmaChrRngAsymptUpg2R2Lmapmt -> sigmaChrRngAsymptUpg2R2Lf122mapmt
+  case "R2L-upg2-f141-mapmt": same three symbols -> ...f141mapmt
+
+==============================================================================
+CELL significance plot ids + pMinTargetSignificance (original L6675)
+==============================================================================
+--- original
++++ fixed
+@@ -3,2 +3,7 @@
+ 
+ idSBN1=11;idSBN2=12;idSBN3=13;idSBN4=14;idSBN5=15;idSBN6=16;
++
++
++(*FIX 2026-10-26 (A1): one target significance for the pMin thresholds, used by the results table AND the plots*)
++pMinTargetSignificance=5;
++
+
+==============================================================================
+CELL headerDoCalcSignificance (original L5902)
+==============================================================================
+--- original
++++ fixed
+@@ -37,4 +37,5 @@
+ "pMinKaon5",
+ "pMinProt5",
+-"deadTime"(*not yet calculated*)
++"deadTime"(*not yet calculated*),
++"pMinTargetSignificance"(*FIX 2026-10-26 (A1): target significance used for pMin*)
+ }
+
+==============================================================================
+CELL doCalcExperiment (original L5372)
+==============================================================================
+--- original
++++ fixed
+@@ -1,2 +1,3 @@
++(* FIX 2026-10-26 (review B1): explicit experiment context instead of this* globals *)
+ (*BASIC CALCULATED DATA // CHANGEABLE AMONG RUNS *)
+ (*TrueCnts := REAL # hits*)
+@@ -45,5 +46,6 @@
+ theScaleFactorRejectBackFromTimingInReco_,
+ thePDAGeoLong_,
+-thePDAGeoShrt_
++thePDAGeoShrt_,
++theExperiment_Association(*FIX 2026-10-26 (B1): context built by doCalcAllExperiment; replaces the globals thisMRadToMm, thisRefrIndex, thisSigmaChrRngAsympt*)
+ ]:=Module[{x,\[Sigma],
+ theNumChrPhoInGaussianBandAsympt,
+@@ -74,5 +76,5 @@
+ \[CapitalDelta]m,
+ \[Mu]m,
+-Subscript[n, \[Sigma]],
++nSigmaSep,
+ \[CapitalDelta]\[CapitalTheta],
+ \[Mu]\[CapitalTheta]
+@@ -87,5 +89,5 @@
+ ];
+ theNumChrPhoInGaussianBandAsympt:=theNumPhoRawAsympt*N@Probability[Abs[x]<theScaleFactorBandRadius*\[Sigma],x \[Distributed] NormalDistribution[0,\[Sigma]]];(*two-sided*)
+-radiusChrAsympt:=thetaChrAsympt*thisMRadToMm;(*it is a calculation: here*)
++radiusChrAsympt:=thetaChrAsympt*theExperiment["mRadToMm"];(*it is a calculation: here*)
+ radiusChrInPixelsAsympt:=toNumPixels[thetaChrAsympt/thePixAngSize];(* in pixels *)
+ bandHalfRadiusChrAsympt:=theScaleFactorBandRadius*createMRad[sumInQuadr[        QuantityMagnitude[       theSigmaSnglPhAsympt]]];(*today*)(*ASSUMPTION*)
+@@ -93,5 +95,5 @@
+ (*printD@theSigmaSnglPhAsympt;*)
+ (*printD@bandTotalRadiusChrAsympt;*)
+-theRingAreaAsympt:=fiducialAreaOfTheRing[thetaChrAsympt*thisMRadToMm,bandTotalRadiusChrAsympt*thisMRadToMm,1];
++theRingAreaAsympt:=fiducialAreaOfTheRing[thetaChrAsympt*theExperiment["mRadToMm"],bandTotalRadiusChrAsympt*theExperiment["mRadToMm"],1];
+ scaleFactTimeBin:=toPure[N[theTimeBinBCORef/theTimeBin]];(*shortened time bin 25 ns->*)
+ scaleFactRejectBackFromTimingInReco:=theScaleFactorRejectBackFromTimingInReco;
+@@ -117,17 +119,17 @@
+ dniOccupInPixelInGateTimeUnifo:=toCounts@calcBinaryOccupancyFromTrueToApparent[(dniTrueCntsInPixelInGateTimeUnifo/toCounts[1])];
+ totOccupInPixelInGateTime:=toCounts@calcBinaryOccupancyFromTrueToApparent[(bckTrueCntsInPixelInGateTimeEquiv+dniTrueCntsInPixelInGateTimeUnifo)/toCounts[1]];
+-areaPDAFromNominalGeoAccept:=2*First[Flatten@Outer[Times,Differences@thePDAGeoLong,Differences@thePDAGeoShrt]]*thisMRadToMm^2;
++areaPDAFromNominalGeoAccept:=2*First[Flatten@Outer[Times,Differences@thePDAGeoLong,Differences@thePDAGeoShrt]]*theExperiment["mRadToMm"]^2;
+ maxIdealNumChannels:=2*First[Flatten@Outer[Times,Differences@thePDAGeoLong,Differences@thePDAGeoShrt]/thePixAngSize^2];
+-Subscript[n, \[Sigma]]=5;
+-thePMaxSmallAngleApprox:=Sqrt[(\[CapitalDelta]m*\[Mu]m)/(thisRefrIndex^2*Subscript[n, \[Sigma]]*\[CapitalDelta]\[CapitalTheta]*\[Mu]\[CapitalTheta])];
++nSigmaSep=5;
++thePMaxSmallAngleApprox:=Sqrt[(\[CapitalDelta]m*\[Mu]m)/(theExperiment["refrIndex"]^2*nSigmaSep*\[CapitalDelta]\[CapitalTheta]*\[Mu]\[CapitalTheta])];
+ pMaxSepPionKaon5s=thePMaxSmallAngleApprox
+-/.\[Mu]\[CapitalTheta]->ArcCos[1/thisRefrIndex]/.\[CapitalDelta]\[CapitalTheta]->QuantityMagnitude[thisSigmaChrRngAsympt]/1000/.\[CapitalDelta]m->\[Delta]MassesList[[1]]/.\[Mu]m->\[Mu]MassesList[[1]];
++/.\[Mu]\[CapitalTheta]->ArcCos[1/theExperiment["refrIndex"]]/.\[CapitalDelta]\[CapitalTheta]->QuantityMagnitude[theExperiment["sigmaChrRngAsympt"]]/1000/.\[CapitalDelta]m->\[Delta]MassesList[[1]]/.\[Mu]m->\[Mu]MassesList[[1]];
+ pMaxSepKaonProt5s=thePMaxSmallAngleApprox
+-/.\[Mu]\[CapitalTheta]->ArcCos[1/thisRefrIndex]/.\[CapitalDelta]\[CapitalTheta]->QuantityMagnitude[thisSigmaChrRngAsympt]/1000/.\[CapitalDelta]m->\[Delta]MassesList[[2]]/.\[Mu]m->\[Mu]MassesList[[2]];
++/.\[Mu]\[CapitalTheta]->ArcCos[1/theExperiment["refrIndex"]]/.\[CapitalDelta]\[CapitalTheta]->QuantityMagnitude[theExperiment["sigmaChrRngAsympt"]]/1000/.\[CapitalDelta]m->\[Delta]MassesList[[2]]/.\[Mu]m->\[Mu]MassesList[[2]];
+ (*printD@pMaxSepPionKaon5s;*)
+ (*printD@pMaxSepKaonProt5s;*)
+ (**)
+ ClearAll[resultsDoCalcExperiment];
+-resultsDoCalcExperiment:={"*",(*given this definition, the format is kept when resultsDo is cllade later*)
++resultsDoCalcExperiment={"*",(*FIX 2026-10-26 (B1): snapshot (=) of this call, no longer a delayed definition*)(*given this definition, the format is kept when resultsDo is cllade later*)
+ Round[#,0.1]&@theNumChrPhoInGaussianBandAsympt,
+ SetPrecision[#,3]&@bckTrueCntsInPixelInBCOTime,
+
+==============================================================================
+CELL doCalcSignificance (original L5952)
+==============================================================================
+--- original
++++ fixed
+@@ -2,11 +2,15 @@
+ 
+ 
+-doCalcSignificance[debug_:False,
++(*FIX 2026-10-26 (B1): the experiment context (Association built by doCalcAllExperiment) replaces the this* globals and the signal/bck/dni arguments*)
++doCalcSignificance[theExperiment_Association,
++debug_:False,
+ theGamma_:gammaMax,
+-numberOfSignalPhotonsAsympt_:toNumPhotons[-1],
+-bckCnt_:toCounts[-1],
+-dniCnt_:toCounts[-1],
+ modeFlag_:""
+ ]:=Module[{
++numberOfSignalPhotonsAsympt,bckCnt,dniCnt,refrIndex,mRadToMm,radiusAt,
++sgnlVersusMomentum,ringAreaVersusMomentum,
++totalBckgInRingAreaInGateTimeVersusMomentum,totalDarkInRingAreaInGateTimeVersusMomentum,
++totalBckgPlusNoiseVersusMomentum,varTotalBckgPlusNoiseVersusMomentum,
++pMinPion5,pMinKaon5,pMinProt5,deadTime,
+ totBckgPlusNoiseOld,
+ ringAreaAsympt,ringAreaOld,
+@@ -22,8 +26,15 @@
+ },
+ debugPrintEnabledFlag=debug;
++(*FIX 2026-10-26 (B1): everything below is read from theExperiment*)
++numberOfSignalPhotonsAsympt=theExperiment["numChrPho"];
++bckCnt=theExperiment["bckCntInRingAreaAsymptInGateTime"];
++dniCnt=theExperiment["dniCntInRingAreaAsymptInGateTime"];
++refrIndex=theExperiment["refrIndex"];
++mRadToMm=theExperiment["mRadToMm"];
++radiusAt[g_,nn_]:=thisThetaChr[g,nn]*mRadToMm;(*same as thisRadiusChr, but with the mm-per-mrad factor of this experiment*)
+ 
+ (*printD@theGamma;*)
+ If[
+-((thisNumRelChr[theGamma,thisRefrIndex]>0)&&(QuantityMagnitude[thisRadiusChr[theGamma,thisRefrIndex]]>0)),
++((thisNumRelChr[theGamma,refrIndex]>0)&&(QuantityMagnitude[radiusAt[theGamma,refrIndex]]>0)),
+ If[debug==True,
+ bigBanner[
+@@ -52,13 +63,13 @@
+ Block[{f,x,\[Sigma]},Probability[Abs[x]<f*\[Sigma],x \[Distributed] NormalDistribution[0,\[Sigma]]]];
+ (**)
+-sgnlOld:= QuantityMagnitude[numberOfSignalPhotonsAsympt*thisNumRelChr[theGamma,thisRefrIndex]];
+-sgnlVersusMomentum[\[Gamma]_]:=QuantityMagnitude[thisNumChrPhoRaw*thisNumRelChr[\[Gamma],thisRefrIndex]]*N@Erf[sigmaTotSnglPhEvolutionWithGammaRatio[\[Gamma]]*thisScaleFactorBandRadius/Sqrt[2]];
+-(**)
+-(*THE RECALCULATION OF AREA IS APPROXIMATE // SHOULD USE THE EXACT FORMULA*)
+-ringAreaAsympt=thisSearchRingAreaAsympt;(*just a name more similar to others variables here*)
+-ringAreaOld=fiducialAreaOfTheRing[thisRadiusChr[theGamma,thisRefrIndex],thisBandTotalRadiusChrAsympt*thisMRadToMm];
+-theNumPixEquivInRingArea=ringAreaOld/((thisPixLinSize))^2;
+-theNumPixEquivOnRingCircumference=2*\[Pi]*thisRadiusChrAsympt/thisPixLinSize;
+-ringAreaVersusMomentum[\[Gamma]_]:=fiducialAreaOfTheRing[thisRadiusChr[\[Gamma],thisRefrIndex],sigmaTotSnglPhEvolutionWithGammaRatio[\[Gamma]]*thisBandTotalRadiusChrAsympt*thisMRadToMm];
++sgnlOld:= QuantityMagnitude[numberOfSignalPhotonsAsympt*thisNumRelChr[theGamma,refrIndex]];
++sgnlVersusMomentum[\[Gamma]_]:=QuantityMagnitude[theExperiment["numChrPhoRaw"]*thisNumRelChr[\[Gamma],refrIndex]]*N@Erf[sigmaTotSnglPhEvolutionWithGammaRatio[\[Gamma]]*theExperiment["bandRadiusScaleFactor"]/Sqrt[2]];
++(**)
++(*THE RECALCULATION OF AREA IS APPROXIMATE // SHOULD USE THE EXACT FORMULA*)
++ringAreaAsympt=theExperiment["searchRingAreaAsympt"];(*just a name more similar to others variables here*)
++ringAreaOld=fiducialAreaOfTheRing[radiusAt[theGamma,refrIndex],theExperiment["bandTotalRadiusChrAsympt"]*mRadToMm];
++theNumPixEquivInRingArea=ringAreaOld/((theExperiment["pixLinSize"]))^2;
++theNumPixEquivOnRingCircumference=2*\[Pi]*theExperiment["radiusChrAsympt"]/theExperiment["pixLinSize"];
++ringAreaVersusMomentum[\[Gamma]_]:=fiducialAreaOfTheRing[radiusAt[\[Gamma],refrIndex],sigmaTotSnglPhEvolutionWithGammaRatio[\[Gamma]]*theExperiment["bandTotalRadiusChrAsympt"]*mRadToMm];
+ (**)
+ (*intBck*ringAreaOld*theTimeBinRef !@#$% CONSERVATIVE: PHYS BACK IN BCO go in THE TIME-GATE *)
+@@ -84,5 +95,5 @@
+ If[debug==True,
+ printD@theGamma;
+-printD@thisNumChrPhoRaw;(*original asymptotic*)
++printD@theExperiment["numChrPhoRaw"];(*original asymptotic*)
+ printD@numberOfSignalPhotonsAsympt;(*rescaled asymptotic*)
+ printD@sgnlOld;
+@@ -175,6 +186,7 @@
+ pMinKaon5=-1;(*reset here: just a placeholder to be calculated by doAllSignificancePlots which must call doCalcSignificance before*)
+ pMinProt5=-1;(*reset here: just a placeholder to be calculated by doAllSignificancePlots which must call doCalcSignificance before*)
++deadTime=-1;(*not yet calculated*)
+ ClearAll[resultsDoCalcSignificance];
+-resultsDoCalcSignificance:={"*",(*given this definition, the format is kept when resultsDo is cllade later*)
++resultsDoCalcSignificance={"*",(*FIX 2026-10-26 (B1): snapshot (=) of this call; doCalcAllExperiment copies it right after the gammaMax call*)
+ Round[#,0.1]&@theGamma,
+ Round[#,0.1]&@toNumPhotons@sgnlVersusMomentum[theGamma],
+
+==============================================================================
+CELL sbnScan / listOfGammasFor (original L6683)
+==============================================================================
+--- original
++++ fixed
+@@ -1,4 +1,14 @@
+-ClearAll[sbnScan];
++ClearAll[sbnScan,listOfGammasFor];
+ 
+ 
+-sbnScan[part_,num_:Length@theListOfGammas]:=Flatten@{1,2,"---",part,momentumFromMassAndBeta[part/.toMass,beta[#]],loop[#],"============"}&/@Take[theListOfGammas,num];
++(*FIX 2026-10-26 (B1): gamma list for an explicit refractive index (same formula as theListOfGammas, which depends on the global thisRefrIndex)*)
++listOfGammasFor[nVal_]:=Append[
++Table[
++Round[Re[Chop[FullSimplify[gammaVal[f]/.n->nVal,Reals]]],0.1]
++,{f,1/numSteps,1-1/numSteps,1/numSteps}]
++,gammaMax];
++
++
++(*FIX 2026-10-26 (B1): the experiment context is passed explicitly*)
++sbnScan[theExperiment_Association,part_,num_:All]:=Flatten@{1,2,"---",part,momentumFromMassAndBeta[part/.toMass,beta[#]],loop[theExperiment,#],"============"}&/@Take[listOfGammasFor[theExperiment["refrIndex"]],num];
++
+
+==============================================================================
+CELL doAllSignificancePlots (original L6702)
+==============================================================================
+--- original
++++ fixed
+@@ -2,41 +2,36 @@
+ (*LOOPS*)
+ (*=============================================================================*)
++(*FIX 2026-10-26 (A1,A3,B1):
++ - target defaults to pMinTargetSignificance (same as the results table);
++ - thresholds come from momentumThresholdFromScan (range and monotonicity checks) instead of a bare Interpolation with the extrapolation warning switched off; failures show as "N/A";
++ - doCalcAllExperiment is called with recordResults=False (no duplicate columns in the results table);
++ - the scans use the explicit experiment context currentExperiment.*)
+ (**)
+-doAllSignificancePlots[tag_,targetSignificance_,idSBN_:idSBN5]:=Module[{},
++ClearAll[doAllSignificancePlots];
++doAllSignificancePlots[tag_,targetSignificance_:Automatic,idSBN_:idSBN5]:=Module[{target,thresholds,numericThresholds,lbl},
++target=If[targetSignificance===Automatic,pMinTargetSignificance,targetSignificance];
+ (**)
+ (*=============================================================================*)
+ (*MANDATORY TO RUN IT*)
+-doCalcAllExperiment[tag];
++doCalcAllExperiment[tag,False,False];
+ (*=============================================================================*)
+ (**)
+-sbnScanResults1={};
+-momentumThresholdsHadrons={};
+ ClearAll[sbnScanResults];
+-sbnScanResults=sbnScan[#]&/@theParts;(*MAKE SURE TO RERUN*)
++sbnScanResults=sbnScan[currentExperiment,#]&/@theParts;(*MAKE SURE TO RERUN*)
+ (*=============================================================================*)
+-(*extract significance*)
++(*extract significance versus momentum for pi, K, p*)
+ (*=============================================================================*)
+-Do[AppendTo[sbnScanResults1,Transpose[{sbnScanResults[[i]][[All,idMom]],sbnScanResults[[i]][[All,idSBN]]}]],{i,3,5}];(*here select number of particles to show*)
++sbnScanResults1=Table[Transpose[{sbnScanResults[[i]][[All,idMom]],sbnScanResults[[i]][[All,idSBN]]}],{i,3,5}];
+ Print@TableForm@sbnScanResults1;
+ (*=============================================================================*)
+-(*
+-Interpolate with y/sbn axis as independent variable; 
+-Interpolation[sbnScanResults11]; gives the interpolated values at integer values on the y/sbn axis written in [1] [2].... [max]
+-*)
++(*momentum at which the significance reaches target*)
+ (*=============================================================================*)
+-Do[
+-sbnScanResults11=Transpose[{sbnScanResults1[[i]][[All,2]],sbnScanResults1[[i]][[All,1]]}];
+-ClearAll[momVal];
+-momVal=Interpolation[sbnScanResults11];
+-Print@Length@momVal;
+-If[Length@momVal>0,AppendTo[momentumThresholdsHadrons,momVal[targetSignificance]]]
+-(*printD@momVal[targetSignificance]*)
+-,{i,1,3}
+-];
+-Print@TableForm@Transpose@sbnScanResults11;
++thresholds=MapThread[momentumThresholdFromScan[#1,target,idMom,idSBN,#2]&,{sbnScanResults[[3;;5]],{"Pion","Kaon","Proton"}}];
++Print@Select[thresholds,FailureQ];
++momentumThresholdsHadrons=Map[If[FailureQ[#]||#>1000,"N/A",#]&,thresholds];
++Print@momentumThresholdsHadrons;
++numericThresholds=Select[momentumThresholdsHadrons,NumericQ];
++lbl[x_]:=If[NumericQ[x],ToString[nf[x,7,1]],"N/A"];
+ (**)
+-momentumThresholdsHadrons=Map[If[#>1000,"N/A",#]&,momentumThresholdsHadrons  ];
+-Print@momentumThresholdsHadrons;
+-If[Length@momentumThresholdsHadrons>0,
+ plot=ListLogLogPlot[sbnScanResults1,
+ (*PlotStyle->Directive[Orange,Thick,Dashed],PlotStyle->Automatic,*)
+@@ -45,17 +40,15 @@
+ Mesh->Full,
+ ImageSize->Large,
+-PlotRange->{{1,150},{Max[targetSignificance-3,0.5],Max[targetSignificance+5,11]}},
++PlotRange->{{1,150},{Max[target-3,0.5],Max[target+5,11]}},
+ Background->White,
+ Ticks->{Flatten[{2{0.01,0.1,1,10,100},{0.01,0.1,1,10,100},5{0.01,0.1,1,10,100}}],{0.5,1,2,3,4,5,10}},
+-GridLines->{{#,Blue,Thick,Dashed}&/@momentumThresholdsHadrons,{{1,Red,Thick},{3,Orange,Thick},{5,Green,Thick}}},
+-AxesLabel->{"p(GeV/c)","\!\(\*StyleBox["\[ScriptCapitalS]",FontSize->18,FontWeight->"Bold"]\)"},
+-PlotLabel->tag<>" - significance: "<>sbns[[idSBN-10]]<>"\n"<>"\!\(\*SubscriptBox[\(p\), \(MIN\)]\)(\[Pi])="<>ToString[nf[momentumThresholdsHadrons[[1]],7,1]]<>"  -  "<>"\!\(\*SubscriptBox[\(p\), \(MIN\)]\)(K)="<>ToString[nf[momentumThresholdsHadrons[[2]],7,1]]<>"  -  "<>"\!\(\*SubscriptBox[\(p\), \(MIN\)]\)(p)="<>ToString[nf[momentumThresholdsHadrons[[3]],7,1]]<>"   (in GeV/c)",LabelStyle->{12,GrayLevel[0],Bold},
+-PlotLegends->Placed[{"\[Pi]","K","p"},Automatic],
+-(*PlotLegends->LineLegend[{"\[Pi]","K","p"},LegendLabel->"label",LegendFunction->(Large,Framed[#,RoundingRadius->5]&),LegendMargins->5],*)
+-GridLines->Automatic
++GridLines->{{#,Blue,Thick,Dashed}&/@numericThresholds,{{1,Red,Thick},{3,Orange,Thick},{5,Green,Thick}}},
++AxesLabel->{"p(GeV/c)","\!\(\*StyleBox[\"\[ScriptCapitalS]\",FontSize->18,FontWeight->\"Bold\"]\)"},
++PlotLabel->tag<>" - significance: "<>sbns[[idSBN-10]]<>" - target: "<>ToString[target]<>"\n"<>"\!\(\*SubscriptBox[\(p\), \(MIN\)]\)(\[Pi])="<>lbl[momentumThresholdsHadrons[[1]]]<>"  -  "<>"\!\(\*SubscriptBox[\(p\), \(MIN\)]\)(K)="<>lbl[momentumThresholdsHadrons[[2]]]<>"  -  "<>"\!\(\*SubscriptBox[\(p\), \(MIN\)]\)(p)="<>lbl[momentumThresholdsHadrons[[3]]]<>"   (in GeV/c)",LabelStyle->{12,GrayLevel[0],Bold},
++PlotLegends->Placed[{"\[Pi]","K","p"},Automatic]
+ ];
+ Print@plot;
+-exportGraphicsToPDF[plot,tag<>"-significance-"<>"sbns"<>ToString[idSBN-10]<>"-val"<>ToString[targetSignificance],"","",False]
+-];
++exportGraphicsToPDF[plot,tag<>"-significance-"<>"sbns"<>ToString[idSBN-10]<>"-val"<>ToString[target],"","",False];
+ Return[](*Return[plot]*)
+ ];
++
+
+==============================================================================
+CELL resSign (original L7066)
+==============================================================================
+--- original
++++ fixed
+@@ -1,9 +1,6 @@
+-resSign:=doCalcSignificance["False",
+-gammaMax,
+-thisNumChrPho,
+-thisBckCntInRingAreaAsymptInGateTime,
+-thisDNICntInRingAreaAsymptInGateTime
+-];
++(*FIX 2026-10-26 (B1): explicit context; debug flag was the string "False"*)
++resSign:=doCalcSignificance[currentExperiment,False,gammaMax];
+ 
+ 
+ (*Print[resSign];*)
++
+
+==============================================================================
+CELL loop (original L7080)
+==============================================================================
+--- original
++++ fixed
+@@ -2,12 +2,5 @@
+ 
+ 
+-loop[g_:gammaMax]:=Module[{},
+-resSign=doCalcSignificance[False,
+-g,
+-thisNumChrPho,
+-thisBckCntInRingAreaAsymptInGateTime,
+-thisDNICntInRingAreaAsymptInGateTime
+-];
+-(*{"gamma","sgnlRaw","totalDarkInRingAreaInGateTimeAsympt","totalBckgInRingAreaInGateTimeAsympt","sbn1","sbn2","sbn3","sbn4","sbn5","sbn6"},*)
+-Return[resSign]
+-];
++(*FIX 2026-10-26 (B1): explicit context; no longer overwrites the global resSign*)
++loop[theExperiment_Association,g_:gammaMax]:=doCalcSignificance[theExperiment,False,g];
++
+
+==============================================================================
+CELL doCalcAllExperiment (original L11670)
+==============================================================================
+--- original
++++ fixed
+@@ -9,5 +9,6 @@
+ 
+ 
+-doCalcAllExperiment[theTempTag_,theDebugFlag_:False]:=Module[{selectedParameters,resPara,resCalc,resSign,outputA,outputB,output0,index,momentumThresholdResults,momentumThresholdFailure},
++(*FIX 2026-10-26: recordResults=False runs the experiment without appending it to allExperimentResultsData (used by doAllSignificancePlots)*)
++doCalcAllExperiment[theTempTag_,theDebugFlag_:False,recordResults_:True]:=Module[{selectedParameters,resPara,resCalc,resSign,outputA,outputB,output0,index,momentumThresholdResults,momentumThresholdFailure,rowSignificance},
+ (*=============================================================================*)
+ (* doSetExperiment: DIFFERENT FROM EXPERIMENT TO EXPERIMENT *)
+@@ -66,4 +67,25 @@
+ thisMRadToMm:=resPara[[19]];
+ thisEff:=resPara[[21]];
++(*FIX 2026-10-26 (B1): explicit experiment context passed to doCalcExperiment, doCalcSignificance, sbnScan, loop. The this* globals above are kept only for interactive cells.*)
++currentExperiment=<|
++"tag"->theTempTag,
++"effFocalLength"->resPara[[1]],
++"pixLinSize"->resPara[[2]],
++"pixAngSize"->resPara[[3]],
++"intensityPhysBack"->resPara[[4]],
++"timeBin"->resPara[[5]],
++"intensityDarkNois"->resPara[[7]],
++"thetaChrAsympt"->resPara[[8]],
++"sigmaSnglPhAsympt"->resPara[[9]],
++"sigmaChrRngAsympt"->resPara[[10]],
++"numChrPhoRaw"->resPara[[11]],
++"refrIndex"->resPara[[12]],
++"rejectFactBackFromTimingInReco"->resPara[[13]],
++"pdaGeoLong"->resPara[[14]],
++"pdaGeoShrt"->resPara[[15]],
++"bandRadiusScaleFactor"->resPara[[16]],
++"mmToMRad"->resPara[[18]],
++"mRadToMm"->resPara[[19]]
++|>;
+ (**)
+ (*resCalc=doCalcExperiment[theDebugFlag,thisNumChrPhoRaw,thisTimeBin,thisThetaChrAsympt,thisPixLinSize,thisScaleFactorBandRadius,thisEffFocalLength,thisSigmaSnglPhAsympt,thisIntensityPhysicalBckgr,thisIntensityDarkCntsNoise,thisPixAngSize,thisScaleFactorRejectBackFromTimingInReco,thisPDAGeoLong,thisPDAGeoShrt];*)
+@@ -82,5 +104,6 @@
+ thisScaleFactorRejectBackFromTimingInReco,
+ thisPDAGeoLong,
+-thisPDAGeoShrt
++thisPDAGeoShrt,
++currentExperiment(*FIX 2026-10-26 (B1)*)
+ ],
+ "doCalcExperiment",20];
+@@ -94,4 +117,14 @@
+ thisBandTotalRadiusChrAsympt:=resCalc[[11]];
+ thisSearchRingAreaAsympt:=resCalc[[13]];
++(*FIX 2026-10-26 (B1): add the doCalcExperiment results needed by doCalcSignificance to the context*)
++currentExperiment=Join[currentExperiment,<|
++"numChrPho"->resCalc[[1]],
++"bckCntInRingAreaAsymptInGateTime"->resCalc[[7]],
++"dniCntInRingAreaAsymptInGateTime"->resCalc[[8]],
++"radiusChrAsympt"->resCalc[[9]],
++"radiusChrInPixelsAsympt"->resCalc[[10]],
++"bandTotalRadiusChrAsympt"->resCalc[[11]],
++"searchRingAreaAsympt"->resCalc[[13]]
++|>];
+ (**)
+ (*=============================================================================*)
+@@ -101,11 +134,8 @@
+ (*resSign=doCalcSignificance[False,gammaMax,thisNumChrPho,thisBckCntInRingAreaAsymptInGateTime,thisDNICntInRingAreaAsymptInGateTime];*)
+ resSign=checkedStageResult[
+-doCalcSignificance[False,
+-gammaMax,
+-thisNumChrPho,
+-thisBckCntInRingAreaAsymptInGateTime,
+-thisDNICntInRingAreaAsymptInGateTime],
++doCalcSignificance[currentExperiment,False,gammaMax](*FIX 2026-10-26 (B1)*),
+ "doCalcSignificance",17];
+ If[FailureQ[resSign],Print["Experiment stopped: ",resSign];Return[resSign]];
++rowSignificance=resultsDoCalcSignificance;(*FIX 2026-10-26 (B1): snapshot of the gammaMax call, taken before the scans below overwrite it*)
+ (**)
+ thisNumChrPhoSignal:=resSign[[2]];
+@@ -115,19 +145,23 @@
+ 
+ 
+-targetSignificance=1;
+-
+-sbnScanResults=sbnScan/@theParts;
++(*FIX 2026-10-26 (A1): the target is pMinTargetSignificance (same as the plots), no longer a hard-coded 1*)
++sbnScanResults=sbnScan[currentExperiment,#]&/@theParts;(*FIX 2026-10-26 (B1)*)
+ 
+ If[!ListQ[sbnScanResults]||Length[sbnScanResults]<5,Return[Failure["InsufficientSBNScans",<|"ExperimentTag"->theTempTag,"ExpectedMinimum"->5,"ActualCount"->If[ListQ[sbnScanResults],Length[sbnScanResults],Missing["NotAList"]]|>]]];
+ 
+-momentumThresholdResults=MapThread[momentumThresholdFromScan[#1,targetSignificance,idMom,idSBN5,#2]&,{sbnScanResults[[3;;5]],{"Pion","Kaon","Proton"}}];
++momentumThresholdResults=MapThread[momentumThresholdFromScan[#1,pMinTargetSignificance,idMom,idSBN5,#2]&,{sbnScanResults[[3;;5]],{"Pion","Kaon","Proton"}}];
+ 
+ 
+-If[AnyTrue[momentumThresholdResults,FailureQ],momentumThresholdFailure=Failure["MomentumThresholdCalculationFailed",
++(*FIX 2026-10-26 (A1): a target outside the scanned significance range gives "N/A" instead of stopping the experiment; any other failure still stops it*)
++If[AnyTrue[momentumThresholdResults,FailureQ[#]&&First[#]=!="TargetOutsideScanRange"&],momentumThresholdFailure=Failure["MomentumThresholdCalculationFailed",
+ <|"ExperimentTag"->theTempTag,"StageResults"->momentumThresholdResults|>];
+ Print["Experiment stopped: ",momentumThresholdFailure];
+ Return[momentumThresholdFailure]
+ ];
+-(*All three values are now valid,so assign them atomically.*){pMinPion5,pMinKaon5,pMinProt5}=Map[If[#>1000,"N/A",Round[#,0.1]]&,momentumThresholdResults];
++(*All three values are now valid,so assign them atomically.*){pMinPion5,pMinKaon5,pMinProt5}=Map[If[FailureQ[#]||#>1000,"N/A",Round[#,0.1]]&,momentumThresholdResults];
++(*FIX 2026-10-26 (A1,B1): fill the pMin entries (positions 15-17) of the snapshot row and record the target used*)
++rowSignificance=Append[
++ReplacePart[rowSignificance,Thread[{15,16,17}->Map[If[NumericQ[#],toGeVc[#],#]&,{pMinPion5,pMinKaon5,pMinProt5}]]],
++pMinTargetSignificance];
+ debugPrintD[{pMinPion5,pMinKaon5,pMinProt5}];
+ 
+@@ -137,5 +171,5 @@
+ output0=Transpose[{
+ Flatten[Join[{"experiment",dropFirst@headerDoSetExperiment,dropFirst@headerDoCalcExperiment,dropFirst@headerDoCalcSignificance}],1],
+-Flatten[Join[{theTempTag,dropFirst@resultsDoSetExperiment,dropFirst@resultsDoCalcExperiment,dropFirst@resultsDoCalcSignificance}],1]
++Flatten[Join[{theTempTag,dropFirst@resultsDoSetExperiment,dropFirst@resultsDoCalcExperiment,dropFirst@rowSignificance}],1](*FIX 2026-10-26 (B1)*)
+ }];
+ (*index={1,2,3,4,5,6,7,8,10,11,13,14,17,22,23,24,25,31,26,32,27,34,28,35,37,38,39,41,42,46,47,48,49,50,51,56,57};*)
+@@ -145,4 +179,5 @@
+ outputB=TableForm[output0,TableAlignments->Center];
+ debugPrint@outputB;
++If[recordResults,(*FIX 2026-10-26: avoid duplicate columns when called again by doAllSignificancePlots*)
+ allExperimentResultsHeader=DeleteDuplicates@AppendTo[allExperimentResultsHeader,First@Take[Transpose[outputA[[index]]],{2}]];
+ allExperimentResultsData=AppendTo[allExperimentResultsData,First@Drop[Transpose[outputA[[index]]],2]];
+@@ -150,4 +185,5 @@
+ Export[StringJoin["C:\\TEMP\\res-"<>theTempTag<>"-"<>thisTimeStamp<>".pdf"],outputB];
+ Export[StringJoin["C:\\TEMP\\res-"<>theTempTag<>"-"<>thisTimeStamp<>".tex"],outputB];
++];
+ (**)
+ 
+
+==============================================================================
+CELL scan table (cont section) (original L13261)
+==============================================================================
+--- original
++++ fixed
+@@ -1,3 +1,3 @@
+-TableForm[nf @ doCalcSignificance[False, #, thisNumChrPho, thisBckCntInRingAreaAsymptInGateTime,
+-   thisDNICntInRingAreaAsymptInGateTime]& /@ theListOfGammas, TableAlignments
++(*FIX 2026-10-26 (B1): explicit context*)
++TableForm[nf @ doCalcSignificance[currentExperiment, False, #]& /@ listOfGammasFor[currentExperiment["refrIndex"]], TableAlignments
+    -> {Right, Center}]
+
+==============================================================================
+CELL doAllSignificancePlots calls (original L13295)
+==============================================================================
+--- original
++++ fixed
+@@ -1,14 +1,14 @@
+-Off[InterpolatingFunction::dmval];
++(*FIX 2026-10-26 (A3): extrapolation warning no longer switched off; thresholds come from momentumThresholdFromScan*)
+ (**)
+ 
+ 
+-doAllSignificancePlots[#,5,idSBN2]&/@experimentTags;
++doAllSignificancePlots[#,pMinTargetSignificance,idSBN2]&/@experimentTags;(*FIX 2026-10-26 (A1)*)
+ 
+ 
+-doAllSignificancePlots[#,5,idSBN5]&/@experimentTags;
++doAllSignificancePlots[#,pMinTargetSignificance,idSBN5]&/@experimentTags;(*FIX 2026-10-26 (A1)*)
+ (**)
+ 
+ 
+-On[InterpolatingFunction::dmval];
++
+ 
+ 
+
+==============================================================================
+CELL miscellanea scan (original L13338)
+==============================================================================
+--- original
++++ fixed
+@@ -6,5 +6,5 @@
+ whichParticle,
+ Round@momentumFromMassAndBeta[toMass[whichParticle],beta[g]],
+-loop[g]
++loop[currentExperiment,g](*FIX 2026-10-26 (B1)*)
+ }
+ ,{g,Ceiling[theGammaOverThr],999,399}
+

@@ -307,25 +307,26 @@ EndPackage[];
 
 (* ::Input::Initialization:: *)
 checkNewCreatedSymbols[]
-Off[Symbolize::bsymbexs];
 (**)
 Notation`AutoLoadNotationPalette=False;(*BEFORE LOADING Notations!*)
 (*Notation`AutoLoadNotationPalette=True;*)(*BEFORE LOADING Notations!*)
 Needs["Notation`"];
+Off[Symbolize::bsymbexs];(*FIX 2026-10-28: only after Needs["Notation`"]; before it, this line created Global`Symbolize and Notation` printed a shadowing message*)
 (**)
 ClearNotations[](*clears all notations,symbolizations,and infix notations*)
 (**)
-Symbolize[NotationTemplateTag[Subscript[n, s]]]
-Symbolize[NotationTemplateTag[Subscript[n, \[Sigma]]]]
-Symbolize[NotationTemplateTag[Subscript[f, \[Sigma]]]]
-Symbolize[NotationTemplateTag[Subscript[\[Lambda], 1]]]
-Symbolize[NotationTemplateTag[Subscript[\[Lambda], 2]]]
-Symbolize[NotationTemplateTag[Subscript[\[Delta]\[Theta], R]]]
-Symbolize[NotationTemplateTag[\!\(\*SubsuperscriptBox[\(\[Sigma]\), \(R\), \(\[Infinity]\)]\)]]
-Symbolize[NotationTemplateTag[Subscript[\[ScriptCapitalF], \[Lambda]]]]
-Symbolize[NotationTemplateTag[Subscript[\[ScriptCapitalD], \[Lambda]]]]
-Symbolize[NotationTemplateTag[Subscript[\[ScriptCapitalF], \[Theta]]]]
-Symbolize[NotationTemplateTag[Subscript[\[ScriptCapitalD], \[Theta]]]]
+(*FIX 2026-10-28: Symbolize statements use ParsedBoxWrapper (the documented form outside notebooks); NotationTemplateTag[...] text gave Symbolize::noboxtag*)
+Symbolize[ParsedBoxWrapper[SubscriptBox["n", "s"]]]
+Symbolize[ParsedBoxWrapper[SubscriptBox["n", "\[Sigma]"]]]
+Symbolize[ParsedBoxWrapper[SubscriptBox["f", "\[Sigma]"]]]
+Symbolize[ParsedBoxWrapper[SubscriptBox["\[Lambda]", "1"]]]
+Symbolize[ParsedBoxWrapper[SubscriptBox["\[Lambda]", "2"]]]
+Symbolize[ParsedBoxWrapper[SubscriptBox["\[Delta]\[Theta]", "R"]]]
+Symbolize[ParsedBoxWrapper[SubsuperscriptBox["\[Sigma]", "R", "\[Infinity]"]]]
+Symbolize[ParsedBoxWrapper[SubscriptBox["\[ScriptCapitalF]", "\[Lambda]"]]]
+Symbolize[ParsedBoxWrapper[SubscriptBox["\[ScriptCapitalD]", "\[Lambda]"]]]
+Symbolize[ParsedBoxWrapper[SubscriptBox["\[ScriptCapitalF]", "\[Theta]"]]]
+Symbolize[ParsedBoxWrapper[SubscriptBox["\[ScriptCapitalD]", "\[Theta]"]]]
 (**)
 FullForm[NotationTemplateTag[Subscript[n, s]]]
 FullForm[NotationTemplateTag[Subscript[n, \[Sigma]]]]

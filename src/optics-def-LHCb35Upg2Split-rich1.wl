@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Subsection::Initialization:: *)
-(*(*(*(*(*(*(*(*(* SPLIT OPTICS for RICH=1 *)*)*)*)*)*)*)*)*)
+(*(* SPLIT OPTICS for RICH = 1 *)*)
 
 
 (* ::Input::Initialization:: *)
@@ -45,9 +45,9 @@ shiftAlongTilt[{z_,x_,y_},d_,az_,tilt_]:=N[{z,x,y}+d*tiltVectorFromAzimuth[az,ti
 
 (*=======================================================================*)
 (**)
-(*=======================================================================*)
-
-
+(*=========================================================================*)
+(* BOUNDARY AND ACCEPTANCE *)
+(*=========================================================================*)
 (**)
 (*=========================================================================*)
 (* SIZE TRNSVRS DIM *)
@@ -84,7 +84,6 @@ sizeThrdDimScreenL:=sizeThrdDimScreen0;
 sizeThrdDimScreenH:=sizeThrdDimScreen0;
 sizeThrdDimScreenT:=sizeThrdDimScreen0;
 (**)
-
 (*=======================================================================*)
 (*roll*)
 (*=======================================================================*)
@@ -94,9 +93,6 @@ rollSecMirL=0 Degree;
 rollSecMirH=0 Degree;
 rollScreenL=0 Degree;
 rollScreenH=0 Degree;
-
-
-
 (*=======================================================================*)
 (*tilt*)
 (*=======================================================================*)
@@ -119,22 +115,19 @@ tiltScreenH=58. Degree;
 tiltScreenTDegree=125.;
 tiltScreenT:=tiltScreenTDegree Degree;
 (**)
+
+
 (*=========================================================================*)
-(* ABSCISSA AND ORDINATE *)
-(*positions in physical axes,stored as z,x,y*)
+(* ABSCISSA AND ORDINATE positions in physical axes,stored as z,x,y*)
 (*=========================================================================*)
 (**)
 zPriMirL=2030.;
 xPriMirL=0.;
 yPriMirL=0;
 
-
-
 zPriMirH=2100.;
 xPriMirH=0.;
 yPriMirH=0;
-
-
 zSecMirL=1063.;
 xSecMirL=211.;
 ySecMirL=0;
@@ -143,15 +136,11 @@ xSecMirH=668.;
 ySecMirH=663;
 
 
-
-
 (**)
 
 zScreenL0=2119.;
 xScreenL0=1427.;
 yScreenL0=0;
-
-
 zScreenH0=1459.;
 xScreenH0=1293.;
 yScreenH0=0;
@@ -170,8 +159,6 @@ If[!ValueQ[theShiftOfThePDAT],theShiftOfThePDAT=0];
 {zScreenL,xScreenL,yScreenL}=shiftAlongTilt[{zScreenL0,xScreenL0,yScreenL0},theShiftOfThePDAL,azL,tiltScreenL];
 {zScreenH,xScreenH,yScreenH}=shiftAlongTilt[{zScreenH0,xScreenH0,yScreenH0},theShiftOfThePDAH,azH,tiltScreenH];
 {zScreenT,xScreenT,yScreenT}=shiftAlongTilt[{zScreenT0,xScreenT0,yScreenT0},theShiftOfThePDAT,azH,tiltScreenT];
-
-
 
 
 
@@ -198,15 +185,11 @@ thetaMinPriMirL=0.0;
 (*radii*)
 (*=======================================================================*)
 
-
-
 centerPriMirL={0.,0.};(*needed to define as a 2D pair*)
 centerPriMirH={0.,0.};(*needed to define as a 2D pair*)
 centerPriMirLRefl={0.,0.};(*needed to define as a 2D pair*)
 centerPriMirHRefl={0.,0.};(*needed to define as a 2D pair*)
 (**)
-
-
 radiusSecMir=0.0;
 radiusSecMirL:=radiusSecMir;
 radiusSecMirH:=radiusSecMir;
@@ -250,10 +233,24 @@ shiftThePDAH[d_]={N[zScreenH+d*Cos[tiltScreenH]],N[xScreenH+d*Sin[tiltScreenH]]}
 (*=========================================================================*)
 (* TESTING CHANGES : temporary modifying values already defined above *)
 (*=========================================================================*)
-(*sizeThrdDimPriMirL=1500/3;*)
-(*sizeTrnsvrsPriMir=325;*)
-(*sizeTrnsvrsPriMirL:=sizeTrnsvrsPriMir;*)
+
 (**)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (*=========================================================================*)
 (* NO MORE CHANGES OF PARAMETERS AFTER HERE *)
 (*=========================================================================*)
