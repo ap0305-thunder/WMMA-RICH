@@ -76,7 +76,7 @@ stopHeartbeat::usage = "stopHeartbeat[] removes the active heartbeat task, print
 summarizeLoads::usage = "summarizeLoads[] prints totals and an indexed list of calls in recording order for loadMyFile, loadNeeds, and trusted external loaders using recordExternalLoad, and returns the log as a Dataset. When the log is empty it prints a notice and returns Null.";
 superClearSet::usage = "superClearSet[symbol, short:True, value:\"n/a\", pad:21, numDigits:3, resetMonitoring:False] holds symbol, clears its definitions, assigns value, and installs Experimental`ValueFunction monitoring. With resetMonitoring -> True it removes monitoring only. This is destructive and accepts one symbol at a time.";
 timeBanner::usage = "timeBanner[msg:\"\", char:\"-\", width:98] prints a timestamped banner and returns <|\"Message\" -> msg, \"Timestamp\" -> string|>.";
-timeStamp::usage = "timeStamp is a delayed symbol that returns the current local date and time as a compact String of the form -DYYMMDDTHHMMSS.";
+timeStamp::usage = "timeStamp is a delayed symbol that returns the current local date and time as a String of the form --yyyy-mm-dd--HHMMSS (24 h), to be appended to file names.";
 validStylesheetReport::usage = "validStylesheetReport[file] reads file with Get and returns an Association describing whether it is a Notebook expression and likely stylesheet, including StyleData counts, parent-style presence, ordinary Input cells, a Salvaged tag, and problem descriptions.";
 myNotebookInit`versionTAG::usage = "versionTAG is the package version String reported when myNotebookInit loads.";
 withHeartbeat::usage = "withHeartbeat[expr, seconds:60, label:\"calculation\"] evaluates expr while printing a timestamp and elapsed time at the requested interval, and always removes the heartbeat task when evaluation finishes or is aborted. It holds expr unevaluated until monitoring has started.";
@@ -686,8 +686,9 @@ ensureNotebookSaved[] := Module[{nbk, path},
    ============================================================ *)
 
 ClearAll[timeStamp];
+(*FIX 2026-11-08: user standard format for dates in file names, --yyyy-mm-dd--HHMMSS (it was -DYYMMDDTHHMMSS, e.g. -D261108T150818)*)
 timeStamp := DateString[DateList[],
-  {"-D", "YearShort", "", "Month", "", "Day", "", "T", "Hour", "", "Minute", "", "Second"}];
+  {"--", "Year", "-", "Month", "-", "Day", "--", "Hour", "Minute", "Second"}];
 
 
 (* ============================================================
