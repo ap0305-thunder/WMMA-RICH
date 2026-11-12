@@ -11423,21 +11423,10 @@ ShowCellLabel->False,
 CodeAssistOptions->{"CodeToolsOptions"-><|
  "CodeInspect" -> <|"Tags" -> <|"SuspiciousBox" -> <|Enabled -> False|>|>|>|>},
 AutoMultiplicationSymbol->True,
-"NotebookPersistence"-><|"Hashes/Once/FqeNo654-3D" -> <|"HeldValue" -> Hold[
-      Hold[Null]], "CreationDate" -> 3.9591522306820386`17.350177189996305*^9,
-     "Creator" -> "Ale", "ModificationDate" -> 
-    3.9591522306820386`17.350177189996305*^9, "LanguageVersion" -> 14.2, 
-    "ValuePreprocessingFunction" -> Identity|>, 
-  "Hashes/Once/cqqe5xUmvK" -> <|"HeldValue" -> Hold[
-      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\cellStyleDataRules.m"]], 
-    "CreationDate" -> 3.9802555915410537`17.352485950286866*^9, "Creator" -> 
-    "Ale", "ModificationDate" -> 3.9802555915410537`17.352485950286866*^9, 
-    "LanguageVersion" -> 14.3, "ValuePreprocessingFunction" -> Identity|>|>,
 Magnification->Rational[3, 4],
 Background->RGBColor[0.88, 1, 0.88],
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
-StyleDefinitions->"C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\myStyle.nb",
+StyleDefinitions->FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"],
 ExpressionUUID->"ffdb89b7-30c1-e34d-b3e4-3abadbf4f2af"
 ]
 

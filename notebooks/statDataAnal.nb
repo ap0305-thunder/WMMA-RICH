@@ -207,16 +207,10 @@ including its initialization cells, is preserved under legacy-original/.",
  CellProlog :> SelectionMove[EvaluationCell[], All, Cell], 
  CellEpilog :> SelectionMove[EvaluationNotebook[], Next, Cell], 
  DynamicUpdating -> True, ShowCellLabel -> False, 
- AutoMultiplicationSymbol -> True, "NotebookPersistence" -> 
-  <|"Hashes/Once/FqeNo654-3D" -> <|"HeldValue" -> Hold[Hold[Null]], 
-     "CreationDate" -> 3.9504593867901356`17.34922259049462*^9, 
-     "Creator" -> "Ale", "ModificationDate" -> 
-      3.9504593867901356`17.34922259049462*^9, "LanguageVersion" -> 14.2, 
-     "ValuePreprocessingFunction" -> Identity|>|>, Magnification -> 3/4, 
+ AutoMultiplicationSymbol -> True, Magnification -> 3/4, 
  Background -> RGBColor[0.88, 1, 0.88], FrontEndVersion -> 
   "15.0 for Microsoft Windows (64-bit) (July 2, 2026)", 
- StyleDefinitions -> "C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\myStyle.nb", 
+ StyleDefinitions -> FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"], 
  ExpressionUUID -> "4394a700-1951-3447-bccb-a967361b23b6", 
  TaggingRules -> <|"RICHProjectCase" -> "statDataAnal", 
    "RICHNotebookRole" -> "package-bootstrap", "RICHSourceFile" -> 

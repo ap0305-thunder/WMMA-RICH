@@ -1,6 +1,7 @@
 (* Project loader for WolframMMAProjectRICH-Git. *)
 ClearAll[
   $RICHProjectRoot, $RICHProjectStyleDefinitions, $RICHProjectComponents,
+  RICHNotebookStyleDefinitions,
   richDockedCellCases,
   $RICHPathSettings, $RICHPathConfigFile,
   RICHProjectPath, RICHDefaultPathSettings, RICHNormalizePathSettings,
@@ -18,6 +19,23 @@ $RICHProjectStyleDefinitions = With[
   {localStyleSheet = RICHProjectPath["myStyle.nb"]},
   If[FileExistsQ[localStyleSheet], localStyleSheet, "myStyle.nb"]
 ];
+
+(* FIX 2026-11-12: stylesheet reference to store in project notebooks.
+   FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"] is resolved by the Front
+   End relative to the notebook's own folder (notebooks/../myStyle.nb), so it
+   stays valid when the project is copied, cloned or distributed and does not
+   change when another user saves the notebook. Notebooks saved elsewhere
+   fall back to $RICHProjectStyleDefinitions (absolute path or name only). *)
+RICHNotebookStyleDefinitions[] := RICHNotebookStyleDefinitions[EvaluationNotebook[]];
+RICHNotebookStyleDefinitions[nb_NotebookObject] := Module[{dir},
+  dir = Quiet @ Check[NotebookDirectory[nb], $Failed];
+  If[
+    StringQ[dir] && FileExistsQ[FileNameJoin[{Quiet @ ParentDirectory[dir], "myStyle.nb"}]],
+    FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"],
+    $RICHProjectStyleDefinitions
+  ]
+];
+RICHNotebookStyleDefinitions[_] := $RICHProjectStyleDefinitions;
 
 $RICHPathConfigFile = FileNameJoin[{
   $UserBaseDirectory, "ApplicationData", "WolframMMAProjectRICH", "paths.json"
@@ -334,7 +352,7 @@ RICHBootstrap[] := Module[{loaded},
   If[RICHFrontEndAvailableQ[],
     $HistoryLength = 100;
     myNotebookInit`applySettings[$RICHNotebookDefaultSettings];
-    SetOptions[EvaluationNotebook[], StyleDefinitions -> $RICHProjectStyleDefinitions]
+    SetOptions[EvaluationNotebook[], StyleDefinitions -> RICHNotebookStyleDefinitions[]]
   ];
   True
 ];
@@ -354,6 +372,13 @@ RICHNotebookBootstrap[case_String] := Module[{loaded},
 
   loaded = LoadRICHCase[case];
   If[loaded =!= True, Return[$Failed]];
+
+  (* FIX 2026-11-12: some components set StyleDefinitions to the absolute
+     project stylesheet path while loading; restore the portable relative
+     reference so that it is what gets saved with the notebook. *)
+  If[RICHFrontEndAvailableQ[],
+    SetOptions[EvaluationNotebook[], StyleDefinitions -> RICHNotebookStyleDefinitions[]]
+  ];
 
   If[
     RICHFrontEndAvailableQ[] && MemberQ[richDockedCellCases, case],

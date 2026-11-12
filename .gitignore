@@ -24,3 +24,6 @@ notebooks/allOutputShrt--*.xlsx
 # Dated manual "save as version" notebook copies
 notebooks/*_D*-T*_v.*.nb
 notebooks/*_D*-T*_v.*.txt
+
+# Dated notebook save copies (name--yyyy-mm-dd--HHMM-save.nb)
+notebooks/*-save.nb

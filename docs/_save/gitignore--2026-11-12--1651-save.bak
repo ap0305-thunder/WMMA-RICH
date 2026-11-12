@@ -1,0 +1,26 @@
+generated/*
+!generated/.gitkeep
+output/*
+!output/README.md
+backups/*
+!backups/README.md
+*.mx
+*.wdx
+load_log.wdx
+.DS_Store
+validation/results/*
+!validation/results/README.md
+
+# Transient validation run logs (stdout/stderr captures from harness runs)
+*.log
+
+# Manual pre-change source snapshots. Git history already versions these;
+# the directories are kept on disk but are not tracked.
+validation/backup-before-codex/
+
+# Notebook run outputs
+notebooks/allOutputShrt--*.xlsx
+
+# Dated manual "save as version" notebook copies
+notebooks/*_D*-T*_v.*.nb
+notebooks/*_D*-T*_v.*.txt

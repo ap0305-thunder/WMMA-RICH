@@ -307,16 +307,10 @@ later.", "Text", InitializationCell -> False, InitializationGroup -> True,
         Automatic, "NewlinesBetweenCommas" -> Automatic, 
        "NewlinesInControl" -> Automatic, "NewlinesInScoping" -> Automatic, 
        "NewlinesInComments" -> Automatic|>|>}, 
- AutoMultiplicationSymbol -> True, "NotebookPersistence" -> 
-  <|"Hashes/Once/FqeNo654-3D" -> <|"HeldValue" -> Hold[Hold[Null]], 
-     "CreationDate" -> 3.9498332189841768`17.349153747165136*^9, 
-     "Creator" -> "Ale", "ModificationDate" -> 
-      3.9498332189841768`17.349153747165136*^9, "LanguageVersion" -> 14.1, 
-     "ValuePreprocessingFunction" -> Identity|>|>, Magnification -> 3/4, 
+ AutoMultiplicationSymbol -> True, Magnification -> 3/4, 
  Background -> RGBColor[0.88, 1, 0.88], FrontEndVersion -> 
   "15.0 for Microsoft Windows (64-bit) (July 2, 2026)", 
- StyleDefinitions -> "C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\myStyle.nb", 
+ StyleDefinitions -> FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"], 
  ExpressionUUID -> "b82189d2-5b63-eb41-9371-ae686e193b55", 
  TaggingRules -> <|"TryRealOnly" -> False, "RICHProjectCase" -> "base", 
    "RICHNotebookRole" -> "package-bootstrap", "RICHSourceFile" -> 

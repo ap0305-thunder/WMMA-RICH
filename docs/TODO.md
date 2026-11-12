@@ -1,6 +1,6 @@
 # WolframMMAProjectRICH – to-do list
 
-Last updated: 2026-11-08 (16:00)
+Last updated: 2026-11-12 (16:55)
 
 ## Open
 
@@ -13,9 +13,10 @@ Last updated: 2026-11-08 (16:00)
 | 5 | Non-split template uses the Optica tilt convention (primary/secondary tilts differ by 180° from the old values): tilt values printed or exported by the notebook are in the new convention, check them before comparing with older outputs. | `notebooks/optics.nb` exports (opticalSystemDefVars, optics-geometry) | low |
 | 6 | Other `.wl` files still have mixed line endings (calculator.wl, myNotebookInit.wl, geometricalOptics.wl, inputDataForRICH.wl, statDataAnal.wl, cellStyleDataRules.wl, LoadProject.wl, validation/ValidationConfig.wl): convert to CRLF as done for the optics-def files. | `src/`, `validation/` | low |
 | 7 | `opticalSystemDefVars-<tag>--<date>.txt` lists about 15 entries of the split optics that the non-split template does not define (they print their own name). Kept as is for now. | `notebooks/optics.nb` > SYSTEM DEFINITION > INIT > full dataset | low |
-| 8 | Run panel: increase the contrast between selected and non-selected buttons (SetterBar choices, check boxes). | `notebooks/optics.nb` > RUN CONTROL PANEL (also the Float palette) | low |
-| 9 | Run panel title: "RICH optics run control" (now "RICH run control"; also the palette window title). | `notebooks/optics.nb` > RUN CONTROL PANEL | low |
 | 10 | ARC barrel: in `ARCBarrel.wl` the aerogel and cooling plates are offset from the sensor along the radial axis of the cell but oriented like the tilted sensor, so the 262 µm safe distance holds only for untilted sensors (cells ±17: aerogel overlaps the sensor by 0.24 mm). Check `ARC_barrel_geo.cpp`: if the offsets are in the sensor frame, fix `makeCell` (`ac`, `cc`). See arc.nb Test 4. | `notebooks/ARCBarrel.wl` | normal |
+| 11 | `geometricalOptics.nb` (left aside for now): active exports to `C:\TEMP` (`plot-…`, `tabl--…`), a `validStylesheetReport` call with an absolute path (PROVE), absolute stylesheet path and saved outputs. Use `RICHOutputPath[…]` and the relative stylesheet as in the other notebooks. | `notebooks/geometricalOptics.nb` | low |
+| 12 | Dated save copies already in git (`notebooks/*-save.nb`, now in `.gitignore`) stay tracked until removed from the index (`git rm --cached notebooks/*-save.nb`); they contain absolute paths and outputs. | git | low |
+| 13 | Commented legacy lines with absolute paths (`src/physicsGeneral.wl` 28-29, `src/RICH.wl` 35, commented exports in `calculator.nb`): delete when convenient (inactive). | `src/`, `notebooks/calculator.nb` | low |
 
 ## Design decisions (not to-do)
 
@@ -31,3 +32,9 @@ Last updated: 2026-11-08 (16:00)
 - 2026-11-08 – optics.nb: `run-summary--<tagString>--<date>.txt` at the end of every run (run options, optics file, geometry, radiator/Cherenkov/sensor, source, results); `opticalSystemDefVars-a-<tag>.txt` no longer written.
 - 2026-11-08 – myNotebookInit.wl: `timeStamp` in the format `--yyyy-mm-dd--HHMMSS` (was `-DYYMMDDTHHMMSS`).
 - 2026-11-08 – ARC barrel (`notebooks/arc.nb`, `ARCBarrelOptica.wl`): adapter switched to OpticaEM and Rotate convention fixed (OpticaEM applies the transpose of the rotation matrix); cell 1 trace checked: 36/36 photons on the sensor, ring radius 8.82 mm, as in an independent geometric calculation.
+- 2026-11-12 – optics.nb: run panel and palette titled "RICH optics run control"; selected buttons white bold on blue, others grey; ticked check boxes bold blue (items 8, 9).
+- 2026-11-12 – portability: notebooks store the stylesheet as ``FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"]`` (relative to the notebook folder) instead of the absolute path; `LoadProject.wl` (`RICHNotebookStyleDefinitions[]`) re-applies it after loading, so it is what gets saved. Applied to optics, calculator, RICH, base, physicsGeneral, statDataAnal, inputDataForRICH, cellStyleDataRules.
+- 2026-11-12 – calculator.nb: `doCalcAllExperiment` and the two `allExperimentsResults` exports write to the output folder (`RICHOutputPath[…]`) instead of `C:\TEMP`; `allOutputShrt-….xlsx` uses `FileNameJoin`.
+- 2026-11-12 – removed the stale `NotebookPersistence` cache (old `Once` result with `C:\Users\Ale\My Drive\allRICHWMMA\cellStyleDataRules.m`) from optics, calculator, RICH, base, physicsGeneral, statDataAnal.
+- 2026-11-12 – run summary: output folder and optics file shown relative to the project (`<project>\…`).
+- 2026-11-12 – `tools/make-release.wls`: clean copy for distribution (outputs stripped, persistence removed, relative stylesheet, path scan, optional zip).

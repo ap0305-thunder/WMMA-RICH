@@ -575042,9 +575042,9 @@ allExperimentResultsHeader,First@Take[Transpose[outputA[[index]]],{2}]];
 allExperimentResultsData=AppendTo[allExperimentResultsData,First@Drop[\
 Transpose[outputA[[index]]],2]];
 (**)
-Export[StringJoin[\"C:\\\\TEMP\\\\res-\"<>theTempTag<>\"-\"<>thisTimeStamp<>\"\
+Export[Global`RICHOutputPath[\"res-\"<>theTempTag<>\"-\"<>thisTimeStamp<>\"\
 .pdf\"],outputB];
-Export[StringJoin[\"C:\\\\TEMP\\\\res-\"<>theTempTag<>\"-\"<>thisTimeStamp<>\"\
+Export[Global`RICHOutputPath[\"res-\"<>theTempTag<>\"-\"<>thisTimeStamp<>\"\
 .tex\"],outputB];
 ];
 (**)
@@ -592278,7 +592278,7 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"Export", "[", 
      RowBox[{
-      RowBox[{"\"\<C:\\\\TEMP\\\\allExperimentsResults-\>\"", "<>", 
+      RowBox[{RowBox[{"Global`RICHOutputPath", "[", "\"\<allExperimentsResults-\>\"", "]"}], "<>", 
        "thisTimeStamp", "<>", "\"\<.tex\>\""}], ",", "\[IndentingNewLine]", 
       RowBox[{"TableForm", "[", 
        RowBox[{"Transpose", "[", 
@@ -592306,7 +592306,7 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"Export", "[", 
      RowBox[{
-      RowBox[{"\"\<C:\\\\TEMP\\\\allExperimentsResults-\>\"", "<>", 
+      RowBox[{RowBox[{"Global`RICHOutputPath", "[", "\"\<allExperimentsResults-\>\"", "]"}], "<>", 
        "thisTimeStamp", "<>", "\"\<.txt\>\""}], ",", "texOutput"}], "]"}], 
     ";"}], 
    RowBox[{"(*", " ", 
@@ -599077,9 +599077,7 @@ Cell[BoxData[
  RowBox[{"Export", "[", 
   RowBox[{
    RowBox[{
-    RowBox[{"ToString", "[", 
-     RowBox[{"NotebookDirectory", "[", "]"}], "]"}], 
-    "<>", "\"\<\\\\allOutputShrt-\>\"", 
+    RowBox[{"FileNameJoin", "[", RowBox[{"{", RowBox[{RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<allOutputShrt-\>\""}], "}"}], "]"}], 
     RowBox[{"(*", 
      RowBox[{"<>", "tag", "<>", "\"\<-\>\""}], "*)"}], " ", "<>", " ", 
     "thisTimeStamp", " ", "<>", " ", "\"\<.xlsx\>\""}], ",", 
@@ -712235,21 +712233,10 @@ CodeAssistOptions->{"CodeToolsOptions"-><|
       "NoVariables" -> <|"Module" -> <|Enabled -> False|>|>, 
       "SuspiciousBox" -> <|Enabled -> False|>|>|>|>},
 AutoMultiplicationSymbol->True,
-"NotebookPersistence"-><|"Hashes/Once/FqeNo654-3D" -> <|"HeldValue" -> Hold[
-      Hold[Null]], "CreationDate" -> 3.9615944408950576`17.350445002740923*^9,
-     "Creator" -> "Ale", "ModificationDate" -> 
-    3.9615944408950576`17.350445002740923*^9, "LanguageVersion" -> 14.2, 
-    "ValuePreprocessingFunction" -> Identity|>, 
-  "Hashes/Once/cqqe5xUmvK" -> <|"HeldValue" -> Hold[
-      Hold["C:\\Users\\Ale\\My Drive\\allRICHWMMA\\cellStyleDataRules.m"]], 
-    "CreationDate" -> 3.9802551583947874`17.35248590302532*^9, "Creator" -> 
-    "Ale", "ModificationDate" -> 3.9802551583947874`17.35248590302532*^9, 
-    "LanguageVersion" -> 14.3, "ValuePreprocessingFunction" -> Identity|>|>,
 Magnification->Rational[3, 4],
 Background->RGBColor[0.88, 1, 0.88],
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
-StyleDefinitions->"C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\myStyle.nb",
+StyleDefinitions->FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"],
 ExpressionUUID->"3ba97c2e-5614-fc49-ae93-df50b26509af"
 ]
 

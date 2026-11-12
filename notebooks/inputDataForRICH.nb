@@ -86019,8 +86019,7 @@ VACUUM or MEDIUM ??? ASSUME in VACUUM - see case by case the refractive index \
  AutoMultiplicationSymbol -> True, Magnification -> 3/4, 
  Background -> RGBColor[0.88, 1, 0.88], FrontEndVersion -> 
   "15.0 for Microsoft Windows (64-bit) (July 2, 2026)", 
- StyleDefinitions -> "C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\myStyle.nb", 
+ StyleDefinitions -> FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"], 
  ExpressionUUID -> "d58d7370-67a9-f04d-80d9-4058005283a6", 
  TaggingRules -> <|"Salvaged" -> True, "RICHProjectCase" -> 
     "inputDataForRICH", "RICHNotebookRole" -> "package-bootstrap", 

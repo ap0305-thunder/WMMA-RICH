@@ -350,16 +350,10 @@ CellEpilog:>SelectionMove[
 DynamicUpdating->True,
 ShowCellLabel->False,
 AutoMultiplicationSymbol->True,
-"NotebookPersistence"-><|"Hashes/Once/FqeNo654-3D" -> <|"HeldValue" -> Hold[
-      Hold[Null]], "CreationDate" -> 3.950459344138273`17.349222585805677*^9, 
-    "Creator" -> "Ale", "ModificationDate" -> 
-    3.950459344138273`17.349222585805677*^9, "LanguageVersion" -> 14.2, 
-    "ValuePreprocessingFunction" -> Identity|>|>,
 Magnification->Rational[3, 4],
 Background->RGBColor[0.88, 1, 0.88],
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
-StyleDefinitions->"C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\myStyle.nb",
+StyleDefinitions->FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"],
 ExpressionUUID->"f62d6cfc-fa99-b043-90f5-f7fa13f2a624"
 ]
 
