@@ -2,8 +2,10 @@
 (* Native Optica adapter, using the documented Optica package API.
    Requires licensed Optica. Use PropagateSystem/DrawSystem, not TurboTrace:
    the exact trimming hooks below are ordinary Wolfram Language functions.
-   This file has NOT been executed with a licensed Optica installation here.
-   All surfaces are in mm; Optica wavelengths are in micrometres. *)
+   Executed with OpticaEM 5.90 on 2026-11-08 (arc.nb); see the Rotate fix in place[] below.
+   All surfaces are in mm; Optica wavelengths are in micrometres.
+   Global frame {Z beam, X, Y} from ARCBarrel.wl (2026-11-13): the Optica first axis is the beam axis,
+   as in the LHCb optics. The adapter works in the ARCBarrel.wl frame and needed no change. *)
 (* FIX 2026-11-08: Optica is installed here as OpticaEM`OpticaEM` (OpticaEM 5.90, as in src/optics.wl), not Optica`Optica`.
    It is loaded only if not loaded yet, and the check no longer uses Check[Needs[...]] (the OpticaEM loader can issue messages
    and still load). OpticaEM`OpticaEM` is not a BeginPackage dependency (it would be reloaded when it is not listed in $Packages):
@@ -95,7 +97,10 @@ installIntersection[obj_,fun_] := Module[{surf,changed},
   obj /. HoldPattern[Rule[Surfaces,_]] :> (Surfaces->changed)
 ];
 
-place[obj_,c_,o_,f_] := Translate[Rotate[obj,N[c["Rotation"].f]],N[ARCToGlobal[c,o]]];
+(*FIX 2026-11-08: OpticaEM Rotate[obj, matrix] applies the TRANSPOSE of the given matrix, so the matrix is transposed here.
+  Found on the ARC cell 1 trace: with the old line the mirror centre came out at u = -2.0 mm instead of +2.0 mm and the
+  aerogel and sensor planes were tilted by 0.029 rad; a model with the transposed rotation reproduces the traced end points to 0.001 mm.*)
+place[obj_,c_,o_,f_] := Translate[Rotate[obj,N[Transpose[c["Rotation"].f]]],N[ARCToGlobal[c,o]]];
 makeBase["Mirror",fun_,ap_,label_,medium_] := CustomMirror[fun,ap,label];
 makeBase["Aerogel",fun_,ap_,label_,medium_] := CustomLensSurface[fun,ap,label,ComponentMedium->medium];
 makeBase["Cooling"|"Sensor",fun_,ap_,label_,medium_] := CustomBaffle[fun,ap,label];

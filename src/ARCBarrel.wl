@@ -1,13 +1,15 @@
 (* ::Package:: *)
 (* ARC barrel geometry. Coordinates and distances: mm; angles: rad.
+   Global frame {Z beam, X, Y}: the FIRST axis is the beam axis, as in the LHCb optics
+   (Optica first axis along the beam). Changed 2026-11-13: it was {X, Y, Z beam}.
    Load with Get["/absolute/path/ARCBarrel.wl"]. Does not require Optica.
    See README_IT.md for source conventions and retained source-code details. *)
 
 BeginPackage["ARCBarrel`"];
 $ARCBarrelData::usage = "Association extracted from the XML and the active ARCBARREL_T C++ constructor.";
 ARCBarrel::usage = "ARCBarrel[\"Row\"->1,\"Phi\"->0] builds all eta cells with centres at physical azimuth Phi. Row may be 1,2,or \"Both\"; Phi->Automatic preserves the ZIP orientation.";
-ARCToGlobal::usage = "ARCToGlobal[cell,{u,v,w}] maps cell coordinates to global {X,Y,Z}; Z is the beam axis.";
-ARCToLocal::usage = "ARCToLocal[cell,{X,Y,Z}] is the inverse of ARCToGlobal.";
+ARCToGlobal::usage = "ARCToGlobal[cell,{u,v,w}] maps cell coordinates to global {Z,X,Y}: the first axis is the beam axis (as in the LHCb optics).";
+ARCToLocal::usage = "ARCToLocal[cell,{Z,X,Y}] is the inverse of ARCToGlobal.";
 ARCCellContainsQ::usage = "ARCCellContainsQ[cell,p] tests membership in the exact local hexagonal cell prism. Also accepts symbolic p.";
 ARCVolumeContainsQ::usage = "ARCVolumeContainsQ[cell,kind,p] tests the local Mirror, Sensor, Aerogel, or Cooling solid, including the C++ Boolean intersections.";
 ARCVolumeRegion::usage = "ARCVolumeRegion[cell,kind] returns an exact global ImplicitRegion/TransformedRegion; Coordinates->\"Local\" returns a local region.";
@@ -43,8 +45,10 @@ makeCell[n_,phi_,phin_] := Module[{d=$ARCBarrelData,p,sgn,z,a,ph,q,sc,ac,cc,mc,r
   z=sgn (p["Column"] d["ZStep"]-If[p["Row"]===2,d["ZStep"]/2,0.]);
   a=sgn p["SensorTilt"];
   ph=phi+If[p["Row"]===2,d["PhiStep"]/2,0.];
-  (* Columns are +beam Z, -azimuth, +radial: det(q)=+1. *)
-  q={{0.,Sin[ph],Cos[ph]},{0.,-Cos[ph],Sin[ph]},{1.,0.,0.}};
+  (* FIX 2026-11-13: global frame {Z beam, X, Y}, beam along the first axis as in the LHCb optics
+     (was {X, Y, Z beam}: q={{0,Sin[ph],Cos[ph]},{0,-Cos[ph],Sin[ph]},{1,0,0}}, translation {0,0,z}).
+     Columns are +beam, -azimuth, +radial: det(q)=+1. *)
+  q={{1.,0.,0.},{0.,Sin[ph],Cos[ph]},{0.,-Cos[ph],Sin[ph]}};
   mc={sgn p["MirrorU"],0.,d["MirrorRadialOrigin"]+p["MirrorWOffset"]};
   sc={sgn p["SensorU"],0.,d["SensorRadialOrigin"]+p["SensorWOffset"]};
   ac=sc+{0.,0.,d["AerogelRadialOffset"]};
@@ -53,7 +57,7 @@ makeCell[n_,phi_,phin_] := Module[{d=$ARCBarrelData,p,sgn,z,a,ph,q,sc,ac,cc,mc,r
   e={Cos[a],0.,Sin[a]};v={0.,1.,0.};normal={-Sin[a],0.,Cos[a]};
   sourceIndex=First[FirstPosition[d["SourceSignedCellNumbers"],n]]-1;
   <|"SignedNumber"->n,"Number"->Abs[n],"Row"->p["Row"],"Column"->p["Column"],
-    "CentreZ"->z,"PhysicalPhi"->ph,"Rotation"->q,"Translation"->{0.,0.,z},
+    "CentreZ"->z,"PhysicalPhi"->ph,"Rotation"->q,"Translation"->{z,0.,0.},
     "CellApothem"->d["CellApothem"],"HexVertices"->hexVertices[d["CellApothem"]],
     "RadialLimits"->d["CellRadialLimits"],"MirrorCentre"->mc,
     "MirrorOuterRadius"->p["Radius"],"MirrorInnerRadius"->p["Radius"]-d["MirrorThickness"],
@@ -106,10 +110,10 @@ ARCMirrorW[c_Association,u_,v_,side_:"Inner"] := Module[{m=c["MirrorCentre"],r=c
 
 ARCBarrelTable[b_Association] := Dataset[Map[Function[c,<|
   "Cell"->c["SignedNumber"],"Row"->c["Row"],"Zcell_mm"->c["CentreZ"],"EtaCentre"->c["EtaAtSensorRadius"],
-  "Phi_rad"->c["PhysicalPhi"],"MirrorCentreXYZ_mm"->ARCToGlobal[c,c["MirrorCentre"]],
+  "Phi_rad"->c["PhysicalPhi"],"MirrorCentreZXY_mm"->ARCToGlobal[c,c["MirrorCentre"]],
   "MirrorRadiusGasSide_mm"->c["MirrorInnerRadius"],
-  "SensorCentreXYZ_mm"->ARCToGlobal[c,c["SensorCentre"]],"SensorTilt_rad"->c["SensorTilt"],
-  "AerogelCentreXYZ_mm"->ARCToGlobal[c,c["AerogelCentre"]]|>],b["Cells"]]];
+  "SensorCentreZXY_mm"->ARCToGlobal[c,c["SensorCentre"]],"SensorTilt_rad"->c["SensorTilt"],
+  "AerogelCentreZXY_mm"->ARCToGlobal[c,c["AerogelCentre"]]|>],b["Cells"]]];
 
 ARCIndex::wave="Wavelength must be positive.";
 ARCIndex[material: ("Gas"|"Aerogel"),lambda_?NumericQ] := Module[{key,t,energy},
@@ -156,8 +160,9 @@ Options[ARCBarrelGraphics]={"CellWireframes"->True,"Aerogel"->True,ImageSize->10
 ARCBarrelGraphics[b_Association,OptionsPattern[]] := Module[{cs=b["Cells"],parts},
   parts=Join[mirrorPlot /@ cs,If[TrueQ[OptionValue["Aerogel"]],Flatten[Table[platePlot[c,s],{c,cs},{s,{-1,1}}],1],{}],
     {Graphics3D[Join[sensorPolygon /@ cs,If[TrueQ[OptionValue["CellWireframes"]],cellWire /@ cs,{}]]]}];
-  Show[parts,Axes->True,AxesLabel->{"X [mm]","Y [mm]","Z beam [mm]"},BoxRatios->Automatic,
-    PlotRange->All,ImageSize->OptionValue[ImageSize],Lighting->"Neutral",ViewPoint->{3,-5,2}]
+  (*FIX 2026-11-13: global frame {Z beam, X, Y}; same view as before (beam vertical)*)
+  Show[parts,Axes->True,AxesLabel->{"Z beam [mm]","X [mm]","Y [mm]"},BoxRatios->Automatic,
+    PlotRange->All,ImageSize->OptionValue[ImageSize],Lighting->"Neutral",ViewPoint->{2,3,-5},ViewVertical->{1,0,0}]
 ];
 
 Options[ARCBarrelSection]={ImageSize->1100};

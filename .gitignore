@@ -27,3 +27,14 @@ notebooks/*_D*-T*_v.*.txt
 
 # Dated notebook save copies (name--yyyy-mm-dd--HHMM-save.nb)
 notebooks/*-save.nb
+
+# Claude local settings
+.claude/
+
+# Manual backup copies (git history already versions these)
+*.bak
+_save/
+
+# Python bytecode caches
+__pycache__/
+*.pyc

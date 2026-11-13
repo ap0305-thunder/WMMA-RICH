@@ -203798,8 +203798,7 @@ AutoMultiplicationSymbol->True,
 Magnification->Rational[3, 4],
 Background->RGBColor[0.88, 1, 0.88],
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
-StyleDefinitions->"C:\\Users\\Ale\\OneDrive - \
-unige.it\\Documenti\\WolframMMAProjectRICH-Git-new\\myStyle.nb",
+StyleDefinitions->FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"],
 ExpressionUUID->"43525358-f58e-a74d-aa0d-69e7f5a00715"
 ]
 

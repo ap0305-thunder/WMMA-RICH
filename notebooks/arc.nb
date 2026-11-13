@@ -6,16 +6,6 @@
 (* CreatedBy='Wolfram 15.0' *)
 
 (*CacheID: 234*)
-(* Internal cache information:
-NotebookFileLineBreakTest
-NotebookFileLineBreakTest
-NotebookDataPosition[       154,          7]
-NotebookDataLength[   2752184,      47693]
-NotebookOptionsPosition[   2744877,      47564]
-NotebookOutlinePosition[   2745298,      47581]
-CellTagsIndexPosition[   2745255,      47578]
-WindowTitle->arc.nb
-WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
@@ -23,32 +13,14 @@ Notebook[{
 Cell[CellGroupData[{
 Cell["ARC barrel RICH", "Title",ExpressionUUID->"56cf4608-3dc1-3e43-b4fd-9724a93019dd"],
 
-Cell["\<\
-Geometry and Optica ray tracing of the ARC barrel RICH, from \
-ARCGeometryData.wl (numbers extracted from the ARC XML and C++ constructor), \
-ARCBarrel.wl (pure Mathematica geometry, no Optica) and ARCBarrelOptica.wl \
-(Optica adapter, here adapted to OpticaEM). The three files must stay in the \
-same folder as this notebook. Units: mm, rad; Optica wavelengths in \
-micrometres. Use a fresh kernel (Evaluation > Quit Kernel) if optics.nb was \
-evaluated in the same kernel: the adapter adds its own refractive-index \
-models to ModelRefractiveIndex.\
-\>", "Text",ExpressionUUID->"246e7aca-253e-664d-a4ae-ece6f9c14465"],
+Cell["Geometry and Optica ray tracing of the ARC barrel RICH, from ARCGeometryData.wl (numbers extracted from the ARC XML and C++ constructor), ARCBarrel.wl (pure Mathematica geometry, no Optica) and ARCBarrelOptica.wl (Optica adapter, here adapted to OpticaEM). The three files are in the project folder src/ (moved there on 2026-11-13): ARCBarrel.wl is loaded by the project loader (LoadRICHCase[\"arc\"], src/LoadProject.wl). Global frame {Z beam, X, Y}: the first axis is the beam axis, as in the LHCb optics (changed on 2026-11-13; it was {X, Y, Z beam}). Units: mm, rad; Optica wavelengths in micrometres. The same geometry is the detector \"ARC barrel\" of optics.nb (detector list src/detectors.wl), whose source chr is the cone of Test 1. Use a fresh kernel (Evaluation > Quit Kernel) if optics.nb was evaluated in the same kernel: the adapter adds its own refractive-index models to ModelRefractiveIndex.", "Text",ExpressionUUID->"246e7aca-253e-664d-a4ae-ece6f9c14465"],
 
 Cell[CellGroupData[{
 
 Cell["Geometry (no Optica)", "Section",ExpressionUUID->"474d78b5-3c51-3d49-9491-f5f32260d6f3"],
 
-Cell[BoxData[
- RowBox[{
-  RowBox[{"Get", "[", 
-   RowBox[{"FileNameJoin", "[", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"NotebookDirectory", "[", "]"}], ",", 
-      " ", "\"\<ARCBarrel.wl\>\""}], "}"}], "]"}], "]"}], ";"}]], "Input",
- CellLabel->
-  "11/8/26 18:37:20 \
-In[1]:=",ExpressionUUID->"e98f15eb-ac64-364b-a2bb-6352bfccb410"],
+Cell["(*FIX 2026-11-13: the ARC files are in src/; ARCBarrel.wl is loaded by the project loader (case \"arc\" of src/LoadProject.wl)*)\nGet[FileNameJoin[{ParentDirectory[NotebookDirectory[]],\"src\",\"LoadProject.wl\"}]];\nLoadRICHCase[\"arc\"];", "Input",
+ CellTags->"FIX-2026-11-13"],
 
 Cell[CellGroupData[{
 
@@ -38558,18 +38530,8 @@ on the Optica surfaces).\
 
 Cell[CellGroupData[{
 
-Cell[BoxData[
- RowBox[{
-  RowBox[{"Get", "[", 
-   RowBox[{"FileNameJoin", "[", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"NotebookDirectory", "[", "]"}], ",", 
-      " ", "\"\<ARCBarrelOptica.wl\>\""}], "}"}], "]"}], "]"}], 
-  ";"}]], "Input",
- CellLabel->
-  "11/8/26 18:37:27 \
-In[8]:=",ExpressionUUID->"3ad7d97e-f2d2-a049-a8b6-97318d9e989d"],
+Cell["(*FIX 2026-11-13: the ARC files are in src/*)\nGet[RICHProjectPath[\"src\",\"ARCBarrelOptica.wl\"]];", "Input",
+ CellTags->"FIX-2026-11-13"],
 
 Cell[CellGroupData[{
 
@@ -47566,138 +47528,9 @@ WindowSize->{900, 497},
 WindowMargins->{{24.5, Automatic}, {Automatic, 0}},
 WindowTitle->"arc.nb",
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
-StyleDefinitions->"Default.nb",
+StyleDefinitions->FrontEnd`FileName[{ParentDirectory}, "myStyle.nb"],
 ExpressionUUID->"ac56fb1d-df40-6344-a91c-36378e704b74"
 ]
 (* End of Notebook Content *)
 
-(* Internal cache information *)
-(*CellTagsOutline
-CellTagsIndex->{}
-*)
-(*CellTagsIndex
-CellTagsIndex->{}
-*)
-(*NotebookFileOutline
-Notebook[{
-Cell[CellGroupData[{
-Cell[596, 23, 87, 0, 72, "Title",ExpressionUUID->"56cf4608-3dc1-3e43-b4fd-9724a93019dd"],
-Cell[686, 25, 630, 9, 74, "Text",ExpressionUUID->"246e7aca-253e-664d-a4ae-ece6f9c14465"],
-Cell[CellGroupData[{
-Cell[1341, 38, 94, 0, 49, "Section",ExpressionUUID->"474d78b5-3c51-3d49-9491-f5f32260d6f3"],
-Cell[1438, 40, 339, 10, 21, "Input",ExpressionUUID->"e98f15eb-ac64-364b-a2bb-6352bfccb410"],
-Cell[CellGroupData[{
-Cell[1802, 54, 1008, 27, 49, "Input",ExpressionUUID->"15ccfeef-6b84-a44b-9eb0-17fc459c2353"],
-Cell[2813, 83, 129, 3, 24, "Output",ExpressionUUID->"7c74eac3-e067-5347-9858-1aecfc61b61d"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2979, 91, 460, 11, 21, "Input",ExpressionUUID->"58deeb63-7dd1-1143-87a6-c99ed2039f72"],
-Cell[3442, 104, 200049, 3907, 372, "Output",ExpressionUUID->"a7641c29-bb7e-b64c-b22e-e13255b90833"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[203528, 4016, 594, 16, 21, "Input",ExpressionUUID->"ba6b2af4-312d-6243-97a9-9775a838d427"],
-Cell[204125, 4034, 256666, 4290, 196, "Output",ExpressionUUID->"fa67c75b-9eb8-9649-b294-b0a66bcb2491"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[460828, 8329, 329, 9, 21, "Input",ExpressionUUID->"92f81ef0-29fc-3244-89bd-7892a23568e1"],
-Cell[461160, 8340, 1830455, 30176, 5746, 567735, 9475, "CachedBoxData", "BoxData", "Output",ExpressionUUID->"5117b1f0-e3d6-ae4a-bb64-85ed6fbb6b00"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2291652, 38521, 551, 15, 21, "Input",ExpressionUUID->"2e789dad-5778-4546-9214-ef63b2ea3b8f"],
-Cell[2292206, 38538, 212, 6, 24, "Output",ExpressionUUID->"04bffbae-5290-3c4d-8de5-8dd979d95425"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2292467, 38550, 108, 0, 49, "Section",ExpressionUUID->"7320f96f-7a7c-d846-a364-785953408ecb"],
-Cell[2292578, 38552, 258, 4, 25, "Text",ExpressionUUID->"f3a8068f-cf20-c043-9fd7-e03d50919907"],
-Cell[CellGroupData[{
-Cell[2292861, 38560, 348, 11, 21, "Input",ExpressionUUID->"3ad7d97e-f2d2-a049-a8b6-97318d9e989d"],
-Cell[CellGroupData[{
-Cell[2293234, 38575, 258, 7, 18, "Print",ExpressionUUID->"0083e5ea-919e-d64f-b84b-9901ab756d5b"],
-Cell[2293495, 38584, 614, 18, 18, "Print",ExpressionUUID->"b1d541e3-1a6e-0e4f-8e4e-91bdfa8705e6"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2294158, 38608, 264, 7, 21, "Input",ExpressionUUID->"86b8e3aa-1729-254b-a32f-6aa991da486f"],
-Cell[2294425, 38617, 131, 3, 24, "Output",ExpressionUUID->"78ab12ea-a2c5-0f4d-8230-a5b47f42bd81"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2294593, 38625, 484, 13, 21, "Input",ExpressionUUID->"41e28572-02ab-ce4a-84db-14fa990416c1"],
-Cell[2295080, 38640, 478, 10, 24, "Output",ExpressionUUID->"07056d55-841a-9843-b65f-e7071545843b"]
-}, Open  ]],
-Cell[2295573, 38653, 692, 9, 74, "Text",ExpressionUUID->"ba379419-f7b3-4f4d-9667-a84124c31d8b"],
-Cell[CellGroupData[{
-Cell[2296290, 38666, 96, 0, 39, "Subsection",ExpressionUUID->"5f0820db-4c5a-6340-8d70-25628f412c83"],
-Cell[2296389, 38668, 840, 11, 90, "Text",ExpressionUUID->"8b156d15-d6cd-ea42-a13d-cb693e1f8723"],
-Cell[2297232, 38681, 14580, 358, 477, "Input",ExpressionUUID->"bfc2325c-94f1-6a44-b351-91de17e942cd"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2311849, 39044, 105, 0, 39, "Subsection",ExpressionUUID->"05e584b8-0b60-6c4d-b23d-f8d48f56962f"],
-Cell[2311957, 39046, 365, 5, 41, "Text",ExpressionUUID->"b29f1864-e375-f84b-a06e-9cf2b86d1e1a"],
-Cell[2312325, 39053, 216, 6, 21, "Input",ExpressionUUID->"b9a565e3-1e38-1f4a-9e8f-38bb39c33135"],
-Cell[2312544, 39061, 270, 4, 41, "Text",ExpressionUUID->"2a821ed1-a7b5-ae4b-8878-b10a192006b6"],
-Cell[CellGroupData[{
-Cell[2312839, 39069, 823, 21, 35, "Input",ExpressionUUID->"403321c1-f147-784e-88ff-d670ed073005"],
-Cell[2313665, 39092, 135034, 2234, 371, 46337, 778, "CachedBoxData", "BoxData", "Output",ExpressionUUID->"53bde8b7-918d-7b48-91bd-5ee10def9a91"]
-}, Open  ]],
-Cell[2448714, 41329, 418, 6, 41, "Text",ExpressionUUID->"637bc07c-9aa9-7e43-8bc4-2c44cf968dea"],
-Cell[CellGroupData[{
-Cell[2449157, 41339, 164, 4, 21, "Input",ExpressionUUID->"d1423597-b67e-a845-9b7a-c6b44aaa085c"],
-Cell[2449324, 41345, 438, 10, 24, "Output",ExpressionUUID->"2b56c886-e7f0-c34c-b880-a89204f5d63a"]
-}, Open  ]],
-Cell[2449777, 41358, 455, 7, 58, "Text",ExpressionUUID->"6eb44366-3331-4d40-952c-296ae02ddece"],
-Cell[CellGroupData[{
-Cell[2450257, 41369, 686, 18, 35, "Input",ExpressionUUID->"f0a945d8-5695-8045-8b0b-5ce91a445a4b"],
-Cell[2450946, 41389, 1218, 29, 42, "Output",ExpressionUUID->"849b34cc-8931-8a4f-aaed-96e603e8dfb4"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2452201, 41423, 1305, 33, 49, "Input",ExpressionUUID->"24f52b72-4535-4d43-af64-ce32192a607e"],
-Cell[2453509, 41458, 19190, 430, 340, "Output",ExpressionUUID->"1b01110e-330f-644b-8d5c-a991f7275e53"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2472748, 41894, 104, 0, 39, "Subsection",ExpressionUUID->"08fe0f47-1d82-4143-8040-dc45c526b37b"],
-Cell[2472855, 41896, 525, 7, 58, "Text",ExpressionUUID->"ab18d1c6-04c8-9041-9a11-358e772a0566"],
-Cell[2473383, 41905, 646, 18, 49, "Input",ExpressionUUID->"dfbfdd92-a420-5e45-a66a-ad5dd51177d0"],
-Cell[CellGroupData[{
-Cell[2474054, 41927, 2304, 57, 92, "Input",ExpressionUUID->"b570cd73-a3b6-2449-ab1d-e21418947734"],
-Cell[2476361, 41986, 100361, 1993, 372, "Output",ExpressionUUID->"1b1290bd-1e89-a446-b4e8-a1200b87f285"]
-}, Open  ]],
-Cell[2576737, 43982, 240, 4, 25, "Text",ExpressionUUID->"4d629efb-e2a0-a643-b420-135b6b4be698"],
-Cell[CellGroupData[{
-Cell[2577002, 43990, 1803, 47, 49, "Input",ExpressionUUID->"7728976b-0c90-bf4e-a1e5-ce9ef0cdb29c"],
-Cell[2578808, 44039, 67140, 1472, 152, "Output",ExpressionUUID->"9915956e-4fe3-1644-bb74-df1f6b5a1f3d"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2645997, 45517, 134, 0, 39, "Subsection",ExpressionUUID->"af03d93d-2d1e-6c46-885a-4b7fa74509d2"],
-Cell[2646134, 45519, 407, 6, 41, "Text",ExpressionUUID->"6ca5bb7a-288e-5b41-a3f1-9dec23c13b2b"],
-Cell[CellGroupData[{
-Cell[2646566, 45529, 2191, 57, 78, "Input",ExpressionUUID->"0ae172a6-290e-b744-a6f2-3f8372f3f347"],
-Cell[2648760, 45588, 696, 16, 67, "Output",ExpressionUUID->"255576d2-b52a-4148-b45f-2c0f8cb6989b"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2649493, 45609, 1082, 29, 35, "Input",ExpressionUUID->"5153c436-d16f-8845-8c90-60d5c9419525"],
-Cell[2650578, 45640, 24094, 528, 338, "Output",ExpressionUUID->"6213720c-44b3-e34e-a097-a3fd99f9b17c"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2674721, 46174, 162, 2, 39, "Subsection",ExpressionUUID->"8691be8e-6d72-2942-bf93-6b23a456bf75"],
-Cell[2674886, 46178, 720, 10, 74, "Text",ExpressionUUID->"3fcfa2de-5654-4146-b4e3-ea403b1e4167"],
-Cell[CellGroupData[{
-Cell[2675631, 46192, 2023, 47, 63, "Input",ExpressionUUID->"f8e9eb6d-a054-8c4f-bdef-4633eb1f4cb3"],
-Cell[2677657, 46241, 66457, 1302, 372, "Output",ExpressionUUID->"4bffd38b-062e-9d4d-b6c1-5e08aa0a4e63"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2744163, 47549, 82, 0, 39, "Subsection",ExpressionUUID->"b26fc34d-18f9-1843-8bfb-c7ec9ab41ab5"],
-Cell[2744248, 47551, 589, 8, 58, "Text",ExpressionUUID->"1ecdbbb4-1543-0c43-9a0d-505cb1b42d74"]
-}, Open  ]]
-}, Open  ]]
-}, Open  ]]
-}
-]
-*)
-
-(* End of internal cache information *)
 

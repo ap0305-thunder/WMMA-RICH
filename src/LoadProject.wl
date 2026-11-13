@@ -261,7 +261,9 @@ $RICHProjectComponents = <|
   "optics" -> {
     "cellStyleDataRules.wl",
     "base.wl", "statDataAnal.wl", "physicsGeneral.wl",
-    "inputDataForRICH.wl", "RICH.wl", "optics.wl"
+    "inputDataForRICH.wl", "RICH.wl", "optics.wl",
+    (* 2026-11-13: detector list and run control panel *)
+    "detectors.wl", "runControlPanel.wl"
   },
   "geometricalOptics" -> {
     "cellStyleDataRules.wl",
@@ -270,6 +272,12 @@ $RICHProjectComponents = <|
   },
   "cellStyleDataRules" -> {
     "cellStyleDataRules.wl"
+  },
+  (* 2026-11-13: ARC barrel geometry (pure Mathematica, no Optica), loaded by arc.nb
+     with LoadRICHCase["arc"]. The Optica adapter ARCBarrelOptica.wl is loaded on demand
+     (arc.nb, and src/optics-def-ARCv0-barrel.wl for optics.nb). *)
+  "arc" -> {
+    "ARCBarrel.wl"
   }
 |>;
 
